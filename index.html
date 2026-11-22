@@ -700,8 +700,10 @@ function iBk(){
   if(!ICV.i||!document.body.contains(ICV.i))return;
   var dd=window.devicePixelRatio||1;
   ["h","l","i","p"].forEach(function(k){
-    var c=ICV[k],dp=Math.min(dd,(k==="i"||k==="p")?2:1.5);c.width=Math.round(IPW*IPS*dp);c.height=Math.round(IPH*IPS*dp);
-    var x=ICX[k]=c.getContext("2d",{desynchronized:k==="i"});
+    var c=ICV[k],x;
+    if(k==="p"){c.width=c.height=1;ICX.p=c.getContext("2d");return}
+    var dp=Math.min(dd,k==="i"?2:1.5,3000/(IPW*IPS));c.width=Math.round(IPW*IPS*dp);c.height=Math.round(IPH*IPS*dp);
+    x=ICX[k]=c.getContext("2d");
     x.setTransform(c.width/IPW,0,0,c.height/IPH,0,0);x.lineCap="round";x.lineJoin="round";
   });
   iRedraw();
@@ -732,7 +734,7 @@ function iRedraw(){
   ICX.h.clearRect(0,0,IPW,IPH);ICX.i.clearRect(0,0,IPW,IPH);IDY.doc.s.forEach(iPaint);
 }
 function iPt(e,r){return[(e.clientX-r.left)*IPW/r.width,(e.clientY-r.top)*IPH/r.height]}
-function iPv(e,C){var p=e.pressure;if(e.pointerType!=="pen"||!(p>0))p=.5;C.pr=C.pr*.55+p*.45;return Math.round(C.pr*100)/100}
+function iPv(e,C){var p=e.pressure;if(e.pointerType!=="pen"||!(p>0))p=.5;C.pr=C.pr*.65+p*.35;return Math.round(C.pr*100)/100}
 function iPd(e){
   var T=IDY;if(!T||T.cur)return;
   if(e.pointerType==="touch"){
@@ -757,7 +759,6 @@ function iPm(e){
   e.preventDefault();
   var ev=e.getCoalescedEvents?e.getCoalescedEvents():null,j;if(!ev||!ev.length)ev=[e];
   for(j=0;j<ev.length;j++)iAdd(T,C,ev[j]);
-  iPred(e,T,C);
 }
 function iAdd(T,C,e){
   var q=iPt(e,T.r);
@@ -768,17 +769,6 @@ function iAdd(T,C,e){
   p.push(iRd(q[0]),iRd(q[1]),iPv(e,C));n++;
   if(st.t==="h")iSeg(ICX.l,st,n-2,1);else iSeg(ICX.i,st,n-2);
 }
-function iPred(e,T,C){
-  var x=ICX.p;if(C.pb){x.clearRect(C.pb[0],C.pb[1],C.pb[2],C.pb[3]);C.pb=0}
-  if(C.er||C.st.t==="h")return;
-  var p=C.st.p,n=p.length/3;if(n<2)return;
-  var lx=p[n*3-3],ly=p[n*3-2],a=iMid(p[n*3-6],lx),b=iMid(p[n*3-5],ly),
-  x0=Math.min(a,lx),x1=Math.max(a,lx),y0=Math.min(b,ly),y1=Math.max(b,ly),pe,i,q;
-  x.strokeStyle=C.st.c;x.lineWidth=C.st.w*(.42+p[n*3-1]*.95);x.beginPath();x.moveTo(a,b);x.lineTo(lx,ly);
-  pe=e.getPredictedEvents?e.getPredictedEvents():null;
-  if(pe)for(i=0;i<pe.length&&i<3;i++){q=iPt(pe[i],T.r);x.lineTo(q[0],q[1]);x0=Math.min(x0,q[0]);x1=Math.max(x1,q[0]);y0=Math.min(y0,q[1]);y1=Math.max(y1,q[1])}
-  x.stroke();C.pb=[x0-8,y0-8,x1-x0+16,y1-y0+16];
-}
 function iErase(x,y){
   var T=IDY,S=T.doc.s,i,j,s,p,rr,dx,dy,ch=0;
   for(i=S.length-1;i>=0;i--){
@@ -787,7 +777,7 @@ function iErase(x,y){
   }
   if(ch){T.dirty=1;iRedraw()}
 }
-function iClr(){var T=IDY;if(!T)return;ICX.p.clearRect(0,0,IPW,IPH);ICX.l.clearRect(0,0,IPW,IPH)}
+function iClr(){var T=IDY;if(!T)return;ICX.l.clearRect(0,0,IPW,IPH)}
 function iPu(e){
   var T=IDY;if(!T)return;var C=T.cur;
   if(e.pointerType==="touch"&&!C){
