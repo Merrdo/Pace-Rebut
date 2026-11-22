@@ -134,6 +134,13 @@ main{position:relative;overflow:hidden;height:100dvh}
 .swi{min-height:0;overflow:hidden}
 .lw.drag{position:relative;z-index:3;will-change:transform}.ll.fast .sw{transition:none}.lw.drag.rel .lr{transform:none;box-shadow:none}.lw.drag .li{overflow:visible}
 .lw.drag .lr{transform:scale(1.025);box-shadow:0 20px 44px rgba(0,0,0,.16)}.lw.drag .grip{cursor:grabbing}
+.fl{height:44px;padding:0 18px;border-radius:999px;background:rgba(255,255,255,.88);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:0 8px 24px rgba(0,0,0,.1);font-size:16px;font-weight:700;transition:transform .5s var(--sp),opacity .45s var(--ease)}
+.fl:active{transform:scale(.93)}
+.fl-l{position:fixed;z-index:5;top:calc(18px + env(safe-area-inset-top,0px));left:24px;opacity:0;transform:translateY(-14px);pointer-events:none}
+.fl-l.on{opacity:1;transform:none;pointer-events:auto}.fl-l.on:active{transform:scale(.93)}
+.fl-r{position:fixed;z-index:5;top:calc(18px + env(safe-area-inset-top,0px));right:24px;display:flex;gap:10px}
+.fp{width:44px;padding:0;display:grid;place-items:center;font-size:28px;line-height:1;font-weight:500}
+.fk{background:var(--fg);color:var(--bg)}
 .em{padding:20px 4px;color:var(--dim);font-weight:500}
 @media (max-width:1000px){#v-topics{grid-template-columns:300px 1fr}.topics{padding:28px 28px var(--dock-space)}.th h1{font-size:38px}.pc b{font-size:88px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
@@ -156,7 +163,7 @@ main{position:relative;overflow:hidden;height:100dvh}
     <section class="view" id="v-timer"></section>
     <section class="view" id="v-settings"><div class="set" id="set"></div></section>
   </main>
-  <div class="sheet" id="sheet"><div class="shw" id="shw"></div></div>
+  <div class="sheet" id="sheet"><button class="fl fl-l" id="fl">Dersler</button><div class="fl-r"><button class="fl fp" id="fp" aria-label="Yeni ders">+</button><button class="fl fk" id="sx">Kapat</button></div><div class="shw" id="shw"></div></div>
 </div>
 <script>
 (function(){
@@ -276,12 +283,16 @@ function swatches(c){return PAL.map(function(p,k){return'<button class="swb'+(p[
 function rowH(s,i){return'<div class="lw" data-id="'+s.id+'" style="--c:'+s.c+';--ct:'+s.ct+';--d:'+Math.min(i*45+100,500)+'ms"><div class="li"><div class="lr"><div class="lh"><button class="grip" aria-label="Sırala"><svg viewBox="0 0 24 24"><path d="M9 6h.01M15 6h.01M9 12h.01M15 12h.01M9 18h.01M15 18h.01"/></svg></button><button class="dot" aria-label="Rengi değiştir"></button><div class="ln"><b>'+esc(s.n)+'</b><small>'+s.t.length+' konu</small></div>'+(s.x?'<button class="dl">Sil</button>':"")+'</div><div class="sw"><div class="swi"><div class="swr">'+swatches(s.c)+'</div></div></div></div></div></div>'}
 function buildSheet(){
   nf={g:"TYT",p:0};
-  var h='<div class="sh-h"><div><h1>Dersler</h1><p>Tutamaçtan sürükleyerek sırala, renk noktasına dokunarak rengi değiştir.</p></div><button class="btn" id="sx">Kapat</button></div><button class="add" id="ab"><span>+</span>Yeni ders ekle</button>'+
+  var h='<div class="sh-h"><div><h1>Dersler</h1><p>Tutamaçtan sürükleyerek sırala, renk noktasına dokunarak rengi değiştir.</p></div></div><button class="add" id="ab"><span>+</span>Yeni ders ekle</button>'+
   '<div class="af" id="af"><div class="afi"><div class="card" style="margin:14px 0 0"><h2>Yeni ders</h2><input id="fn" maxlength="24" placeholder="Ders adı" autocomplete="off"><div class="seg" id="fg" data-g="TYT"><i></i><button class="on" data-g="TYT">TYT</button><button data-g="AYT">AYT</button></div><div class="swr">'+swatches(PAL[0][0])+'</div><textarea id="ft" placeholder="Konular (isteğe bağlı, her satıra bir konu)"></textarea><div class="row"><button class="btn pr" id="fok">Ekle</button></div><div class="msg" id="fm"></div></div></div></div>';
   ["TYT","AYT"].forEach(function(g){h+='<div class="grp">'+(g==="TYT"?"TYT":"AYT Sayısal")+'</div><div class="ll" data-g="'+g+'">'+vis().filter(function(s){return s.g===g}).map(rowH).join("")+'</div>'});
   $("#shw").innerHTML=h;
 }
-function openSheet(){buildSheet();$("#sheet").scrollTop=0;$("#sheet").classList.add("on")}
+function openSheet(){buildSheet();$("#sheet").scrollTop=0;$("#fl").classList.remove("on");$("#sheet").classList.add("on")}
+$("#sheet").addEventListener("scroll",function(){$("#fl").classList.toggle("on",this.scrollTop>90)},{passive:true});
+$("#fl").onclick=function(){$("#sheet").scrollTo({top:0,behavior:"smooth"})};
+$("#sx").onclick=function(){closeSheet()};
+$("#fp").onclick=function(){$("#sheet").scrollTo({top:0,behavior:"smooth"});$("#ab").classList.add("open");$("#af").classList.add("open");setTimeout(function(){$("#fn").focus()},600)};
 function closeSheet(){$("#sheet").classList.remove("on")}
 document.addEventListener("keydown",function(e){if(e.key==="Escape")closeSheet()});
 function addLesson(){
