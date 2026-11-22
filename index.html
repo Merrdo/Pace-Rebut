@@ -638,8 +638,8 @@ function paintK(q){
 }
 /* Gün sayfası: kalemle yazı, dokunarak işaret */
 var IPW=1200,IPH=640,IPS=1,INKD={},ILP=0,IDY=null,IRDY=0,IWQ=[],IDB=null,IFT=0,ICV={},ICX={},
-ITL={t:"pen",pc:0,hc:0,fg:0},IPC=["#161616","#2f55e0","#d6336c","#2b9a5b"],IHC=["#ffe45e","#ff9ad5","#8fe3b5","#9fd0ff"],
-IPI={pen:'<g transform="translate(-.8 .4) rotate(45 12 12)"><path d="M9.5 3.5a2.5 2.5 0 015 0V15L12 20.5 9.5 15z"/><path d="M9.5 7.5h5"/></g>',hl:'<g transform="translate(1.5 1.5) rotate(45 12 10.5)"><path d="M8 4a2 2 0 012-2h4a2 2 0 012 2v7H8z"/><path d="M8 11l2.2 5h3.6l2.2-5"/></g><path d="M3 21h7"/>',er:'<g transform="rotate(-45 12 11.5)"><rect x="8" y="4" width="8" height="14" rx="2"/><path d="M8 12h8"/></g><path d="M11 21h9"/>',un:'<path d="M9 14L4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 010 11H11"/>',cl:'<path d="M4 7h16"/><path d="M9.5 7V4.5h5V7"/><path d="M6.5 7l.9 12.5h9.2L17.5 7"/><path d="M10 11v5M14 11v5"/>',fg:'<path d="M22 14a8 8 0 0 1-8 8"/><path d="M18 11v-1a2 2 0 0 0-2-2a2 2 0 0 0-2 2"/><path d="M14 10V9a2 2 0 0 0-2-2a2 2 0 0 0-2 2v1"/><path d="M10 9.5V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v10"/><path d="M18 11a2 2 0 1 1 4 0v3a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/>'},
+ITL={t:"pen",pc:0,hc:0,fg:0,ph:0},IPC=["#161616","#2f55e0","#d6336c","#2b9a5b"],IHC=["#ffe45e","#ff9ad5","#8fe3b5","#9fd0ff"],
+IPI={ph:'<path d="M6 3.5l12.5 6.8-5.6 1.7L10.6 18z"/>',pen:'<g transform="translate(-.8 .4) rotate(45 12 12)"><path d="M9.5 3.5a2.5 2.5 0 015 0V15L12 20.5 9.5 15z"/><path d="M9.5 7.5h5"/></g>',hl:'<g transform="translate(1.5 1.5) rotate(45 12 10.5)"><path d="M8 4a2 2 0 012-2h4a2 2 0 012 2v7H8z"/><path d="M8 11l2.2 5h3.6l2.2-5"/></g><path d="M3 21h7"/>',er:'<g transform="rotate(-45 12 11.5)"><rect x="8" y="4" width="8" height="14" rx="2"/><path d="M8 12h8"/></g><path d="M11 21h9"/>',un:'<path d="M9 14L4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 010 11H11"/>',cl:'<path d="M4 7h16"/><path d="M9.5 7V4.5h5V7"/><path d="M6.5 7l.9 12.5h9.2L17.5 7"/><path d="M10 11v5M14 11v5"/>',fg:'<path d="M22 14a8 8 0 0 1-8 8"/><path d="M18 11v-1a2 2 0 0 0-2-2a2 2 0 0 0-2 2"/><path d="M14 10V9a2 2 0 0 0-2-2a2 2 0 0 0-2 2v1"/><path d="M10 9.5V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v10"/><path d="M18 11a2 2 0 1 1 4 0v3a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/>'},
 IMF=[["Tükenmiş","M10.5 23c3-4 8-4 11 0"],["Yorgun","M11 22.5c3-2.5 7-2.5 10 0"],["Nötr","M11 21.5h10"],["İyi","M11 20.5c3 2.5 7 2.5 10 0"],["Enerjik","M10 20c3 5 9 5 12 0z"]],
 IRO=window.ResizeObserver?new ResizeObserver(function(){iFit()}):null;
 try{Object.assign(ITL,JSON.parse(localStorage.getItem("dd-ink-tool")))}catch(e){}
@@ -683,7 +683,7 @@ function iTools(){
   function B(p,l,x,i){return'<button class="tx-b'+(x||"")+'" data-p="'+p+'" aria-label="'+l+'"><svg viewBox="0 0 24 24">'+IPI[p]+'</svg>'+(i||"")+'</button>'}
   return'<div class="tx" id="tx" data-t="'+t+'"><div class="tx-g"><i class="tx-ind"></i>'+B("pen","Kalem",t==="pen"?" on":"")+B("hl","Fosforlu kalem",t==="hl"?" on":"")+B("er","Silgi",t==="er"?" on":"")+'</div><i class="tx-s"></i>'+
   '<div class="tx-m"><div class="tx-cols">'+cs.map(function(c,i){return'<button class="tx-c'+(i===ci?" on":"")+'" data-p="c" data-i="'+i+'" aria-label="Renk '+(i+1)+'" style="--k:'+c+'"><i></i></button>'}).join("")+'</div><div class="tx-h">Çizgi silgisi</div></div><i class="tx-s"></i>'+
-  '<div class="tx-g">'+B("un","Geri al",ud?"":" dis")+B("cl","Yazıyı sil"," tx-x",'<span class="tx-t">Sil?</span>')+B("fg","Parmakla da yaz"," tx-tg"+(ITL.fg?" on":""))+'</div></div>';
+  '<div class="tx-g">'+B("un","Geri al",ud?"":" dis")+B("cl","Yazıyı sil"," tx-x",'<span class="tx-t">Sil?</span>')+B("fg","Parmakla da yaz"," tx-tg"+(ITL.fg?" on":""))+B("ph","Kalem parmak gibi davransın"," tx-tg"+(ITL.ph?" on":""))+'</div></div>';
 }
 function iTbSync(){
   var e=$("#tx");if(!e)return;
@@ -691,7 +691,7 @@ function iTbSync(){
   e.dataset.t=t;
   $$("#tx .tx-g:first-child .tx-b").forEach(function(b){b.classList.toggle("on",b.dataset.p===t)});
   $$("#tx .tx-c").forEach(function(b,i){b.style.setProperty("--k",cs[i]);b.classList.toggle("on",i===ci)});
-  $("#tx .tx-tg").classList.toggle("on",!!ITL.fg);
+  $$("#tx .tx-tg").forEach(function(b){b.classList.toggle("on",!!ITL[b.dataset.p])});
   iTbU();
 }
 function iTbU(){var b=$("#tx [data-p=un]");if(b)b.classList.toggle("dis",!(IDY&&IDY.ud.length))}
@@ -750,11 +750,13 @@ function iBk(){
   /* Tuvaller tüm sayfayı değil, yalnızca görünür bölgeyi (+kenar payı) kaplar; yakınlaştıkça piksel yoğunluğu artar ama bellek sabit kalır */
   var dd=window.devicePixelRatio||1,w=iWin(),sc=IPS*IZ.z;
   ["h","l","i","p"].forEach(function(k){
-    var c=ICV[k],x,ws=w.w*sc,dp=(k==="l"||k==="p")?Math.min(dd,1.5,2600/ws):Math.min(dd,3200/ws),sx,sy;
+    var c=ICV[k],x,ws=w.w*sc,lv=k==="l"||k==="p",dp=Math.min(dd,lv?1.5:3200/ws,Math.sqrt((lv?1.5e6:3.2e6)/(w.w*w.h*sc*sc))),sx,sy;
     c.style.left=w.x+"px";c.style.top=w.y+"px";c.style.width=w.w+"px";c.style.height=w.h+"px";
     c.width=Math.max(1,Math.round(w.w*sc*dp));c.height=Math.max(1,Math.round(w.h*sc*dp));
     x=ICX[k]=c.getContext("2d");sx=c.width/w.w;sy=c.height/w.h;
-    x.setTransform(sx,0,0,sy,-w.x*sx,-w.y*sy);x.lineCap="round";x.lineJoin="round";
+    x.setTransform(sx,0,0,sy,-w.x*sx,-w.y*sy);
+    if(!lv){x.beginPath();x.moveTo(26,0);x.arcTo(IPW,0,IPW,IPH,26);x.arcTo(IPW,IPH,0,IPH,26);x.arcTo(0,IPH,0,0,26);x.arcTo(0,0,IPW,0,26);x.closePath();x.clip()}
+    x.lineCap="round";x.lineJoin="round";
   });
   IZ.w={x:w.x,y:w.y,x1:w.x+w.w,y1:w.y+w.h,s:sc};
   iRedraw();
@@ -785,26 +787,30 @@ function iRedraw(){
   ICX.h.clearRect(0,0,IPW,IPH);ICX.i.clearRect(0,0,IPW,IPH);IDY.doc.s.forEach(iPaint);
 }
 function iPt(e,r){return[(e.clientX-r.left)*IPW/r.width,(e.clientY-r.top)*IPH/r.height]}
+function iTy(e){var t=e.pointerType;return t==="pen"&&ITL.ph?"touch":t}
+function iIn(x,y){var r=26;if(x<0||y<0||x>IPW||y>IPH)return false;var dx=x-(x<r?r:x>IPW-r?IPW-r:x),dy=y-(y<r?r:y>IPH-r?IPH-r:y);return dx*dx+dy*dy<=r*r}
 function iPv(e,C){var p=e.pressure;if(e.pointerType!=="pen"||!(p>0))p=.5;C.pr=C.pr*.65+p*.35;return Math.round(C.pr*100)/100}
 function iPd(e){
   var T=IDY;if(!T||T.cur)return;
-  if(e.pointerType==="touch"&&IZ.n>1)return;
-  if(e.pointerType==="touch"){
+  var pt=iTy(e);
+  if(pt==="touch"&&IZ.n>1)return;
+  if(pt==="touch"){
     if(Date.now()-ILP<900)return;
     if(!ITL.fg){T.tap={id:e.pointerId,x:e.clientX,y:e.clientY,t:Date.now()};return}
-  }else{ILP=Date.now();if(e.pointerType==="mouse"&&e.button!==0)return}
+  }else{ILP=Date.now();if(pt==="mouse"&&e.button!==0)return}
   e.preventDefault();
   T.r=$("#pg").getBoundingClientRect();
-  var er=ITL.t==="er"||(e.buttons&32)>0,q=iPt(e,T.r);
+  var er=ITL.t==="er"||(pt!=="touch"&&(e.buttons&32)>0),q=iPt(e,T.r);
+  if(!iIn(q[0],q[1]))return;
   try{this.setPointerCapture(e.pointerId)}catch(x){}
-  var C=T.cur={id:e.pointerId,pt:e.pointerType,er:er,t0:Date.now(),st:null,del:[],x0:e.clientX,y0:e.clientY,moved:0,pr:.5};
+  var C=T.cur={id:e.pointerId,pt:pt,er:er,t0:Date.now(),st:null,del:[],x0:e.clientX,y0:e.clientY,moved:0,pr:.5};
   if(er){iErase(q[0],q[1]);return}
   var h=ITL.t==="hl",st=C.st={t:h?"h":"p",c:h?IHC[ITL.hc]:IPC[ITL.pc],w:h?18:2.4,p:[iRd(q[0]),iRd(q[1]),iPv(e,C)]};
   if(h){ICX.l.fillStyle=st.c;ICX.l.beginPath();ICX.l.arc(st.p[0],st.p[1],st.w/2,0,6.3);ICX.l.fill()}else iDot(ICX.p,st);
 }
 function iPm(e){
   var T=IDY;if(!T)return;
-  if(e.pointerType==="pen")ILP=Date.now();
+  if(e.pointerType==="pen"&&!ITL.ph)ILP=Date.now();
   var C=T.cur;
   if(!C){if(T.tap&&e.pointerId===T.tap.id&&Math.abs(e.clientX-T.tap.x)+Math.abs(e.clientY-T.tap.y)>14)T.tap=null;return}
   if(e.pointerId!==C.id)return;
@@ -819,7 +825,7 @@ function iAdd(T,C,e){
   C.moved=Math.max(C.moved,Math.abs(e.clientX-C.x0)+Math.abs(e.clientY-C.y0));
   if(dx*dx+dy*dy<.5)return;
   p.push(iRd(q[0]),iRd(q[1]),iPv(e,C));n++;
-  if(st.t==="h")iSeg(ICX.l,st,n-2,1);else iSeg(ICX.p,st,n-2);
+  if(iIn(q[0],q[1])){if(st.t==="h")iSeg(ICX.l,st,n-2,1);else iSeg(ICX.p,st,n-2)}
 }
 function iErase(x,y){
   var T=IDY,S=T.doc.s,i,j,s,p,rr,dx,dy,ch=0;
@@ -832,7 +838,7 @@ function iErase(x,y){
 function iClr(){var T=IDY;if(!T)return;ICX.p.clearRect(0,0,IPW,IPH);ICX.l.clearRect(0,0,IPW,IPH)}
 function iPu(e){
   var T=IDY;if(!T)return;var C=T.cur;
-  if(e.pointerType==="touch"&&!C){
+  if(iTy(e)==="touch"&&!C){
     var a=T.tap;T.tap=null;
     if(a&&a.id===e.pointerId&&Date.now()-a.t<600&&Date.now()-ILP>900&&Math.abs(e.clientX-a.x)+Math.abs(e.clientY-a.y)<=14){if(!iHit(e.clientX,e.clientY))zDbl(e.clientX,e.clientY)}
     return;
@@ -882,6 +888,7 @@ $("#cal").addEventListener("click",function(e){
   else if(p==="c"){if(ITL.t==="hl")ITL.hc=+b.dataset.i;else ITL.pc=+b.dataset.i}
   else if(p==="un"){iUndo();return}
   else if(p==="fg")ITL.fg=ITL.fg?0:1;
+  else if(p==="ph")ITL.ph=ITL.ph?0:1;
   else if(p==="cl"){
     if(!b.classList.contains("arm")){if(!(IDY&&IDY.doc.s.length))return;b.classList.add("arm");clearTimeout(iAt);iAt=setTimeout(iDisarm,3000);return}
     iDisarm();iWipe();return;
@@ -921,7 +928,7 @@ function zRe(){var g=zG();if(g){IZ.x=zClamp(IZ.x,zLim(g,IZ.z,1));IZ.y=zClamp(IZ.
 function iWin(){
   var g=zG(),s=IPS*IZ.z,u0,v0,u1,v1,mx,my;
   if(!g||IZ.z<1.02)return{x:0,y:0,w:IPW,h:IPH};
-  u0=(-g.nl-IZ.x)/s;v0=(-g.nt-IZ.y)/s;u1=u0+g.w/s;v1=v0+g.h/s;mx=(u1-u0)*.25;my=(v1-v0)*.25;
+  u0=(-g.nl-IZ.x)/s;v0=(-g.nt-IZ.y)/s;u1=u0+g.w/s;v1=v0+g.h/s;mx=(u1-u0)*.15;my=(v1-v0)*.15;
   u0=Math.max(0,Math.floor(u0-mx));v0=Math.max(0,Math.floor(v0-my));u1=Math.min(IPW,Math.ceil(u1+mx));v1=Math.min(IPH,Math.ceil(v1+my));
   return{x:u0,y:v0,w:Math.max(1,u1-u0),h:Math.max(1,v1-v0)};
 }
@@ -1020,7 +1027,7 @@ function zEnd(){
 }
 function zDown(e){
   var T=IDY,C;if(!T||(e.target.closest&&e.target.closest(".zc")))return;
-  if(e.pointerType!=="touch"){zSnap();zFlush();return}
+  if(iTy(e)!=="touch"){IZ.p={};IZ.n=0;IZ.pn=null;IZ.g=null;zSnap();zFlush();return}
   if(Date.now()-ILP<900||(T.cur&&T.cur.pt!=="touch"))return;
   zStop();
   IZ.p[e.pointerId]={x:e.clientX,y:e.clientY};IZ.n=Object.keys(IZ.p).length;
@@ -1117,7 +1124,7 @@ $("#cal").addEventListener("click",function(e){
     ok=0;if(e.touches.length!==1||$("#cset").classList.contains("on"))return;
     if(e.target.closest("input,textarea,select"))return;
     if(IZ.z>1.02&&e.target.closest(".dv"))return;
-    if(e.target.closest(".pgc")){var tc=e.touches[0];if(ITL.fg||tc.touchType==="stylus"||Date.now()-ILP<900)return}
+    if(e.target.closest(".pgc")){var tc=e.touches[0];if(ITL.fg||(tc.touchType==="stylus"&&!ITL.ph)||Date.now()-ILP<900)return}
     var t=e.touches[0];sx=t.clientX;sy=t.clientY;st=Date.now();ok=1;
   },{passive:true});
   c.addEventListener("touchend",function(e){
