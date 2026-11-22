@@ -141,6 +141,10 @@ main{position:relative;overflow:hidden;height:100dvh}
 .fl-r{position:fixed;z-index:5;top:calc(18px + env(safe-area-inset-top,0px));right:24px;display:flex;gap:10px}
 .fp{width:44px;padding:0;display:grid;place-items:center;font-size:28px;line-height:1;font-weight:500}
 .fk{background:var(--fg);color:var(--bg)}
+.tb{position:fixed;z-index:5;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;padding:calc(8px + env(safe-area-inset-top,0px)) 24px 8px;background:rgba(244,242,238,.78);-webkit-backdrop-filter:blur(20px) saturate(1.4);backdrop-filter:blur(20px) saturate(1.4);box-shadow:0 1px 0 rgba(0,0,0,.06);opacity:0;transform:translateY(-100%);pointer-events:none;transition:transform .6s var(--ease),opacity .45s var(--ease)}
+.tb.on{opacity:1;transform:none;pointer-events:auto}
+.tb b{font-size:22px;font-weight:800;letter-spacing:-.3px;cursor:pointer}
+.tbr{display:flex;gap:10px}.tb .fl{height:40px;box-shadow:none}.tb .fp{width:40px}
 .em{padding:20px 4px;color:var(--dim);font-weight:500}
 @media (max-width:1000px){#v-topics{grid-template-columns:300px 1fr}.topics{padding:28px 28px var(--dock-space)}.th h1{font-size:38px}.pc b{font-size:88px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
@@ -163,7 +167,7 @@ main{position:relative;overflow:hidden;height:100dvh}
     <section class="view" id="v-timer"></section>
     <section class="view" id="v-settings"><div class="set" id="set"></div></section>
   </main>
-  <div class="sheet" id="sheet"><button class="fl fl-l" id="fl">Dersler</button><div class="fl-r"><button class="fl fp" id="fp" aria-label="Yeni ders">+</button><button class="fl fk" id="sx">Kapat</button></div><div class="shw" id="shw"></div></div>
+  <div class="sheet" id="sheet"><div class="tb" id="tb"><b id="tbt">Dersler</b><div class="tbr"><button class="fl fp" id="fp" aria-label="Yeni ders">+</button><button class="fl fk" id="sx">Kapat</button></div></div><div class="shw" id="shw"></div></div>
 </div>
 <script>
 (function(){
@@ -283,14 +287,14 @@ function swatches(c){return PAL.map(function(p,k){return'<button class="swb'+(p[
 function rowH(s,i){return'<div class="lw" data-id="'+s.id+'" style="--c:'+s.c+';--ct:'+s.ct+';--d:'+Math.min(i*45+100,500)+'ms"><div class="li"><div class="lr"><div class="lh"><button class="grip" aria-label="Sırala"><svg viewBox="0 0 24 24"><path d="M9 6h.01M15 6h.01M9 12h.01M15 12h.01M9 18h.01M15 18h.01"/></svg></button><button class="dot" aria-label="Rengi değiştir"></button><div class="ln"><b>'+esc(s.n)+'</b><small>'+s.t.length+' konu</small></div>'+(s.x?'<button class="dl">Sil</button>':"")+'</div><div class="sw"><div class="swi"><div class="swr">'+swatches(s.c)+'</div></div></div></div></div></div>'}
 function buildSheet(){
   nf={g:"TYT",p:0};
-  var h='<div class="sh-h"><div><h1>Dersler</h1><p>Tutamaçtan sürükleyerek sırala, renk noktasına dokunarak rengi değiştir.</p></div></div><button class="add" id="ab"><span>+</span>Yeni ders ekle</button>'+
+  var h='<div class="sh-h"><div><h1>Dersler</h1><p>Tutamaçtan sürükleyerek sırala, renk noktasına dokunarak rengi değiştir.</p></div><button class="btn" id="sx2">Kapat</button></div><button class="add" id="ab"><span>+</span>Yeni ders ekle</button>'+
   '<div class="af" id="af"><div class="afi"><div class="card" style="margin:14px 0 0"><h2>Yeni ders</h2><input id="fn" maxlength="24" placeholder="Ders adı" autocomplete="off"><div class="seg" id="fg" data-g="TYT"><i></i><button class="on" data-g="TYT">TYT</button><button data-g="AYT">AYT</button></div><div class="swr">'+swatches(PAL[0][0])+'</div><textarea id="ft" placeholder="Konular (isteğe bağlı, her satıra bir konu)"></textarea><div class="row"><button class="btn pr" id="fok">Ekle</button></div><div class="msg" id="fm"></div></div></div></div>';
   ["TYT","AYT"].forEach(function(g){h+='<div class="grp">'+(g==="TYT"?"TYT":"AYT Sayısal")+'</div><div class="ll" data-g="'+g+'">'+vis().filter(function(s){return s.g===g}).map(rowH).join("")+'</div>'});
   $("#shw").innerHTML=h;
 }
-function openSheet(){buildSheet();$("#sheet").scrollTop=0;$("#fl").classList.remove("on");$("#sheet").classList.add("on")}
-$("#sheet").addEventListener("scroll",function(){$("#fl").classList.toggle("on",this.scrollTop>90)},{passive:true});
-$("#fl").onclick=function(){$("#sheet").scrollTo({top:0,behavior:"smooth"})};
+function openSheet(){buildSheet();$("#sheet").scrollTop=0;$("#tb").classList.remove("on");$("#sheet").classList.add("on")}
+$("#sheet").addEventListener("scroll",function(){$("#tb").classList.toggle("on",this.scrollTop>90)},{passive:true});
+$("#tbt").onclick=function(){$("#sheet").scrollTo({top:0,behavior:"smooth"})};
 $("#sx").onclick=function(){closeSheet()};
 $("#fp").onclick=function(){$("#sheet").scrollTo({top:0,behavior:"smooth"});$("#ab").classList.add("open");$("#af").classList.add("open");setTimeout(function(){$("#fn").focus()},600)};
 function closeSheet(){$("#sheet").classList.remove("on")}
@@ -307,7 +311,7 @@ function addLesson(){
 $("#shw").addEventListener("click",function(e){
   var t=e.target.closest("button");if(!t)return;
   var w=t.closest(".lw"),id=t.id;
-  if(id==="sx")return closeSheet();
+  if(id==="sx"||id==="sx2")return closeSheet();
   if(id==="fok")return addLesson();
   if(id==="ab"){var o=!$("#af").classList.contains("open");t.classList.toggle("open",o);$("#af").classList.toggle("open",o);if(o)setTimeout(function(){$("#fn").focus()},500);return}
   if(t.closest(".seg")){nf.g=t.dataset.g;t.parentNode.dataset.g=nf.g;[].forEach.call(t.parentNode.querySelectorAll("button"),function(b){b.classList.toggle("on",b===t)});return}
