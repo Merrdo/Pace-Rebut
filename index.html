@@ -600,11 +600,12 @@ function isT(y,m,d){return y===TD.getFullYear()&&m===TD.getMonth()&&d===TD.getDa
 var IC={p:'<path d="M15 5l-7 7 7 7"/>',n:'<path d="M9 5l7 7-7 7"/>',fs:'<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>',fx:'<path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/>',st:'<path d="M4 7h9M19 7h1M4 17h1M11 17h9"/><circle cx="16" cy="7" r="2.5"/><circle cx="8" cy="17" r="2.5"/>'};
 function ib(a,i,x){return'<button class="kb'+(x||"")+'" data-a="'+a+'" aria-label="'+a+'"><svg viewBox="0 0 24 24">'+IC[i]+'</svg></button>'}
 function paintK(q){
-  iFlush();IDY=null;
+  iCap();iFlush();IDY=null;
   var l=cv.l,t=l==="year"?'<span>'+cv.y+'</span>':l==="month"?'<button data-a="y">'+cv.y+'</button><span>'+MN[cv.m]+'</span>':'<button data-a="y">'+cv.y+'</button><button data-a="mo">'+MN[cv.m]+'</button><span>'+cv.d+'</span>',
   fs=$(".app").classList.contains("fs");
   $("#cal").innerHTML='<div class="kh"><div class="kt">'+t+'</div>'+(l==="day"?iTools():"")+'<div class="kc">'+ib("pv","p")+'<button class="kb w" data-a="td">Bugün</button>'+ib("nx","n")+'<button class="kb fsx'+(fs?" on":"")+'" data-a="fs" aria-label="Tam ekran"><svg class="i-e" viewBox="0 0 24 24">'+IC.fs+'</svg><svg class="i-c" viewBox="0 0 24 24">'+IC.fx+'</svg></button>'+ib("st","st")+'</div></div><div class="kbody"><div class="kz '+(q?"no":l==="day"?"dz":cv.dir)+(l==="month"?" km":"")+'">'+(l==="year"?rY():l==="month"?rM():(DVC?"":rD()))+'</div></div>';
-  if(l==="day"){if(DVC){$(".kz").appendChild(DVC);iLoad();iFit()}else iInit()}
+  if(l==="day"){if(DVC){$(".kz").appendChild(DVC);var pre=$("#dvpre");if(pre)pre.remove();iFit(true);iLoad()}else iInit()}
+  else{iPreSoon();if(l==="month")iPrefMonth()}
 }
 /* Gün sayfası: kalemle yazı, dokunarak işaret */
 var IRR=26,IPW=1200,IPH=640,IPS=1,INKD={},ILP=0,IDY=null,IRDY=0,IWQ=[],IDB=null,IFT=0,ICV={},ICX={},
@@ -638,7 +639,7 @@ function iIdle(){var T=IDY;if(!T)return;if(T.cur){T.tm=setTimeout(iIdle,800);ret
   if(window.requestIdleCallback)requestIdleCallback(iFlush,{timeout:2500});else iFlush()}
 function iFlush(){
   var T=IDY;if(!T||!T.dirty)return;T.dirty=0;clearTimeout(T.tm);
-  var h=iHas(T.doc);iPut(T.date,T.doc,!h);if(h)INKD[T.date]=1;else delete INKD[T.date];
+  var h=iHas(T.doc);DOCC[T.date]=T.doc;iPut(T.date,T.doc,!h);if(h)INKD[T.date]=1;else delete INKD[T.date];
 }
 document.addEventListener("visibilitychange",function(){if(document.hidden)iFlush()});
 window.addEventListener("pagehide",iFlush);
@@ -680,26 +681,99 @@ function iMarks(){
   $$("#pg [data-md]").forEach(function(b){b.classList.toggle("on",+b.dataset.md===D.m)});
   $$("#pg [data-wt]").forEach(function(b){b.classList.toggle("on",+b.dataset.wt<=D.w)});
 }
-var DVC=null;
+var DVC=null,ILT=0,IRA=0,ILS=0,DOCC={},SNAP={},SQ=[],SCAP=8,IPQ=[],IPB=0,IPT=0,INKR=0,IPRE=0;
+function snOk(sn){return !!sn&&Math.abs(sn.k-SK(ILS))<=20}
+function SK(s){return Math.round(s*1000)}
+function iDp(k,s){var dd=window.devicePixelRatio||1,m=2600/(IPW*s);return k==="h"||k==="l"?Math.min(dd,1,m):k==="p"?Math.min(dd,1.5,m):Math.min(dd,2,m)}
+function iScaleNow(){var e=$(".dv")||$(".kbody");if(!e||!e.clientWidth||!e.clientHeight)return 0;return Math.min(e.clientWidth/IPW,e.clientHeight/IPH,1.5)}
+function iNewCtx(c,dp,s){
+  c.width=Math.round(IPW*s*dp);c.height=Math.round(IPH*s*dp);
+  var x=c.getContext("2d");x.setTransform(c.width/IPW,0,0,c.height/IPH,0,0);x.lineCap="round";x.lineJoin="round";
+  x.beginPath();x.moveTo(IRR,0);x.arcTo(IPW,0,IPW,IPH,IRR);x.arcTo(IPW,IPH,0,IPH,IRR);x.arcTo(0,IPH,0,0,IRR);x.arcTo(0,0,IPW,0,IRR);x.closePath();x.clip();
+  return x;
+}
+function iIdle2(f){if(window.requestIdleCallback)requestIdleCallback(f,{timeout:1500});else setTimeout(f,60)}
+/* Yazıyı önceden çizilmiş görüntü (snapshot) olarak sakla: gün açılırken tek bir drawImage yeter, kasma olmaz */
+function iSnapPut(d,o){var i=SQ.indexOf(d);if(i>=0)SQ.splice(i,1);SNAP[d]=o;SQ.push(d);while(SQ.length>SCAP)delete SNAP[SQ.shift()]}
+function iSnapBuild(doc,s,cb){
+  var ch=document.createElement("canvas"),ci=document.createElement("canvas"),X={h:iNewCtx(ch,iDp("h",s),s),i:iNewCtx(ci,iDp("i",s),s)},S=doc.s,k=0;
+  (function run(){
+    var t0=performance.now();
+    while(k<S.length&&performance.now()-t0<5)iPaint(S[k++],X);
+    if(k<S.length)setTimeout(run,16);else cb({h:ch,i:ci,k:SK(s)});
+  })();
+}
+function iCap(){
+  var T=IDY;if(!T||!T.drawn||!iOk())return;
+  var d=T.date;if(!T.doc.s.length){return}
+  if(snOk(SNAP[d])&&!T.edit)return;
+  var ch=document.createElement("canvas"),ci=document.createElement("canvas");
+  ch.width=ICV.h.width;ch.height=ICV.h.height;ci.width=ICV.i.width;ci.height=ICV.i.height;
+  ch.getContext("2d").drawImage(ICV.h,0,0);ci.getContext("2d").drawImage(ICV.i,0,0);
+  iSnapPut(d,{h:ch,i:ci,k:SK(ILS)});
+}
+function iPrefetch(list){
+  list.forEach(function(d){if(INKD[d]&&!SNAP[d]&&IPQ.indexOf(d)<0)IPQ.push(d)});
+  clearTimeout(IPT);IPT=setTimeout(iPump,700);
+}
+function iPump(){
+  if(IPB||!IPQ.length)return;
+  var d=IPQ.shift();
+  if(SNAP[d]||(IDY&&IDY.date===d)){iPump();return}
+  var s=iScaleNow();if(!s){IPQ.length=0;return}
+  IPB=1;
+  iWhen(function(){
+    function go(doc){
+      if(!doc.s.length){IPB=0;setTimeout(iPump,30);return}
+      iSnapBuild(doc,s,function(sn){iSnapPut(d,sn);IPB=0;setTimeout(iPump,30)});
+    }
+    if(DOCC[d])go(DOCC[d]);
+    else iGet(d,function(r){var doc=DOCC[d]||(DOCC[d]=iNd(r));go(doc)});
+  });
+}
+function iPrefMonth(){
+  if(!INKR)return;
+  var ks=Object.keys(INKD).filter(function(k){return k.slice(0,7)===cv.y+"-"+p2(cv.m+1)});
+  ks.sort(function(a,b){return Math.abs(+a.slice(8)-cv.d)-Math.abs(+b.slice(8)-cv.d)});iPrefetch(ks);
+}
+function iNear(y,m,c,n){
+  var o=[],i,t;for(i=1;i<=n;i++){[c+i,c-i].forEach(function(x){t=new Date(y,m,x);o.push(ds(t.getFullYear(),t.getMonth(),t.getDate()))})}return o;
+}
+function iShow(on,fade){
+  if(!ICV.h)return;
+  var t=fade?"opacity .3s ease":"none";ICV.h.style.transition=ICV.i.style.transition=t;
+  ICV.h.style.opacity=ICV.i.style.opacity=on?1:0;
+}
 function iLoad(){
-  var d=ds(cv.y,cv.m,cv.d),T=IDY={date:d,doc:iNd(),ud:[],dirty:0,cur:null,tap:null,tm:0,r:null};
+  var d=ds(cv.y,cv.m,cv.d),T=IDY={date:d,doc:iNd(),ud:[],dirty:0,cur:null,tap:null,tm:0,r:null,edit:0,drawn:0};
+  clearTimeout(ILT);IRA++;
   var c1=$("#pg .c1");
   c1.querySelector("small").textContent=MN[cv.m]+' '+cv.y+(isT(cv.y,cv.m,cv.d)?' · Bugün':'');
   c1.querySelector(".bn").textContent=cv.d;
   c1.querySelector("h2").textContent=WD[wdx(cv.y,cv.m,cv.d)];
   if(ICX.h){ICX.h.clearRect(0,0,IPW,IPH);ICX.i.clearRect(0,0,IPW,IPH);iClr()}
-  iInfo();iMarks();
+  iInfo();
   if(IRO){IRO.disconnect();IRO.observe($(".dv"))}
-  if(ICV.h){ICV.h.style.opacity=0;ICV.i.style.opacity=0}
-  /* Geçiş animasyonu bitmeden ağır iş (veri okuma, çizim) yapma: önce sade geçiş, sonra yazılar yumuşakça belirir */
-  clearTimeout(ILT);
-  ILT=setTimeout(function(){requestAnimationFrame(function(){if(IDY!==T)return;iWhen(function(){iGet(d,function(r){
-    if(IDY!==T)return;var n=iNd(r);
-    if(T.doc.s.length)n.s=n.s.concat(T.doc.s);
-    T.doc=n;iMarks();iRedrawA();
-  })})})},400);
+  var sn=SNAP[d],doc=DOCC[d],ready=iOk();
+  if(doc)T.doc=doc;
+  iMarks();
+  if(ready&&INKR&&!INKD[d]&&!doc){iShow(1,0);T.drawn=1}                       /* hiç kayıt yok: yüklenecek bir şey yok */
+  else if(ready&&doc&&!doc.s.length){iShow(1,0);T.drawn=1}
+  else if(ready&&snOk(sn)&&doc){                                      /* hazır görüntü: anında, animasyonla eş zamanlı */
+    ICX.h.drawImage(sn.h,0,0,IPW,IPH);ICX.i.drawImage(sn.i,0,0,IPW,IPH);iShow(1,0);T.drawn=1;
+  }else{                                                                        /* soğuk yol: animasyondan sonra yükle, yumuşakça göster */
+    iShow(0,0);
+    ILT=setTimeout(function(){requestAnimationFrame(function(){if(IDY!==T)return;iWhen(function(){
+      function fin(){if(IDY!==T)return;iMarks();iRedrawA()}
+      if(DOCC[d]){T.doc=DOCC[d];fin();return}
+      iGet(d,function(r){
+        if(IDY!==T)return;var n=iNd(r);
+        if(T.doc.s.length)n.s=n.s.concat(T.doc.s);
+        T.doc=DOCC[d]=n;fin();
+      })})})},400);
+  }
+  if(INKR)iPrefetch(iNear(cv.y,cv.m,cv.d,2));
 }
-var ILT=0,IRA=0;
 function iRedrawA(){
   if(!ICX.h||!IDY)return;
   var T=IDY,S=T.doc.s,k=0,g=++IRA;
@@ -707,58 +781,52 @@ function iRedrawA(){
   (function run(){
     if(g!==IRA||IDY!==T||!ICX.h)return;
     var t0=performance.now();
-    while(k<S.length&&performance.now()-t0<6)iPaint(S[k++]);
+    while(k<S.length&&performance.now()-t0<5)iPaint(S[k++]);
     if(k<S.length)requestAnimationFrame(run);
-    else{ICV.h.style.opacity=1;ICV.i.style.opacity=1}
+    else{T.drawn=1;iShow(1,1)}
   })();
 }
-function iInit(){
-  var d=ds(cv.y,cv.m,cv.d),T=IDY={date:d,doc:iNd(),ud:[],dirty:0,cur:null,tap:null,tm:0,r:null};
-  ICX={};ILS=0;DVC=$(".dv");
+function iSetup(){
+  ICX={};ILS=0;
   ICV={h:$("#ink-h"),l:$("#ink-l"),i:$("#ink-i"),p:$("#ink-p")};
   var c=ICV.p;
   c.addEventListener("pointerdown",iPd);c.addEventListener("pointermove",iPm);c.addEventListener("pointerup",iPu);c.addEventListener("pointercancel",iPc);
   c.addEventListener("contextmenu",function(e){e.preventDefault()});
   ICV.l.style.opacity=.5;
-  iInfo();iFit(true);
-  ICV.h.style.opacity=0;ICV.i.style.opacity=0;
-  ICV.h.style.transition=ICV.i.style.transition="opacity .3s ease";
-  if(IRO){IRO.disconnect();IRO.observe($(".dv"))}
-  clearTimeout(ILT);
-  ILT=setTimeout(function(){requestAnimationFrame(function(){if(IDY!==T)return;iWhen(function(){iGet(d,function(r){
-    if(IDY!==T)return;var n=iNd(r);
-    if(T.doc.s.length)n.s=n.s.concat(T.doc.s);
-    T.doc=n;iMarks();iRedrawA();
-  })})})},400);
 }
-var ILS=0;
+function iInit(){
+  DVC=$(".dv");iSetup();iFit(true);
+  iLoad();
+}
+/* Gün sayfasını (canvas'larıyla) arka planda önceden kur: ilk açılış da kasmasın */
+function iPrebuild(){
+  if(DVC||cv.l==="day")return;
+  var kb=$(".kbody");if(!kb||!kb.clientWidth)return;
+  var o=document.createElement("div");o.id="dvpre";
+  o.style.cssText="position:fixed;left:0;top:0;width:"+kb.clientWidth+"px;height:"+kb.clientHeight+"px;visibility:hidden;pointer-events:none;z-index:-1";
+  o.innerHTML=rD();document.body.appendChild(o);
+  DVC=o.querySelector(".dv");iSetup();
+  var s=iScaleNow();IPS=s;var w=$("#pgw");w.style.width=IPW*s+"px";w.style.height=IPH*s+"px";$("#pg").style.transform="scale("+s+")";
+  iBk();
+}
+function iPreSoon(){if(DVC||IPRE)return;IPRE=setTimeout(function(){IPRE=0;iIdle2(iPrebuild)},800)}
+function iOk(){return !!(ICX.i&&ICV.i&&ICV.i.width>0&&ILS>=IPS-.002&&ILS<=IPS*1.1)}
 function iFit(now){
   var dv=$(".dv"),w=$("#pgw");if(!dv||!w)return;
   var s=Math.min(dv.clientWidth/IPW,dv.clientHeight/IPH,1.5);if(!(s>0))return;
-  /* Boyut değişmediyse (ResizeObserver'ın ilk tetiklemesi gibi) canvas'ları yeniden kurma */
-  if(Math.abs(s-ILS)<.002&&ICX.i&&ICV.i&&ICV.i.width>0){IPS=s;return}
-  IPS=s;w.style.width=IPW*s+"px";w.style.height=IPH*s+"px";$("#pg").style.transform="scale("+s+")";
+  if(Math.abs(s-IPS)>.0005||!w.style.width){IPS=s;w.style.width=IPW*s+"px";w.style.height=IPH*s+"px";$("#pg").style.transform="scale("+s+")"}
+  /* Canvas'lar yeterince çözünürlüklüyse (küçük fark) yeniden kurma */
+  if(iOk())return;
   clearTimeout(IFT);
-  if(now){
-    /* İlk kurulum: geçiş animasyonu başladıktan sonra, boşta yap — ağır canvas tahsisi animasyonu kesmesin */
-    IFT=setTimeout(function(){requestAnimationFrame(iBk)},380);
-  }else IFT=setTimeout(iBk,140);
+  if(now)IFT=setTimeout(function(){requestAnimationFrame(iBk)},380);
+  else IFT=setTimeout(iBk,140);
 }
 function iBk(){
-  if(!ICV.i||!document.body.contains(ICV.i))return;
-  var dd=window.devicePixelRatio||1;
+  if(!ICV.i||!ICV.i.isConnected)return;
+  if(iOk())return;
   ILS=IPS;
-  ["h","l","i","p"].forEach(function(k){
-    var c=ICV[k],x;
-    /* h (fosforlu) ve l (canlı fosforlu) düşük çözünürlük yeter; sadece i (mürekkep) ve p (canlı kalem) keskin kalır */
-    var dp=k==="h"||k==="l"?Math.min(dd,1,2600/(IPW*IPS)):k==="p"?Math.min(dd,1.5,2600/(IPW*IPS)):Math.min(dd,2,2600/(IPW*IPS));
-    var nw=Math.round(IPW*IPS*dp),nh=Math.round(IPH*IPS*dp);
-    c.width=nw;c.height=nh;
-    x=ICX[k]=c.getContext("2d");
-    x.setTransform(c.width/IPW,0,0,c.height/IPH,0,0);x.lineCap="round";x.lineJoin="round";
-    x.beginPath();x.moveTo(IRR,0);x.arcTo(IPW,0,IPW,IPH,IRR);x.arcTo(IPW,IPH,0,IPH,IRR);x.arcTo(0,IPH,0,0,IRR);x.arcTo(0,0,IPW,0,IRR);x.closePath();x.clip();
-  });
-  iRedrawA();
+  ["h","l","i","p"].forEach(function(k){ICX[k]=iNewCtx(ICV[k],iDp(k,IPS),IPS)});
+  if(IDY)iRedrawA();
 }
 function iMid(a,b){return(a+b)/2}
 function iRd(v){return Math.round(v*10)/10}
@@ -777,13 +845,14 @@ function iHp(x,st){
   else{for(i=1;i<n-1;i++)x.quadraticCurveTo(p[i*3],p[i*3+1],iMid(p[i*3],p[i*3+3]),iMid(p[i*3+1],p[i*3+4]));x.lineTo(p[n*3-3],p[n*3-2])}
   x.stroke();x.globalAlpha=1;
 }
-function iPaint(st){
-  if(st.t==="h"){iHp(ICX.h,st);return}
-  var n=st.p.length/3,k;if(n===1)iDot(ICX.i,st);else for(k=0;k<n;k++)iSeg(ICX.i,st,k);
+function iPaint(st,X){
+  X=X||ICX;
+  if(st.t==="h"){iHp(X.h,st);return}
+  var n=st.p.length/3,k;if(n===1)iDot(X.i,st);else for(k=0;k<n;k++)iSeg(X.i,st,k);
 }
 function iRedraw(){
   if(!ICX.h||!IDY)return;
-  ICX.h.clearRect(0,0,IPW,IPH);ICX.i.clearRect(0,0,IPW,IPH);IDY.doc.s.forEach(iPaint);
+  ICX.h.clearRect(0,0,IPW,IPH);ICX.i.clearRect(0,0,IPW,IPH);IDY.edit=1;IDY.doc.s.forEach(function(st){iPaint(st)});
 }
 function iPt(e,r){return[(e.clientX-r.left)*IPW/r.width,(e.clientY-r.top)*IPH/r.height]}
 function iIn(x,y){
@@ -850,7 +919,7 @@ function iPu(e){
   var st=C.st,n=st.p.length/3;
   if(C.moved<5&&Date.now()-C.t0<350&&iHit(e.clientX,e.clientY)){iRedraw();return}
   iPaint(st);
-  T.doc.s.push(st);T.ud.push({k:"add",s:st});iSv();
+  T.edit=1;T.doc.s.push(st);T.ud.push({k:"add",s:st});iSv();
 }
 function iPc(e){
   var T=IDY;if(!T)return;var C=T.cur;T.tap=null;
@@ -893,7 +962,7 @@ $("#cal").addEventListener("click",function(e){
   try{localStorage.setItem("dd-ink-tool",JSON.stringify(ITL))}catch(x){}
   iSetPT();
 });
-iDbOpen();iWhen(function(){iKeys(function(k){k.forEach(function(x){INKD[x]=1});markInk()})});
+iDbOpen();iWhen(function(){iKeys(function(k){k.forEach(function(x){INKD[x]=1});INKR=1;markInk();if(IDY)iPrefetch(iNear(cv.y,cv.m,cv.d,2));else if(cv.l==="month")iPrefMonth()})});
 
 
 function rY(){
@@ -918,7 +987,7 @@ function rM(){
 function find(id){return CS.items.filter(function(i){return i.id===id})[0]}
 /* Gün -> gün geçişi: DOM ve canvas'ları yeniden kurmadan sadece içeriği değiştir (kasma olmaz) */
 function swapDay(n){
-  iFlush();
+  iCap();iFlush();
   $(".kt").innerHTML='<button data-a="y">'+cv.y+'</button><button data-a="mo">'+MN[cv.m]+'</button><span>'+cv.d+'</span>';
   iLoad();
   var w=$("#pgw");
