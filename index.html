@@ -192,7 +192,7 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 
 /* Takvim */
 /* Performans: gün sayfası geçişi sadece opaklık (GPU), katman izolasyonu */
-.kz.dz{animation:kfade .22s ease-out both;will-change:opacity}
+.kz.dz{animation:kfade .4s cubic-bezier(.22,1,.36,1) both;will-change:opacity}
 @keyframes kfade{from{opacity:0}}
 .pg{contain:layout paint style;will-change:transform}
 .pgw{will-change:opacity,transform}
@@ -690,13 +690,16 @@ function iLoad(){
   if(ICX.h){ICX.h.clearRect(0,0,IPW,IPH);ICX.i.clearRect(0,0,IPW,IPH);iClr()}
   iInfo();iMarks();
   if(IRO){IRO.disconnect();IRO.observe($(".dv"))}
-  iWhen(function(){iGet(d,function(r){
+  if(ICV.h){ICV.h.style.opacity=0;ICV.i.style.opacity=0}
+  /* Geçiş animasyonu bitmeden ağır iş (veri okuma, çizim) yapma: önce sade geçiş, sonra yazılar yumuşakça belirir */
+  clearTimeout(ILT);
+  ILT=setTimeout(function(){requestAnimationFrame(function(){if(IDY!==T)return;iWhen(function(){iGet(d,function(r){
     if(IDY!==T)return;var n=iNd(r);
     if(T.doc.s.length)n.s=n.s.concat(T.doc.s);
     T.doc=n;iMarks();iRedrawA();
-  })});
+  })})})},400);
 }
-var IRA=0;
+var ILT=0,IRA=0;
 function iRedrawA(){
   if(!ICX.h||!IDY)return;
   var T=IDY,S=T.doc.s,k=0,g=++IRA;
@@ -706,6 +709,7 @@ function iRedrawA(){
     var t0=performance.now();
     while(k<S.length&&performance.now()-t0<6)iPaint(S[k++]);
     if(k<S.length)requestAnimationFrame(run);
+    else{ICV.h.style.opacity=1;ICV.i.style.opacity=1}
   })();
 }
 function iInit(){
@@ -717,12 +721,15 @@ function iInit(){
   c.addEventListener("contextmenu",function(e){e.preventDefault()});
   ICV.l.style.opacity=.5;
   iInfo();iFit(true);
+  ICV.h.style.opacity=0;ICV.i.style.opacity=0;
+  ICV.h.style.transition=ICV.i.style.transition="opacity .3s ease";
   if(IRO){IRO.disconnect();IRO.observe($(".dv"))}
-  iWhen(function(){iGet(d,function(r){
+  clearTimeout(ILT);
+  ILT=setTimeout(function(){requestAnimationFrame(function(){if(IDY!==T)return;iWhen(function(){iGet(d,function(r){
     if(IDY!==T)return;var n=iNd(r);
     if(T.doc.s.length)n.s=n.s.concat(T.doc.s);
     T.doc=n;iMarks();iRedrawA();
-  })});
+  })})})},400);
 }
 var ILS=0;
 function iFit(now){
@@ -734,7 +741,7 @@ function iFit(now){
   clearTimeout(IFT);
   if(now){
     /* İlk kurulum: geçiş animasyonu başladıktan sonra, boşta yap — ağır canvas tahsisi animasyonu kesmesin */
-    IFT=setTimeout(function(){requestAnimationFrame(function(){requestAnimationFrame(iBk)})},0);
+    IFT=setTimeout(function(){requestAnimationFrame(iBk)},380);
   }else IFT=setTimeout(iBk,140);
 }
 function iBk(){
