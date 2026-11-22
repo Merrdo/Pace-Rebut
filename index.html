@@ -659,7 +659,7 @@ function rD(){
   for(i=0;i<10;i++)h+=iRw("t"+i);
   h+='</div><div class="c3"><div class="sl">Program</div>';
   for(i=7;i<=22;i++)h+='<div class="hr"><b>'+p2(i)+':00</b></div>';
-  h+='</div><canvas class="cv ip" id="ink-i"></canvas><canvas class="cv pgc ip" id="ink-p"></canvas></div></div></div>';
+  h+='</div><canvas class="cv pgc" id="ink-i"></canvas></div></div></div>';
   return h;
 }
 function iInfo(){
@@ -675,9 +675,9 @@ function iMarks(){
 }
 function iInit(){
   var d=ds(cv.y,cv.m,cv.d),T=IDY={date:d,doc:iNd(),ud:[],dirty:0,cur:null,tap:null,tm:0,r:null};
-  ICV={h:$("#ink-h"),l:$("#ink-l"),i:$("#ink-i"),p:$("#ink-p")};
-  var c=ICV.p;
-  c.addEventListener("pointerdown",iPd);c.addEventListener("pointermove",iPm);c.addEventListener("pointerup",iPu);c.addEventListener("pointercancel",iPc);
+  ICV={h:$("#ink-h"),l:$("#ink-l"),i:$("#ink-i")};
+  var c=ICV.i;
+  c.addEventListener("pointerdown",iPd);c.addEventListener("pointermove",iPm);if("onpointerrawupdate" in c)c.addEventListener("pointerrawupdate",iPm);c.addEventListener("pointerup",iPu);c.addEventListener("pointercancel",iPc);
   c.addEventListener("contextmenu",function(e){e.preventDefault()});
   iInfo();iFit(true);
   if(IRO){IRO.disconnect();IRO.observe($(".dv"))}
@@ -696,7 +696,7 @@ function iFit(now){
 function iBk(){
   if(!ICV.i||!document.body.contains(ICV.i))return;
   var dd=window.devicePixelRatio||1;
-  ["h","l","i","p"].forEach(function(k){
+  ["h","l","i"].forEach(function(k){
     var c=ICV[k],dp=Math.min(dd,k==="i"?2:1.5);c.width=Math.round(IPW*IPS*dp);c.height=Math.round(IPH*IPS*dp);
     var x=ICX[k]=c.getContext("2d",{desynchronized:k==="i"});
     x.setTransform(c.width/IPW,0,0,c.height/IPH,0,0);x.lineCap="round";x.lineJoin="round";
@@ -751,10 +751,9 @@ function iPm(e){
   var C=T.cur;
   if(!C){if(T.tap&&e.pointerId===T.tap.id&&Math.abs(e.clientX-T.tap.x)+Math.abs(e.clientY-T.tap.y)>14)T.tap=null;return}
   if(e.pointerId!==C.id)return;
-  e.preventDefault();
-  var ev=e.getCoalescedEvents?e.getCoalescedEvents():null,j;if(!ev||!ev.length)ev=[e];
+  if(e.type==="pointermove"&&"onpointerrawupdate" in window)return;
+  var ev=e.type==="pointermove"&&e.getCoalescedEvents?e.getCoalescedEvents():null,j;if(!ev||!ev.length)ev=[e];
   for(j=0;j<ev.length;j++)iAdd(T,C,ev[j]);
-  iPred(e,T,C);
 }
 function iAdd(T,C,e){
   var q=iPt(e,T.r);
@@ -765,18 +764,6 @@ function iAdd(T,C,e){
   p.push(iRd(q[0]),iRd(q[1]),iPv(e,C));n++;
   if(st.t==="h"){ICX.l.clearRect(0,0,IPW,IPH);iHp(ICX.l,st)}else iSeg(ICX.i,st,n-2);
 }
-function iPred(e,T,C){
-  var x=ICX.p;if(C.pb){x.clearRect(C.pb[0],C.pb[1],C.pb[2],C.pb[3]);C.pb=0}
-  if(C.er||C.st.t==="h"||!e.getPredictedEvents)return;
-  var pe=e.getPredictedEvents();if(!pe||!pe.length)return;
-  var p=C.st.p,n=p.length/3,i,q;if(n<2)return;
-  x.strokeStyle=C.st.c;x.lineWidth=C.st.w*(.42+p[n*3-1]*.95);x.beginPath();
-  x.moveTo(iMid(p[n*3-6],p[n*3-3]),iMid(p[n*3-5],p[n*3-2]));x.lineTo(p[n*3-3],p[n*3-2]);
-  var a=iMid(p[n*3-6],p[n*3-3]),b=iMid(p[n*3-5],p[n*3-2]),x0=a,x1=a,y0=b,y1=b;
-  x0=Math.min(x0,p[n*3-3]);x1=Math.max(x1,p[n*3-3]);y0=Math.min(y0,p[n*3-2]);y1=Math.max(y1,p[n*3-2]);
-  for(i=0;i<pe.length&&i<3;i++){q=iPt(pe[i],T.r);x.lineTo(q[0],q[1]);x0=Math.min(x0,q[0]);x1=Math.max(x1,q[0]);y0=Math.min(y0,q[1]);y1=Math.max(y1,q[1])}
-  x.stroke();C.pb=[x0-8,y0-8,x1-x0+16,y1-y0+16];
-}
 function iErase(x,y){
   var T=IDY,S=T.doc.s,i,j,s,p,rr,dx,dy,ch=0;
   for(i=S.length-1;i>=0;i--){
@@ -785,7 +772,7 @@ function iErase(x,y){
   }
   if(ch){T.dirty=1;iRedraw()}
 }
-function iClr(){var T=IDY;if(!T)return;ICX.p.clearRect(0,0,IPW,IPH);ICX.l.clearRect(0,0,IPW,IPH)}
+function iClr(){if(IDY&&ICX.l)ICX.l.clearRect(0,0,IPW,IPH)}
 function iPu(e){
   var T=IDY;if(!T)return;var C=T.cur;
   if(e.pointerType==="touch"&&!C){
