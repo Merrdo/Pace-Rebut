@@ -151,7 +151,7 @@ main{position:relative;overflow:hidden;height:100dvh}
 .fp{opacity:0;transform:scale(.6);pointer-events:none}.fp.on{opacity:1;transform:none;pointer-events:auto}.fp.on:active{transform:scale(.93)}
 .em{padding:20px 4px;color:var(--dim);font-weight:500}
 /* Sure */
-@keyframes bl{50%{opacity:.25}}@keyframes dn{50%{opacity:.3}}
+@keyframes dn{50%{opacity:.3}}
 .dock{transition:transform .75s var(--ease),opacity .45s var(--ease)}
 .app.fs .dock{transform:translate(-50%,160%);opacity:0;pointer-events:none}
 #v-timer{display:flex;align-items:center;justify-content:center}
@@ -161,13 +161,16 @@ main{position:relative;overflow:hidden;height:100dvh}
 .fold{display:grid;grid-template-rows:1fr;transition:grid-template-rows .65s var(--ease),opacity .45s var(--ease)}
 .fold>div{min-height:0;overflow:hidden;padding:8px;margin:-8px}
 .fold.off{grid-template-rows:0fr;opacity:0;pointer-events:none}
-#tmode{width:310px;max-width:100%;margin:0}.seg[data-m=cd] i{transform:translateX(100%)}
+#tmode{width:330px;max-width:100%;margin:0}#tmode button{font-size:16px;color:#55524d}#tmode button.on{color:var(--bg)}.seg[data-m=cd] i{transform:translateX(100%)}
 .clk{display:flex;align-items:baseline;margin:26px 0 6px;font-family:Inter,"SF Pro Display",system-ui,sans-serif;font-weight:500;font-variant-numeric:tabular-nums;letter-spacing:-.04em;line-height:1;white-space:nowrap;font-size:min(19vw,32vh);transition:font-size .85s var(--ease)}
 .clk.h{font-size:min(13.5vw,32vh)}
 .app.fs .clk{font-size:min(24vw,50vh)}.app.fs .clk.h{font-size:min(16.5vw,50vh)}
-.clk b{font-weight:inherit}.clk u{text-decoration:none}
+.clk b{font-weight:inherit}
+.clk u{display:inline-block;position:relative;width:.3em;height:.727em;text-decoration:none}
+.clk u:before,.clk u:after{content:"";position:absolute;left:50%;width:.125em;height:.125em;margin-left:-.0625em;border-radius:50%;background:currentColor}
+.clk u:before{top:.18em}.clk u:after{bottom:.18em}
 .clk i{font-style:normal;color:var(--dim);font-size:.26em;letter-spacing:0;margin-left:.12em}
-.clk.run u{animation:bl 1.4s ease-in-out infinite}.view.on .tw>.clk.done{animation:dn 1.6s ease-in-out infinite}
+.view.on .tw>.clk.done{animation:dn 1.6s ease-in-out infinite}
 .ts{min-height:1.4em;margin-bottom:12px;font-size:18px;font-weight:700;color:var(--dim)}
 .pre{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;max-width:640px}
 .chip{padding:9px 18px;border-radius:999px;background:var(--surf);font-size:16px;font-weight:700;transition:transform .5s var(--sp),background .35s,color .35s}
@@ -430,9 +433,9 @@ function drag(e,g,w){
 }
 
 /* Sure */
-var T={m:S.tm&&S.tm.m==="cd"?"cd":"sw",cd:S.tm&&S.tm.cd>=6e4?Math.min(S.tm.cd,432e5):15e5,run:false,t0:0,acc:0,done:false,iv:0},AC=null,WL=null,lt="",lc="";
-function savT(){S.tm={m:T.m,cd:T.cd};save()}
-function el(){return T.acc+(T.run?performance.now()-T.t0:0)}
+var T={m:S.tm&&S.tm.m==="cd"?"cd":"sw",cd:S.tm&&S.tm.cd>=6e4?Math.min(S.tm.cd,432e5):15e5,run:false,t0:0,acc:S.tm&&S.tm.acc>0&&S.tm.acc<1e10?+S.tm.acc:0,done:!!(S.tm&&S.tm.done),iv:0},AC=null,WL=null,lt="",lc="";
+function savT(){S.tm={m:T.m,cd:T.cd,run:T.run,t0:T.t0,acc:T.acc,done:T.done};save()}
+function el(){return T.acc+(T.run?Date.now()-T.t0:0)}
 function p2(n){return(n<10?"0":"")+n}
 function wl(on){try{if(on&&navigator.wakeLock)navigator.wakeLock.request("screen").then(function(l){WL=l}).catch(function(){});else if(WL){WL.release();WL=null}}catch(e){}}
 function beep(){
@@ -441,7 +444,7 @@ function beep(){
 }
 function paint(){
   var e=el(),cd=T.m==="cd",ms=cd?Math.max(0,T.cd-e):e,tot=cd?Math.ceil(ms/1000):Math.floor(ms/1000),h=Math.floor(tot/3600),m=Math.floor(tot%3600/60),sc=tot%60,
-  str=(h?h+"<u>:</u>"+p2(m):p2(m))+"<u>:</u>"+p2(sc);
+  str=(h?h+"<u></u>"+p2(m):p2(m))+"<u></u>"+p2(sc);
   if(str!==lt){lt=str;$("#tt").innerHTML=str;$("#clk").classList.toggle("h",h>0)}
   var c=cd?"":"."+p2(Math.floor(ms%1000/10));
   if(c!==lc){lc=c;$("#tc").textContent=c}
@@ -450,19 +453,19 @@ function paint(){
 function sync(){
   var c=$("#clk"),fs=$(".app").classList.contains("fs"),cd=T.m==="cd";
   c.classList.toggle("run",T.run);c.classList.toggle("done",T.done);$("#tgo").classList.toggle("on",T.run);
-  $("#tmode").dataset.m=T.m;$("#tbw").classList.toggle("off",fs);
+  $("#tmode").dataset.m=T.m;$$("#tmode button").forEach(function(b){b.classList.toggle("on",b.dataset.m===T.m)});$("#tbw").classList.toggle("off",fs);
   $("#pw").classList.toggle("off",fs||!cd||T.run||T.acc>0);
   $$(".chip[data-p]").forEach(function(b){b.classList.toggle("on",+b.dataset.p*6e4===T.cd)});
   $("#ts").textContent=T.done?"Süre doldu":T.run?"Çalışıyor":T.acc>0?"Duraklatıldı":"Hazır";
 }
-function reset(){clearInterval(T.iv);T.run=false;T.acc=0;T.done=false;wl(false);sync();paint()}
-function finish(){T.acc=T.cd;T.run=false;clearInterval(T.iv);T.done=true;wl(false);sync();paint();beep()}
+function reset(){clearInterval(T.iv);T.run=false;T.acc=0;T.done=false;wl(false);savT();sync();paint()}
+function finish(q){T.acc=T.cd;T.run=false;clearInterval(T.iv);T.done=true;wl(false);savT();sync();paint();if(!q)beep()}
 function go(){
   if(!AC){try{AC=new(window.AudioContext||window.webkitAudioContext)()}catch(e){}}
   if(AC&&AC.resume)AC.resume();
-  if(T.run){T.acc+=performance.now()-T.t0;T.run=false;clearInterval(T.iv);wl(false)}
-  else{if(T.done)reset();T.t0=performance.now();T.run=true;T.iv=setInterval(paint,40);wl(true)}
-  sync();paint();
+  if(T.run){T.acc+=Date.now()-T.t0;T.run=false;clearInterval(T.iv);wl(false)}
+  else{if(T.done)reset();T.t0=Date.now();T.run=true;T.iv=setInterval(paint,40);wl(true)}
+  savT();sync();paint();
 }
 function setCd(ms){T.cd=Math.max(6e4,Math.min(432e5,ms));savT();sync();paint()}
 $("#pre").innerHTML='<button class="chip" data-a="-5">−5 dk</button>'+[15,25,40,60,90].map(function(n){return'<button class="chip" data-p="'+n+'">'+n+' dk</button>'}).join("")+'<button class="chip" data-a="5">+5 dk</button>';
@@ -470,6 +473,7 @@ $("#pre").addEventListener("click",function(e){var b=e.target.closest(".chip");i
 $("#tmode").addEventListener("click",function(e){var b=e.target.closest("button");if(!b||b.dataset.m===T.m)return;T.m=b.dataset.m;savT();reset()});
 $("#tgo").onclick=go;$("#trs").onclick=reset;
 $("#fsb").onclick=function(){var f=$(".app").classList.toggle("fs");this.classList.toggle("on",f);this.setAttribute("aria-label",f?"Tam ekrandan çık":"Tam ekran");sync()};
+if(S.tm&&S.tm.run&&+S.tm.t0>0){T.run=true;T.t0=Math.min(+S.tm.t0,Date.now());if(T.m==="cd"&&el()>=T.cd)finish(true);else{T.iv=setInterval(paint,40);wl(true)}}
 sync();paint();
 
 /* Gezinme */
