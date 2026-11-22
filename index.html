@@ -643,6 +643,22 @@ $("#cal").addEventListener("click",function(e){
     CS.items=CS.items.filter(function(i){return i.id!==cv.ed});b.classList.remove("arm");b.textContent="Sil";csv();clr();dayList();
   }
 });
+(function(){
+  var sx,sy,st,ok=0;
+  var c=$("#cal");
+  c.addEventListener("touchstart",function(e){
+    ok=0;if(e.touches.length!==1||$("#cset").classList.contains("on"))return;
+    if(e.target.closest("input,textarea,select"))return;
+    var t=e.touches[0];sx=t.clientX;sy=t.clientY;st=Date.now();ok=1;
+  },{passive:true});
+  c.addEventListener("touchend",function(e){
+    if(!ok)return;ok=0;
+    var t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;
+    if(Date.now()-st>900||Math.abs(dx)<50||Math.abs(dx)<Math.abs(dy)*1.5)return;
+    step(dx<0?1:-1);
+  },{passive:true});
+  c.addEventListener("touchcancel",function(){ok=0},{passive:true});
+})();
 $("#cal").addEventListener("keydown",function(e){if(e.key==="Enter"&&e.target.id==="it")svI()});
 function svI(){
   var t=$("#it").value.trim();if(!t){$("#it").focus();return}
