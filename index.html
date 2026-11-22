@@ -305,16 +305,22 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .dpb{display:flex;align-items:center;gap:10px;margin-top:14px;padding:11px 16px;border-radius:14px;background:var(--surf2);font:500 16px Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;transition:transform .5s var(--sp),background .3s var(--ease)}
 .dpb:active{transform:scale(.97)}
 .dpb svg{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;color:var(--dim)}
-.dp{--rh:clamp(34px,calc((100dvh - 340px)/6),46px);position:fixed;inset:0;z-index:12;display:flex;align-items:flex-end;justify-content:center;padding:14px 14px calc(14px + env(safe-area-inset-bottom,0px));visibility:hidden;transition:visibility 0s .6s}
+.dp{--rh:clamp(34px,calc((100dvh - 400px)/6),46px);position:fixed;inset:0;z-index:12;display:flex;align-items:flex-end;justify-content:center;padding:14px 14px calc(14px + env(safe-area-inset-bottom,0px));visibility:hidden;transition:visibility 0s .6s}
 .dp.on{visibility:visible;transition-delay:0s}
 .dp-bd{position:absolute;inset:0;background:rgba(17,17,17,.28);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);opacity:0;transition:opacity .5s var(--ease)}
 .dp.on .dp-bd{opacity:1}
-.dp-card{position:relative;width:min(100%,400px);max-height:calc(100dvh - 28px);overflow:auto;overscroll-behavior:contain;padding:0 20px 20px;border-radius:30px;background:var(--surf);box-shadow:0 30px 80px rgba(0,0,0,.2),0 2px 10px rgba(0,0,0,.06);outline:0;opacity:0;transform:translateY(calc(100% + 30px));transition:transform .5s var(--ease),opacity .3s var(--ease)}
+.dp-card{position:relative;width:min(100%,400px);max-height:calc(var(--dpv,100dvh) - 28px);overflow:auto;overscroll-behavior:contain;padding:0 20px 20px;border-radius:30px;background:var(--surf);box-shadow:0 30px 80px rgba(0,0,0,.2),0 2px 10px rgba(0,0,0,.06);outline:0;opacity:0;transform:translateY(calc(100% + 30px));transition:transform .5s var(--ease),opacity .3s var(--ease)}
 .dp.on .dp-card{opacity:1;transform:none;transition:transform .75s var(--ease),opacity .4s var(--ease)}
 @media (min-width:700px) and (min-height:600px){.dp{align-items:center}.dp-card{transform:translateY(26px) scale(.96)}}
 .dp-top{touch-action:none;cursor:grab;-webkit-user-select:none;user-select:none}
 .dp-grab{display:grid;place-items:center;height:26px}
 .dp-grab i{width:38px;height:5px;border-radius:5px;background:var(--surf2)}
+.dp-nm{display:flex;align-items:center;gap:10px;height:48px;margin:2px 0 6px;padding:0 14px;border-radius:16px;background:var(--bg);box-shadow:inset 0 0 0 2px transparent;transition:box-shadow .35s var(--ease),background .35s var(--ease)}
+.dp-nm:focus-within{background:var(--surf);box-shadow:inset 0 0 0 2px var(--fg)}
+.dp-nm svg{width:20px;height:20px;flex:none;fill:none;stroke:var(--dim);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:stroke .3s var(--ease)}
+.dp-nm:focus-within svg{stroke:var(--fg)}
+.dp-nm input{flex:1;min-width:0;height:100%;border:0;outline:0;background:none;color:var(--fg);font:600 17px Inter,system-ui,sans-serif;-webkit-user-select:text;user-select:text}
+.dp-nm input::placeholder{color:#b3afa7;font-weight:500}
 .dp-hd{height:86px}
 .dp-hd small{display:block;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
 .dp-hd b{display:block;margin-top:2px;font-size:32px;font-weight:800;letter-spacing:-.5px;line-height:1.1;white-space:nowrap}
@@ -407,6 +413,7 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
         <div class="dp-grab"><i></i></div>
         <div class="dp-hd"><small>Sınav tarihi</small><b id="dpd"></b><span id="dps"></span></div>
       </div>
+      <label class="dp-nm"><svg viewBox="0 0 24 24"><path d="M4 12.5V5a1 1 0 0 1 1-1h7.5l7.5 7.5a1.5 1.5 0 0 1 0 2.1l-5.4 5.4a1.5 1.5 0 0 1-2.1 0z"/><circle cx="8.6" cy="8.6" r="1.3"/></svg><input id="dpn" maxlength="24" placeholder="Sınav adı (örn. YKS)" autocomplete="off" autocapitalize="characters" enterkeyhint="done" aria-label="Sınav adı"></label>
       <div class="dp-nav">
         <button class="dp-t" id="dpt" aria-label="Ay ve yıl seç"><em id="dpte"></em><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
         <div class="dp-ar"><button class="dp-b" data-a="-1" aria-label="Önceki"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button><button class="dp-b" data-a="1" aria-label="Sonraki"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button></div>
@@ -439,8 +446,10 @@ var D=[
 ["AYT","Biyoloji","Sinir Sistemi|Endokrin Sistem|Duyu Organları|Destek ve Hareket|Sindirim Sistemi|Dolaşım Sistemi|Solunum Sistemi|Boşaltım Sistemi|Üreme ve Gelişim|Komünite ve Popülasyon Ekolojisi|Genden Proteine|Fotosentez ve Kemosentez|Hücresel Solunum|Bitki Biyolojisi"]
 ].map(function(r,i){return{id:i,g:r[0],n:r[1],t:r[2].split("|"),c:COL[r[1]][0],ct:COL[r[1]][1]}});
 
-var S={done:{},date:"2027-06-19",sel:0};
+var S={done:{},date:"2027-06-19",name:"YKS",sel:0};
 try{var raw=localStorage.getItem("dd-state");if(raw)Object.assign(S,JSON.parse(raw))}catch(e){}
+function cleanName(v,fb){v=typeof v==="string"?v.replace(/\s+/g," ").trim().slice(0,24):"";return v||fb}
+S.name=cleanName(S.name,"YKS");
 function save(){try{localStorage.setItem("dd-state",JSON.stringify(S))}catch(e){}}
 function esc(t){return String(t).replace(/[&<>"']/g,function(c){return"&#"+c.charCodeAt(0)+";"})}
 if(!Array.isArray(S.extra))S.extra=[];if(!Array.isArray(S.order))S.order=[];if(!S.col||typeof S.col!=="object")S.col={};if(!S.gone||typeof S.gone!=="object")S.gone={};
@@ -456,7 +465,7 @@ function cnt(s){var c=0;s.t.forEach(function(_,i){if(S.done[s.id+"_"+i])c++});re
 var RE_DATE=/^\d{4}-\d{2}-\d{2}$/;
 function setDate(v){if(!RE_DATE.test(v))return false;S.date=v;save();return true}
 function resetDone(){S.done={};save()}
-function exportData(){return JSON.stringify({v:1,date:S.date,done:S.done})}
+function exportData(){return JSON.stringify({v:1,date:S.date,name:S.name,done:S.done})}
 function importData(txt){
   var o;try{o=JSON.parse(txt)}catch(e){return false}
   if(!o||typeof o.done!=="object"||!o.done)return false;
@@ -465,14 +474,14 @@ function importData(txt){
     var m=/^(\d+)_(\d+)$/.exec(k);
     if(m&&o.done[k]&&D[+m[1]]&&+m[2]<D[+m[1]].t.length)d[k]=1;
   }
-  S.done=d;if(RE_DATE.test(o.date))S.date=o.date;save();return true;
+  S.done=d;if(RE_DATE.test(o.date))S.date=o.date;if(typeof o.name==="string")S.name=cleanName(o.name,S.name);save();return true;
 }
 function daysTo(v){var d=Math.ceil((new Date(v+"T10:00:00")-new Date())/864e5);return d>0?d:0}
 function days(){return daysTo(S.date)}
 function fmtD(v){var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(v);if(!m)return"";return(+m[3])+" "+["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"][+m[2]-1]+" "+m[1]}
 
 function buildSubs(){
-  var h='<div class="hero"><div class="pc"><b id="pct">0</b><span>%</span></div><div class="hl"><span id="dleft"></span><small id="dt" role="button" tabindex="0">Sınav tarihini değiştir</small></div></div>',g="";
+  var h='<div class="hero"><div class="pc"><b id="pct">0</b><span>%</span></div><div class="hl"><span id="dleft"></span><small id="dt" role="button" tabindex="0">Sınavı düzenle</small></div></div>',g="";
   vis().forEach(function(s){
     if(s.g!==g){if(g)h+='</div>';g=s.g;h+='<div class="grp">'+(g==="TYT"?"TYT":"AYT Sayısal")+'</div><div class="sg">'}
     h+='<button class="sub" data-i="'+s.id+'" style="--c:'+s.c+'"><b>'+esc(s.n)+'</b><small></small><span class="pb"><i></i></span></button>';
@@ -485,8 +494,8 @@ function buildSubs(){
 function stats(){
   var tot=0,dn=0;vis().forEach(function(s){tot+=s.t.length;dn+=cnt(s)});
   $("#pct").textContent=tot?Math.round(dn/tot*100):0;
-  $("#dleft").textContent="YKS'ye "+days()+" gün kaldı";
-  if($("#sd"))$("#sd").querySelector("span").textContent=fmtD(S.date);
+  $("#dleft").textContent=S.name+" için "+days()+" gün kaldı";
+  if($("#sd"))$("#sd").querySelector("span").textContent=S.name+" · "+fmtD(S.date);
   $$(".sub").forEach(function(b){var s=D[b.dataset.i],c=cnt(s);b.style.setProperty("--p",s.t.length?c/s.t.length:0);b.querySelector("small").textContent=c+" / "+s.t.length;b.classList.toggle("on",s.id===S.sel)});
   var s=cur(),c=cnt(s);
   if($("#cn")){$("#cn").innerHTML=c+'<small>/ '+s.t.length+'</small>';$("#fill").style.transform="scaleX("+(s.t.length?c/s.t.length:0)+")"}
@@ -502,7 +511,7 @@ function showSub(anim){
 function buildSettings(){
   $("#set").innerHTML='<div class="setw"><h1>Ayarlar</h1>'+
   '<div class="card lc"><div><h2>Dersler</h2><p>TYT ve AYT derslerini sırala, renklerini değiştir, yeni ders ekle.</p><div class="dots">'+vis().map(function(s){return'<i style="--c:'+s.c+'"></i>'}).join("")+'</div></div><button class="btn pr" id="ld">Düzenle</button></div>'+
-  '<div class="card"><h2>Sınav tarihi</h2><p>Geri sayım bu tarihe göre hesaplanır.</p><button class="dpb" id="sd" aria-haspopup="dialog"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span></span></button></div>'+
+  '<div class="card"><h2>Sınav</h2><p>Adını ve tarihini düzenle, geri sayım buna göre hesaplanır.</p><button class="dpb" id="sd" aria-haspopup="dialog"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span></span></button></div>'+
   '<div class="card"><h2>Yedek</h2><p>İlerlemeni metin olarak kopyala, gerekirse buradan geri yükle.</p><div class="row"><button class="btn pr" id="bk">Yedeği kopyala</button></div><textarea id="bt" placeholder="Yedek metnini buraya yapıştır"></textarea><div class="row"><button class="btn" id="br">Geri yükle</button></div><div class="msg" id="bm"></div></div>'+
   '<div class="card"><h2>İlerlemeyi sıfırla</h2><p>İşaretlenen tüm konular silinir. Sınav tarihi korunur.</p><div class="row"><button class="btn dg" id="rs">Sıfırla</button></div><div class="msg" id="rm"></div></div></div>';
   $("#sd").onclick=function(){openDP(this)};
@@ -1446,7 +1455,7 @@ function dpPick(s,key){
 }
 function openDP(from){
   var t=dpToday(),v=RE_DATE.test(S.date)?S.date:ds(t[0],t[1],t[2]),p=v.split("-");
-  DP.sel=v;DP.y=+p[0];DP.m=+p[1]-1;DP.mode="d";DP.from=from||null;
+  DP.sel=v;DP.y=+p[0];DP.m=+p[1]-1;DP.mode="d";DP.from=from||null;$("#dpn").value=S.name;
   if(DP.y*12+DP.m<t[0]*12+t[1]){DP.y=t[0];DP.m=t[1]}
   dpPaint("");dpHead(true);dpNav(true);
   var e=$("#dp");e.classList.add("on");e.setAttribute("aria-hidden","false");DP.on=1;
@@ -1459,12 +1468,14 @@ function closeDP(){
   var f=DP.from;if(f&&document.body.contains(f))try{f.focus({preventScroll:true})}catch(e){}
 }
 function saveDP(){
-  var ch=DP.sel!==S.date;
-  if(ch){setDate(DP.sel);stats()}
+  var nm=cleanName($("#dpn").value,"Sınav"),ch=DP.sel!==S.date||nm!==S.name;
+  if(ch){S.name=nm;setDate(DP.sel);stats()}
   closeDP();
   if(ch)["#dleft","#sd"].forEach(function(q){var e=$(q);if(e){e.classList.remove("dfl");void e.offsetWidth;e.classList.add("dfl")}});
 }
-$("#dpbd").onclick=closeDP;$("#dpx").onclick=closeDP;$("#dpk").onclick=saveDP;
+$("#dpbd").onclick=closeDP;
+if(window.visualViewport){var vv=window.visualViewport,dpf=function(){var k=Math.max(0,innerHeight-vv.height-vv.offsetTop),e=$("#dp");e.style.paddingBottom=k>80?(k+14)+"px":"";e.style.setProperty("--dpv",k>80?vv.height+"px":"")};vv.addEventListener("resize",dpf)}
+$("#dpx").onclick=closeDP;$("#dpk").onclick=saveDP;
 $("#dpt").onclick=function(){DP.mode=DP.mode==="d"?"m":"d";dpPaint("z");dpNav()};
 $$("#dpc .dp-b").forEach(function(b){b.onclick=function(){dpStep(+b.dataset.a)}});
 $("#dpb").addEventListener("click",function(e){
@@ -1503,6 +1514,7 @@ $("#dpb").addEventListener("click",function(e){
 document.addEventListener("keydown",function(e){
   if(!DP.on)return;
   if(e.key==="Escape"){closeDP();return}
+  if(e.target.id==="dpn"){if(e.key==="Enter"){e.preventDefault();saveDP()}return}
   var dl={ArrowLeft:-1,ArrowRight:1,ArrowUp:-7,ArrowDown:7}[e.key];
   if(dl&&DP.mode==="d"){
     e.preventDefault();var p=DP.sel.split("-"),d=new Date(+p[0],+p[1]-1,+p[2]+dl);
