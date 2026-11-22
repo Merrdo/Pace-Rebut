@@ -23,10 +23,12 @@ html,body{width:100%;height:100dvh;background:var(--bg);color:var(--fg);overflow
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .num{font-family:Inter,"SF Pro Display",system-ui,sans-serif;font-variant-numeric:tabular-nums}
 .app{height:100dvh}
-.dock{position:fixed;left:50%;bottom:calc(var(--nav-gap) + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:5;display:flex;gap:6px;padding:6px;border-radius:999px;border:2px solid var(--ln);background:rgba(18,18,18,.72);-webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4)}
-.db{display:flex;align-items:center;gap:8px;height:calc(var(--nav-h) - 16px);padding:0 22px;border-radius:999px;border:2px solid transparent;color:var(--dim);font-size:15px;font-weight:700;transition:transform .5s var(--sp),box-shadow .5s var(--sp),background .3s,color .3s}
+.dock{--tw:112px;--th:calc(var(--nav-h) - 12px);--i:0;position:fixed;left:50%;bottom:calc(var(--nav-gap) + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:5;display:flex;padding:6px;border-radius:999px;background:rgba(24,24,24,.9);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
+.ind{position:absolute;top:6px;left:6px;width:var(--tw);height:var(--th);border-radius:999px;background:var(--fg);transform:translateX(calc(var(--i)*100%));transition:transform .65s var(--ease)}
+.db{position:relative;z-index:1;width:var(--tw);height:var(--th);display:flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;color:var(--dim);font-size:15px;font-weight:700;transition:color .35s var(--ease),transform .5s var(--sp)}
+.db:active{transform:scale(.95)}
 .db svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.db.on{background:var(--fg);color:#000;box-shadow:3px 3px 0 var(--ac,#ff90e8);transform:translate(-1px,-1px)}
+.db.on{color:#000}
 :focus-visible{outline:2px solid var(--ac,#ff90e8);outline-offset:3px}
 main{position:relative;overflow:hidden;height:100dvh}
 .view{position:absolute;inset:0;opacity:0;visibility:hidden;transform:scale(.985);transition:opacity .5s var(--ease),transform .6s var(--ease),visibility 0s .5s}
@@ -75,17 +77,17 @@ main{position:relative;overflow:hidden;height:100dvh}
 .set{position:absolute;inset:0;overflow:auto;padding:34px 24px var(--dock-space);overscroll-behavior:contain}
 .setw{max-width:640px;margin:0 auto}
 .set h1{font-size:50px;font-weight:800;letter-spacing:-1px;line-height:1;margin-bottom:24px}
-.card{border:2px solid var(--ln);border-radius:18px;padding:18px;margin-bottom:14px}
+.card{background:#121212;border-radius:20px;padding:20px;margin-bottom:14px}
 .card h2{font-size:19px;font-weight:700}
 .card p{margin-top:4px;font-size:14px;font-weight:500;color:var(--dim)}
 .card .row{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
-.card input,.card textarea{display:block;width:100%;margin-top:14px;background:#0b0b0b;color:var(--fg);border:2px solid var(--ln);border-radius:14px;padding:10px 14px;font-family:Inter,system-ui,sans-serif;font-size:16px;-webkit-user-select:text;user-select:text}
+.card input,.card textarea{display:block;width:100%;margin-top:14px;background:#1f1f1f;color:var(--fg);border:0;border-radius:14px;padding:10px 14px;font-family:Inter,system-ui,sans-serif;font-size:16px;-webkit-user-select:text;user-select:text}
 .card input{max-width:240px}
 .card textarea{height:90px;resize:none}
-.btn{padding:10px 18px;border-radius:14px;border:2px solid var(--ln);font-size:16px;font-weight:700;transition:transform .5s var(--sp),background .3s,color .3s,border-color .3s}
+.btn{padding:10px 18px;border-radius:14px;background:#1f1f1f;font-size:16px;font-weight:700;transition:transform .5s var(--sp),background .3s,color .3s,border-color .3s}
 .btn:active{transform:scale(.96)}
-.btn.pr{background:var(--fg);color:#000;border-color:var(--fg);box-shadow:3px 3px 0 var(--ac,#ff90e8)}
-.btn.dg{border-color:#ff8a8a;color:#ff8a8a}
+.btn.pr{background:var(--fg);color:#000}
+.btn.dg{color:#ff8a8a}
 .btn.dg.arm{background:#ff8a8a;color:#000}
 .msg{margin-top:10px;font-size:14px;font-weight:500;color:var(--dim);min-height:1.2em}
 
@@ -96,7 +98,8 @@ main{position:relative;overflow:hidden;height:100dvh}
 </head>
 <body>
 <div class="app">
-  <nav class="dock">
+  <nav class="dock" id="dock">
+    <i class="ind"></i>
     <button class="db on" data-v="topics"><svg viewBox="0 0 24 24"><path d="M5 6h14M5 12h14M5 18h9"/></svg>Konular</button>
     <button class="db" data-v="timer"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9.5 2.5h5"/></svg>Süre</button>
     <button class="db" data-v="settings"><svg viewBox="0 0 24 24"><path d="M4 7h9M19 7h1M4 17h1M11 17h9"/><circle cx="16" cy="7" r="2.5"/><circle cx="8" cy="17" r="2.5"/></svg>Ayarlar</button>
@@ -211,7 +214,8 @@ function buildSettings(){
 buildSubs();buildSettings();showSub(false);
 
 /* Gezinme */
-$$(".db").forEach(function(b){b.onclick=function(){
+$$(".db").forEach(function(b,n){b.onclick=function(){
+  $("#dock").style.setProperty("--i",n);
   $$(".db").forEach(function(x){x.classList.toggle("on",x===b)});
   $$(".view").forEach(function(e){e.classList.toggle("on",e.id==="v-"+b.dataset.v)});
 }});
