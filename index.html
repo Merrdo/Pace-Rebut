@@ -628,7 +628,9 @@ function iKeys(cb){
 }
 function iNd(r){r=r||{};return{s:Array.isArray(r.s)?r.s:[],c:r.c||{},m:typeof r.m==="number"?r.m:-1,w:+r.w||0}}
 function iHas(D){return D.s.length>0||D.m>=0||D.w>0||Object.keys(D.c).length>0}
-function iSv(){var T=IDY;if(!T)return;T.dirty=1;clearTimeout(T.tm);T.tm=setTimeout(iFlush,500)}
+function iSv(){var T=IDY;if(!T)return;T.dirty=1;clearTimeout(T.tm);T.tm=setTimeout(iIdle,1200)}
+function iIdle(){var T=IDY;if(!T)return;if(T.cur){T.tm=setTimeout(iIdle,800);return}
+  if(window.requestIdleCallback)requestIdleCallback(iFlush,{timeout:2500});else iFlush()}
 function iFlush(){
   var T=IDY;if(!T||!T.dirty)return;T.dirty=0;clearTimeout(T.tm);
   var h=iHas(T.doc);iPut(T.date,T.doc,!h);if(h)INKD[T.date]=1;else delete INKD[T.date];
@@ -679,6 +681,7 @@ function iInit(){
   var c=ICV.p;
   c.addEventListener("pointerdown",iPd);c.addEventListener("pointermove",iPm);c.addEventListener("pointerup",iPu);c.addEventListener("pointercancel",iPc);
   c.addEventListener("contextmenu",function(e){e.preventDefault()});
+  ICV.l.style.opacity=.5;
   iInfo();iFit(true);
   if(IRO){IRO.disconnect();IRO.observe($(".dv"))}
   iWhen(function(){iGet(d,function(r){
@@ -697,7 +700,7 @@ function iBk(){
   if(!ICV.i||!document.body.contains(ICV.i))return;
   var dd=window.devicePixelRatio||1;
   ["h","l","i","p"].forEach(function(k){
-    var c=ICV[k],dp=Math.min(dd,k==="i"?2:1.5);c.width=Math.round(IPW*IPS*dp);c.height=Math.round(IPH*IPS*dp);
+    var c=ICV[k],dp=Math.min(dd,(k==="i"||k==="p")?2:1.5);c.width=Math.round(IPW*IPS*dp);c.height=Math.round(IPH*IPS*dp);
     var x=ICX[k]=c.getContext("2d",{desynchronized:k==="i"});
     x.setTransform(c.width/IPW,0,0,c.height/IPH,0,0);x.lineCap="round";x.lineJoin="round";
   });
@@ -705,9 +708,9 @@ function iBk(){
 }
 function iMid(a,b){return(a+b)/2}
 function iRd(v){return Math.round(v*10)/10}
-function iSeg(x,st,k){
+function iSeg(x,st,k,f){
   var p=st.p,n=p.length/3,i=k*3;if(n<2)return;
-  x.strokeStyle=st.c;x.lineWidth=st.w*(.42+p[i+2]*.95);x.beginPath();
+  x.strokeStyle=st.c;x.lineWidth=f?st.w:st.w*(.42+p[i+2]*.95);x.beginPath();
   if(k===0){x.moveTo(p[0],p[1]);x.lineTo(iMid(p[0],p[3]),iMid(p[1],p[4]))}
   else if(k===n-1){x.moveTo(iMid(p[i-3],p[i]),iMid(p[i-2],p[i+1]));x.lineTo(p[i],p[i+1])}
   else{x.moveTo(iMid(p[i-3],p[i]),iMid(p[i-2],p[i+1]));x.quadraticCurveTo(p[i],p[i+1],iMid(p[i],p[i+3]),iMid(p[i+1],p[i+4]))}
@@ -743,7 +746,7 @@ function iPd(e){
   var C=T.cur={id:e.pointerId,er:er,t0:Date.now(),st:null,del:[],x0:e.clientX,y0:e.clientY,moved:0,pr:.5};
   if(er){iErase(q[0],q[1]);return}
   var h=ITL.t==="hl",st=C.st={t:h?"h":"p",c:h?IHC[ITL.hc]:IPC[ITL.pc],w:h?18:2.4,p:[iRd(q[0]),iRd(q[1]),iPv(e,C)]};
-  if(h)iHp(ICX.l,st);else iDot(ICX.i,st);
+  if(h){ICX.l.fillStyle=st.c;ICX.l.beginPath();ICX.l.arc(st.p[0],st.p[1],st.w/2,0,6.3);ICX.l.fill()}else iDot(ICX.i,st);
 }
 function iPm(e){
   var T=IDY;if(!T)return;
@@ -763,18 +766,17 @@ function iAdd(T,C,e){
   C.moved=Math.max(C.moved,Math.abs(e.clientX-C.x0)+Math.abs(e.clientY-C.y0));
   if(dx*dx+dy*dy<.5)return;
   p.push(iRd(q[0]),iRd(q[1]),iPv(e,C));n++;
-  if(st.t==="h"){ICX.l.clearRect(0,0,IPW,IPH);iHp(ICX.l,st)}else iSeg(ICX.i,st,n-2);
+  if(st.t==="h")iSeg(ICX.l,st,n-2,1);else iSeg(ICX.i,st,n-2);
 }
 function iPred(e,T,C){
   var x=ICX.p;if(C.pb){x.clearRect(C.pb[0],C.pb[1],C.pb[2],C.pb[3]);C.pb=0}
-  if(C.er||C.st.t==="h"||!e.getPredictedEvents)return;
-  var pe=e.getPredictedEvents();if(!pe||!pe.length)return;
-  var p=C.st.p,n=p.length/3,i,q;if(n<2)return;
-  x.strokeStyle=C.st.c;x.lineWidth=C.st.w*(.42+p[n*3-1]*.95);x.beginPath();
-  x.moveTo(iMid(p[n*3-6],p[n*3-3]),iMid(p[n*3-5],p[n*3-2]));x.lineTo(p[n*3-3],p[n*3-2]);
-  var a=iMid(p[n*3-6],p[n*3-3]),b=iMid(p[n*3-5],p[n*3-2]),x0=a,x1=a,y0=b,y1=b;
-  x0=Math.min(x0,p[n*3-3]);x1=Math.max(x1,p[n*3-3]);y0=Math.min(y0,p[n*3-2]);y1=Math.max(y1,p[n*3-2]);
-  for(i=0;i<pe.length&&i<3;i++){q=iPt(pe[i],T.r);x.lineTo(q[0],q[1]);x0=Math.min(x0,q[0]);x1=Math.max(x1,q[0]);y0=Math.min(y0,q[1]);y1=Math.max(y1,q[1])}
+  if(C.er||C.st.t==="h")return;
+  var p=C.st.p,n=p.length/3;if(n<2)return;
+  var lx=p[n*3-3],ly=p[n*3-2],a=iMid(p[n*3-6],lx),b=iMid(p[n*3-5],ly),
+  x0=Math.min(a,lx),x1=Math.max(a,lx),y0=Math.min(b,ly),y1=Math.max(b,ly),pe,i,q;
+  x.strokeStyle=C.st.c;x.lineWidth=C.st.w*(.42+p[n*3-1]*.95);x.beginPath();x.moveTo(a,b);x.lineTo(lx,ly);
+  pe=e.getPredictedEvents?e.getPredictedEvents():null;
+  if(pe)for(i=0;i<pe.length&&i<3;i++){q=iPt(pe[i],T.r);x.lineTo(q[0],q[1]);x0=Math.min(x0,q[0]);x1=Math.max(x1,q[0]);y0=Math.min(y0,q[1]);y1=Math.max(y1,q[1])}
   x.stroke();C.pb=[x0-8,y0-8,x1-x0+16,y1-y0+16];
 }
 function iErase(x,y){
