@@ -17,24 +17,24 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Inter:wght@100;200;400&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#000;--fg:#f4f2ee;--dim:#7b7a77;--ln:#2d2c2b;--ring:#ff90e8;--c:#ff90e8;--sp:cubic-bezier(.34,1.56,.64,1);--ease:cubic-bezier(.22,1,.36,1);--rail:104px}
+:root{--bg:#000;--fg:#f4f2ee;--dim:#7b7a77;--ln:#2d2c2b;--ring:#ff90e8;--c:#ff90e8;--sp:cubic-bezier(.34,1.56,.64,1);--ease:cubic-bezier(.22,1,.36,1);--nav-h:58px;--nav-gap:18px;--dock-space:calc(var(--nav-h) + var(--nav-gap) + 28px + env(safe-area-inset-bottom,0px))}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{width:100%;height:100dvh;background:var(--bg);color:var(--fg);overflow:hidden;font-family:"Baloo 2",ui-rounded,"Avenir Next",system-ui,sans-serif;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;overscroll-behavior:none;touch-action:manipulation}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .num{font-family:Inter,"SF Pro Display",system-ui,sans-serif;font-variant-numeric:tabular-nums}
-.app{display:grid;grid-template-columns:var(--rail) 1fr;height:100dvh}
-.rail{border-right:1px solid var(--ln);display:flex;flex-direction:column;align-items:center;gap:14px;padding:30px 0}
-.logo{font-size:30px;font-weight:800;margin-bottom:22px;letter-spacing:-1px}
-.rb{width:72px;display:flex;flex-direction:column;align-items:center;gap:4px;padding:11px 0 8px;border-radius:20px;border:2px solid transparent;color:var(--dim);font-size:13px;font-weight:700;transition:transform .5s var(--sp),box-shadow .5s var(--sp),background .3s,color .3s,border-color .3s}
-.rb svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.rb.on{background:var(--fg);color:#000;box-shadow:4px 4px 0 var(--ac,#ff90e8);transform:translate(-2px,-2px)}
-main{position:relative;overflow:hidden}
+.app{height:100dvh}
+.dock{position:fixed;left:50%;bottom:calc(var(--nav-gap) + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:5;display:flex;gap:6px;padding:6px;border-radius:999px;border:2px solid var(--ln);background:rgba(18,18,18,.72);-webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4)}
+.db{display:flex;align-items:center;gap:8px;height:calc(var(--nav-h) - 16px);padding:0 22px;border-radius:999px;border:2px solid transparent;color:var(--dim);font-size:15px;font-weight:700;transition:transform .5s var(--sp),box-shadow .5s var(--sp),background .3s,color .3s}
+.db svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.db.on{background:var(--fg);color:#000;box-shadow:3px 3px 0 var(--ac,#ff90e8);transform:translate(-1px,-1px)}
+:focus-visible{outline:2px solid var(--ac,#ff90e8);outline-offset:3px}
+main{position:relative;overflow:hidden;height:100dvh}
 .view{position:absolute;inset:0;opacity:0;visibility:hidden;transform:scale(.985);transition:opacity .5s var(--ease),transform .6s var(--ease),visibility 0s .5s}
 .view.on{opacity:1;visibility:visible;transform:none;transition-delay:0s}
 
 /* Konular */
 #v-topics{display:grid;grid-template-columns:360px 1fr}
-.subs{overflow:auto;padding:30px 24px;border-right:1px solid var(--ln);overscroll-behavior:contain}
+.subs{overflow:auto;padding:30px 24px var(--dock-space);border-right:1px solid var(--ln);overscroll-behavior:contain}
 .hero{margin-bottom:26px}
 .pc{display:flex;align-items:baseline;line-height:.9}
 .pc b{font-family:Inter,sans-serif;font-weight:100;font-size:112px;letter-spacing:-6px}
@@ -51,7 +51,7 @@ main{position:relative;overflow:hidden}
 .sub .pb{position:absolute;left:14px;right:14px;bottom:11px;height:4px;border-radius:4px;background:var(--ln);overflow:hidden}
 .sub .pb i{display:block;height:100%;background:var(--c);transform-origin:left;transform:scaleX(var(--p,0));transition:transform .8s var(--ease)}
 .sub.on{border-color:var(--c);box-shadow:4px 4px 0 var(--c);transform:translate(-2px,-2px)}
-.topics{overflow:auto;padding:34px 48px 60px;overscroll-behavior:contain}
+.topics{overflow:auto;padding:34px 48px var(--dock-space);overscroll-behavior:contain}
 .th{display:flex;align-items:flex-end;justify-content:space-between;gap:24px}
 .th h1{font-size:50px;font-weight:800;letter-spacing:-1px;line-height:1}
 .th h1 em{font-style:normal;color:var(--c)}
@@ -71,24 +71,43 @@ main{position:relative;overflow:hidden}
 .tp.pop{animation:pop .55s var(--sp)}
 @keyframes pop{40%{transform:scale(1.025)}}
 
-@media (max-width:1000px){:root{--rail:84px}#v-topics{grid-template-columns:300px 1fr}.topics{padding:28px}.th h1{font-size:38px}.pc b{font-size:88px}.rb{width:62px}}
+/* Ayarlar */
+.set{position:absolute;inset:0;overflow:auto;padding:34px 24px var(--dock-space);overscroll-behavior:contain}
+.setw{max-width:640px;margin:0 auto}
+.set h1{font-size:50px;font-weight:800;letter-spacing:-1px;line-height:1;margin-bottom:24px}
+.card{border:2px solid var(--ln);border-radius:18px;padding:18px;margin-bottom:14px}
+.card h2{font-size:19px;font-weight:700}
+.card p{margin-top:4px;font-size:14px;font-weight:500;color:var(--dim)}
+.card .row{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+.card input,.card textarea{display:block;width:100%;margin-top:14px;background:#0b0b0b;color:var(--fg);border:2px solid var(--ln);border-radius:14px;padding:10px 14px;font-family:Inter,system-ui,sans-serif;font-size:16px;-webkit-user-select:text;user-select:text}
+.card input{max-width:240px}
+.card textarea{height:90px;resize:none}
+.btn{padding:10px 18px;border-radius:14px;border:2px solid var(--ln);font-size:16px;font-weight:700;transition:transform .5s var(--sp),background .3s,color .3s,border-color .3s}
+.btn:active{transform:scale(.96)}
+.btn.pr{background:var(--fg);color:#000;border-color:var(--fg);box-shadow:3px 3px 0 var(--ac,#ff90e8)}
+.btn.dg{border-color:#ff8a8a;color:#ff8a8a}
+.btn.dg.arm{background:#ff8a8a;color:#000}
+.msg{margin-top:10px;font-size:14px;font-weight:500;color:var(--dim);min-height:1.2em}
+
+@media (max-width:1000px){#v-topics{grid-template-columns:300px 1fr}.topics{padding:28px 28px var(--dock-space)}.th h1{font-size:38px}.pc b{font-size:88px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 @media (max-width:767px){.app:before{content:"Bu uygulama şimdilik tablet için tasarlandı.";position:fixed;inset:0;z-index:9;display:grid;place-items:center;background:var(--bg);color:var(--dim);text-align:center;padding:30px}}
 </style>
 </head>
 <body>
 <div class="app">
-  <aside class="rail">
-    <div class="logo">dd</div>
-    <button class="rb on" data-v="topics"><svg viewBox="0 0 24 24"><path d="M5 6h14M5 12h14M5 18h9"/></svg>Konular</button>
-    <button class="rb" data-v="timer"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9.5 2.5h5"/></svg>Süre</button>
-  </aside>
+  <nav class="dock">
+    <button class="db on" data-v="topics"><svg viewBox="0 0 24 24"><path d="M5 6h14M5 12h14M5 18h9"/></svg>Konular</button>
+    <button class="db" data-v="timer"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9.5 2.5h5"/></svg>Süre</button>
+    <button class="db" data-v="settings"><svg viewBox="0 0 24 24"><path d="M4 7h9M19 7h1M4 17h1M11 17h9"/><circle cx="16" cy="7" r="2.5"/><circle cx="8" cy="17" r="2.5"/></svg>Ayarlar</button>
+  </nav>
   <main>
     <section class="view on" id="v-topics">
       <div class="subs" id="subs"></div>
       <div class="topics" id="topics"></div>
     </section>
     <section class="view" id="v-timer"></section>
+    <section class="view" id="v-settings"><div class="set" id="set"></div></section>
   </main>
 </div>
 <script>
@@ -118,6 +137,20 @@ var S={done:{},date:"2027-06-19",sel:0};
 try{var raw=localStorage.getItem("dd-state");if(raw)Object.assign(S,JSON.parse(raw))}catch(e){}
 function save(){try{localStorage.setItem("dd-state",JSON.stringify(S))}catch(e){}}
 function cnt(s){var c=0;s.t.forEach(function(_,i){if(S.done[s.id+"_"+i])c++});return c}
+var RE_DATE=/^\d{4}-\d{2}-\d{2}$/;
+function setDate(v){if(!RE_DATE.test(v))return false;S.date=v;save();return true}
+function resetDone(){S.done={};save()}
+function exportData(){return JSON.stringify({v:1,date:S.date,done:S.done})}
+function importData(txt){
+  var o;try{o=JSON.parse(txt)}catch(e){return false}
+  if(!o||typeof o.done!=="object"||!o.done)return false;
+  var d={};
+  for(var k in o.done){
+    var m=/^(\d+)_(\d+)$/.exec(k);
+    if(m&&o.done[k]&&D[+m[1]]&&+m[2]<D[+m[1]].t.length)d[k]=1;
+  }
+  S.done=d;if(RE_DATE.test(o.date))S.date=o.date;save();return true;
+}
 function days(){var d=Math.ceil((new Date(S.date+"T10:00:00")-new Date())/864e5);return d>0?d:0}
 
 function buildSubs(){
@@ -135,6 +168,7 @@ function stats(){
   var tot=0,dn=0;D.forEach(function(s){tot+=s.t.length;dn+=cnt(s)});
   $("#pct").textContent=Math.round(dn/tot*100);
   $("#dleft").textContent="YKS'ye "+days()+" gün kaldı";
+  if($("#sd"))$("#sd").value=S.date;
   $$(".sub").forEach(function(b){var s=D[b.dataset.i],c=cnt(s);b.style.setProperty("--p",c/s.t.length);b.querySelector("small").textContent=c+" / "+s.t.length;b.classList.toggle("on",s.id===S.sel)});
   var s=D[S.sel],c=cnt(s);
   if($("#cn")){$("#cn").innerHTML=c+'<small>/ '+s.t.length+'</small>';$("#fill").style.transform="scaleX("+c/s.t.length+")"}
@@ -147,11 +181,38 @@ function showSub(anim){
   $$(".tp").forEach(function(b){b.onclick=function(){var k=s.id+"_"+b.dataset.k;if(S.done[k])delete S.done[k];else{S.done[k]=1;b.classList.remove("pop");void b.offsetWidth;b.classList.add("pop")}b.classList.toggle("d");save();stats()}});
   stats();
 }
-buildSubs();showSub(false);
+function buildSettings(){
+  $("#set").innerHTML='<div class="setw"><h1>Ayarlar</h1>'+
+  '<div class="card"><h2>Sınav tarihi</h2><p>Geri sayım bu tarihe göre hesaplanır.</p><input type="date" id="sd"></div>'+
+  '<div class="card"><h2>Yedek</h2><p>İlerlemeni metin olarak kopyala, gerekirse buradan geri yükle.</p><div class="row"><button class="btn pr" id="bk">Yedeği kopyala</button></div><textarea id="bt" placeholder="Yedek metnini buraya yapıştır"></textarea><div class="row"><button class="btn" id="br">Geri yükle</button></div><div class="msg" id="bm"></div></div>'+
+  '<div class="card"><h2>İlerlemeyi sıfırla</h2><p>İşaretlenen tüm konular silinir. Sınav tarihi korunur.</p><div class="row"><button class="btn dg" id="rs">Sıfırla</button></div><div class="msg" id="rm"></div></div></div>';
+  $("#sd").onchange=function(){if(setDate(this.value))stats()};
+  $("#bk").onclick=function(){
+    var t=exportData(),m=$("#bm");
+    function fb(){var a=$("#bt");a.value=t;a.focus();a.select();m.textContent="Kopyalanamadı. Metni elle kopyala."}
+    if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(function(){m.textContent="Kopyalandı."},fb);else fb();
+  };
+  $("#br").onclick=function(){
+    var ok=importData($("#bt").value);
+    $("#bm").textContent=ok?"Yedek yüklendi.":"Yedek metni geçersiz.";
+    if(ok){$("#bt").value="";showSub(false)}
+  };
+  var rt;
+  $("#rs").onclick=function(){
+    var b=this;
+    if(!b.classList.contains("arm")){
+      b.classList.add("arm");b.textContent="Emin misin? Tekrar dokun";
+      clearTimeout(rt);rt=setTimeout(function(){b.classList.remove("arm");b.textContent="Sıfırla"},3000);return;
+    }
+    clearTimeout(rt);b.classList.remove("arm");b.textContent="Sıfırla";
+    resetDone();showSub(false);$("#rm").textContent="İlerleme sıfırlandı.";
+  };
+}
+buildSubs();buildSettings();showSub(false);
 
 /* Gezinme */
-$$(".rb").forEach(function(b){b.onclick=function(){
-  $$(".rb").forEach(function(x){x.classList.toggle("on",x===b)});
+$$(".db").forEach(function(b){b.onclick=function(){
+  $$(".db").forEach(function(x){x.classList.toggle("on",x===b)});
   $$(".view").forEach(function(e){e.classList.toggle("on",e.id==="v-"+b.dataset.v)});
 }});
 
