@@ -192,8 +192,9 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 
 /* Takvim */
 /* Performans: gün sayfası geçişi sadece opaklık (GPU), katman izolasyonu */
-.kz.dz{animation:kdz .6s cubic-bezier(.22,1,.36,1) both;will-change:opacity,transform}
-@keyframes kdz{0%{opacity:0;transform:scale(.94)}55%{opacity:1}100%{opacity:1;transform:none}}
+/* Nav'dan Takvim'e girişteki (.view) geçişin aynısı: opaklık .5s + scale(.985) .6s, aynı eğri */
+.kz.dz{animation:kdzo .5s var(--ease) both,kdzs .6s var(--ease) both}
+@keyframes kdzo{from{opacity:0}}@keyframes kdzs{from{transform:scale(.985)}}
 .pg{contain:layout paint style;will-change:transform}
 .pgw{will-change:opacity,transform}
 .kz.no{animation:none}.kb.fsx svg{grid-area:1/1;transition:opacity .3s,transform .5s var(--sp)}.kb.fsx{grid-template:1fr/1fr}.kb.fsx .i-c{opacity:0;transform:scale(.5)}.kb.fsx.on .i-c{opacity:1;transform:none}.kb.fsx.on .i-e{opacity:0;transform:scale(.5)}
