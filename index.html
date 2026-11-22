@@ -702,7 +702,7 @@ function iBk(){
   ["h","l","i","p"].forEach(function(k){
     var c=ICV[k],x;
     if(k==="p"){c.width=c.height=1;ICX.p=c.getContext("2d");return}
-    var dp=k==="i"?Math.min(dd,3200/(IPW*IPS)):Math.min(dd,1.5,2600/(IPW*IPS));c.width=Math.round(IPW*IPS*dp);c.height=Math.round(IPH*IPS*dp);
+    var dp=Math.min(dd,3200/(IPW*IPS));c.width=Math.round(IPW*IPS*dp);c.height=Math.round(IPH*IPS*dp);
     x=ICX[k]=c.getContext("2d");
     x.setTransform(c.width/IPW,0,0,c.height/IPH,0,0);x.lineCap="round";x.lineJoin="round";
   });
