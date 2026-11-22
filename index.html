@@ -595,7 +595,7 @@ function isT(y,m,d){return y===TD.getFullYear()&&m===TD.getMonth()&&d===TD.getDa
 var IC={p:'<path d="M15 5l-7 7 7 7"/>',n:'<path d="M9 5l7 7-7 7"/>',fs:'<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>',fx:'<path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/>',st:'<path d="M4 7h9M19 7h1M4 17h1M11 17h9"/><circle cx="16" cy="7" r="2.5"/><circle cx="8" cy="17" r="2.5"/>'};
 function ib(a,i,x){return'<button class="kb'+(x||"")+'" data-a="'+a+'" aria-label="'+a+'"><svg viewBox="0 0 24 24">'+IC[i]+'</svg></button>'}
 function paintK(q){
-  iFlush();IDY=null;ICX={};
+  iFlush();IDY=null;ICX={};ILS=0;
   var l=cv.l,t=l==="year"?'<span>'+cv.y+'</span>':l==="month"?'<button data-a="y">'+cv.y+'</button><span>'+MN[cv.m]+'</span>':'<button data-a="y">'+cv.y+'</button><button data-a="mo">'+MN[cv.m]+'</button><span>'+cv.d+'</span>',
   fs=$(".app").classList.contains("fs");
   $("#cal").innerHTML='<div class="kh"><div class="kt">'+t+'</div>'+(l==="day"?iTools():"")+'<div class="kc">'+ib("pv","p")+'<button class="kb w" data-a="td">Bugün</button>'+ib("nx","n")+'<button class="kb fsx'+(fs?" on":"")+'" data-a="fs" aria-label="Tam ekran"><svg class="i-e" viewBox="0 0 24 24">'+IC.fs+'</svg><svg class="i-c" viewBox="0 0 24 24">'+IC.fx+'</svg></button>'+ib("st","st")+'</div></div><div class="kbody"><div class="kz '+(q?"no":cv.dir)+(l==="month"?" km":"")+'">'+(l==="year"?rY():l==="month"?rM():rD())+'</div></div>';
@@ -690,18 +690,29 @@ function iInit(){
     T.doc=n;iMarks();iRedraw();
   })});
 }
+var ILS=0;
 function iFit(now){
   var dv=$(".dv"),w=$("#pgw");if(!dv||!w)return;
   var s=Math.min(dv.clientWidth/IPW,dv.clientHeight/IPH,1.5);if(!(s>0))return;
+  /* Boyut değişmediyse (ResizeObserver'ın ilk tetiklemesi gibi) canvas'ları yeniden kurma */
+  if(Math.abs(s-ILS)<.002&&ICX.i&&ICV.i&&ICV.i.width>0){IPS=s;return}
   IPS=s;w.style.width=IPW*s+"px";w.style.height=IPH*s+"px";$("#pg").style.transform="scale("+s+")";
-  clearTimeout(IFT);if(now)iBk();else IFT=setTimeout(iBk,140);
+  clearTimeout(IFT);
+  if(now){
+    /* İlk kurulum: geçiş animasyonu başladıktan sonra, boşta yap — ağır canvas tahsisi animasyonu kesmesin */
+    IFT=setTimeout(function(){requestAnimationFrame(function(){requestAnimationFrame(iBk)})},0);
+  }else IFT=setTimeout(iBk,140);
 }
 function iBk(){
   if(!ICV.i||!document.body.contains(ICV.i))return;
   var dd=window.devicePixelRatio||1;
+  ILS=IPS;
   ["h","l","i","p"].forEach(function(k){
     var c=ICV[k],x;
-    var dp=(k==="l"||k==="p")?Math.min(dd,1.5,2600/(IPW*IPS)):Math.min(dd,3200/(IPW*IPS));c.width=Math.round(IPW*IPS*dp);c.height=Math.round(IPH*IPS*dp);
+    /* h (fosforlu) ve l (canlı fosforlu) düşük çözünürlük yeter; sadece i (mürekkep) ve p (canlı kalem) keskin kalır */
+    var dp=k==="h"||k==="l"?Math.min(dd,1,2600/(IPW*IPS)):k==="p"?Math.min(dd,1.5,2600/(IPW*IPS)):Math.min(dd,2,2600/(IPW*IPS));
+    var nw=Math.round(IPW*IPS*dp),nh=Math.round(IPH*IPS*dp);
+    c.width=nw;c.height=nh;
     x=ICX[k]=c.getContext("2d");
     x.setTransform(c.width/IPW,0,0,c.height/IPH,0,0);x.lineCap="round";x.lineJoin="round";
     x.beginPath();x.moveTo(IRR,0);x.arcTo(IPW,0,IPW,IPH,IRR);x.arcTo(IPW,IPH,0,IPH,IRR);x.arcTo(0,IPH,0,0,IRR);x.arcTo(0,0,IPW,0,IRR);x.closePath();x.clip();
@@ -864,8 +875,30 @@ function rM(){
   return h+'</div>';
 }
 function find(id){return CS.items.filter(function(i){return i.id===id})[0]}
+/* Gün -> gün geçişi: DOM ve canvas'ları yeniden kurmadan sadece içeriği değiştir (kasma olmaz) */
+function swapDay(n){
+  iFlush();
+  var T=IDY={date:ds(cv.y,cv.m,cv.d),doc:iNd(),ud:[],dirty:0,cur:null,tap:null,tm:0,r:null};
+  $(".kt").innerHTML='<button data-a="y">'+cv.y+'</button><button data-a="mo">'+MN[cv.m]+'</button><span>'+cv.d+'</span>';
+  var c1=$("#pg .c1");
+  c1.querySelector("small").textContent=MN[cv.m]+' '+cv.y+(isT(cv.y,cv.m,cv.d)?' · Bugün':'');
+  c1.querySelector(".bn").textContent=cv.d;
+  c1.querySelector("h2").textContent=WD[wdx(cv.y,cv.m,cv.d)];
+  if(ICX.h){ICX.h.clearRect(0,0,IPW,IPH);ICX.i.clearRect(0,0,IPW,IPH);iClr()}
+  iInfo();iMarks();
+  iWhen(function(){iGet(T.date,function(r){
+    if(IDY!==T)return;var d=iNd(r);
+    if(T.doc.s.length)d.s=d.s.concat(T.doc.s);
+    T.doc=d;iMarks();iRedraw();
+  })});
+  var w=$("#pgw");
+  if(w&&w.animate)w.animate([{opacity:0,transform:n?"translateX("+(n>0?34:-34)+"px)":"scale(.97)"},{opacity:1,transform:"none"}],{duration:320,easing:"cubic-bezier(.22,1,.36,1)"});
+}
 function step(n){
   var t;
+  if(cv.l==="day"&&IDY&&$("#pgw")&&ICX.i){
+    t=new Date(cv.y,cv.m,cv.d+n);cv.y=t.getFullYear();cv.m=t.getMonth();cv.d=t.getDate();cv.ed=0;swapDay(n);return;
+  }
   if(cv.l==="year")cv.y+=n;
   else if(cv.l==="month"){t=new Date(cv.y,cv.m+n,1);cv.y=t.getFullYear();cv.m=t.getMonth();cv.d=Math.min(cv.d,dim(cv.y,cv.m))}
   else{t=new Date(cv.y,cv.m,cv.d+n);cv.y=t.getFullYear();cv.m=t.getMonth();cv.d=t.getDate()}
@@ -879,7 +912,7 @@ $("#cal").addEventListener("click",function(e){
   else if(a==="d"){cv.d=+b.dataset.d;lvl("day","in")}
   else if(a==="y")lvl("year","out");else if(a==="mo")lvl("month","out");
   else if(a==="pv")step(-1);else if(a==="nx")step(1);
-  else if(a==="td"){var sm=cv.y===TD.getFullYear()&&cv.m===TD.getMonth()&&(cv.l!=="day"||cv.d===TD.getDate());cv.y=TD.getFullYear();cv.m=TD.getMonth();cv.d=TD.getDate();cv.dir="in";paintK(sm)}
+  else if(a==="td"){var sm=cv.y===TD.getFullYear()&&cv.m===TD.getMonth()&&(cv.l!=="day"||cv.d===TD.getDate());var wasDay=cv.l==="day"&&IDY&&$("#pgw")&&ICX.i;cv.y=TD.getFullYear();cv.m=TD.getMonth();cv.d=TD.getDate();cv.dir="in";if(wasDay&&!sm)swapDay(0);else if(!wasDay||!sm)paintK(sm)}
   else if(a==="fs"){$("#fsb").click();b.classList.toggle("on",$(".app").classList.contains("fs"))}
   else if(a==="st"){paintS();$("#cset").classList.add("on")}
   else if(a==="tg"){var i=find(+b.dataset.id);if(i){i.x=i.x?0:1;csv();b.classList.toggle("d",!!i.x)}}
@@ -930,6 +963,11 @@ paintK();
 
 /* Gezinme */
 $$(".db").forEach(function(b,n){b.onclick=function(){
+  if(b.dataset.v==="cal"&&b.classList.contains("on")){
+    var cs=$("#cset");if(cs&&cs.classList.contains("on"))cs.classList.remove("on");
+    if(cv.l!=="month")lvl("month","out");
+    return;
+  }
   $("#dock").style.setProperty("--i",n);
   $$(".db").forEach(function(x){x.classList.toggle("on",x===b)});
   $$(".view").forEach(function(e){e.classList.toggle("on",e.id==="v-"+b.dataset.v)});
