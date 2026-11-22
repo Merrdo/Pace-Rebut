@@ -192,8 +192,8 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 
 /* Takvim */
 /* Performans: gün sayfası geçişi sadece opaklık (GPU), katman izolasyonu */
-.kz.dz{animation:kfade .4s cubic-bezier(.22,1,.36,1) both;will-change:opacity}
-@keyframes kfade{from{opacity:0}}
+.kz.dz{animation:kdz .6s cubic-bezier(.22,1,.36,1) both;will-change:opacity,transform}
+@keyframes kdz{0%{opacity:0;transform:scale(.94)}55%{opacity:1}100%{opacity:1;transform:none}}
 .pg{contain:layout paint style;will-change:transform}
 .pgw{will-change:opacity,transform}
 .kz.no{animation:none}.kb.fsx svg{grid-area:1/1;transition:opacity .3s,transform .5s var(--sp)}.kb.fsx{grid-template:1fr/1fr}.kb.fsx .i-c{opacity:0;transform:scale(.5)}.kb.fsx.on .i-c{opacity:1;transform:none}.kb.fsx.on .i-e{opacity:0;transform:scale(.5)}
