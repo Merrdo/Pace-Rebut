@@ -189,6 +189,58 @@ main{position:relative;overflow:hidden;height:100dvh}
 @media (max-width:1000px){#v-topics{grid-template-columns:300px 1fr}.topics{padding:28px 28px var(--dock-space)}.th h1{font-size:38px}.pc b{font-size:88px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 @media (max-width:767px){.app:before{content:"Bu uygulama şimdilik tablet için tasarlandı.";position:fixed;inset:0;z-index:9;display:grid;place-items:center;background:var(--bg);color:var(--dim);text-align:center;padding:30px}}
+
+/* Takvim */
+#v-cal{overflow:hidden}
+.cal{position:absolute;inset:0;display:flex;flex-direction:column;padding:26px 36px var(--dock-space);transition:padding .8s var(--ease)}
+.app.fs .cal{padding-bottom:26px}
+.kh{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:16px}
+.kt{display:flex;align-items:baseline;gap:14px;font-size:46px;font-weight:800;letter-spacing:-1px;line-height:1;white-space:nowrap}
+.kt button,.kt span{color:var(--dim);font-weight:800;transition:color .3s}.kt>:last-child{color:var(--fg)}.kt button:active{color:var(--ct)}
+.kc{display:flex;gap:10px;align-items:center}
+.kb{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--surf);transition:transform .5s var(--sp),background .3s}
+.kb:active{transform:scale(.92)}.kb.w{width:auto;padding:0 18px;border-radius:999px;font-size:16px;font-weight:700}
+.kb svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.kb.on{background:var(--fg);color:var(--bg)}
+.kbody{flex:1;min-height:0;position:relative}
+.kz{position:absolute;inset:0;overflow:auto;overscroll-behavior:contain;animation:zin .6s var(--ease) both}
+.kz.out{animation-name:zout}.kz.nx{animation-name:knx}.kz.pv{animation-name:kpv}
+@keyframes zin{from{opacity:0;transform:scale(.92)}}@keyframes zout{from{opacity:0;transform:scale(1.08)}}
+@keyframes knx{from{opacity:0;transform:translateX(34px)}}@keyframes kpv{from{opacity:0;transform:translateX(-34px)}}
+.yg{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(3,1fr);gap:12px;height:100%}
+.mm{display:flex;flex-direction:column;text-align:left;padding:12px 14px;border-radius:20px;background:var(--surf);min-height:0;transition:transform .5s var(--sp);animation:up .5s var(--ease) calc(var(--n)*30ms) backwards}
+.mm:active{transform:scale(.96)}.mm b{font-size:18px;font-weight:800;margin-bottom:4px}.mm.now b{color:var(--ct)}
+.mg{flex:1;min-height:0;display:grid;grid-template-columns:repeat(7,1fr);grid-auto-rows:1fr;align-items:center;justify-items:center;font:500 11px Inter,system-ui,sans-serif;color:var(--fg)}
+.mg i{font-style:normal;color:var(--dim);font-size:10px}
+.mg s{position:relative;text-decoration:none;width:20px;line-height:20px;text-align:center;border-radius:50%}
+.mg s.t{background:var(--fg);color:var(--bg)}
+.mg s.h:after,.mg s.e:after{content:"";position:absolute;left:50%;bottom:-3px;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:#ff8a8a}.mg s.e:after{background:var(--ct)}
+.wk{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-bottom:8px;text-align:center;font-size:14px;font-weight:700;color:var(--dim)}
+.mg2{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;height:calc(100% - 28px)}
+.dc{display:flex;flex-direction:column;gap:3px;min-height:0;overflow:hidden;text-align:left;padding:8px 9px;border-radius:16px;background:var(--surf);transition:transform .5s var(--sp);animation:up .5s var(--ease) calc(var(--n)*10ms) backwards}
+.dc:active{transform:scale(.96)}.dc.pd{background:transparent;pointer-events:none}
+.dc>b{align-self:flex-start;min-width:26px;line-height:26px;text-align:center;border-radius:13px;font:600 15px Inter,system-ui,sans-serif}
+.dc.t>b{background:var(--fg);color:var(--bg)}
+.cp{display:block;flex:none;padding:1px 7px;border-radius:7px;background:var(--k);color:#111;font-size:12px;font-weight:600;line-height:1.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cp.big{display:inline-block;font-size:14px;padding:3px 10px;margin:0 6px 6px 0;border-radius:10px}
+.cp.mo{background:var(--surf2);color:var(--dim)}
+.dv{display:grid;grid-template-columns:330px 1fr;gap:16px;height:100%}
+.dl2{margin:0;display:flex;flex-direction:column;overflow:auto}.dl2 small{font-size:16px;font-weight:700;color:var(--dim)}
+.bn{font:500 150px/1 Inter,system-ui,sans-serif;letter-spacing:-7px;margin:4px 0 2px}.dl2 h2{font-size:26px;margin-bottom:14px}
+.dr{overflow:auto;min-height:0;padding-bottom:10px}.df{margin-bottom:14px}.df input{max-width:none}
+#sk{max-width:none}#sk i{width:calc((100% - 8px)/3)}#sk[data-k=ev] i{transform:translateX(100%)}#sk[data-k=sp] i{transform:translateX(200%)}
+.df .row{align-items:center}.df .row input{margin-top:0;width:auto}
+.ir{display:flex;align-items:center;gap:12px;padding:10px 14px;margin-bottom:8px;border-radius:18px;background:var(--surf);animation:up .45s var(--ease) backwards}
+.ik{width:28px;height:28px;border-radius:50%;flex:none;display:grid;place-items:center;background:var(--k);transition:transform .5s var(--sp)}.ik:active{transform:scale(.86)}
+.ik svg{width:15px;height:15px;fill:none;stroke:var(--ink);stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:24;stroke-dashoffset:24;transition:stroke-dashoffset .4s var(--ease)}
+.ir.d .ik svg{stroke-dashoffset:0}.ir.d .itx b{text-decoration:line-through;color:var(--dim)}
+.itx{flex:1;min-width:0;text-align:left}.itx b{display:block;font-size:18px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.itx small{font-size:13px;font-weight:500;color:var(--dim)}
+.cset{position:absolute;inset:0;z-index:4;background:var(--bg);overflow:auto;padding:34px 24px var(--dock-space);opacity:0;visibility:hidden;transform:translateY(24px);transition:opacity .45s var(--ease),transform .65s var(--ease),visibility 0s .45s}
+.cset.on{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+.tg{position:relative;width:58px;height:34px;border-radius:999px;background:var(--surf2);flex:none;transition:background .35s}
+.tg i{position:absolute;top:4px;left:4px;width:26px;height:26px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.2);transition:transform .55s var(--sp)}
+.tg.on{background:var(--fg)}.tg.on i{transform:translateX(24px)}
+@media (max-width:1000px){.yg{grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(4,1fr)}.cal{padding:22px 22px var(--dock-space)}.kt{font-size:36px}.dv{grid-template-columns:260px 1fr}.bn{font-size:110px}}
 </style>
 </head>
 <body>
@@ -197,6 +249,7 @@ main{position:relative;overflow:hidden;height:100dvh}
     <i class="ind"></i>
     <button class="db on" data-v="topics"><svg viewBox="0 0 24 24"><path d="M5 6h14M5 12h14M5 18h9"/></svg>Konular</button>
     <button class="db" data-v="timer"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9.5 2.5h5"/></svg>Süre</button>
+    <button class="db" data-v="cal"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Takvim</button>
     <button class="db" data-v="settings"><svg viewBox="0 0 24 24"><path d="M4 7h9M19 7h1M4 17h1M11 17h9"/><circle cx="16" cy="7" r="2.5"/><circle cx="8" cy="17" r="2.5"/></svg>Ayarlar</button>
   </nav>
   <main>
@@ -217,6 +270,7 @@ main{position:relative;overflow:hidden;height:100dvh}
         </div>
       </div>
     </section>
+    <section class="view" id="v-cal"><div class="cal" id="cal"></div><div class="cset" id="cset"></div></section>
     <section class="view" id="v-settings"><div class="set" id="set"></div></section>
   </main>
   <div class="sheet" id="sheet"><button class="fl fl-l" id="fl">Dersler</button><div class="fl-r"><button class="fl fp" id="fp" aria-label="Yeni ders">+</button><button class="fl fk" id="sx">Kapat</button></div><div class="shw" id="shw"></div><div class="mod" id="mod"><div class="mc card" id="mc"></div></div></div>
@@ -486,6 +540,120 @@ $("#tgo").onclick=go;$("#trs").onclick=reset;
 $("#fsb").onclick=function(){var f=$(".app").classList.toggle("fs");this.classList.toggle("on",f);this.setAttribute("aria-label",f?"Tam ekrandan çık":"Tam ekran");sync()};
 if(ST.cd.run&&el(ST.cd)>=ST.cd.cd)finish(ST.cd,true);
 wk();sync();paint();setInterval(tick,40);
+
+
+/* Takvim */
+var CK="dd-cal",CS={items:[],set:{r:1,d:1,a:1,w:1},nid:1},HC={},TD=new Date();
+try{var cj=JSON.parse(localStorage.getItem(CK));if(cj){if(Array.isArray(cj.items))CS.items=cj.items.filter(function(i){return i&&typeof i.t==="string"&&/^\d{4}-\d{2}-\d{2}$/.test(i.d)});Object.assign(CS.set,cj.set||{});CS.nid=+cj.nid||1}}catch(e){}
+function csv(){try{localStorage.setItem(CK,JSON.stringify(CS))}catch(e){}}
+var cv={l:"month",y:TD.getFullYear(),m:TD.getMonth(),d:TD.getDate(),k:"task",ed:0,dir:"in"};
+var MN=["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"],WD=["Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi","Pazar"],
+GC={r:"#ff8a8a",d:"#c6f36b",a:"#ffe066",w:"#6ec6ff"},KC={task:"#d9d5cd",ev:"#ffb46e",sp:"#ff90e8"},KL={task:"Görev",ev:"Randevu",sp:"Özel gün"},
+RB={2026:[[2,20],[4,27]],2027:[[2,9],[4,16]],2028:[[1,26],[4,5]],2029:[[1,14],[3,24]],2030:[[1,4],[3,14]]},
+F="r|1|1|Yılbaşı;r|4|23|Ulusal Egemenlik ve Çocuk Bayramı;r|5|1|Emek ve Dayanışma Günü;r|5|19|Atatürk'ü Anma, Gençlik ve Spor Bayramı;r|7|15|Demokrasi ve Milli Birlik Günü;r|8|30|Zafer Bayramı;r|10|28|Cumhuriyet Bayramı Arifesi;r|10|29|Cumhuriyet Bayramı;a|3|12|İstiklal Marşı'nın Kabulü;a|3|14|Tıp Bayramı;a|3|18|Çanakkale Zaferi;a|9|9|İzmir'in Kurtuluşu;a|9|19|Gaziler Günü;a|11|10|Atatürk'ü Anma Günü;a|11|24|Öğretmenler Günü;w|2|14|Sevgililer Günü;w|3|8|Dünya Kadınlar Günü;w|3|22|Dünya Su Günü;w|4|1|1 Nisan Şakası;w|4|22|Dünya Günü;w|6|5|Dünya Çevre Günü;w|6|21|Dünya Müzik Günü;w|10|4|Dünya Hayvanları Koruma Günü;w|10|5|Dünya Öğretmenler Günü;w|10|31|Cadılar Bayramı (Halloween);w|11|19|Dünya Erkekler Günü;w|11|20|Dünya Çocuk Günü;w|12|10|İnsan Hakları Günü;w|12|24|Noel Arifesi;w|12|25|Noel;w|12|31|Yılbaşı Gecesi".split(";").map(function(x){return x.split("|")});
+function nth(y,m,w,n){return 1+(w-new Date(y,m,1).getDay()+7)%7+(n-1)*7}
+function easter(y){var a=y%19,b=Math.floor(y/100),c=y%100,d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451);return[Math.floor((h+l-7*m+114)/31)-1,(h+l-7*m+114)%31+1]}
+function hol(y){
+  if(HC[y])return HC[y];var h={};
+  function add(m,d,n,g){var t=new Date(y,m,d),k=p2(t.getMonth()+1)+"-"+p2(t.getDate());(h[k]=h[k]||[]).push({n:n,g:g})}
+  F.forEach(function(f){add(f[1]-1,+f[2],f[3],f[0])});
+  add(4,nth(y,4,0,2),"Anneler Günü","a");add(5,nth(y,5,0,3),"Babalar Günü","a");
+  var th=nth(y,10,4,4);add(10,th,"Şükran Günü","w");add(10,th+1,"Efsane Cuma (Black Friday)","w");
+  var e=easter(y);add(e[0],e[1],"Paskalya","w");
+  if(RB[y])["Ramazan Bayramı","Kurban Bayramı"].forEach(function(n,j){var s=RB[y][j];for(var o=-1;o<(j?4:3);o++)add(s[0],s[1]+o,n+(o<0?" Arifesi":" "+(o+1)+". Gün"),"d")});
+  return HC[y]=h;
+}
+function ds(y,m,d){return y+"-"+p2(m+1)+"-"+p2(d)}
+function wdx(y,m,d){return(new Date(y,m,d).getDay()+6)%7}
+function dim(y,m){return new Date(y,m+1,0).getDate()}
+function hs(y,m,d){return(hol(y)[p2(m+1)+"-"+p2(d)]||[]).filter(function(h){return CS.set[h.g]})}
+function its(y,m,d){var s=ds(y,m,d);return CS.items.filter(function(i){return i.d===s||(i.y&&i.d.slice(5)===s.slice(5)&&i.d<=s)}).sort(function(a,b){return(a.tm||"99").localeCompare(b.tm||"99")})}
+function isT(y,m,d){return y===TD.getFullYear()&&m===TD.getMonth()&&d===TD.getDate()}
+var IC={p:'<path d="M15 5l-7 7 7 7"/>',n:'<path d="M9 5l7 7-7 7"/>',fs:'<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>',fx:'<path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/>',st:'<path d="M4 7h9M19 7h1M4 17h1M11 17h9"/><circle cx="16" cy="7" r="2.5"/><circle cx="8" cy="17" r="2.5"/>'};
+function ib(a,i,x){return'<button class="kb'+(x||"")+'" data-a="'+a+'" aria-label="'+a+'"><svg viewBox="0 0 24 24">'+IC[i]+'</svg></button>'}
+function paintK(){
+  var l=cv.l,t=l==="year"?'<span>'+cv.y+'</span>':l==="month"?'<button data-a="y">'+cv.y+'</button><span>'+MN[cv.m]+'</span>':'<button data-a="y">'+cv.y+'</button><button data-a="mo">'+MN[cv.m]+'</button><span>'+cv.d+'</span>',
+  fs=$(".app").classList.contains("fs");
+  $("#cal").innerHTML='<div class="kh"><div class="kt">'+t+'</div><div class="kc">'+ib("pv","p")+'<button class="kb w" data-a="td">Bugün</button>'+ib("nx","n")+ib("fs",fs?"fx":"fs",fs?" on":"")+ib("st","st")+'</div></div><div class="kbody"><div class="kz '+cv.dir+'">'+(l==="year"?rY():l==="month"?rM():rD())+'</div></div>';
+  if(l==="day")dayList();
+}
+function rY(){
+  var h='<div class="yg">';
+  for(var m=0;m<12;m++){
+    var o=wdx(cv.y,m,1),n=dim(cv.y,m);
+    h+='<button class="mm'+(isT(cv.y,m,TD.getDate())?" now":"")+'" data-a="m" data-m="'+m+'" style="--n:'+m+'"><b>'+MN[m]+'</b><div class="mg">'+"PSÇPCCP".split("").map(function(x){return"<i>"+x+"</i>"}).join("")+Array(o+1).join("<u></u>");
+    for(var d=1;d<=n;d++){var c=(isT(cv.y,m,d)?"t ":"")+(hs(cv.y,m,d).length?"h ":"")+(its(cv.y,m,d).length?"e":"");h+='<s class="'+c+'">'+d+'</s>'}
+    h+='</div></button>';
+  }
+  return h+'</div>';
+}
+function rM(){
+  var o=wdx(cv.y,cv.m,1),n=dim(cv.y,cv.m),rows=Math.ceil((o+n)/7),h='<div class="wk">'+WD.map(function(x){return"<span>"+x.slice(0,3)+"</span>"}).join("")+'</div><div class="mg2" style="grid-template-rows:repeat('+rows+',1fr)">';
+  for(var c=0;c<rows*7;c++){
+    var d=c-o+1;if(d<1||d>n){h+='<i class="dc pd"></i>';continue}
+    var ch=hs(cv.y,cv.m,d).map(function(x){return[x.n,GC[x.g]]}).concat(its(cv.y,cv.m,d).map(function(x){return[x.t,KC[x.k]]})),v=ch.slice(0,3);
+    h+='<button class="dc'+(isT(cv.y,cv.m,d)?" t":"")+'" data-a="d" data-d="'+d+'" style="--n:'+c+'"><b>'+d+'</b>'+v.map(function(x){return'<span class="cp" style="--k:'+x[1]+'">'+esc(x[0])+'</span>'}).join("")+(ch.length>3?'<span class="cp mo">+'+(ch.length-3)+' daha</span>':'')+'</button>';
+  }
+  return h+'</div>';
+}
+function rD(){
+  return'<div class="dv"><div class="dl2 card"><small>'+MN[cv.m]+' '+cv.y+(isT(cv.y,cv.m,cv.d)?' · Bugün':'')+'</small><div class="bn">'+cv.d+'</div><h2>'+WD[wdx(cv.y,cv.m,cv.d)]+'</h2><div id="dh"></div></div><div class="dr"><div class="df card"><div class="seg" id="sk" data-k="'+cv.k+'"><i></i><button data-a="k" data-k="task">Görev</button><button data-a="k" data-k="ev">Randevu</button><button data-a="k" data-k="sp">Özel gün</button></div><input id="it" maxlength="80" placeholder="Örn. Kardeşimin doğum günü"><div class="row"><input type="time" id="tm" style="display:'+(cv.k==="ev"?"block":"none")+'"><button class="chip'+(cv.k==="sp"?" on":"")+'" id="ty" data-a="ty">Her yıl tekrarla</button></div><div class="row"><button class="btn pr" id="sv" data-a="sv">Ekle</button><button class="btn" id="cx" data-a="cx" style="display:none">İptal</button><button class="btn dg" id="dx" data-a="dx" style="display:none">Sil</button></div></div><div id="dli"></div></div></div>';
+}
+function dayList(){
+  var y=cv.y,m=cv.m,d=cv.d;
+  $("#dh").innerHTML=hs(y,m,d).map(function(h){return'<span class="cp big" style="--k:'+GC[h.g]+'">'+esc(h.n)+'</span>'}).join("")||'<p class="em" style="padding:0">Resmi veya özel gün yok.</p>';
+  var it=its(y,m,d);
+  $("#dli").innerHTML=it.length?it.map(function(i,n){return'<div class="ir'+(i.x?" d":"")+'" data-id="'+i.id+'" style="animation-delay:'+n*40+'ms"><button class="ik" data-a="tg" style="--k:'+KC[i.k]+'"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg></button><button class="itx" data-a="ed"><b>'+esc(i.t)+'</b><small>'+KL[i.k]+(i.tm?" · "+i.tm:"")+(i.y?" · Her yıl":"")+'</small></button></div>'}).join(""):'<p class="em">Bu güne henüz bir şey eklenmedi.</p>';
+}
+function setK(k){cv.k=k;$("#sk").dataset.k=k;$("#tm").style.display=k==="ev"?"block":"none";if(!cv.ed)$("#ty").classList.toggle("on",k==="sp")}
+function clr(){cv.ed=0;$("#it").value="";$("#tm").value="";$("#sv").textContent="Ekle";$("#cx").style.display=$("#dx").style.display="none";setK(cv.k)}
+function find(id){return CS.items.filter(function(i){return i.id===id})[0]}
+function step(n){
+  var t;
+  if(cv.l==="year")cv.y+=n;
+  else if(cv.l==="month"){t=new Date(cv.y,cv.m+n,1);cv.y=t.getFullYear();cv.m=t.getMonth();cv.d=Math.min(cv.d,dim(cv.y,cv.m))}
+  else{t=new Date(cv.y,cv.m,cv.d+n);cv.y=t.getFullYear();cv.m=t.getMonth();cv.d=t.getDate()}
+  cv.dir=n>0?"nx":"pv";cv.ed=0;paintK();
+}
+function lvl(l,dir){cv.l=l;cv.dir=dir;cv.ed=0;paintK()}
+var dt;
+$("#cal").addEventListener("click",function(e){
+  var b=e.target.closest("[data-a]");if(!b)return;var a=b.dataset.a;
+  if(a==="m"){cv.m=+b.dataset.m;cv.d=Math.min(cv.d,dim(cv.y,cv.m));lvl("month","in")}
+  else if(a==="d"){cv.d=+b.dataset.d;lvl("day","in")}
+  else if(a==="y")lvl("year","out");else if(a==="mo")lvl("month","out");
+  else if(a==="pv")step(-1);else if(a==="nx")step(1);
+  else if(a==="td"){cv.y=TD.getFullYear();cv.m=TD.getMonth();cv.d=TD.getDate();cv.dir="in";paintK()}
+  else if(a==="fs"){$("#fsb").click();paintK()}
+  else if(a==="st"){paintS();$("#cset").classList.add("on")}
+  else if(a==="k")setK(b.dataset.k);
+  else if(a==="ty")b.classList.toggle("on");
+  else if(a==="sv")svI();
+  else if(a==="cx")clr();
+  else if(a==="tg"){var i=find(+b.closest(".ir").dataset.id);i.x=i.x?0:1;csv();b.closest(".ir").classList.toggle("d",!!i.x)}
+  else if(a==="ed"){var i=find(+b.closest(".ir").dataset.id);cv.ed=i.id;$("#it").value=i.t;$("#tm").value=i.tm||"";$("#ty").classList.toggle("on",!!i.y);setK(i.k);$("#sv").textContent="Kaydet";$("#cx").style.display=$("#dx").style.display="";$("#it").focus()}
+  else if(a==="dx"){
+    if(!b.classList.contains("arm")){b.classList.add("arm");b.textContent="Emin misin?";clearTimeout(dt);dt=setTimeout(function(){b.classList.remove("arm");b.textContent="Sil"},3000);return}
+    CS.items=CS.items.filter(function(i){return i.id!==cv.ed});b.classList.remove("arm");b.textContent="Sil";csv();clr();dayList();
+  }
+});
+$("#cal").addEventListener("keydown",function(e){if(e.key==="Enter"&&e.target.id==="it")svI()});
+function svI(){
+  var t=$("#it").value.trim();if(!t){$("#it").focus();return}
+  var o=cv.ed&&find(cv.ed),y=$("#ty").classList.contains("on"),tm=cv.k==="ev"?$("#tm").value:"";
+  if(o){o.t=t;o.k=cv.k;o.tm=tm;o.y=y}else CS.items.push({id:CS.nid++,d:ds(cv.y,cv.m,cv.d),t:t,k:cv.k,tm:tm,y:y,x:0});
+  csv();clr();dayList();
+}
+var KS=[["r","Resmi tatiller","23 Nisan, 19 Mayıs, 30 Ağustos, 29 Ekim…"],["d","Dini bayramlar","Ramazan ve Kurban Bayramı, arifeler (2026–2030)"],["a","Anma ve özel günler","10 Kasım, Öğretmenler Günü, Anneler Günü…"],["w","Dünya özel günleri","Noel, Cadılar Bayramı, Yılbaşı Gecesi, Dünya Erkekler Günü…"]];
+function paintS(){
+  $("#cset").innerHTML='<div class="setw"><div class="sh-h"><div><h1>Takvim ayarları</h1><p>Hangi özel günler takvimde görünsün?</p></div><button class="btn pr" data-x="1">Bitti</button></div>'+KS.map(function(k){return'<div class="card lc"><div><h2>'+k[1]+'</h2><p>'+k[2]+'</p></div><button class="tg'+(CS.set[k[0]]?" on":"")+'" data-g="'+k[0]+'" aria-label="'+k[1]+'"><i></i></button></div>'}).join("")+'</div>';
+}
+$("#cset").addEventListener("click",function(e){
+  var b=e.target.closest("button");if(!b)return;
+  if(b.dataset.x){$("#cset").classList.remove("on");cv.dir="in";paintK()}
+  else if(b.dataset.g){CS.set[b.dataset.g]=CS.set[b.dataset.g]?0:1;b.classList.toggle("on",!!CS.set[b.dataset.g]);csv()}
+});
+paintK();
 
 /* Gezinme */
 $$(".db").forEach(function(b,n){b.onclick=function(){
