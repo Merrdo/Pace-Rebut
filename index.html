@@ -594,7 +594,7 @@ function rY(){
   return h+'</div>';
 }
 function rM(){
-  var o=wdx(cv.y,cv.m,1),n=dim(cv.y,cv.m),rows=Math.ceil((o+n)/7),h='<div class="wk">'+WD.map(function(x){return"<span>"+x.slice(0,3)+"</span>"}).join("")+'</div><div class="mg2" style="grid-template-rows:repeat('+rows+',1fr)">';
+  var o=wdx(cv.y,cv.m,1),n=dim(cv.y,cv.m),rows=Math.ceil((o+n)/7),h='<div class="wk">'+["Pzt","Sal","Çar","Per","Cum","Cmt","Paz"].map(function(x){return"<span>"+x+"</span>"}).join("")+'</div><div class="mg2" style="grid-template-rows:repeat(6,1fr)">';
   for(var c=0;c<rows*7;c++){
     var d=c-o+1;if(d<1||d>n){h+='<i class="dc pd"></i>';continue}
     var ch=hs(cv.y,cv.m,d).map(function(x){return[x.n,GC[x.g]]}).concat(its(cv.y,cv.m,d).map(function(x){return[x.t,KC[x.k]]})),v=ch.slice(0,3);
