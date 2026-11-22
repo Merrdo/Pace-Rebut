@@ -595,11 +595,11 @@ function isT(y,m,d){return y===TD.getFullYear()&&m===TD.getMonth()&&d===TD.getDa
 var IC={p:'<path d="M15 5l-7 7 7 7"/>',n:'<path d="M9 5l7 7-7 7"/>',fs:'<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>',fx:'<path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/>',st:'<path d="M4 7h9M19 7h1M4 17h1M11 17h9"/><circle cx="16" cy="7" r="2.5"/><circle cx="8" cy="17" r="2.5"/>'};
 function ib(a,i,x){return'<button class="kb'+(x||"")+'" data-a="'+a+'" aria-label="'+a+'"><svg viewBox="0 0 24 24">'+IC[i]+'</svg></button>'}
 function paintK(q){
-  iFlush();IDY=null;ICX={};ILS=0;
+  iFlush();IDY=null;
   var l=cv.l,t=l==="year"?'<span>'+cv.y+'</span>':l==="month"?'<button data-a="y">'+cv.y+'</button><span>'+MN[cv.m]+'</span>':'<button data-a="y">'+cv.y+'</button><button data-a="mo">'+MN[cv.m]+'</button><span>'+cv.d+'</span>',
   fs=$(".app").classList.contains("fs");
-  $("#cal").innerHTML='<div class="kh"><div class="kt">'+t+'</div>'+(l==="day"?iTools():"")+'<div class="kc">'+ib("pv","p")+'<button class="kb w" data-a="td">Bugün</button>'+ib("nx","n")+'<button class="kb fsx'+(fs?" on":"")+'" data-a="fs" aria-label="Tam ekran"><svg class="i-e" viewBox="0 0 24 24">'+IC.fs+'</svg><svg class="i-c" viewBox="0 0 24 24">'+IC.fx+'</svg></button>'+ib("st","st")+'</div></div><div class="kbody"><div class="kz '+(q?"no":cv.dir)+(l==="month"?" km":"")+'">'+(l==="year"?rY():l==="month"?rM():rD())+'</div></div>';
-  if(l==="day")iInit();
+  $("#cal").innerHTML='<div class="kh"><div class="kt">'+t+'</div>'+(l==="day"?iTools():"")+'<div class="kc">'+ib("pv","p")+'<button class="kb w" data-a="td">Bugün</button>'+ib("nx","n")+'<button class="kb fsx'+(fs?" on":"")+'" data-a="fs" aria-label="Tam ekran"><svg class="i-e" viewBox="0 0 24 24">'+IC.fs+'</svg><svg class="i-c" viewBox="0 0 24 24">'+IC.fx+'</svg></button>'+ib("st","st")+'</div></div><div class="kbody"><div class="kz '+(q?"no":cv.dir)+(l==="month"?" km":"")+'">'+(l==="year"?rY():l==="month"?rM():(DVC?"":rD()))+'</div></div>';
+  if(l==="day"){if(DVC){$(".kz").appendChild(DVC);iLoad();iFit()}else iInit()}
 }
 /* Gün sayfası: kalemle yazı, dokunarak işaret */
 var IRR=26,IPW=1200,IPH=640,IPS=1,INKD={},ILP=0,IDY=null,IRDY=0,IWQ=[],IDB=null,IFT=0,ICV={},ICX={},
@@ -675,8 +675,37 @@ function iMarks(){
   $$("#pg [data-md]").forEach(function(b){b.classList.toggle("on",+b.dataset.md===D.m)});
   $$("#pg [data-wt]").forEach(function(b){b.classList.toggle("on",+b.dataset.wt<=D.w)});
 }
+var DVC=null;
+function iLoad(){
+  var d=ds(cv.y,cv.m,cv.d),T=IDY={date:d,doc:iNd(),ud:[],dirty:0,cur:null,tap:null,tm:0,r:null};
+  var c1=$("#pg .c1");
+  c1.querySelector("small").textContent=MN[cv.m]+' '+cv.y+(isT(cv.y,cv.m,cv.d)?' · Bugün':'');
+  c1.querySelector(".bn").textContent=cv.d;
+  c1.querySelector("h2").textContent=WD[wdx(cv.y,cv.m,cv.d)];
+  if(ICX.h){ICX.h.clearRect(0,0,IPW,IPH);ICX.i.clearRect(0,0,IPW,IPH);iClr()}
+  iInfo();iMarks();
+  if(IRO){IRO.disconnect();IRO.observe($(".dv"))}
+  iWhen(function(){iGet(d,function(r){
+    if(IDY!==T)return;var n=iNd(r);
+    if(T.doc.s.length)n.s=n.s.concat(T.doc.s);
+    T.doc=n;iMarks();iRedrawA();
+  })});
+}
+var IRA=0;
+function iRedrawA(){
+  if(!ICX.h||!IDY)return;
+  var T=IDY,S=T.doc.s,k=0,g=++IRA;
+  ICX.h.clearRect(0,0,IPW,IPH);ICX.i.clearRect(0,0,IPW,IPH);
+  (function run(){
+    if(g!==IRA||IDY!==T||!ICX.h)return;
+    var t0=performance.now();
+    while(k<S.length&&performance.now()-t0<6)iPaint(S[k++]);
+    if(k<S.length)requestAnimationFrame(run);
+  })();
+}
 function iInit(){
   var d=ds(cv.y,cv.m,cv.d),T=IDY={date:d,doc:iNd(),ud:[],dirty:0,cur:null,tap:null,tm:0,r:null};
+  ICX={};ILS=0;DVC=$(".dv");
   ICV={h:$("#ink-h"),l:$("#ink-l"),i:$("#ink-i"),p:$("#ink-p")};
   var c=ICV.p;
   c.addEventListener("pointerdown",iPd);c.addEventListener("pointermove",iPm);c.addEventListener("pointerup",iPu);c.addEventListener("pointercancel",iPc);
@@ -687,7 +716,7 @@ function iInit(){
   iWhen(function(){iGet(d,function(r){
     if(IDY!==T)return;var n=iNd(r);
     if(T.doc.s.length)n.s=n.s.concat(T.doc.s);
-    T.doc=n;iMarks();iRedraw();
+    T.doc=n;iMarks();iRedrawA();
   })});
 }
 var ILS=0;
@@ -717,7 +746,7 @@ function iBk(){
     x.setTransform(c.width/IPW,0,0,c.height/IPH,0,0);x.lineCap="round";x.lineJoin="round";
     x.beginPath();x.moveTo(IRR,0);x.arcTo(IPW,0,IPW,IPH,IRR);x.arcTo(IPW,IPH,0,IPH,IRR);x.arcTo(0,IPH,0,0,IRR);x.arcTo(0,0,IPW,0,IRR);x.closePath();x.clip();
   });
-  iRedraw();
+  iRedrawA();
 }
 function iMid(a,b){return(a+b)/2}
 function iRd(v){return Math.round(v*10)/10}
@@ -878,19 +907,8 @@ function find(id){return CS.items.filter(function(i){return i.id===id})[0]}
 /* Gün -> gün geçişi: DOM ve canvas'ları yeniden kurmadan sadece içeriği değiştir (kasma olmaz) */
 function swapDay(n){
   iFlush();
-  var T=IDY={date:ds(cv.y,cv.m,cv.d),doc:iNd(),ud:[],dirty:0,cur:null,tap:null,tm:0,r:null};
   $(".kt").innerHTML='<button data-a="y">'+cv.y+'</button><button data-a="mo">'+MN[cv.m]+'</button><span>'+cv.d+'</span>';
-  var c1=$("#pg .c1");
-  c1.querySelector("small").textContent=MN[cv.m]+' '+cv.y+(isT(cv.y,cv.m,cv.d)?' · Bugün':'');
-  c1.querySelector(".bn").textContent=cv.d;
-  c1.querySelector("h2").textContent=WD[wdx(cv.y,cv.m,cv.d)];
-  if(ICX.h){ICX.h.clearRect(0,0,IPW,IPH);ICX.i.clearRect(0,0,IPW,IPH);iClr()}
-  iInfo();iMarks();
-  iWhen(function(){iGet(T.date,function(r){
-    if(IDY!==T)return;var d=iNd(r);
-    if(T.doc.s.length)d.s=d.s.concat(T.doc.s);
-    T.doc=d;iMarks();iRedraw();
-  })});
+  iLoad();
   var w=$("#pgw");
   if(w&&w.animate)w.animate([{opacity:0,transform:n?"translateX("+(n>0?34:-34)+"px)":"scale(.97)"},{opacity:1,transform:"none"}],{duration:320,easing:"cubic-bezier(.22,1,.36,1)"});
 }
