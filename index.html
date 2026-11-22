@@ -19,6 +19,7 @@
 <style>
 :root{--bg:#f4f2ee;--fg:#111;--dim:#8a8782;--surf:#fff;--surf2:#e9e6e0;--ink:#111;--ac:#111;--c:#ff90e8;--ct:#b8189a;--sp:cubic-bezier(.34,1.56,.64,1);--ease:cubic-bezier(.22,1,.36,1);--nav-h:58px;--nav-gap:18px;--dock-space:calc(var(--nav-h) + var(--nav-gap) + 28px + env(safe-area-inset-bottom,0px))}
 *{box-sizing:border-box;margin:0;padding:0}
+*{scrollbar-width:none;-ms-overflow-style:none}*::-webkit-scrollbar{display:none;width:0;height:0}
 html,body{width:100%;height:100dvh;background:var(--bg);color:var(--fg);overflow:hidden;font-family:"Baloo 2",ui-rounded,"Avenir Next",system-ui,sans-serif;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;overscroll-behavior:none;touch-action:manipulation}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 :focus-visible{outline:2px solid var(--ac);outline-offset:3px}
@@ -149,6 +150,39 @@ main{position:relative;overflow:hidden;height:100dvh}
 .mc input{max-width:none}
 .fp{opacity:0;transform:scale(.6);pointer-events:none}.fp.on{opacity:1;transform:none;pointer-events:auto}.fp.on:active{transform:scale(.93)}
 .em{padding:20px 4px;color:var(--dim);font-weight:500}
+/* Sure */
+@keyframes bl{50%{opacity:.25}}@keyframes dn{50%{opacity:.3}}
+.dock{transition:transform .75s var(--ease),opacity .45s var(--ease)}
+.app.fs .dock{transform:translate(-50%,160%);opacity:0;pointer-events:none}
+#v-timer{display:flex;align-items:center;justify-content:center}
+.tw{display:flex;flex-direction:column;align-items:center;width:100%;padding:30px 24px var(--dock-space);transition:padding .8s var(--ease)}
+.app.fs .tw{padding-bottom:30px}
+.view.on .tw>*{animation:up .8s var(--ease) backwards}.view.on .tw>:nth-child(2){animation-delay:.06s}.view.on .tw>:nth-child(3){animation-delay:.1s}.view.on .tw>:nth-child(4){animation-delay:.14s}.view.on .tw>:nth-child(5){animation-delay:.2s}
+.fold{display:grid;grid-template-rows:1fr;transition:grid-template-rows .65s var(--ease),opacity .45s var(--ease)}
+.fold>div{min-height:0;overflow:hidden;padding:8px;margin:-8px}
+.fold.off{grid-template-rows:0fr;opacity:0;pointer-events:none}
+#tmode{width:310px;max-width:100%;margin:0}.seg[data-m=cd] i{transform:translateX(100%)}
+.clk{display:flex;align-items:baseline;margin:26px 0 6px;font-family:Inter,"SF Pro Display",system-ui,sans-serif;font-weight:500;font-variant-numeric:tabular-nums;letter-spacing:-.04em;line-height:1;white-space:nowrap;font-size:min(19vw,32vh);transition:font-size .85s var(--ease)}
+.clk.h{font-size:min(13.5vw,32vh)}
+.app.fs .clk{font-size:min(24vw,50vh)}.app.fs .clk.h{font-size:min(16.5vw,50vh)}
+.clk b{font-weight:inherit}.clk u{text-decoration:none}
+.clk i{font-style:normal;color:var(--dim);font-size:.26em;letter-spacing:0;margin-left:.12em}
+.clk.run u{animation:bl 1.4s ease-in-out infinite}.view.on .tw>.clk.done{animation:dn 1.6s ease-in-out infinite}
+.ts{min-height:1.4em;margin-bottom:12px;font-size:18px;font-weight:700;color:var(--dim)}
+.pre{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;max-width:640px}
+.chip{padding:9px 18px;border-radius:999px;background:var(--surf);font-size:16px;font-weight:700;transition:transform .5s var(--sp),background .35s,color .35s}
+.chip:active{transform:scale(.94)}.chip.on{background:var(--fg);color:var(--bg)}
+.tctl{display:flex;align-items:center;gap:24px;margin-top:26px}
+.cb{position:relative;display:grid;place-items:center;width:66px;height:66px;border-radius:50%;background:var(--surf);transition:transform .5s var(--sp)}
+.cb:active{transform:scale(.92)}
+.cb.main{width:96px;height:96px;background:var(--fg);color:var(--bg)}
+.cb svg{width:28px;height:28px}.cb.sec svg{fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.cb.main svg{grid-area:1/1;width:38px;height:38px;transition:opacity .3s,transform .55s var(--sp)}
+.cb.main .i-p{opacity:0;transform:scale(.5)}.cb.main.on .i-p{opacity:1;transform:none}.cb.main.on .i-g{opacity:0;transform:scale(.5)}
+.fsb{position:absolute;z-index:2;top:28px;right:24px;display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--surf);transition:transform .5s var(--sp)}
+.fsb:active{transform:scale(.92)}
+.fsb svg{grid-area:1/1;width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:opacity .3s,transform .5s var(--sp)}
+.fsb .i-c{opacity:0;transform:scale(.5)}.fsb.on .i-c{opacity:1;transform:none}.fsb.on .i-e{opacity:0;transform:scale(.5)}
 @media (max-width:1000px){#v-topics{grid-template-columns:300px 1fr}.topics{padding:28px 28px var(--dock-space)}.th h1{font-size:38px}.pc b{font-size:88px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 @media (max-width:767px){.app:before{content:"Bu uygulama şimdilik tablet için tasarlandı.";position:fixed;inset:0;z-index:9;display:grid;place-items:center;background:var(--bg);color:var(--dim);text-align:center;padding:30px}}
@@ -167,7 +201,19 @@ main{position:relative;overflow:hidden;height:100dvh}
       <div class="subs" id="subs"></div>
       <div class="topics" id="topics"></div>
     </section>
-    <section class="view" id="v-timer"></section>
+    <section class="view" id="v-timer">
+      <button class="fsb" id="fsb" aria-label="Tam ekran"><svg class="i-e" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><svg class="i-c" viewBox="0 0 24 24"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg></button>
+      <div class="tw">
+        <div class="fold" id="tbw"><div><div class="seg" id="tmode" data-m="sw"><i></i><button data-m="sw">Kronometre</button><button data-m="cd">Geri sayım</button></div></div></div>
+        <div class="clk" id="clk" data-style="classic"><b id="tt"></b><i id="tc"></i></div>
+        <div class="ts" id="ts"></div>
+        <div class="fold" id="pw"><div><div class="pre" id="pre"></div></div></div>
+        <div class="tctl">
+          <button class="cb sec" id="trs" aria-label="Sıfırla"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.6-5.9M4 4v4.5h4.5"/></svg></button>
+          <button class="cb main" id="tgo" aria-label="Başlat / Duraklat"><svg class="i-g" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><svg class="i-p" viewBox="0 0 24 24"><path d="M8 5.5v13M16 5.5v13" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" fill="none"/></svg></button>
+        </div>
+      </div>
+    </section>
     <section class="view" id="v-settings"><div class="set" id="set"></div></section>
   </main>
   <div class="sheet" id="sheet"><button class="fl fl-l" id="fl">Dersler</button><div class="fl-r"><button class="fl fp" id="fp" aria-label="Yeni ders">+</button><button class="fl fk" id="sx">Kapat</button></div><div class="shw" id="shw"></div><div class="mod" id="mod"><div class="mc card" id="mc"></div></div></div>
@@ -301,6 +347,7 @@ function openSheet(){$("#mod").classList.remove("on");buildSheet();$("#sheet").s
 $("#sheet").addEventListener("scroll",function(){var d=this.scrollTop>90;$("#fl").classList.toggle("on",d);$("#fp").classList.toggle("on",d)},{passive:true});
 $("#fl").onclick=function(){$("#sheet").scrollTo({top:0,behavior:"smooth"})};
 $("#sx").onclick=function(){closeSheet()};
+$("#sheet").addEventListener("click",function(e){var o=$(".lw.open");if(o&&!o.contains(e.target))o.classList.remove("open")});
 $("#mod").addEventListener("click",function(e){if(e.target===this)closeForm()});
 $("#fp").onclick=openForm;
 function closeSheet(){closeForm();$("#sheet").classList.remove("on")}
@@ -381,6 +428,49 @@ function drag(e,g,w){
   g.addEventListener("pointermove",mv);g.addEventListener("pointerup",up);g.addEventListener("pointercancel",up);
   raf=requestAnimationFrame(upd);
 }
+
+/* Sure */
+var T={m:S.tm&&S.tm.m==="cd"?"cd":"sw",cd:S.tm&&S.tm.cd>=6e4?Math.min(S.tm.cd,432e5):15e5,run:false,t0:0,acc:0,done:false,iv:0},AC=null,WL=null,lt="",lc="";
+function savT(){S.tm={m:T.m,cd:T.cd};save()}
+function el(){return T.acc+(T.run?performance.now()-T.t0:0)}
+function p2(n){return(n<10?"0":"")+n}
+function wl(on){try{if(on&&navigator.wakeLock)navigator.wakeLock.request("screen").then(function(l){WL=l}).catch(function(){});else if(WL){WL.release();WL=null}}catch(e){}}
+function beep(){
+  try{if(AC)[0,.4,.8].forEach(function(d){var o=AC.createOscillator(),g=AC.createGain(),t=AC.currentTime+d;o.frequency.value=880;o.connect(g);g.connect(AC.destination);g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.18,t+.03);g.gain.exponentialRampToValueAtTime(.001,t+.32);o.start(t);o.stop(t+.34)})}catch(e){}
+  try{if(navigator.vibrate)navigator.vibrate([200,100,200])}catch(e){}
+}
+function paint(){
+  var e=el(),cd=T.m==="cd",ms=cd?Math.max(0,T.cd-e):e,tot=cd?Math.ceil(ms/1000):Math.floor(ms/1000),h=Math.floor(tot/3600),m=Math.floor(tot%3600/60),sc=tot%60,
+  str=(h?h+"<u>:</u>"+p2(m):p2(m))+"<u>:</u>"+p2(sc);
+  if(str!==lt){lt=str;$("#tt").innerHTML=str;$("#clk").classList.toggle("h",h>0)}
+  var c=cd?"":"."+p2(Math.floor(ms%1000/10));
+  if(c!==lc){lc=c;$("#tc").textContent=c}
+  if(cd&&T.run&&e>=T.cd)finish();
+}
+function sync(){
+  var c=$("#clk"),fs=$(".app").classList.contains("fs"),cd=T.m==="cd";
+  c.classList.toggle("run",T.run);c.classList.toggle("done",T.done);$("#tgo").classList.toggle("on",T.run);
+  $("#tmode").dataset.m=T.m;$("#tbw").classList.toggle("off",fs);
+  $("#pw").classList.toggle("off",fs||!cd||T.run||T.acc>0);
+  $$(".chip[data-p]").forEach(function(b){b.classList.toggle("on",+b.dataset.p*6e4===T.cd)});
+  $("#ts").textContent=T.done?"Süre doldu":T.run?"Çalışıyor":T.acc>0?"Duraklatıldı":"Hazır";
+}
+function reset(){clearInterval(T.iv);T.run=false;T.acc=0;T.done=false;wl(false);sync();paint()}
+function finish(){T.acc=T.cd;T.run=false;clearInterval(T.iv);T.done=true;wl(false);sync();paint();beep()}
+function go(){
+  if(!AC){try{AC=new(window.AudioContext||window.webkitAudioContext)()}catch(e){}}
+  if(AC&&AC.resume)AC.resume();
+  if(T.run){T.acc+=performance.now()-T.t0;T.run=false;clearInterval(T.iv);wl(false)}
+  else{if(T.done)reset();T.t0=performance.now();T.run=true;T.iv=setInterval(paint,40);wl(true)}
+  sync();paint();
+}
+function setCd(ms){T.cd=Math.max(6e4,Math.min(432e5,ms));savT();sync();paint()}
+$("#pre").innerHTML='<button class="chip" data-a="-5">−5 dk</button>'+[15,25,40,60,90].map(function(n){return'<button class="chip" data-p="'+n+'">'+n+' dk</button>'}).join("")+'<button class="chip" data-a="5">+5 dk</button>';
+$("#pre").addEventListener("click",function(e){var b=e.target.closest(".chip");if(!b||T.run||T.acc)return;setCd(b.dataset.p?+b.dataset.p*6e4:T.cd+ +b.dataset.a*6e4)});
+$("#tmode").addEventListener("click",function(e){var b=e.target.closest("button");if(!b||b.dataset.m===T.m)return;T.m=b.dataset.m;savT();reset()});
+$("#tgo").onclick=go;$("#trs").onclick=reset;
+$("#fsb").onclick=function(){var f=$(".app").classList.toggle("fs");this.classList.toggle("on",f);this.setAttribute("aria-label",f?"Tam ekrandan çık":"Tam ekran");sync()};
+sync();paint();
 
 /* Gezinme */
 $$(".db").forEach(function(b,n){b.onclick=function(){
