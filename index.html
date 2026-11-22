@@ -293,6 +293,11 @@ function openSheet(){buildSheet();$("#sheet").scrollTop=0;$("#fl").classList.rem
 $("#sheet").addEventListener("scroll",function(){$("#fl").classList.toggle("on",this.scrollTop>90)},{passive:true});
 $("#fl").onclick=function(){$("#sheet").scrollTo({top:0,behavior:"smooth"})};
 $("#sx").onclick=function(){closeSheet()};
+$("#sheet").addEventListener("click",function(e){
+  var f=$("#af");if(!f||!f.classList.contains("open")||e.target.closest("#af,#ab,#fp"))return;
+  f.classList.remove("open");$("#ab").classList.remove("open");
+  if(document.activeElement&&f.contains(document.activeElement))document.activeElement.blur();
+});
 $("#fp").onclick=function(){$("#sheet").scrollTo({top:0,behavior:"smooth"});$("#ab").classList.add("open");$("#af").classList.add("open");setTimeout(function(){$("#fn").focus()},600)};
 function closeSheet(){$("#sheet").classList.remove("on")}
 document.addEventListener("keydown",function(e){if(e.key==="Escape")closeSheet()});
