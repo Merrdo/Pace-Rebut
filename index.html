@@ -677,7 +677,7 @@ function iInit(){
   var d=ds(cv.y,cv.m,cv.d),T=IDY={date:d,doc:iNd(),ud:[],dirty:0,cur:null,tap:null,tm:0,r:null};
   ICV={h:$("#ink-h"),l:$("#ink-l"),i:$("#ink-i")};
   var c=ICV.i;
-  c.addEventListener("pointerdown",iPd);c.addEventListener("pointermove",iPm);if("onpointerrawupdate" in c)c.addEventListener("pointerrawupdate",iPm);c.addEventListener("pointerup",iPu);c.addEventListener("pointercancel",iPc);
+  c.addEventListener("pointerdown",iPd);c.addEventListener("pointermove",iPm);c.addEventListener("pointerup",iPu);c.addEventListener("pointercancel",iPc);
   c.addEventListener("contextmenu",function(e){e.preventDefault()});
   iInfo();iFit(true);
   if(IRO){IRO.disconnect();IRO.observe($(".dv"))}
@@ -697,7 +697,7 @@ function iBk(){
   if(!ICV.i||!document.body.contains(ICV.i))return;
   var dd=window.devicePixelRatio||1;
   ["h","l","i"].forEach(function(k){
-    var c=ICV[k],dp=Math.min(dd,k==="i"?2:1.5);c.width=Math.round(IPW*IPS*dp);c.height=Math.round(IPH*IPS*dp);
+    var c=ICV[k],dp=Math.min(dd,1.5);c.width=Math.round(IPW*IPS*dp);c.height=Math.round(IPH*IPS*dp);
     var x=ICX[k]=c.getContext("2d",{desynchronized:k==="i"});
     x.setTransform(c.width/IPW,0,0,c.height/IPH,0,0);x.lineCap="round";x.lineJoin="round";
   });
@@ -751,8 +751,7 @@ function iPm(e){
   var C=T.cur;
   if(!C){if(T.tap&&e.pointerId===T.tap.id&&Math.abs(e.clientX-T.tap.x)+Math.abs(e.clientY-T.tap.y)>14)T.tap=null;return}
   if(e.pointerId!==C.id)return;
-  if(e.type==="pointermove"&&"onpointerrawupdate" in window)return;
-  var ev=e.type==="pointermove"&&e.getCoalescedEvents?e.getCoalescedEvents():null,j;if(!ev||!ev.length)ev=[e];
+  var ev=e.getCoalescedEvents?e.getCoalescedEvents():null,j;if(!ev||!ev.length)ev=[e];
   for(j=0;j<ev.length;j++)iAdd(T,C,ev[j]);
 }
 function iAdd(T,C,e){
