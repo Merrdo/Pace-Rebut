@@ -142,6 +142,11 @@ main{position:relative;overflow:hidden;height:100dvh}
 .fl-r{position:fixed;z-index:5;top:calc(18px + env(safe-area-inset-top,0px));right:24px;display:flex;gap:10px}
 .fp{width:44px;padding:0;display:grid;place-items:center;font-size:28px;line-height:1;font-weight:500}
 .fk{background:var(--fg);color:var(--bg)}
+.mod{position:fixed;inset:0;z-index:6;display:grid;place-items:center;padding:24px;background:rgba(17,17,17,.26);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);opacity:0;visibility:hidden;transition:opacity .45s var(--ease),visibility 0s .45s}
+.mod.on{opacity:1;visibility:visible;transition-delay:0s}
+.mc{width:min(460px,100%);max-height:calc(100dvh - 48px);overflow:auto;margin:0;padding:24px;border-radius:30px;box-shadow:0 30px 80px rgba(0,0,0,.22);transform:translateY(26px) scale(.93);opacity:0;transition:transform .65s var(--sp),opacity .4s var(--ease)}
+.mod.on .mc{transform:none;opacity:1}
+.mc input{max-width:none}
 .em{padding:20px 4px;color:var(--dim);font-weight:500}
 @media (max-width:1000px){#v-topics{grid-template-columns:300px 1fr}.topics{padding:28px 28px var(--dock-space)}.th h1{font-size:38px}.pc b{font-size:88px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
@@ -164,7 +169,7 @@ main{position:relative;overflow:hidden;height:100dvh}
     <section class="view" id="v-timer"></section>
     <section class="view" id="v-settings"><div class="set" id="set"></div></section>
   </main>
-  <div class="sheet" id="sheet"><button class="fl fl-l" id="fl">Dersler</button><div class="fl-r"><button class="fl fp" id="fp" aria-label="Yeni ders">+</button><button class="fl fk" id="sx">Kapat</button></div><div class="shw" id="shw"></div></div>
+  <div class="sheet" id="sheet"><button class="fl fl-l" id="fl">Dersler</button><div class="fl-r"><button class="fl fp" id="fp" aria-label="Yeni ders">+</button><button class="fl fk" id="sx">Kapat</button></div><div class="shw" id="shw"></div><div class="mod" id="mod"><div class="mc card" id="mc"></div></div></div>
 </div>
 <script>
 (function(){
@@ -284,38 +289,37 @@ function swatches(c){return PAL.map(function(p,k){return'<button class="swb'+(p[
 function rowH(s,i){return'<div class="lw" data-id="'+s.id+'" style="--c:'+s.c+';--ct:'+s.ct+';--d:'+Math.min(i*45+100,500)+'ms"><div class="li"><div class="lr"><div class="lh"><button class="grip" aria-label="Sırala"><svg viewBox="0 0 24 24"><path d="M9 6h.01M15 6h.01M9 12h.01M15 12h.01M9 18h.01M15 18h.01"/></svg></button><button class="dot" aria-label="Rengi değiştir"></button><div class="ln"><b>'+esc(s.n)+'</b><small>'+s.t.length+' konu</small></div>'+(s.x?'<button class="dl">Sil</button>':"")+'</div><div class="sw"><div class="swi"><div class="swr">'+swatches(s.c)+'</div></div></div></div></div></div>'}
 function buildSheet(){
   nf={g:"TYT",p:0};
-  var h='<div class="sh-h"><div><h1>Dersler</h1><p>Tutamaçtan sürükleyerek sırala, renk noktasına dokunarak rengi değiştir.</p></div></div><button class="add" id="ab"><span>+</span>Yeni ders ekle</button>'+
-  '<div class="af" id="af"><div class="afi"><div class="card" style="margin:14px 0 0"><h2>Yeni ders</h2><input id="fn" maxlength="24" placeholder="Ders adı" autocomplete="off"><div class="seg" id="fg" data-g="TYT"><i></i><button class="on" data-g="TYT">TYT</button><button data-g="AYT">AYT</button></div><div class="swr">'+swatches(PAL[0][0])+'</div><textarea id="ft" placeholder="Konular (isteğe bağlı, her satıra bir konu)"></textarea><div class="row"><button class="btn pr" id="fok">Ekle</button></div><div class="msg" id="fm"></div></div></div></div>';
+  var h='<div class="sh-h"><div><h1>Dersler</h1><p>Tutamaçtan sürükleyerek sırala, renk noktasına dokunarak rengi değiştir.</p></div></div><button class="add" id="ab"><span>+</span>Yeni ders ekle</button>';
   ["TYT","AYT"].forEach(function(g){h+='<div class="grp">'+(g==="TYT"?"TYT":"AYT Sayısal")+'</div><div class="ll" data-g="'+g+'">'+vis().filter(function(s){return s.g===g}).map(rowH).join("")+'</div>'});
   $("#shw").innerHTML=h;
+  $("#mc").innerHTML='<h2>Yeni ders</h2><input id="fn" maxlength="24" placeholder="Ders adı" autocomplete="off"><div class="seg" id="fg" data-g="TYT"><i></i><button class="on" data-g="TYT">TYT</button><button data-g="AYT">AYT</button></div><div class="swr">'+swatches(PAL[0][0])+'</div><textarea id="ft" placeholder="Konular (isteğe bağlı, her satıra bir konu)"></textarea><div class="row"><button class="btn pr" id="fok">Ekle</button><button class="btn" id="fc">İptal</button></div><div class="msg" id="fm"></div>';
 }
-function openSheet(){buildSheet();$("#sheet").scrollTop=0;$("#fl").classList.remove("on");$("#sheet").classList.add("on")}
+function openForm(){$("#mod").classList.add("on");setTimeout(function(){if($("#mod").classList.contains("on"))$("#fn").focus()},450)}
+function closeForm(){$("#mod").classList.remove("on");var a=document.activeElement;if(a&&$("#mc").contains(a))a.blur()}
+function openSheet(){$("#mod").classList.remove("on");buildSheet();$("#sheet").scrollTop=0;$("#fl").classList.remove("on");$("#sheet").classList.add("on")}
 $("#sheet").addEventListener("scroll",function(){$("#fl").classList.toggle("on",this.scrollTop>90)},{passive:true});
 $("#fl").onclick=function(){$("#sheet").scrollTo({top:0,behavior:"smooth"})};
 $("#sx").onclick=function(){closeSheet()};
-$("#sheet").addEventListener("click",function(e){
-  var f=$("#af");if(!f||!f.classList.contains("open")||e.target.closest("#af,#ab,#fp"))return;
-  f.classList.remove("open");$("#ab").classList.remove("open");
-  if(document.activeElement&&f.contains(document.activeElement))document.activeElement.blur();
-});
-$("#fp").onclick=function(){$("#sheet").scrollTo({top:0,behavior:"smooth"});$("#ab").classList.add("open");$("#af").classList.add("open");setTimeout(function(){$("#fn").focus()},600)};
-function closeSheet(){$("#sheet").classList.remove("on")}
-document.addEventListener("keydown",function(e){if(e.key==="Escape")closeSheet()});
+$("#mod").addEventListener("click",function(e){if(e.target===this)closeForm()});
+$("#fp").onclick=openForm;
+function closeSheet(){closeForm();$("#sheet").classList.remove("on")}
+document.addEventListener("keydown",function(e){if(e.key==="Escape"){if($("#mod").classList.contains("on"))closeForm();else closeSheet()}});
 function addLesson(){
   var n=$("#fn").value.trim(),m=$("#fm");
   if(!n){m.textContent="Ders adı yaz.";$("#fn").focus();return}
   var p=PAL[nf.p],e={g:nf.g,n:n,t:$("#ft").value.split("\n").map(function(x){return x.trim()}).filter(Boolean).slice(0,80),c:p[0],ct:p[1]};
   S.extra.push(e);var id=addL(e);norm();save();
   var l=$('.ll[data-g="'+nf.g+'"]');l.insertAdjacentHTML("beforeend",rowH(D[id],0));
-  $("#fn").value="";$("#ft").value="";m.textContent="";$("#ab").classList.remove("open");$("#af").classList.remove("open");
+  $("#fn").value="";$("#ft").value="";m.textContent="";closeForm();
   var r=l.lastElementChild;setTimeout(function(){r.scrollIntoView({behavior:"smooth",block:"center"})},350);refresh();
 }
-$("#shw").addEventListener("click",function(e){
+function shClick(e){
   var t=e.target.closest("button");if(!t)return;
   var w=t.closest(".lw"),id=t.id;
   if(id==="sx")return closeSheet();
   if(id==="fok")return addLesson();
-  if(id==="ab"){var o=!$("#af").classList.contains("open");t.classList.toggle("open",o);$("#af").classList.toggle("open",o);if(o)setTimeout(function(){$("#fn").focus()},500);return}
+  if(id==="ab")return openForm();
+  if(id==="fc")return closeForm();
   if(t.closest(".seg")){nf.g=t.dataset.g;t.parentNode.dataset.g=nf.g;[].forEach.call(t.parentNode.querySelectorAll("button"),function(b){b.classList.toggle("on",b===t)});return}
   if(t.classList.contains("swb")){
     var k=+t.dataset.p;[].forEach.call(t.parentNode.children,function(b){b.classList.toggle("on",b===t)});
@@ -328,7 +332,8 @@ $("#shw").addEventListener("click",function(e){
     var i=+w.dataset.id;S.gone[i]=1;for(var q in S.done)if(q.indexOf(i+"_")===0)delete S.done[q];
     w.classList.add("out");norm();save();refresh();setTimeout(function(){w.remove()},500);
   }
-});
+}
+$("#shw").addEventListener("click",shClick);$("#mod").addEventListener("click",shClick);
 $("#shw").addEventListener("pointerdown",function(e){var g=e.target.closest(".grip");if(g&&e.button===0){e.preventDefault();drag(e,g,g.closest(".lw"))}});
 var dragging=false;
 function drag(e,g,w){
