@@ -206,7 +206,7 @@ main{position:relative;overflow:hidden;height:100dvh}
 .kb:active{transform:scale(.92)}.kb.w{width:auto;padding:0 18px;border-radius:999px;font-size:16px;font-weight:700}
 .kb svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .kb.on{background:var(--fg);color:var(--bg)}
-.kbody{flex:1;min-height:0;position:relative}
+.kbody{flex:1;min-height:0;position:relative;touch-action:pan-y}#glc{touch-action:pan-y}
 .kz{position:absolute;inset:0;overflow:auto;overscroll-behavior:contain;animation:zin .6s var(--ease) both}
 .kz.out{animation-name:zout}.kz.nx{animation-name:knx}.kz.pv{animation-name:kpv}
 @keyframes zin{from{opacity:0;transform:scale(.92)}}@keyframes zout{from{opacity:0;transform:scale(1.08)}}
@@ -216,9 +216,9 @@ main{position:relative;overflow:hidden;height:100dvh}
 .mm:active{transform:scale(.96)}.mm b{font-size:18px;font-weight:800;margin-bottom:4px}.mm.now b{color:var(--ct)}
 .mg{flex:1;min-height:0;display:grid;grid-template-columns:repeat(7,1fr);grid-auto-rows:1fr;align-items:center;justify-items:center;font:500 11px Inter,system-ui,sans-serif;color:var(--fg)}
 .mg i{font-style:normal;color:var(--dim);font-size:10px}
-.mg s{position:relative;text-decoration:none;width:20px;line-height:20px;text-align:center;border-radius:50%}
+.mg s{display:block;position:relative;text-decoration:none;width:20px;line-height:20px;text-align:center;border-radius:50%}
 .mg s.t{background:var(--fg);color:var(--bg)}
-.mg s.hr:after,.mg s.hw:after,.mg s.e:after{content:"";position:absolute;left:50%;bottom:-3px;width:4px;height:4px;margin-left:-2px;border-radius:50%}.mg s.hr:after{background:#2fbf71}.mg s.hw:after{background:#9b6cff}.mg s.e:after{background:var(--ct)}
+.mg s.hr:after,.mg s.hw:after,.mg s.e:after{content:"";position:absolute;left:0;right:0;margin:0 auto;bottom:-6px;width:4px;height:4px;border-radius:50%}.mg s.hr:after{background:#2fbf71}.mg s.hw:after{background:#9b6cff}.mg s.e:after{background:var(--ct)}
 .wk{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-bottom:8px;text-align:center;font-size:14px;font-weight:700;color:var(--dim)}
 .mg2{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;height:calc(100% - 28px)}
 .dc{display:flex;flex-direction:column;gap:3px;min-height:0;overflow:hidden;text-align:left;padding:8px 9px;border-radius:16px;background:var(--surf);transition:transform .5s var(--sp);animation:up .5s var(--ease) calc(var(--n)*10ms) backwards}
@@ -667,7 +667,7 @@ function glist(){
 function updL(){$("#gyv").textContent=cl.y;$$("[data-lt]").forEach(function(b){b.classList.toggle("on",b.dataset.lt===cl.t)});var g=$("#gl");g.className="gl "+cl.t;g.innerHTML=glist()}
 function paintS(){
   $("#cset").innerHTML='<div class="setw"><div class="sh-h"><div><h1>Takvim ayarları</h1><p>Hangi özel günler takvimde görünsün?</p></div><button class="btn pr" data-x="1">Bitti</button></div>'+KS.map(function(k){return'<div class="card lc"><div><h2>'+k[1]+'</h2><p>'+k[2]+'</p></div><button class="tg'+(CS.set[k[0]]?" on":"")+'" data-g="'+k[0]+'" aria-label="'+k[1]+'"><i></i></button></div>'}).join("")+
-  '<div class="card"><h2>Gün listesi</h2><p>Hangi gün hangi tarihe denk geliyor.</p><div class="gy"><button class="kb" data-ly="-1" aria-label="Önceki yıl"><svg viewBox="0 0 24 24">'+IC.p+'</svg></button><b id="gyv">'+cl.y+'</b><button class="kb" data-ly="1" aria-label="Sonraki yıl"><svg viewBox="0 0 24 24">'+IC.n+'</svg></button><button class="chip'+(cl.t==="r"?" on":"")+'" data-lt="r">Türkiye</button><button class="chip'+(cl.t==="w"?" on":"")+'" data-lt="w">Uluslararası</button></div><div class="gl '+cl.t+'" id="gl">'+glist()+'</div></div></div>';
+  '<div class="card" id="glc"><h2>Gün listesi</h2><p>Hangi gün hangi tarihe denk geliyor.</p><div class="gy"><button class="kb" data-ly="-1" aria-label="Önceki yıl"><svg viewBox="0 0 24 24">'+IC.p+'</svg></button><b id="gyv">'+cl.y+'</b><button class="kb" data-ly="1" aria-label="Sonraki yıl"><svg viewBox="0 0 24 24">'+IC.n+'</svg></button><button class="chip'+(cl.t==="r"?" on":"")+'" data-lt="r">Türkiye</button><button class="chip'+(cl.t==="w"?" on":"")+'" data-lt="w">Uluslararası</button></div><div class="gl '+cl.t+'" id="gl">'+glist()+'</div></div></div>';
 }
 $("#cset").addEventListener("click",function(e){
   var b=e.target.closest("button");if(!b)return;
@@ -675,6 +675,19 @@ $("#cset").addEventListener("click",function(e){
   else if(b.dataset.g){CS.set[b.dataset.g]=CS.set[b.dataset.g]?0:1;b.classList.toggle("on",!!CS.set[b.dataset.g]);csv()}
   else if(b.dataset.ly||b.dataset.lt){if(b.dataset.ly)cl.y+=+b.dataset.ly;else cl.t=b.dataset.lt;updL()}
 });
+var sw=0;
+function swp(el,ok,cb){
+  var x0=0,y0=0,t0=0,on=0;
+  el.addEventListener("pointerdown",function(e){if(e.pointerType==="mouse"&&e.button){on=0;return}on=ok(e.target)?1:0;x0=e.clientX;y0=e.clientY;t0=Date.now()});
+  el.addEventListener("pointerup",function(e){
+    if(!on)return;on=0;var dx=e.clientX-x0,dy=e.clientY-y0;
+    if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5&&Date.now()-t0<900){sw=1;setTimeout(function(){sw=0},80);cb(dx<0?1:-1)}
+  });
+  el.addEventListener("pointercancel",function(){on=0});
+  el.addEventListener("click",function(e){if(sw){e.stopPropagation();e.preventDefault()}},true);
+}
+swp($("#cal"),function(t){return!!t.closest(".kbody")&&!t.closest("input,textarea")},step);
+swp($("#cset"),function(t){return!!t.closest("#glc")},function(n){cl.y+=n;updL()});
 paintK();
 
 /* Gezinme */
