@@ -755,7 +755,7 @@ function iBk(){
     c.width=Math.max(1,Math.round(w.w*sc*dp));c.height=Math.max(1,Math.round(w.h*sc*dp));
     x=ICX[k]=c.getContext("2d");sx=c.width/w.w;sy=c.height/w.h;
     x.setTransform(sx,0,0,sy,-w.x*sx,-w.y*sy);
-    if(!lv){x.beginPath();x.moveTo(26,0);x.arcTo(IPW,0,IPW,IPH,26);x.arcTo(IPW,IPH,0,IPH,26);x.arcTo(0,IPH,0,0,26);x.arcTo(0,0,IPW,0,26);x.closePath();x.clip()}
+    {x.beginPath();x.moveTo(26,0);x.arcTo(IPW,0,IPW,IPH,26);x.arcTo(IPW,IPH,0,IPH,26);x.arcTo(0,IPH,0,0,26);x.arcTo(0,0,IPW,0,26);x.closePath();x.clip()}
     x.lineCap="round";x.lineJoin="round";
   });
   IZ.w={x:w.x,y:w.y,x1:w.x+w.w,y1:w.y+w.h,s:sc};
@@ -825,7 +825,7 @@ function iAdd(T,C,e){
   C.moved=Math.max(C.moved,Math.abs(e.clientX-C.x0)+Math.abs(e.clientY-C.y0));
   if(dx*dx+dy*dy<.5)return;
   p.push(iRd(q[0]),iRd(q[1]),iPv(e,C));n++;
-  if(iIn(q[0],q[1])){if(st.t==="h")iSeg(ICX.l,st,n-2,1);else iSeg(ICX.p,st,n-2)}
+  if(st.t==="h")iSeg(ICX.l,st,n-2,1);else iSeg(ICX.p,st,n-2);
 }
 function iErase(x,y){
   var T=IDY,S=T.doc.s,i,j,s,p,rr,dx,dy,ch=0;
