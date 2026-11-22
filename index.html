@@ -220,16 +220,11 @@ main{position:relative;overflow:hidden;height:100dvh}
 .mg s.t{background:var(--fg);color:var(--bg)}
 .mg s.hr:after,.mg s.hw:after,.mg s.e:after{content:"";position:absolute;left:50%;bottom:-3px;width:4px;height:4px;margin-left:-2px;border-radius:50%}.mg s.hr:after{background:#2fbf71}.mg s.hw:after{background:#9b6cff}.mg s.e:after{background:var(--ct)}
 .wk{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-bottom:8px;text-align:center;font-size:14px;font-weight:700;color:var(--dim)}
-.mg2{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;height:calc(100% - 28px)}
+.kz.km{overflow:hidden;display:flex;flex-direction:column}.kz.km .wk{flex:none}.mg2{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;flex:1;min-height:0}
 .dc{display:flex;flex-direction:column;gap:3px;min-height:0;overflow:hidden;text-align:left;padding:8px 9px;border-radius:16px;background:var(--surf);transition:transform .5s var(--sp);animation:up .5s var(--ease) calc(var(--n)*10ms) backwards}
 .dc:active{transform:scale(.96)}.dc.pd{background:transparent;pointer-events:none}
 .dc>b{align-self:flex-start;min-width:26px;line-height:26px;text-align:center;border-radius:13px;font:600 15px Inter,system-ui,sans-serif}
 .dc.t>b{background:var(--fg);color:var(--bg)}
-.dc.sp{padding:0;gap:0}.dc.sp:active{transform:none}
-.hf{flex:1;min-height:0;display:flex;align-items:center;gap:6px;padding:0 9px;text-align:left;transition:opacity .2s}.hf:active{opacity:.6}.hf+.hf{border-top:2px solid var(--surf2)}
-.hf>b{flex:none;min-width:24px;line-height:24px;text-align:center;border-radius:12px;font:600 14px Inter,system-ui,sans-serif}.hf.t>b{background:var(--fg);color:var(--bg)}
-.hf .cp{flex:1 1 0;min-width:0}.hf .cp.mo{flex:none}
-
 .cp{display:block;flex:none;padding:1px 7px;border-radius:7px;background:var(--k);color:#111;font-size:12px;font-weight:600;line-height:1.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cp.big{display:inline-block;font-size:14px;padding:3px 10px;margin:0 6px 6px 0;border-radius:10px}
 .cp.mo{background:var(--surf2);color:var(--dim)}
@@ -585,7 +580,7 @@ function ib(a,i,x){return'<button class="kb'+(x||"")+'" data-a="'+a+'" aria-labe
 function paintK(q){
   var l=cv.l,t=l==="year"?'<span>'+cv.y+'</span>':l==="month"?'<button data-a="y">'+cv.y+'</button><span>'+MN[cv.m]+'</span>':'<button data-a="y">'+cv.y+'</button><button data-a="mo">'+MN[cv.m]+'</button><span>'+cv.d+'</span>',
   fs=$(".app").classList.contains("fs");
-  $("#cal").innerHTML='<div class="kh"><div class="kt">'+t+'</div><div class="kc">'+ib("pv","p")+'<button class="kb w" data-a="td">Bugün</button>'+ib("nx","n")+'<button class="kb fsx'+(fs?" on":"")+'" data-a="fs" aria-label="Tam ekran"><svg class="i-e" viewBox="0 0 24 24">'+IC.fs+'</svg><svg class="i-c" viewBox="0 0 24 24">'+IC.fx+'</svg></button>'+ib("st","st")+'</div></div><div class="kbody"><div class="kz '+(q?"no":cv.dir)+'">'+(l==="year"?rY():l==="month"?rM():rD())+'</div></div>';
+  $("#cal").innerHTML='<div class="kh"><div class="kt">'+t+'</div><div class="kc">'+ib("pv","p")+'<button class="kb w" data-a="td">Bugün</button>'+ib("nx","n")+'<button class="kb fsx'+(fs?" on":"")+'" data-a="fs" aria-label="Tam ekran"><svg class="i-e" viewBox="0 0 24 24">'+IC.fs+'</svg><svg class="i-c" viewBox="0 0 24 24">'+IC.fx+'</svg></button>'+ib("st","st")+'</div></div><div class="kbody"><div class="kz '+(q?"no":cv.dir)+(l==="month"?" km":"")+'">'+(l==="year"?rY():l==="month"?rM():rD())+'</div></div>';
   if(l==="day")dayList();
 }
 function rY(){
@@ -599,14 +594,10 @@ function rY(){
   return h+'</div>';
 }
 function rM(){
-  var o=wdx(cv.y,cv.m,1),n=dim(cv.y,cv.m),rows=Math.ceil((o+n)/7),R=Math.min(rows,5),WS=["Pzt","Sal","Çar","Per","Cum","Cmt","Paz"],
-  h='<div class="wk">'+WS.map(function(x){return"<span>"+x+"</span>"}).join("")+'</div><div class="mg2" style="grid-template-rows:repeat('+R+',1fr)">';
-  function chs(d){return hs(cv.y,cv.m,d).map(function(x){return[x.n,GC[x.g]]}).concat(its(cv.y,cv.m,d).map(function(x){return[x.t,KC[x.k]]}))}
-  function half(d){var ch=chs(d);return'<button class="hf'+(isT(cv.y,cv.m,d)?" t":"")+'" data-a="d" data-d="'+d+'"><b>'+d+'</b>'+(ch.length?'<span class="cp" style="--k:'+ch[0][1]+'">'+esc(ch[0][0])+'</span>':'')+(ch.length>1?'<span class="cp mo">+'+(ch.length-1)+'</span>':'')+'</button>'}
-  for(var c=0;c<R*7;c++){
+  var o=wdx(cv.y,cv.m,1),n=dim(cv.y,cv.m),rows=Math.ceil((o+n)/7),h='<div class="wk">'+WD.map(function(x){return"<span>"+x.slice(0,3)+"</span>"}).join("")+'</div><div class="mg2" style="grid-template-rows:repeat('+rows+',1fr)">';
+  for(var c=0;c<rows*7;c++){
     var d=c-o+1;if(d<1||d>n){h+='<i class="dc pd"></i>';continue}
-    if(rows>5&&c>=28&&d+7<=n){h+='<div class="dc sp" style="--n:'+c+'">'+half(d)+half(d+7)+'</div>';continue}
-    var ch=chs(d),v=ch.slice(0,3);
+    var ch=hs(cv.y,cv.m,d).map(function(x){return[x.n,GC[x.g]]}).concat(its(cv.y,cv.m,d).map(function(x){return[x.t,KC[x.k]]})),v=ch.slice(0,3);
     h+='<button class="dc'+(isT(cv.y,cv.m,d)?" t":"")+'" data-a="d" data-d="'+d+'" style="--n:'+c+'"><b>'+d+'</b>'+v.map(function(x){return'<span class="cp" style="--k:'+x[1]+'">'+esc(x[0])+'</span>'}).join("")+(ch.length>3?'<span class="cp mo">+'+(ch.length-3)+' daha</span>':'')+'</button>';
   }
   return h+'</div>';
