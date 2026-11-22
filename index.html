@@ -198,6 +198,10 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 #v-cal{overflow:hidden}
 .cal{position:absolute;inset:0;display:flex;flex-direction:column;padding:26px 36px var(--dock-space);transition:padding .8s var(--ease)}
 .app.fs .cal{padding-bottom:26px}
+.cal.nt{transition:none}
+.app.fsa .dock,.app.fsa .zc{-webkit-backdrop-filter:none;backdrop-filter:none}
+.app.fsa .zc{background:#fff}
+.pgw.fa{will-change:transform;transform-origin:0 0}
 .kh{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:16px}
 .kt{display:flex;align-items:baseline;gap:14px;font-size:46px;font-weight:800;letter-spacing:-1px;line-height:1;white-space:nowrap}
 .kt button,.kt span{color:var(--dim);font-weight:800;transition:color .3s}.kt>:last-child{color:var(--fg)}.kt button:active{color:var(--ct)}
@@ -594,7 +598,35 @@ $("#pre").innerHTML='<button class="chip" data-a="-5">−5 dk</button>'+[15,25,4
 $("#pre").addEventListener("click",function(e){var b=e.target.closest(".chip");if(!b||T.run||T.acc)return;setCd(b.dataset.p?+b.dataset.p*6e4:ST.cd.cd+ +b.dataset.a*6e4)});
 $("#tmode").addEventListener("click",function(e){var b=e.target.closest("button");if(!b||b.dataset.m===MODE)return;MODE=b.dataset.m;T=ST[MODE];savT();sync();paint()});
 $("#tgo").onclick=go;$("#trs").onclick=reset;
-$("#fsb").onclick=function(){var f=$(".app").classList.toggle("fs");this.classList.toggle("on",f);this.setAttribute("aria-label",f?"Tam ekrandan çık":"Tam ekran");sync()};
+/* Tam ekran: yerleşim TEK seferde değişir; geçiş yalnızca GPU transform'uyla (FLIP) oynar.
+   Animasyon sırasında tuval yeniden kurma yok; bittikten sonra bir kez, boşta yapılır. */
+var IFA=0,FSAN=null;
+function fsEnd(){if(FSAN){var a=FSAN;FSAN=null;try{a.finish()}catch(e){}}}
+function fsToggle(btn){
+  var app=$(".app"),cal=$("#cal"),w=$("#pgw"),dv=$(".dv");
+  var flip=!!(w&&dv&&cal&&w.animate&&w.isConnected&&w.offsetParent&&!ZRM);
+  fsEnd();
+  var r0=flip?w.getBoundingClientRect():null;
+  if(flip){IFA=1;cal.classList.add("nt");app.classList.add("fsa")}
+  var f=app.classList.toggle("fs");
+  btn.classList.toggle("on",f);btn.setAttribute("aria-label",f?"Tam ekrandan çık":"Tam ekran");
+  sync();
+  if(!flip)return;
+  iFit(true);                                   /* yeni ölçü: tek layout, yeniden kurma YOK (IFA) */
+  var r1=w.getBoundingClientRect();
+  var sx=r1.width?r0.width/r1.width:1,sy=r1.height?r0.height/r1.height:1;
+  var dx=r0.left-r1.left,dy=r0.top-r1.top;
+  requestAnimationFrame(function(){cal.classList.remove("nt")});
+  if(Math.abs(dx)+Math.abs(dy)+Math.abs(sx-1)+Math.abs(sy-1)<.002){IFA=0;app.classList.remove("fsa");iFit();return}
+  w.classList.add("fa");
+  var an=FSAN=w.animate([{transform:"translate("+dx+"px,"+dy+"px) scale("+sx+","+sy+")"},{transform:"none"}],{duration:520,easing:"cubic-bezier(.22,1,.36,1)"});
+  an.onfinish=an.oncancel=function(){
+    if(FSAN&&FSAN!==an)return;FSAN=null;
+    w.classList.remove("fa");app.classList.remove("fsa");IFA=0;
+    (window.requestIdleCallback||function(c){setTimeout(c,60)})(function(){iFit()},{timeout:400});
+  };
+}
+$("#fsb").onclick=function(){fsToggle(this)};
 if(ST.cd.run&&el(ST.cd)>=ST.cd.cd)finish(ST.cd,true);
 wk();sync();paint();setInterval(tick,40);
 
@@ -729,7 +761,7 @@ function iInit(){
   iStop(IL.b);iStop(IL.z);IL.b=iLay("bh","bi",0);IL.z=iLay("h","i",1);ILW=null;IDR=null;
   ICV={bh:$("#ink-bh"),bi:$("#ink-bi"),h:$("#ink-h"),l:$("#ink-l"),i:$("#ink-i"),p:$("#ink-p")};
   var c=$("#ink-in");
-  c.addEventListener("pointerdown",iPd);c.addEventListener("pointermove",iPm);c.addEventListener("pointerup",iPu);c.addEventListener("pointercancel",iPc);
+  c.addEventListener("pointerdown",fsEnd,true);c.addEventListener("pointerdown",iPd);c.addEventListener("pointermove",iPm);c.addEventListener("pointerup",iPu);c.addEventListener("pointercancel",iPc);
   c.addEventListener("contextmenu",function(e){e.preventDefault()});
   ICV.l.style.opacity=.5;
   zInit($(".dv"));
@@ -867,6 +899,7 @@ function iFit(now){
   var dv=$(".dv"),w=$("#pgw");if(!dv||!w)return;
   var s=Math.min(dv.clientWidth/IPW,dv.clientHeight/IPH,1.5);if(!(s>0))return;
   IPS=s;w.style.width=IPW*s+"px";w.style.height=IPH*s+"px";zRe();
+  if(IFA)return;                                   /* tam ekran geçişi sürerken yeniden kurma yok */
   if(IL.b.fit&&Math.abs(IL.b.fit-s)<.001)return;   /* ölçü değişmediyse (ResizeObserver'ın ilk bildirimi gibi) yeniden kurma */
   clearTimeout(IFT);if(now)iBk();else IFT=setTimeout(iBk,140);
 }
@@ -1046,7 +1079,7 @@ iDbOpen();iWhen(function(){iKeys(function(k){k.forEach(function(x){INKD[x]=1});m
 
 /* Yakınlaştırma: iki parmakla sıkıştır/kaydır, yakınken tek parmakla kaydır, çift dokunuş, Ctrl/⌘+tekerlek, +/- tuşları, sağ alttaki düğmeler.
    Hareket sırasında yalnızca #pg'nin transform'u değişir (GPU). Hareket bitince tuvaller görünür bölgeye göre yüksek çözünürlükte yeniden çizilir. */
-var ZMIN=1,ZMAX=5,ZDBL=2.5,ZRM=!!(window.matchMedia&&matchMedia("(prefers-reduced-motion:reduce)").matches),
+var ZMIN=1,ZMAX=3,ZDBL=2,ZRM=!!(window.matchMedia&&matchMedia("(prefers-reduced-motion:reduce)").matches),
 IZ={z:1,x:0,y:0,p:{},n:0,g:null,pn:null,an:null,tm:0,w:null,lt:0,lx:0,ly:0},IZA=0;
 function zG(){var d=$(".dv");if(!d)return null;var pw=IPW*IPS,ph=IPH*IPS,w=d.clientWidth,h=d.clientHeight;return{w:w,h:h,pw:pw,ph:ph,nl:(w-pw)/2,nt:(h-ph)/2}}
 function zLim(g,z,ax){var pw=ax?g.pw:g.ph,vw=ax?g.w:g.h,n=ax?g.nl:g.nt,s=pw*z,c;if(s<=vw){c=(vw-s)/2-n;return[c,c]}return[vw-s-n,-n]}
