@@ -701,8 +701,7 @@ function iBk(){
   var dd=window.devicePixelRatio||1;
   ["h","l","i","p"].forEach(function(k){
     var c=ICV[k],x;
-    if(k==="p"){c.width=c.height=1;ICX.p=c.getContext("2d");return}
-    var dp=k==="l"?Math.min(dd,1.5,2600/(IPW*IPS)):Math.min(dd,3200/(IPW*IPS));c.width=Math.round(IPW*IPS*dp);c.height=Math.round(IPH*IPS*dp);
+    var dp=(k==="l"||k==="p")?Math.min(dd,1.5,2600/(IPW*IPS)):Math.min(dd,3200/(IPW*IPS));c.width=Math.round(IPW*IPS*dp);c.height=Math.round(IPH*IPS*dp);
     x=ICX[k]=c.getContext("2d");
     x.setTransform(c.width/IPW,0,0,c.height/IPH,0,0);x.lineCap="round";x.lineJoin="round";
   });
@@ -748,7 +747,7 @@ function iPd(e){
   var C=T.cur={id:e.pointerId,er:er,t0:Date.now(),st:null,del:[],x0:e.clientX,y0:e.clientY,moved:0,pr:.5};
   if(er){iErase(q[0],q[1]);return}
   var h=ITL.t==="hl",st=C.st={t:h?"h":"p",c:h?IHC[ITL.hc]:IPC[ITL.pc],w:h?18:2.4,p:[iRd(q[0]),iRd(q[1]),iPv(e,C)]};
-  if(h){ICX.l.fillStyle=st.c;ICX.l.beginPath();ICX.l.arc(st.p[0],st.p[1],st.w/2,0,6.3);ICX.l.fill()}else iDot(ICX.i,st);
+  if(h){ICX.l.fillStyle=st.c;ICX.l.beginPath();ICX.l.arc(st.p[0],st.p[1],st.w/2,0,6.3);ICX.l.fill()}else iDot(ICX.p,st);
 }
 function iPm(e){
   var T=IDY;if(!T)return;
@@ -767,7 +766,7 @@ function iAdd(T,C,e){
   C.moved=Math.max(C.moved,Math.abs(e.clientX-C.x0)+Math.abs(e.clientY-C.y0));
   if(dx*dx+dy*dy<.5)return;
   p.push(iRd(q[0]),iRd(q[1]),iPv(e,C));n++;
-  if(st.t==="h")iSeg(ICX.l,st,n-2,1);else iSeg(ICX.i,st,n-2);
+  if(st.t==="h")iSeg(ICX.l,st,n-2,1);else iSeg(ICX.p,st,n-2);
 }
 function iErase(x,y){
   var T=IDY,S=T.doc.s,i,j,s,p,rr,dx,dy,ch=0;
@@ -791,7 +790,7 @@ function iPu(e){
   if(C.er){if(C.del.length){T.ud.push({k:"del",l:C.del});iSv()}return}
   var st=C.st,n=st.p.length/3;
   if(C.moved<5&&Date.now()-C.t0<350&&iHit(e.clientX,e.clientY)){iRedraw();return}
-  if(st.t==="h")iHp(ICX.h,st);else if(n>1)iSeg(ICX.i,st,n-1);
+  iPaint(st);
   T.doc.s.push(st);T.ud.push({k:"add",s:st});iSv();
 }
 function iPc(e){
