@@ -220,7 +220,7 @@ main{position:relative;overflow:hidden;height:100dvh}
 .mg s.t{background:var(--fg);color:var(--bg)}
 .mg s.hr:after,.mg s.hw:after,.mg s.e:after{content:"";position:absolute;left:50%;bottom:-3px;width:4px;height:4px;margin-left:-2px;border-radius:50%}.mg s.hr:after{background:#2fbf71}.mg s.hw:after{background:#9b6cff}.mg s.e:after{background:var(--ct)}
 .wk{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-bottom:8px;text-align:center;font-size:14px;font-weight:700;color:var(--dim)}
-.kz:has(.mg2){display:flex;flex-direction:column;overflow:hidden;padding-bottom:2px}.kz:has(.mg2) .wk{flex:none}.mg2{--rh:calc((100cqh - 32px)/5);container-type:size;overflow-y:auto;overscroll-behavior:contain;display:grid;grid-template-columns:repeat(7,1fr);gap:8px;flex:1;min-height:0}@supports not (height:1cqh){.mg2{--rh:minmax(90px,1fr)}}
+.mg2{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;height:calc(100% - 28px)}
 .dc{display:flex;flex-direction:column;gap:3px;min-height:0;overflow:hidden;text-align:left;padding:8px 9px;border-radius:16px;background:var(--surf);transition:transform .5s var(--sp);animation:up .5s var(--ease) calc(var(--n)*10ms) backwards}
 .dc:active{transform:scale(.96)}.dc.pd{background:transparent;pointer-events:none}
 .dc>b{align-self:flex-start;min-width:26px;line-height:26px;text-align:center;border-radius:13px;font:600 15px Inter,system-ui,sans-serif}
@@ -594,7 +594,7 @@ function rY(){
   return h+'</div>';
 }
 function rM(){
-  var o=wdx(cv.y,cv.m,1),n=dim(cv.y,cv.m),rows=Math.ceil((o+n)/7),h='<div class="wk">'+["Pzt","Sal","Çar","Per","Cum","Cmt","Paz"].map(function(x){return"<span>"+x+"</span>"}).join("")+'</div><div class="mg2" style="grid-template-rows:repeat('+rows+',var(--rh))">';
+  var o=wdx(cv.y,cv.m,1),n=dim(cv.y,cv.m),rows=Math.ceil((o+n)/7),h='<div class="wk">'+WD.map(function(x){return"<span>"+x.slice(0,3)+"</span>"}).join("")+'</div><div class="mg2" style="grid-template-rows:repeat('+rows+',1fr)">';
   for(var c=0;c<rows*7;c++){
     var d=c-o+1;if(d<1||d>n){h+='<i class="dc pd"></i>';continue}
     var ch=hs(cv.y,cv.m,d).map(function(x){return[x.n,GC[x.g]]}).concat(its(cv.y,cv.m,d).map(function(x){return[x.t,KC[x.k]]})),v=ch.slice(0,3);
