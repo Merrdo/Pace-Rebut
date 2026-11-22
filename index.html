@@ -560,7 +560,7 @@ $("#tmode").addEventListener("click",function(e){var b=e.target.closest("button"
 $("#tgo").onclick=go;$("#trs").onclick=reset;
 $("#fsb").onclick=function(){var f=$(".app").classList.toggle("fs");this.classList.toggle("on",f);this.setAttribute("aria-label",f?"Tam ekrandan çık":"Tam ekran");sync()};
 if(ST.cd.run&&el(ST.cd)>=ST.cd.cd)finish(ST.cd,true);
-wk();sync();paint();setInterval(tick,40);
+wk();sync();paint();var TKI=setInterval(tick,40);
 
 
 /* Takvim */
@@ -602,7 +602,7 @@ function paintK(q){
   if(l==="day")iInit();
 }
 /* Gün sayfası: kalemle yazı, dokunarak işaret */
-var IPW=1200,IPH=640,IPS=1,INKD={},ILP=0,IDY=null,IRDY=0,IWQ=[],IDB=null,IFT=0,ICV={},ICX={},
+var IDPF=0,IFW=0,ITAIL=0,IPW=1200,IPH=640,IPS=1,INKD={},ILP=0,IDY=null,IRDY=0,IWQ=[],IDB=null,IFT=0,ICV={},ICX={},
 ITL={t:"pen",pc:0,hc:0,fg:0},IPC=["#161616","#2f55e0","#d6336c","#2b9a5b"],IHC=["#ffe45e","#ff9ad5","#8fe3b5","#9fd0ff"],
 IPI={pen:'<path d="M4 20l1-4L16.5 4.5a2.1 2.1 0 013 3L8 19l-4 1z"/><path d="M14 7l3 3"/>',hl:'<path d="M9 14l6-6 3 3-6 6H9z"/><path d="M15 8l2-2 3 3-2 2"/><path d="M5 20h7"/>',er:'<path d="M8 20h11"/><path d="M5.5 14.5l8-8a2 2 0 012.8 0l2.2 2.2a2 2 0 010 2.8L11 19H8l-2.5-2.5a2 2 0 010-2z"/>',un:'<path d="M9 7L4 12l5 5"/><path d="M4 12h10a6 6 0 010 8h-3"/>',cl:'<path d="M5 7h14"/><path d="M10 7V4h4v3"/><path d="M7 7l1 13h8l1-13"/>',fg:'<path d="M9 11V5a1.5 1.5 0 013 0v5"/><path d="M12 10V4a1.5 1.5 0 013 0v7"/><path d="M15 9a1.5 1.5 0 013 0v6a6 6 0 01-6 6h-1a6 6 0 01-5-3l-2-4a1.5 1.5 0 012.5-1.5L9 14"/>'},
 IMF=[["Tükenmiş","M10.5 23c3-4 8-4 11 0"],["Yorgun","M11 22.5c3-2.5 7-2.5 10 0"],["Nötr","M11 21.5h10"],["İyi","M11 20.5c3 2.5 7 2.5 10 0"],["Enerjik","M10 20c3 5 9 5 12 0z"]],
@@ -701,7 +701,8 @@ function iBk(){
   var dd=window.devicePixelRatio||1;
   ["h","l","i","p"].forEach(function(k){
     var c=ICV[k],x;
-    var dp=Math.min(dd,(k==="i"||k==="p")?2:1.5,3000/(IPW*IPS));c.width=Math.round(IPW*IPS*dp);c.height=Math.round(IPH*IPS*dp);
+    if(k==="p"&&!ITAIL){c.width=c.height=1;ICX.p=c.getContext("2d");return}
+    var dp=IDPF?1:Math.min(dd,1.5,2600/(IPW*IPS));c.width=Math.round(IPW*IPS*dp);c.height=Math.round(IPH*IPS*dp);
     x=ICX[k]=c.getContext("2d");
     x.setTransform(c.width/IPW,0,0,c.height/IPH,0,0);x.lineCap="round";x.lineJoin="round";
   });
@@ -711,7 +712,7 @@ function iMid(a,b){return(a+b)/2}
 function iRd(v){return Math.round(v*10)/10}
 function iSeg(x,st,k,f){
   var p=st.p,n=p.length/3,i=k*3;if(n<2)return;
-  x.strokeStyle=st.c;x.lineWidth=f?st.w:st.w*(.42+p[i+2]*.95);x.beginPath();
+  x.strokeStyle=st.c;x.lineWidth=(f||IFW)?st.w:st.w*(.42+p[i+2]*.95);x.beginPath();
   if(k===0){x.moveTo(p[0],p[1]);x.lineTo(iMid(p[0],p[3]),iMid(p[1],p[4]))}
   else if(k===n-1){x.moveTo(iMid(p[i-3],p[i]),iMid(p[i-2],p[i+1]));x.lineTo(p[i],p[i+1])}
   else{x.moveTo(iMid(p[i-3],p[i]),iMid(p[i-2],p[i+1]));x.quadraticCurveTo(p[i],p[i+1],iMid(p[i],p[i+3]),iMid(p[i+1],p[i+4]))}
@@ -770,6 +771,7 @@ function iAdd(T,C,e){
   if(st.t==="h")iSeg(ICX.l,st,n-2,1);else iSeg(ICX.i,st,n-2);
 }
 function iTail(C){
+  if(!ITAIL)return;
   var x=ICX.p,b=C.pb;if(b){x.clearRect(b[0],b[1],b[2],b[3]);C.pb=0}
   if(C.er||!C.st||C.st.t==="h")return;
   var p=C.st.p,n=p.length/3;if(n<2)return;
@@ -844,6 +846,69 @@ $("#cal").addEventListener("click",function(e){
   iSetPT();
 });
 iDbOpen();iWhen(function(){iKeys(function(k){k.forEach(function(x){INKD[x]=1});markInk()})});
+
+/* Tanılama paneli: gün sayfasında başlıktaki yazıya 5 kez hızlı dokun (ya da adrese #dbg ekle) */
+(function(){
+  var P=null,D=null,SO=null,tk=0,tt=0,LF=0,RF=0,ST={};
+  function rs(){D={t0:performance.now(),t1:0,pm:0,ev:0,hm:0,fr:0,gm:0,sl:0,lt:0,lm:0}}
+  rs();
+  var _pd=iPd,_pm=iPm,_pu=iPu;
+  iPd=function(e){var a=!(IDY&&IDY.cur);var r=_pd.call(this,e);if(P&&a&&IDY&&IDY.cur){rs();LF=0}return r};
+  iPm=function(e){
+    var c=IDY&&IDY.cur,t=performance.now();
+    _pm.call(this,e);
+    if(P&&c){var d=performance.now()-t,n=e.getCoalescedEvents?e.getCoalescedEvents().length:1;D.pm++;D.ev+=n||1;if(d>D.hm)D.hm=d;D.t1=performance.now()}
+  };
+  iPu=function(e){var r=_pu.call(this,e);if(P&&D)D.t1=performance.now();return r};
+  function loop(t){
+    if(!P)return;
+    if(IDY&&IDY.cur){if(LF){var g=t-LF;D.fr++;if(g>D.gm)D.gm=g;if(g>25)D.sl++}LF=t}else LF=0;
+    RF=requestAnimationFrame(loop);
+  }
+  function txt(){
+    var d=Math.max(1,(D.t1||performance.now())-D.t0),i=ICV&&ICV.i;
+    return"son çizgi: "+(d/1000).toFixed(1)+" sn\n"+
+      "pointermove: "+D.pm+"  olay: "+D.ev+" ("+Math.round(D.ev*1000/d)+"/sn)\n"+
+      "kare: "+D.fr+" ("+Math.round(D.fr*1000/d)+" fps)  yavaş(>25ms): "+D.sl+"\n"+
+      "en uzun kare: "+Math.round(D.gm)+" ms\n"+
+      "en uzun olay işleme: "+D.hm.toFixed(1)+" ms\n"+
+      "longtask: "+D.lt+" (maks "+Math.round(D.lm)+" ms)\n"+
+      "canvas: "+(i?i.width+"x"+i.height:"-")+"  dpr "+(window.devicePixelRatio||1);
+  }
+  function lab(k,n){return n+": "+(ST[k]?"AÇIK":"kapalı")}
+  function btns(){
+    return'<button data-d="dp">'+lab("dp","Çözünürlük 1x")+'</button><button data-d="fw">'+lab("fw","Sabit kalınlık")+'</button><button data-d="bf">'+lab("bf","Blur kapalı")+'</button><button data-d="an">'+lab("an","Animasyon+zamanlayıcı kapalı")+'</button><button data-d="tl">'+lab("tl","Uç çizgisi")+'</button><button data-d="x">Paneli kapat</button>';
+  }
+  function sty(id,css,on){var e=document.getElementById(id);if(on&&!e){e=document.createElement("style");e.id=id;e.textContent=css;document.head.appendChild(e)}else if(!on&&e)e.remove()}
+  function open(){
+    if(P)return;
+    P=document.createElement("div");
+    P.style.cssText="position:fixed;top:8px;right:8px;z-index:99;width:250px;padding:8px;border-radius:12px;background:rgba(0,0,0,.82);color:#fff;font:11px/1.45 ui-monospace,Menlo,monospace;-webkit-user-select:none;user-select:none";
+    P.innerHTML='<style>#dbgp button{display:block;width:100%;margin-top:4px;padding:7px;border-radius:8px;background:#333;color:#fff;font:600 11px system-ui;text-align:left}</style><div id="dbgp"><pre id="dbgt" style="white-space:pre-wrap;margin:0"></pre><div id="dbgb">'+btns()+'</div></div>';
+    document.body.appendChild(P);
+    P.addEventListener("click",function(e){
+      var b=e.target.closest("button");if(!b)return;var k=b.dataset.d;
+      if(k==="x"){close();return}
+      ST[k]=!ST[k];
+      if(k==="dp"){IDPF=ST[k]?1:0;iBk()}
+      else if(k==="fw")IFW=ST[k]?1:0;
+      else if(k==="bf")sty("dbg-bf","*{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}",ST[k]);
+      else if(k==="an"){sty("dbg-an","*{animation:none!important;transition:none!important}",ST[k]);if(ST[k])clearInterval(TKI)}
+      else if(k==="tl"){ITAIL=ST[k]?1:0;iBk()}
+      $("#dbgb").innerHTML=btns();
+    });
+    try{SO=new PerformanceObserver(function(l){l.getEntries().forEach(function(x){if(D&&IDY&&IDY.cur){D.lt++;if(x.duration>D.lm)D.lm=x.duration}})});SO.observe({entryTypes:["longtask"]})}catch(e){SO=null}
+    tt=setInterval(function(){var t=$("#dbgt");if(t)t.textContent=txt()},400);
+    RF=requestAnimationFrame(loop);
+  }
+  function close(){if(!P)return;P.remove();P=null;clearInterval(tt);cancelAnimationFrame(RF);if(SO){SO.disconnect();SO=null}}
+  $("#cal").addEventListener("click",function(e){
+    if(!e.target.closest(".kt"))return;var n=Date.now();
+    tk=n-tt0<1500?tk+1:1;tt0=n;if(tk>=5){tk=0;open()}
+  });
+  var tt0=0;
+  if(location.hash==="#dbg")open();
+})();
 
 function rY(){
   var h='<div class="yg">';
