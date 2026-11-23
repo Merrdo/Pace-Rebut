@@ -216,7 +216,7 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .pdots{display:inline-flex;gap:6px}
 .pdots i{width:9px;height:9px;border-radius:50%;background:rgba(17,17,17,.14);transition:background .6s var(--ease),transform .6s var(--sp),box-shadow .6s var(--ease)}
 .pdots i.on{background:var(--pa)}
-.pdots i.cur{background:var(--pa);transform:scale(1.25);box-shadow:0 0 0 3px color-mix(in srgb,var(--pa) 24%,transparent)}
+.pdots i.cur{background:var(--pa);transform:scale(1.25)}
 .cb svg{width:28px;height:28px}.cb.sec svg{fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .cb.main svg{grid-area:1/1;width:38px;height:38px;transition:opacity .3s,transform .55s var(--sp)}
 .cb.main .i-p{opacity:0;transform:scale(.5)}.cb.main.on .i-p{opacity:1;transform:none}.cb.main.on .i-g{opacity:0;transform:scale(.5)}
@@ -775,8 +775,19 @@ function paint(){
   MS.forEach(function(m){
     var t=ST[m],cd=m!=="sw",e=el(t),ms=cd?Math.max(0,t.cd-e):e,tot=cd?Math.ceil(ms/1000):Math.floor(ms/1000),h=Math.floor(tot/3600),mi=Math.floor(tot%3600/60),sc=tot%60,k=TK[m],
     str=(cd?(h?h+"<u></u>"+p2(mi):p2(mi)):p2(h)+"<u></u>"+p2(mi))+"<u></u>"+p2(sc);
+    var wh=cd?h>0:true,fl=LT[m+"h"]!==undefined&&LT[m+"h"]!==wh&&k.c.offsetWidth>0,w0=fl?k.c.getBoundingClientRect().width:0;
+    LT[m+"h"]=wh;
     if(str!==LT[m]){LT[m]=str;k.b.innerHTML=str}
-    k.c.classList.toggle("h",cd?h>0:true);
+    k.c.classList.toggle("h",wh);
+    if(fl){
+      clearTimeout(k.ft);k.c.style.transition="none";k.c.style.transform="none";
+      var w1=k.c.getBoundingClientRect().width;
+      if(w0&&w1&&Math.abs(w0-w1)>1){
+        k.c.style.transform="scale("+(w0/w1)+")";void k.c.offsetWidth;
+        k.c.style.transition="transform .75s cubic-bezier(.22,1,.36,1)";k.c.style.transform="scale(1)";
+        k.ft=setTimeout(function(){k.c.style.transition="";k.c.style.transform=""},800);
+      }else{k.c.style.transition="";k.c.style.transform=""}
+    }
     var c=cd?"":"."+p2(Math.floor(ms%1000/10));
     if(c!==LT[m+"c"]){LT[m+"c"]=c;k.i.textContent=c}
   });
