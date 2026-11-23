@@ -156,21 +156,32 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .app.fs .dock{transform:translate(-50%,160%);opacity:0;pointer-events:none}
 #v-timer{display:flex;align-items:center;justify-content:center}
 .tw{display:flex;flex-direction:column;align-items:center;width:100%;padding:30px 24px var(--dock-space);transition:padding .8s var(--ease)}
-.app.fs .tw{padding-bottom:30px}
+.app.fs .tw{padding-bottom:30px}#v-timer .tw{height:100%;justify-content:center}
 .view.on .tw>*{animation:up .8s var(--ease) backwards}.view.on .tw>:nth-child(2){animation-delay:.06s}.view.on .tw>:nth-child(3){animation-delay:.1s}.view.on .tw>:nth-child(4){animation-delay:.14s}.view.on .tw>:nth-child(5){animation-delay:.2s}
 .fold{display:grid;grid-template-rows:1fr;transition:grid-template-rows .65s var(--ease),opacity .45s var(--ease)}
 .fold>div{min-height:0;overflow:hidden;padding:8px;margin:-8px}
 .fold.off{grid-template-rows:0fr;opacity:0;pointer-events:none}
-#tmode{width:330px;max-width:100%;margin:0}#tmode button{font-size:16px;color:#55524d}#tmode button.on{color:var(--bg)}#tmode button.bg:after{content:"";display:inline-block;width:6px;height:6px;margin-left:7px;border-radius:50%;background:#2fbf71;vertical-align:middle}.seg[data-m=cd] i{transform:translateX(100%)}
-.clk{display:flex;align-items:baseline;margin:26px 0 6px;font-family:Outfit,Inter,"SF Pro Display",system-ui,sans-serif;font-weight:500;font-variant-numeric:tabular-nums;letter-spacing:.02em;line-height:1;white-space:nowrap;font-size:min(19vw,32vh);transition:font-size .85s var(--ease)}
+.tswt{position:relative;width:100%;overflow:hidden;--swt-ink:var(--fg);--swt-accent:var(--ct)}
+.tswt .swt-track{position:relative;display:flex;will-change:transform;touch-action:pan-y}
+.tswt .swt-page{flex:0 0 33.333%;min-width:0;display:flex;flex-direction:column;align-items:center;padding-top:70px;transition:padding .8s var(--ease),visibility 0s linear .85s}
+.tswt .swt-nav{position:absolute;left:0;right:0;top:0;height:38px;z-index:6;display:flex;align-items:center;justify-content:center;gap:30px;pointer-events:none;transition:opacity .45s var(--ease)}
+.tswt .swt-nav button{position:relative;height:100%;padding:0;font-size:1.3rem;font-weight:700;letter-spacing:-.03em;color:var(--swt-ink);pointer-events:auto;-webkit-tap-highlight-color:transparent}
+.tswt .swt-nav button span{display:block;transform-origin:0 70%;will-change:transform}
+.tswt .swt-ul{position:absolute;left:0;bottom:0;width:22px;height:3px;border-radius:2px;background:var(--swt-accent);will-change:transform;transition:background .5s var(--ease)}
+.tswt .lv{position:absolute;left:0;top:calc(100% + 5px);font-size:11px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap;color:#2fbf71}
+.app.fs .tswt .swt-nav{opacity:0;pointer-events:none}.app.fs .tswt .swt-page{padding-top:0}
+/* Tam ekranda aktif olmayan sayfalar görünmez (girişte hemen, çıkışta geçiş bitince geri gelir); geçişte boşuna layout/raster maliyeti yaratmasın */
+.app.fs .tswt .swt-page[inert]{visibility:hidden;transition:padding .8s var(--ease),visibility 0s}
+.clk{display:flex;align-items:baseline;margin:14px 0 6px;font-family:Outfit,Inter,"SF Pro Display",system-ui,sans-serif;font-weight:500;font-variant-numeric:tabular-nums;letter-spacing:.02em;line-height:1;white-space:nowrap;font-size:min(19vw,32vh);transition:font-size .85s var(--ease)}
 .clk.h{font-size:min(13.5vw,32vh)}
 .app.fs .clk{font-size:min(24vw,50vh)}.app.fs .clk.h{font-size:min(16.5vw,50vh)}
+.app.fzx .clk{transition:none}
 .clk b{font-weight:inherit}
 .clk u{display:inline-block;position:relative;width:.3em;height:.727em;text-decoration:none}
 .clk u:before,.clk u:after{content:"";position:absolute;left:50%;width:.125em;height:.125em;margin-left:-.0625em;border-radius:50%;background:currentColor}
 .clk u:before{top:.18em}.clk u:after{bottom:.18em}
 .clk i{font-style:normal;color:var(--dim);font-size:.26em;letter-spacing:0;margin-left:.12em}
-.view.on .tw>.clk.done{animation:dn 1.6s ease-in-out infinite}
+.view.on .tw .clk.done{animation:dn 1.6s ease-in-out infinite}
 .ts{min-height:1.4em;margin-bottom:12px;font-size:18px;font-weight:700;color:var(--dim)}
 .pre{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;max-width:640px}
 .chip{padding:9px 18px;border-radius:999px;background:var(--surf);font-size:16px;font-weight:700;transition:transform .5s var(--sp),background .35s,color .35s}
@@ -386,10 +397,7 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
     <section class="view" id="v-timer">
       <button class="fsb" id="fsb" aria-label="Tam ekran"><svg class="i-e" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><svg class="i-c" viewBox="0 0 24 24"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg></button>
       <div class="tw">
-        <div class="fold" id="tbw"><div><div class="seg" id="tmode" data-m="sw"><i></i><button data-m="sw">Kronometre</button><button data-m="cd">Geri sayım</button></div></div></div>
-        <div class="clk" id="clk" data-style="classic"><b id="tt"></b><i id="tc"></i></div>
-        <div class="ts" id="ts"></div>
-        <div class="fold" id="pw"><div><div class="pre" id="pre"></div></div></div>
+        <div class="tswt" id="tswt"><section class="swt-page" data-title="Kronometre"><div class="clk" data-m="sw"><b></b><i></i></div><div class="ts"></div></section><section class="swt-page" data-title="Geri sayım"><div class="clk" data-m="cd"><b></b><i></i></div><div class="ts"></div><div class="fold" id="pw"><div><div class="pre" id="pre"></div></div></div></section><section class="swt-page" data-title="Pomodoro"><div class="clk" data-m="pm"><b></b><i></i></div><div class="ts"></div></section></div>
         <div class="tctl">
           <button class="cb sec" id="trs" aria-label="Sıfırla"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.6-5.9M4 4v4.5h4.5"/></svg></button>
           <button class="cb main" id="tgo" aria-label="Başlat / Duraklat"><svg class="i-g" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><svg class="i-p" viewBox="0 0 24 24"><path d="M8 5.5v13M16 5.5v13" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" fill="none"/></svg></button>
@@ -631,42 +639,52 @@ function drag(e,g,w){
 }
 
 /* Sure */
-var ST={sw:{run:false,t0:0,acc:0,done:false},cd:{run:false,t0:0,acc:0,done:false,cd:15e5}},MODE="sw",T,AC=null,WL=null,lt="",lc="";
+var ST={sw:{run:false,t0:0,acc:0,done:false},cd:{run:false,t0:0,acc:0,done:false,cd:15e5},pm:{run:false,t0:0,acc:0,done:false,cd:15e5,ph:0,n:0}},PD=[15e5,3e5,9e5],PN=["Odak","Kısa mola","Uzun mola"],MS=["sw","cd","pm"],MODE="sw",T,AC=null,WL=null,LT={},TK={},TB;
+MS.forEach(function(m){var c=$('.clk[data-m="'+m+'"]');TK[m]={c:c,b:c.firstChild,i:c.lastChild,s:c.nextElementSibling}});
 (function(){
   var o=S.tm||{};
   function ld(t,x){if(!x||typeof x!=="object")return;if(x.acc>0&&x.acc<1e10)t.acc=+x.acc;t.done=!!x.done;if(x.run&&+x.t0>0){t.run=true;t.t0=Math.min(+x.t0,Date.now())}}
-  MODE=o.m==="cd"?"cd":"sw";
+  MODE=o.m==="cd"||o.m==="pm"?o.m:"sw";
   if(o.cd>=6e4)ST.cd.cd=Math.min(+o.cd,432e5);
   if(!o.sw&&!o.c)ld(ST[MODE],o);else{ld(ST.sw,o.sw);ld(ST.cd,o.c)}
+  var q=o.p;if(q&&typeof q==="object"){ld(ST.pm,q);if(q.ph>=0&&q.ph<3)ST.pm.ph=q.ph|0;if(q.n>=0&&q.n<1e6)ST.pm.n=q.n|0}
+  ST.pm.cd=PD[ST.pm.ph];
   T=ST[MODE];
 })();
 function pk(t){return{run:t.run,t0:t.t0,acc:t.acc,done:t.done}}
-function savT(){S.tm={m:MODE,cd:ST.cd.cd,sw:pk(ST.sw),c:pk(ST.cd)};save()}
+function savT(){var p=pk(ST.pm);p.ph=ST.pm.ph;p.n=ST.pm.n;S.tm={m:MODE,cd:ST.cd.cd,sw:pk(ST.sw),c:pk(ST.cd),p:p};save()}
 function el(t){return t.acc+(t.run?Date.now()-t.t0:0)}
 function p2(n){return(n<10?"0":"")+n}
+function fm(s){var h=Math.floor(s/3600);return(h?h+":"+p2(Math.floor(s%3600/60)):p2(Math.floor(s/60)))+":"+p2(s%60)}
 function wl(on){try{if(on&&navigator.wakeLock)navigator.wakeLock.request("screen").then(function(l){WL=l}).catch(function(){});else if(!on&&WL){WL.release();WL=null}}catch(e){}}
-function wk(){wl(ST.sw.run||ST.cd.run)}
+function wk(){wl(ST.sw.run||ST.cd.run||ST.pm.run)}
 function beep(){
   try{if(AC)[0,.4,.8].forEach(function(d){var o=AC.createOscillator(),g=AC.createGain(),t=AC.currentTime+d;o.frequency.value=880;o.connect(g);g.connect(AC.destination);g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.18,t+.03);g.gain.exponentialRampToValueAtTime(.001,t+.32);o.start(t);o.stop(t+.34)})}catch(e){}
   try{if(navigator.vibrate)navigator.vibrate([200,100,200])}catch(e){}
 }
 function paint(){
-  var e=el(T),cd=MODE==="cd",ms=cd?Math.max(0,T.cd-e):e,tot=cd?Math.ceil(ms/1000):Math.floor(ms/1000),h=Math.floor(tot/3600),m=Math.floor(tot%3600/60),sc=tot%60,
-  str=(cd?(h?h+"<u></u>"+p2(m):p2(m)):p2(h)+"<u></u>"+p2(m))+"<u></u>"+p2(sc);
-  if(str!==lt){lt=str;$("#tt").innerHTML=str}
-  $("#clk").classList.toggle("h",cd?h>0:true);
-  var c=cd?"":"."+p2(Math.floor(ms%1000/10));
-  if(c!==lc){lc=c;$("#tc").textContent=c}
+  MS.forEach(function(m){
+    var t=ST[m],cd=m!=="sw",e=el(t),ms=cd?Math.max(0,t.cd-e):e,tot=cd?Math.ceil(ms/1000):Math.floor(ms/1000),h=Math.floor(tot/3600),mi=Math.floor(tot%3600/60),sc=tot%60,k=TK[m],
+    str=(cd?(h?h+"<u></u>"+p2(mi):p2(mi)):p2(h)+"<u></u>"+p2(mi))+"<u></u>"+p2(sc);
+    if(str!==LT[m]){LT[m]=str;k.b.innerHTML=str}
+    k.c.classList.toggle("h",cd?h>0:true);
+    var c=cd?"":"."+p2(Math.floor(ms%1000/10));
+    if(c!==LT[m+"c"]){LT[m+"c"]=c;k.i.textContent=c}
+  });
+  if(!TB)return;
+  $$("#tswt .swt-nav button").forEach(function(b,q){var m=MS[q],t=ST[m],v=b.lastChild,x="";if(m!==MODE){if(t.run)x=fm(m==="sw"?Math.floor(el(t)/1e3):Math.ceil(Math.max(0,t.cd-el(t))/1e3));else if(t.done)x="Bitti"}if(v.textContent!==x)v.textContent=x});
 }
-function tick(){paint();var c=ST.cd;if(c.run&&el(c)>=c.cd)finish(c)}
+function pfin(p,q){if(p.ph===0){p.n++;p.ph=p.n%4===0?2:1}else p.ph=0;p.cd=PD[p.ph];p.acc=0;p.run=false;p.done=false;wk();savT();sync();paint();if(!q)beep()}
+function tick(){paint();var c=ST.cd,p=ST.pm;if(c.run&&el(c)>=c.cd)finish(c);if(p.run&&el(p)>=p.cd)pfin(p)}
 function sync(){
-  var c=$("#clk"),fs=$(".app").classList.contains("fs"),cd=MODE==="cd";
-  c.classList.toggle("run",T.run);c.classList.toggle("done",T.done);$("#tgo").classList.toggle("on",T.run);
-  $("#tmode").dataset.m=MODE;$("#tbw").classList.toggle("off",fs);
-  $$("#tmode button").forEach(function(b){var t=ST[b.dataset.m];b.classList.toggle("on",b.dataset.m===MODE);b.classList.toggle("bg",b.dataset.m!==MODE&&(t.run||t.done))});
-  $("#pw").classList.toggle("off",fs||!cd||T.run||T.acc>0);
+  var fs=$(".app").classList.contains("fs");
+  MS.forEach(function(m){var t=ST[m],k=TK[m],st=t.done?"Süre doldu":t.run?"Çalışıyor":t.acc>0?"Duraklatıldı":"Hazır";
+    k.c.classList.toggle("run",t.run);k.c.classList.toggle("done",t.done);
+    if(m==="pm")st=PN[t.ph]+(t.ph===0?" "+(t.n%4+1)+"/4":"")+" · "+st;
+    k.s.textContent=st});
+  $("#tgo").classList.toggle("on",T.run);
+  $("#pw").classList.toggle("off",fs||ST.cd.run||ST.cd.acc>0);
   $$(".chip[data-p]").forEach(function(b){b.classList.toggle("on",+b.dataset.p*6e4===ST.cd.cd)});
-  $("#ts").textContent=T.done?"Süre doldu":T.run?"Çalışıyor":T.acc>0?"Duraklatıldı":"Hazır";
 }
 function reset(){T.run=false;T.acc=0;T.done=false;wk();savT();sync();paint()}
 function finish(c,q){c.acc=c.cd;c.run=false;c.done=true;wk();savT();sync();paint();if(!q)beep()}
@@ -679,11 +697,134 @@ function go(){
 }
 function setCd(ms){ST.cd.cd=Math.max(6e4,Math.min(432e5,ms));savT();sync();paint()}
 $("#pre").innerHTML='<button class="chip" data-a="-5">−5 dk</button>'+[15,25,40,60,90].map(function(n){return'<button class="chip" data-p="'+n+'">'+n+' dk</button>'}).join("")+'<button class="chip" data-a="5">+5 dk</button>';
-$("#pre").addEventListener("click",function(e){var b=e.target.closest(".chip");if(!b||T.run||T.acc)return;setCd(b.dataset.p?+b.dataset.p*6e4:ST.cd.cd+ +b.dataset.a*6e4)});
-$("#tmode").addEventListener("click",function(e){var b=e.target.closest("button");if(!b||b.dataset.m===MODE)return;MODE=b.dataset.m;T=ST[MODE];savT();sync();paint()});
+$("#pre").addEventListener("click",function(e){var b=e.target.closest(".chip"),c=ST.cd;if(!b||c.run||c.acc)return;setCd(b.dataset.p?+b.dataset.p*6e4:c.cd+ +b.dataset.a*6e4)});
 $("#tgo").onclick=go;$("#trs").onclick=reset;
-$("#fsb").onclick=function(){var f=$(".app").classList.toggle("fs");this.classList.toggle("on",f);this.setAttribute("aria-label",f?"Tam ekrandan çık":"Tam ekran");sync()};
+var FZ=0;
+/* Tam ekran: saat boyutu font-size geçişiyle değil, transform:scale ile (GPU) büyür/küçülür.
+   Metin her karede yeniden yerleştirilip çizilmez; yalnızca bir kez son boyutta çizilir.
+   Üç saat de (görünmeyenler dahil) aynı şekilde işlenir ki kapsayıcı yüksekliği sıçramasın. */
+$("#fsb").onclick=function(){
+  var app=$(".app"),cs=MS.map(function(m){return TK[m].c}),r0=cs.map(function(c){return c.getBoundingClientRect()});
+  clearTimeout(FZ);cs.forEach(function(c){c.style.cssText=""});app.classList.add("fzx");
+  var f=app.classList.toggle("fs");this.classList.toggle("on",f);this.setAttribute("aria-label",f?"Tam ekrandan çık":"Tam ekran");sync();
+  var E="cubic-bezier(.22,1,.36,1)",ch=[];
+  cs.forEach(function(c,i){
+    var a=r0[i],b=c.getBoundingClientRect();
+    if(a.width&&b.width&&Math.abs(a.width-b.width)>1){
+      c.style.transformOrigin="50% 0";c.style.transform="scale("+a.width/b.width+")";c.style.marginBottom=(6-(b.height-a.height))+"px";ch.push(c);
+    }
+  });
+  if(ch.length){void app.offsetWidth;ch.forEach(function(c){c.style.transition="transform .85s "+E+",margin-bottom .85s "+E;c.style.transform="none";c.style.marginBottom="6px"})}
+  FZ=setTimeout(function(){cs.forEach(function(c){c.style.cssText=""});app.classList.remove("fzx")},950);
+};
+(function (root) {
+  var EASE = function (u) { return 1 - Math.pow(1 - u, 4); };
+
+  function SwipeTabs(el, opt) {
+    opt = opt || {};
+    var self = this, pages = Array.prototype.slice.call(el.querySelectorAll(':scope > .swt-page')), n = pages.length;
+    var track = document.createElement('div'); track.className = 'swt-track';
+    pages.forEach(function (p) { track.appendChild(p); p.setAttribute('role', 'tabpanel'); });
+    el.insertBefore(track, el.firstChild);
+    var nav = document.createElement('nav'); nav.className = 'swt-nav'; nav.setAttribute('role', 'tablist');
+    pages.forEach(function (p, i) {
+      var b = document.createElement('button'); b.type = 'button'; b.setAttribute('role', 'tab');
+      b.innerHTML = '<span></span><small class="lv"></small>'; b.firstChild.textContent = p.dataset.title || ('Sayfa ' + (i + 1));
+      b.onclick = function () { self.go(i); };
+      b.onkeydown = function (e) {
+        var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0; if (!d) return;
+        e.preventDefault(); self.go(self.index + d); btns[self.index].focus();
+      };
+      nav.appendChild(b);
+    });
+    var ul = document.createElement('i'); ul.className = 'swt-ul'; nav.appendChild(ul); el.appendChild(nav);
+    var btns = Array.prototype.slice.call(nav.querySelectorAll('button'));
+    track.style.width = (n * 100) + '%';
+    pages.forEach(function (p) { p.style.flexBasis = (100 / n) + '%'; });
+
+    var xs = [], cur = 0, anim = 0, idx = Math.max(0, Math.min(n - 1, opt.index || 0));
+    function measure() { xs = btns.map(function (b) { return b.offsetLeft; }); }
+    function paint(p) {                               // p: sürekli konum
+      cur = p;
+      track.style.transform = 'translate3d(' + (-p * 100 / n) + '%,0,0)';
+      var i = Math.max(0, Math.min(n - 2, Math.floor(p))), f = Math.max(0, Math.min(1, p - i)), k, a;
+      if (!xs[1] && n > 1) measure();
+      for (k = 0; k < n; k++) {
+        a = Math.max(0, 1 - Math.abs(p - k));
+        btns[k].firstChild.style.opacity = (.4 + .6 * a).toFixed(3);
+        btns[k].firstChild.style.transform = 'scale(' + (1 + .13 * a).toFixed(3) + ')';
+        pages[k].style.opacity = (.2 + .8 * a).toFixed(3);
+      }
+      ul.style.transform = 'translateX(' + (n > 1 ? xs[i] + (xs[i + 1] - xs[i]) * f : xs[0]).toFixed(1) + 'px)';
+      if (opt.onProgress) opt.onProgress(p);
+    }
+    function settle() {
+      pages.forEach(function (p, k) { p.inert = k !== idx; });
+      btns.forEach(function (b, k) { b.setAttribute('aria-selected', k === idx); b.tabIndex = k === idx ? 0 : -1; });
+    }
+    function reduced() { return root.matchMedia && root.matchMedia('(prefers-reduced-motion: reduce)').matches; }
+
+    this.go = function (i, instant, fromP) {
+      i = Math.max(0, Math.min(n - 1, i));
+      var from = fromP == null ? idx : fromP, prev = idx, my = ++anim;
+      pages.forEach(function (p) { p.inert = false; });
+      idx = i;
+      if (instant || reduced() || from === i) { paint(i); settle(); if (prev !== i && opt.onChange) opt.onChange(i, prev); return; }
+      if (prev !== i && opt.haptic) opt.haptic();
+      var t0 = performance.now(), ms = 520;
+      (function step(t) {
+        if (my !== anim) return;
+        var u = Math.min(1, (t - t0) / ms);
+        paint(from + (i - from) * EASE(u));
+        if (u < 1) root.requestAnimationFrame(step); else { settle(); if (prev !== i && opt.onChange) opt.onChange(i, prev); }
+      })(t0);
+    };
+    Object.defineProperty(this, 'index', { get: function () { return idx; } });
+
+    // Parmağı izleyen yatay kaydırma
+    var sx, sy, p0, mode = -1, last, lt, v = 0, edge = opt.edge == null ? 24 : opt.edge;
+    function ts(e) {
+      var t = e.touches[0];
+      mode = (e.touches.length === 1 && t.clientX > edge && !e.target.closest('[data-swt-ignore], input, textarea, select') && (!opt.canSwipe || opt.canSwipe(e))) ? 0 : -1;
+      if (mode === 0) { sx = last = t.clientX; sy = t.clientY; lt = performance.now(); v = 0; }
+    }
+    function tm(e) {
+      if (mode < 0) return;
+      var t = e.touches[0], x = t.clientX, dx = x - sx, dy = t.clientY - sy, now = performance.now(), W = el.offsetWidth || root.innerWidth;
+      if (mode === 0) {
+        if (Math.abs(dx) < 10 && Math.abs(dy) < 10) return;
+        if (Math.abs(dx) > Math.abs(dy) * 1.3) { mode = 1; anim++; p0 = idx; sx = x; dx = 0; pages.forEach(function (p) { p.inert = false; }); }
+        else { mode = -1; return; }
+      }
+      var raw = p0 - dx / W;
+      paint(raw < 0 ? raw * .3 : raw > n - 1 ? (n - 1) + (raw - (n - 1)) * .3 : raw);   // uçlarda lastik gibi direnir
+      if (now > lt) v = (last - x) / (now - lt) / W * 1000; last = x; lt = now;
+    }
+    function te() {
+      if (mode !== 1) { mode = -1; return; } mode = -1;
+      var W = el.offsetWidth || root.innerWidth, th = Math.min(.5, 64 / W), d = cur - p0, to = p0;   // kısa kaydırma yeter: ~64px ya da küçük bir fırlatma
+      if (d > th || v > .25) to = p0 + 1; else if (d < -th || v < -.25) to = p0 - 1;
+      to = Math.max(0, Math.min(n - 1, to));
+      self.go(to, false, cur);
+    }
+    track.addEventListener('touchstart', ts, { passive: true });
+    track.addEventListener('touchmove', tm, { passive: true });
+    track.addEventListener('touchend', te, { passive: true });
+    track.addEventListener('touchcancel', te, { passive: true });
+    function rs() { measure(); paint(cur); }
+    root.addEventListener('resize', rs);
+    if (root.document && document.fonts && document.fonts.ready) document.fonts.ready.then(rs);
+    this.destroy = function () { root.removeEventListener('resize', rs); anim++; nav.remove(); pages.forEach(function (p) { p.style.cssText = ''; p.inert = false; el.appendChild(p); }); track.remove(); };
+
+    this.refresh = rs;
+    measure(); paint(idx); settle();
+  }
+  root.SwipeTabs = SwipeTabs;
+})(window);
+TB=new SwipeTabs($("#tswt"),{index:MS.indexOf(MODE),canSwipe:function(){return!$(".app").classList.contains("fs")},haptic:function(){try{navigator.vibrate&&navigator.vibrate(4)}catch(e){}},onChange:function(i){MODE=MS[i];T=ST[MODE];savT();sync();paint()}});
+if(window.ResizeObserver)new ResizeObserver(function(){TB.refresh()}).observe($("#tswt"));
 if(ST.cd.run&&el(ST.cd)>=ST.cd.cd)finish(ST.cd,true);
+if(ST.pm.run&&el(ST.pm)>=ST.pm.cd)pfin(ST.pm,true);
 wk();sync();paint();setInterval(tick,40);
 
 
