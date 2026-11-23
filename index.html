@@ -257,7 +257,7 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .kh{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:16px}
 .kt{display:flex;align-items:baseline;gap:14px;font-size:46px;font-weight:800;letter-spacing:-1px;line-height:1;white-space:nowrap}
 .kt button,.kt span{color:var(--dim);font-weight:800;transition:color .3s}.kt>:last-child{color:var(--fg)}.kt button:active{color:var(--ct)}
-.kc{display:flex;gap:10px;align-items:center}.kt em{font-style:normal;font-size:18px;font-weight:600;color:var(--dim);margin-left:14px;letter-spacing:0}
+.kc{display:flex;gap:10px;align-items:center}.kt em{font-style:normal;font-size:18px;font-weight:600;color:var(--dim);margin-left:2px;letter-spacing:0}
 .kb{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--surf);transition:transform .5s var(--sp),background .3s}
 .kb:active{transform:scale(.92)}.kb.w{width:auto;padding:0 18px;border-radius:999px;font-size:16px;font-weight:700}
 .kb svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
@@ -464,23 +464,6 @@ button.wn:active{transform:scale(.9)}button.wn:hover{background:var(--surf);colo
 .kbt{display:flex;align-items:center;gap:14px;position:fixed;left:50%;bottom:calc(28px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);max-width:calc(100% - 48px);padding:12px 20px;border-radius:999px;background:var(--fg);color:var(--bg);font-size:15px;font-weight:700;text-align:center;opacity:0;pointer-events:none;transition:opacity .35s var(--ease),transform .55s var(--sp)}
 .kbt.on{opacity:1;transform:translate(-50%,0)}
 .kbt.on.ac{pointer-events:auto}
-/* Takvim gorunumu: etiketler, bugun, soluk gunler */
-.cp{position:relative;padding:2px 8px 2px 11px;border-radius:7px;background:color-mix(in srgb,var(--k) 55%,#fff);color:#1d1b18;font-size:12px;font-weight:600;line-height:1.5;letter-spacing:.005em}
-.cp:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3.5px;background:color-mix(in srgb,var(--k) 100%,#000 38%)}
-.cp.mo{background:none;color:var(--dim);padding:0 4px;font-weight:700}.cp.mo:before{display:none}
-.cp.big{padding:4px 12px 4px 15px;border-radius:10px}
-.wc .cp{padding:5px 9px 5px 13px}
-.dc.we{background:rgba(255,255,255,.62)}
-.dc.pd{background:rgba(255,255,255,.34);box-shadow:none;pointer-events:auto;cursor:pointer}
-.dc.pd>b{color:var(--dim);opacity:.75;font-weight:500}
-.dc.pd .cp{opacity:.62}
-.dc.t,.dc.pd.t{background:var(--fg);color:var(--bg);box-shadow:0 10px 22px -12px rgba(0,0,0,.55)}
-.dc.t>b,.dc.pd.t>b{background:var(--bg);color:var(--fg);opacity:1;min-width:32px;line-height:32px;border-radius:16px;font-size:17px;font-weight:700}
-.dc.t:after{content:"Bugün";top:12px;right:11px;bottom:auto;padding:2px 9px;border-radius:999px;background:var(--bg);color:var(--fg);font-size:10px;font-weight:800;letter-spacing:.08em}
-.dc.t .nk{top:auto;bottom:10px;fill:var(--bg);stroke:var(--bg)}.dc.t .nk .c{stroke:var(--fg)}
-.dc.t .cp.mo{color:rgba(255,255,255,.7)}
-.dc.t.s{box-shadow:inset 0 0 0 3px var(--c),0 10px 22px -12px rgba(0,0,0,.55)}
-.wc.t{background:var(--fg);box-shadow:0 10px 22px -12px rgba(0,0,0,.55)}.wc.t>i{color:rgba(255,255,255,.65)}.wc.t>b{color:var(--bg)}.wc.t .em{color:var(--bg)}.wc.t .nk{fill:var(--bg);stroke:var(--bg)}.wc.t .nk .c{stroke:var(--fg)}
 </style>
 </head>
 <body>
@@ -1725,13 +1708,9 @@ function rM(){
   var o=wdx(cv.y,cv.m,1),n=dim(cv.y,cv.m),rows=Math.ceil((o+n)/7),pn=new Date(cv.y,cv.m,0).getDate(),tw=cv.y===TD.getFullYear()&&cv.m===TD.getMonth()?wdx(TD.getFullYear(),TD.getMonth(),TD.getDate()):-1,h='<div class="wk"><span class="wn" style="width:auto">Hf</span>'+WD.map(function(x,q){return'<span'+(q===tw?' class="t"':'')+'>'+WS[q]+'</span>'}).join("")+'</div><div class="mg2" style="grid-template-rows:repeat('+rows+',1fr)">';
   for(var c=0;c<rows*7;c++){
     if(c%7===0){var fd=Math.max(1,c-o+1),wnn=isoW(new Date(cv.y,cv.m,fd));h+='<button class="wn'+(isCurWk(cv.y,cv.m,fd)?' cur':'')+'" data-a="w" data-d="'+fd+'" aria-label="'+wnn+'. hafta">'+wnn+'</button>'}
-    var d=c-o+1,we=c%7>4?" we":"";
-    if(d<1||d>n){
-      var pt=new Date(cv.y,cv.m,d),py=pt.getFullYear(),pm=pt.getMonth(),pdy=pt.getDate();
-      h+='<button class="dc pd'+we+(isT(py,pm,pdy)?" t":"")+'" data-a="pd" data-py="'+py+'" data-pm="'+pm+'" data-pdd="'+pdy+'" aria-label="'+pdy+' '+MN[pm]+'" style="--n:'+c+'"><b>'+pdy+'</b>'+dChips(py,pm,pdy,3)+nkH(py,pm,pdy)+'</button>';
-      continue;
-    }
-    h+='<button class="dc'+we+(isT(cv.y,cv.m,d)?" t":"")+(cv.sel===d?" s":"")+'" data-a="d" data-d="'+d+'" style="--n:'+c+'"><b>'+d+'</b>'+dChips(cv.y,cv.m,d,3)+nkH(cv.y,cv.m,d)+'</button>';
+    var d=c-o+1;if(d<1||d>n){h+='<i class="dc pd" style="--n:'+c+'"><b>'+(d<1?pn+d:d-n)+'</b></i>';continue}
+    var ch=hs(cv.y,cv.m,d).map(function(x){return[x.n,GC[x.g]]}).concat(its(cv.y,cv.m,d).map(function(x){return[x.t,KC[x.k]]})),v=ch.slice(0,3);
+    h+='<button class="dc'+(isT(cv.y,cv.m,d)?" t":"")+(cv.sel===d?" s":"")+'" data-a="d" data-d="'+d+'" style="--n:'+c+'"><b>'+d+'</b>'+v.map(function(x){return'<span class="cp" style="--k:'+x[1]+'">'+esc(x[0])+'</span>'}).join("")+(ch.length>3?'<span class="cp mo">+'+(ch.length-3)+' daha</span>':'')+nkH(cv.y,cv.m,d)+'</button>';
   }
   return h+'</div>';
 }
@@ -1750,7 +1729,6 @@ $("#cal").addEventListener("click",function(e){
   var b=e.target.closest("[data-a]");if(!b)return;var a=b.dataset.a;
   if(a==="m"){cv.m=+b.dataset.m;cv.d=Math.min(cv.d,dim(cv.y,cv.m));lvl("month","in")}
   else if(a==="d"){var n=+b.dataset.d;if(cv.sel===n){cv.d=n;lvl("day","in")}else{cv.sel=n;cv.d=n;$$(".dc[data-d]").forEach(function(x){x.classList.toggle("s",+x.dataset.d===n)})}}
-  else if(a==="pd"){var py=+b.dataset.py,pm=+b.dataset.pm,pd2=+b.dataset.pdd,fw=new Date(py,pm,pd2)>new Date(cv.y,cv.m,1);cv.y=py;cv.m=pm;cv.d=pd2;cv.sel=pd2;cv.dir=fw?"nx":"pv";cv.ed=0;paintK()}
   else if(a==="w"){cv.d=+b.dataset.d;lvl("week","in")}
   else if(a==="tw"){var same=cv.l==="week"&&isCurWk(cv.y,cv.m,cv.d);cv.y=TD.getFullYear();cv.m=TD.getMonth();cv.d=TD.getDate();if(same){cv.sel=0;paintK(true)}else lvl("week","in")}
   else if(a==="wd"){cv.y=+b.dataset.y;cv.m=+b.dataset.m;cv.d=+b.dataset.d;lvl("day","in")}
