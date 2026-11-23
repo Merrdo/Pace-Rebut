@@ -433,6 +433,7 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .kbk{flex:none;display:inline-flex;align-items:center;justify-content:center;min-width:112px;height:42px;padding:0 16px;border-radius:12px;background:var(--surf2);box-shadow:inset 0 -3px 0 rgba(0,0,0,.09);font:600 15px Inter,system-ui,sans-serif;white-space:nowrap;transition:transform .5s var(--sp),background .3s,color .3s}
 .kbk:active{transform:scale(.95)}
 .kbk.no{color:var(--dim);font-weight:500}
+.kbk.cf{background:rgba(209,47,53,.12);color:#d12f35;box-shadow:inset 0 0 0 2px #d12f35;transition:background .3s,color .3s,box-shadow .3s}
 .kbk.ls{background:var(--fg);color:var(--bg);animation:kbp 1.2s ease-in-out infinite}
 @keyframes kbp{50%{opacity:.6}}
 .kbk.fx{pointer-events:none;opacity:.55}
@@ -531,7 +532,7 @@ var KA=[
 ["tReset","t","Süre","Sıfırla","Seçili sayacı başa alır.","r"],
 ["tSkip","t","Süre","Pomodoro'da sonraki tura geç","Odak turunu molaya, molayı sonraki odak turuna geçirir.","s"],
 ["tPrev","t","Süre","Önceki mod","Pomodoro, geri sayım ve kronometre arasında sola geçer.","ArrowLeft"],
-["tNext","t","Süre","Sonraki mod","Kronometre, geri sayım ve pomodoro arasında sağa geçer.","ArrowRight"],
+["tNext","t","Süre","Sonraki mod / tura geç","Kronometre, geri sayım ve pomodoro arasında sağa geçer. Pomodoro açıkken sonraki tura (odak → mola → odak) geçer.","ArrowRight"],
 ["tUp","t","Süre","Geri sayıma 5 dk ekle","Geri sayım hazırken süreyi 5 dakika artırır.","ArrowUp"],
 ["tDown","t","Süre","Geri sayımdan 5 dk çıkar","Geri sayım hazırken süreyi 5 dakika azaltır.","ArrowDown"],
 ["cPrev","c","Takvim","Geri git","Açık görünüme göre bir önceki ayı, günü ya da yılı gösterir.","ArrowLeft"],
@@ -1895,7 +1896,7 @@ function kRun(id,e,c){
     case"tToggle":if(!e.repeat)go();return true;
     case"tReset":reset();return true;
     case"tSkip":if(MODE!=="pm")return false;skip();return true;
-    case"tPrev":case"tNext":if(c.fs||(c.a&&c.a.closest&&c.a.closest(".swt-nav")))return false;TB.go(TB.index+(id==="tNext"?1:-1));return true;
+    case"tPrev":case"tNext":if(c.a&&c.a.closest&&c.a.closest(".swt-nav"))return false;if(id==="tNext"&&MODE==="pm"){skip();return true}if(c.fs)return false;TB.go(TB.index+(id==="tNext"?1:-1));return true;
     case"tUp":case"tDown":if(MODE!=="cd"||c.fs)return false;k=$('.chip[data-a="'+(id==="tUp"?"5":"-5")+'"]');if(k)k.click();return true;
     case"cPrev":case"cNext":if(c.cs)return false;step(id==="cNext"?1:-1);return true;
     case"cToday":if(c.cs)return false;$('#cal [data-a="td"]').click();return true;
@@ -1946,16 +1947,22 @@ function kbLab(k){
   return(m?(MAC?"⌘ + ":"Ctrl + "):"")+t;
 }
 function kbToast(t){var e=$("#kbt");e.textContent=t;e.classList.add("on");clearTimeout(kbTt);kbTt=setTimeout(function(){e.classList.remove("on")},3200)}
+function kbDup(id){
+  var a=KA.filter(function(x){return x[0]===id})[0],k=kbGet(id),r=[];
+  if(!k)return r;
+  KA.forEach(function(b){if(b[0]!==id&&kbGet(b[0])===k&&(a[1]==="g"||b[1]==="g"||a[1]===b[1]))r.push(b[3])});
+  return r;
+}
 function kbRender(){
   var h="";
   ["Genel","Süre","Takvim","Konular"].forEach(function(g){
     h+='<div class="grp">'+g+'</div><div class="card kbg">';
     KA.forEach(function(a){
       if(a[2]!==g)return;
-      var cur=kbGet(a[0]),ls=KL.id===a[0],mod=cur!==KDEF[a[0]];
+      var cur=kbGet(a[0]),ls=KL.id===a[0],mod=cur!==KDEF[a[0]],du=ls?[]:kbDup(a[0]);
       h+='<div class="kbr"><div><b>'+esc(a[3])+'</b><small>'+esc(a[4])+'</small></div>'+
         (mod?'<button class="kbd" data-kr="'+a[0]+'" aria-label="Varsayılana döndür"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.6-5.9M4 4v4.5h4.5"/></svg></button>':'')+
-        '<button class="kbk'+(ls?" ls":cur?"":" no")+'" data-ka="'+a[0]+'" aria-label="'+esc(a[3])+' kısa yolunu değiştir">'+(ls?"Tuşa bas…":esc(kbLab(cur)))+'</button></div>';
+        '<button class="kbk'+(ls?" ls":cur?"":" no")+(du.length?" cf":"")+'" data-ka="'+a[0]+'"'+(du.length?' title="Bu tuş şuna da atanmış: '+esc(du.join(", "))+'"':"")+' aria-label="'+esc(a[3])+' kısa yolunu değiştir'+(du.length?'. Çakışma: '+esc(du.join(", ")):"")+'">'+(ls?"Tuşa bas…":esc(kbLab(cur)))+'</button></div>';
     });
     h+='</div>';
   });
@@ -1971,12 +1978,9 @@ $("#ksheet").addEventListener("scroll",function(){$("#kfr").classList.toggle("on
 function closeKb(){KL.id=null;kbDisarm();$("#ksheet").classList.remove("on");$("#kbt").classList.remove("on")}
 function kbToggle(){KB.on=KB.on?0:1;if(!KB.on)KL.id=null;kbSave();kbRender()}
 function kbSet(id,key){
-  var a=KA.filter(function(x){return x[0]===id})[0],old=kbGet(id),sw=[];
-  if(key&&key!==old)KA.forEach(function(b){
-    if(b[0]!==id&&kbGet(b[0])===key&&(a[1]==="g"||b[1]==="g"||a[1]===b[1])){kbPut(b[0],old);sw.push("“"+b[3]+"”")}
-  });
   kbPut(id,key);kbSave();KL.id=null;kbRender();
-  if(sw.length)kbToast(kbLab(key)+" tuşu "+sw.join(", ")+" kısa yolundaydı"+(old?", yer değiştirdiler.":", onun ataması kaldırıldı."));
+  var d=key?kbDup(id):[];
+  if(d.length)kbToast(kbLab(key)+" tuşu "+d.map(function(x){return"“"+x+"”"}).join(", ")+" için de atanmış. Çakışan tuşlar kırmızı gösterilir.");
 }
 /* Tuş yakalama: dinlerken tüm tuşlar bu işleyiciye gider */
 document.addEventListener("keydown",function(e){
