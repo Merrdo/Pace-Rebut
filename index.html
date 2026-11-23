@@ -187,10 +187,12 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .pre{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;max-width:640px}
 .chip{padding:9px 18px;border-radius:999px;background:var(--surf);font-size:16px;font-weight:700;transition:transform .5s var(--sp),background .35s,color .35s}
 .chip:active{transform:scale(.94)}.chip.on{background:var(--fg);color:var(--bg)}
-.tctl{display:flex;align-items:center;gap:24px;margin-top:26px}
+.tctl{display:flex;align-items:center;gap:24px;margin-top:26px;transition:opacity .45s var(--ease),transform .6s var(--ease),visibility 0s}
+.tctl.hid{opacity:0;transform:translateY(14px);visibility:hidden;pointer-events:none;transition:opacity .45s var(--ease),transform .6s var(--ease),visibility 0s .45s}
 .cb{position:relative;display:grid;place-items:center;width:66px;height:66px;border-radius:50%;background:var(--surf);transition:transform .5s var(--sp)}
 .cb:active{transform:scale(.92)}
 .cb.main{width:96px;height:96px;background:var(--fg);color:var(--bg)}
+.cb.sk{display:none}.tctl.pmx .cb.sk{display:grid}
 .cb svg{width:28px;height:28px}.cb.sec svg{fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .cb.main svg{grid-area:1/1;width:38px;height:38px;transition:opacity .3s,transform .55s var(--sp)}
 .cb.main .i-p{opacity:0;transform:scale(.5)}.cb.main.on .i-p{opacity:1;transform:none}.cb.main.on .i-g{opacity:0;transform:scale(.5)}
@@ -213,6 +215,7 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .pm-stp button:active{transform:scale(.9)}.pm-stp button:disabled{opacity:.35;pointer-events:none}
 .pm-stp output{min-width:66px;text-align:center;font-family:Outfit,Inter,system-ui,sans-serif;font-size:20px;font-weight:500;font-variant-numeric:tabular-nums}
 .card p.pm-n{margin-top:2px;font-size:13px}
+.pm-cr{display:block}.pm-pick{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.pm-pick .chip{min-width:48px;padding:10px 0;text-align:center;font-family:Outfit,Inter,system-ui,sans-serif;font-size:18px;font-weight:500}
 @media (max-width:1000px){#v-topics{grid-template-columns:300px 1fr}.topics{padding:28px 28px var(--dock-space)}.th h1{font-size:38px}.pc b{font-size:88px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 @media (max-width:767px){.app:before{content:"Bu uygulama şimdilik tablet için tasarlandı.";position:fixed;inset:0;z-index:9;display:grid;place-items:center;background:var(--bg);color:var(--dim);text-align:center;padding:30px}}
@@ -440,6 +443,7 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
         <div class="tctl">
           <button class="cb sec" id="trs" aria-label="Sıfırla"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.6-5.9M4 4v4.5h4.5"/></svg></button>
           <button class="cb main" id="tgo" aria-label="Başlat / Duraklat"><svg class="i-g" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><svg class="i-p" viewBox="0 0 24 24"><path d="M8 5.5v13M16 5.5v13" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" fill="none"/></svg></button>
+          <button class="cb sec sk" id="tsk" aria-label="Sonraki tura geç"><svg viewBox="0 0 24 24"><path d="M6 5.5v13l9-6.5z"/><path d="M18.5 5.5v13"/></svg></button>
         </div>
       </div>
     </section>
@@ -500,6 +504,7 @@ var KA=[
 ["fs","g","Genel","Tam ekran","Her sayfada tam ekranı açar veya kapatır, alt çubuğu gizler.","f"],
 ["tToggle","t","Süre","Başlat / duraklat","Seçili kronometreyi, geri sayımı ya da pomodoro'yu başlatır veya duraklatır."," "],
 ["tReset","t","Süre","Sıfırla","Seçili sayacı başa alır.","r"],
+["tSkip","t","Süre","Pomodoro'da sonraki tura geç","Odak turunu molaya, molayı sonraki odak turuna geçirir.","s"],
 ["tPrev","t","Süre","Önceki mod","Pomodoro, geri sayım ve kronometre arasında sola geçer.","ArrowLeft"],
 ["tNext","t","Süre","Sonraki mod","Kronometre, geri sayım ve pomodoro arasında sağa geçer.","ArrowRight"],
 ["tUp","t","Süre","Geri sayıma 5 dk ekle","Geri sayım hazırken süreyi 5 dakika artırır.","ArrowUp"],
@@ -708,7 +713,7 @@ function drag(e,g,w){
 }
 
 /* Sure */
-var ST={sw:{run:false,t0:0,acc:0,done:false},cd:{run:false,t0:0,acc:0,done:false,cd:15e5},pm:{run:false,t0:0,acc:0,done:false,cd:15e5,ph:0,n:0}},PD=[15e5,3e5,9e5],PS={f:25,s:5,l:15,r:4},PDF={f:25,s:5,l:15,r:4},PL={f:[1,180,"dk"],s:[1,60,"dk"],l:[1,120,"dk"],r:[2,12,"tur"]},PX={},PH1,PH2,PN=["Odak","Kısa mola","Uzun mola"],MS=["sw","cd","pm"],MODE="sw",T,AC=null,WL=null,LT={},TK={},TB;
+var ST={sw:{run:false,t0:0,acc:0,done:false},cd:{run:false,t0:0,acc:0,done:false,cd:15e5},pm:{run:false,t0:0,acc:0,done:false,cd:15e5,ph:0,n:0}},PD=[15e5,3e5,9e5],PS={f:25,s:5,l:15,r:4},PDF={f:25,s:5,l:15,r:4},PL={f:[1,180,"dk"],s:[1,60,"dk"],l:[1,120,"dk"],r:[2,8,"tur"]},PX={},PH1,PH2,PN=["Odak","Kısa mola","Uzun mola"],MS=["sw","cd","pm"],MODE="sw",T,AC=null,WL=null,LT={},TK={},TB;
 MS.forEach(function(m){var c=$('.clk[data-m="'+m+'"]');TK[m]={c:c,b:c.firstChild,i:c.lastChild,s:c.nextElementSibling}});
 (function(){
   var o=S.tm||{};
@@ -747,14 +752,27 @@ function pfin(p,q){if(p.ph===0){p.n++;p.ph=p.n%PS.r===0?2:1}else p.ph=0;p.cd=PD[
 function tick(){paint();var c=ST.cd,p=ST.pm;if(c.run&&el(c)>=c.cd)finish(c);if(p.run&&el(p)>=p.cd)pfin(p)}
 function sync(){
   var fs=$(".app").classList.contains("fs");
-  MS.forEach(function(m){var t=ST[m],k=TK[m],st=t.done?"Süre doldu":t.run?"Çalışıyor":t.acc>0?"Duraklatıldı":"Hazır";
+  MS.forEach(function(m){var t=ST[m],k=TK[m],st=t.done?"Süre doldu":t.run||t.acc>0?"":"Hazır";
     k.c.classList.toggle("run",t.run);k.c.classList.toggle("done",t.done);
-    if(m==="pm")st=PN[t.ph]+(t.ph===0?" "+(t.n%PS.r+1)+"/"+PS.r:"")+" · "+st;
+    if(m==="pm")st=PN[t.ph]+(t.ph===0?" "+(t.n%PS.r+1)+"/"+PS.r:"")+(st?" · "+st:"");
     k.s.textContent=st});
   $("#tgo").classList.toggle("on",T.run);
-  $("#pgb").classList.toggle("on",MODE==="pm"&&!fs);
+  if(!T.run){clearTimeout(CHT);CHT=0;$(".tctl").classList.remove("hid")}
+  $("#pgb").classList.toggle("on",(TB?MS[TB.index]:MODE)==="pm"&&!fs);
+  $(".tctl").classList.toggle("pmx",(TB?MS[TB.index]:MODE)==="pm");
   $("#pw").classList.toggle("off",fs||ST.cd.run||ST.cd.acc>0);
   $$(".chip[data-p]").forEach(function(b){b.classList.toggle("on",+b.dataset.p*6e4===ST.cd.cd)});
+}
+/* Sayaç çalışırken Sıfırla/Başlat düğmeleri son dokunuştan 2,5 sn sonra gizlenir; boş bir yere dokununca geri gelir */
+var CHT=0,CHL=0;
+function ctlChk(){
+  CHT=0;if(!T.run)return;
+  var r=2500-(Date.now()-CHL);
+  if(r>30)CHT=setTimeout(ctlChk,r);else $(".tctl").classList.add("hid");
+}
+function ctlPoke(){
+  CHL=Date.now();clearTimeout(CHT);CHT=0;$(".tctl").classList.remove("hid");
+  if(T.run)CHT=setTimeout(ctlChk,2500);
 }
 function reset(){T.run=false;T.acc=0;T.done=false;wk();savT();sync();paint()}
 function finish(c,q){c.acc=c.cd;c.run=false;c.done=true;wk();savT();sync();paint();if(!q)beep()}
@@ -763,21 +781,28 @@ function go(){
   if(AC&&AC.resume)AC.resume();
   if(T.run){T.acc+=Date.now()-T.t0;T.run=false}
   else{if(T.done){T.acc=0;T.done=false}T.t0=Date.now();T.run=true}
-  wk();savT();sync();paint();
+  wk();savT();sync();paint();ctlPoke();
 }
 function setCd(ms){ST.cd.cd=Math.max(6e4,Math.min(432e5,ms));savT();sync();paint()}
 $("#pre").innerHTML='<button class="chip" data-a="-5">−5 dk</button>'+[15,25,40,60,90].map(function(n){return'<button class="chip" data-p="'+n+'">'+n+' dk</button>'}).join("")+'<button class="chip" data-a="5">+5 dk</button>';
 $("#pre").addEventListener("click",function(e){var b=e.target.closest(".chip"),c=ST.cd;if(!b||c.run||c.acc)return;setCd(b.dataset.p?+b.dataset.p*6e4:c.cd+ +b.dataset.a*6e4)});
-$("#tgo").onclick=go;$("#trs").onclick=reset;
+/* Pomodoro: sonraki tura geç (odak -> mola, mola -> odak). Sayaç çalışıyorsa yeni turda da çalışmaya devam eder */
+function skip(){var p=ST.pm,r=p.run;pfin(p,true);if(r){p.t0=Date.now();p.run=true;wk();savT();sync();paint()}ctlPoke()}
+$("#tgo").onclick=go;$("#trs").onclick=reset;$("#tsk").onclick=skip;
+$("#v-timer").addEventListener("pointerdown",ctlPoke,true);
+$("#v-timer").addEventListener("pointerup",ctlPoke,true);
+document.addEventListener("keydown",function(){if($("#v-timer").classList.contains("on"))ctlPoke()});
 /* Pomodoro ayar paneli */
-function pcl(x){var o={},k,v;for(k in PDF){v=x?Math.round(+x[k]):NaN;o[k]=v>=PL[k][0]&&v<=PL[k][1]?v:PDF[k]}return o}
+function pcl(x){var o={},k,v;for(k in PDF){v=x?Math.round(+x[k]):NaN;o[k]=isNaN(v)?PDF[k]:Math.max(PL[k][0],Math.min(PL[k][1],v))}return o}
 function pdur(){return[PS.f*6e4,PS.s*6e4,PS.l*6e4]}
 (function(){
-  var R=[["f","Pomodoro süresi","Odaklanma turu"],["s","Mola süresi","Kısa mola"],["l","Uzun mola","Periyot dolunca"],["r","Periyot","Uzun molaya kadar odak turu"]];
-  $("#pml").innerHTML=R.map(function(r){return'<div class="pm-row"><div><b>'+r[1]+'</b><small>'+r[2]+'</small></div><div class="pm-stp"><button data-pk="'+r[0]+'" data-d="-1" aria-label="'+r[1]+' azalt">−</button><output data-pv="'+r[0]+'"></output><button data-pk="'+r[0]+'" data-d="1" aria-label="'+r[1]+' artır">+</button></div></div>'}).join("");
+  var R=[["f","Pomodoro süresi","Odaklanma turu"],["s","Mola süresi","Kısa mola"],["l","Uzun mola","Süre"]];
+  $("#pml").innerHTML=R.map(function(r){return'<div class="pm-row"><div><b>'+r[1]+'</b><small>'+r[2]+'</small></div><div class="pm-stp"><button data-pk="'+r[0]+'" data-d="-1" aria-label="'+r[1]+' azalt">−</button><output data-pv="'+r[0]+'"></output><button data-pk="'+r[0]+'" data-d="1" aria-label="'+r[1]+' artır">+</button></div></div>'}).join("")+'<div class="pm-row pm-cr"><div><b>Uzun mola sıklığı</b><small id="pmrs"></small></div><div class="pm-pick" id="pmr">'+[2,3,4,5,6,7,8].map(function(n){return'<button class="chip" data-pr="'+n+'" aria-label="Her '+n+' odak turunda bir">'+n+'</button>'}).join("")+'</div></div>';
 })();
 function pRender(){
   $$("#pset [data-pv]").forEach(function(o){var k=o.dataset.pv;o.textContent=PX[k]+" "+PL[k][2]});
+  $$("#pset [data-pr]").forEach(function(b){b.classList.toggle("on",+b.dataset.pr===PX.r)});
+  $("#pmrs").textContent="Her "+PX.r+" odak turundan sonra";
   $$("#pset [data-pk]").forEach(function(b){var k=b.dataset.pk;b.disabled=+b.dataset.d<0?PX[k]<=PL[k][0]:PX[k]>=PL[k][1]});
 }
 function pStep(b){
@@ -799,6 +824,8 @@ $("#pgb").onclick=pOpen;$("#psv").onclick=pSave;$("#pcn").onclick=pClose;
 $("#pdf").onclick=function(){PX=pcl(PDF);pRender()};
 $("#pset").addEventListener("click",function(e){
   if(e.target===this){pClose();return}
+  var c=e.target.closest("[data-pr]");
+  if(c){PX.r=+c.dataset.pr;pRender();try{navigator.vibrate&&navigator.vibrate(3)}catch(x){}return}
   var b=e.target.closest("[data-pk]");if(b&&e.detail===0)pStep(b);
 });
 $("#pset").addEventListener("pointerdown",function(e){
@@ -879,6 +906,7 @@ $("#fsb").onclick=function(){
       var from = fromP == null ? idx : fromP, prev = idx, my = ++anim;
       pages.forEach(function (p) { p.inert = false; });
       idx = i;
+      if (opt.onTarget) opt.onTarget(i);
       if (instant || reduced() || from === i) { paint(i); settle(); if (prev !== i && opt.onChange) opt.onChange(i, prev); return; }
       if (prev !== i && opt.haptic) opt.haptic();
       var t0 = performance.now(), ms = 520;
@@ -931,11 +959,11 @@ $("#fsb").onclick=function(){
   }
   root.SwipeTabs = SwipeTabs;
 })(window);
-TB=new SwipeTabs($("#tswt"),{index:MS.indexOf(MODE),canSwipe:function(){return!$(".app").classList.contains("fs")},haptic:function(){try{navigator.vibrate&&navigator.vibrate(4)}catch(e){}},onChange:function(i){MODE=MS[i];T=ST[MODE];savT();sync();paint()}});
+TB=new SwipeTabs($("#tswt"),{index:MS.indexOf(MODE),onTarget:function(i){$(".tctl").classList.toggle("pmx",MS[i]==="pm");$("#pgb").classList.toggle("on",MS[i]==="pm"&&!$(".app").classList.contains("fs"))},canSwipe:function(){return!$(".app").classList.contains("fs")},haptic:function(){try{navigator.vibrate&&navigator.vibrate(4)}catch(e){}},onChange:function(i){MODE=MS[i];T=ST[MODE];savT();sync();paint();ctlPoke()}});
 if(window.ResizeObserver)new ResizeObserver(function(){TB.refresh()}).observe($("#tswt"));
 if(ST.cd.run&&el(ST.cd)>=ST.cd.cd)finish(ST.cd,true);
 if(ST.pm.run&&el(ST.pm)>=ST.pm.cd)pfin(ST.pm,true);
-wk();sync();paint();setInterval(tick,40);
+wk();sync();paint();ctlPoke();setInterval(tick,40);
 
 
 /* Takvim */
@@ -1769,6 +1797,7 @@ $$(".db").forEach(function(b,n){b.onclick=function(){
     lvl("month","out");
     return;
   }
+  if(b.dataset.v==="timer")ctlPoke();
   $("#dock").style.setProperty("--i",n);
   $$(".db").forEach(function(x){x.classList.toggle("on",x===b)});
   $$(".view").forEach(function(e){e.classList.toggle("on",e.id==="v-"+b.dataset.v)});
@@ -1793,6 +1822,7 @@ function kRun(id,e,c){
     case"fs":kFs();return true;
     case"tToggle":if(!e.repeat)go();return true;
     case"tReset":reset();return true;
+    case"tSkip":if(MODE!=="pm")return false;skip();return true;
     case"tPrev":case"tNext":if(c.fs||(c.a&&c.a.closest&&c.a.closest(".swt-nav")))return false;TB.go(TB.index+(id==="tNext"?1:-1));return true;
     case"tUp":case"tDown":if(MODE!=="cd"||c.fs)return false;k=$('.chip[data-a="'+(id==="tUp"?"5":"-5")+'"]');if(k)k.click();return true;
     case"cPrev":case"cNext":if(c.cs)return false;step(id==="cNext"?1:-1);return true;
