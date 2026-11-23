@@ -156,16 +156,16 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .app.fs .dock{transform:translate(-50%,160%);opacity:0;pointer-events:none}
 #v-timer{display:flex;align-items:center;justify-content:center}
 .tw{display:flex;flex-direction:column;align-items:center;width:100%;padding:30px 24px var(--dock-space);transition:padding .8s var(--ease)}
-.app.fs .tw{padding-bottom:30px}
+.app.fs .tw{padding-bottom:30px}#v-timer .tw{height:100%;justify-content:center}
 .view.on .tw>*{animation:up .8s var(--ease) backwards}.view.on .tw>:nth-child(2){animation-delay:.06s}.view.on .tw>:nth-child(3){animation-delay:.1s}.view.on .tw>:nth-child(4){animation-delay:.14s}.view.on .tw>:nth-child(5){animation-delay:.2s}
 .fold{display:grid;grid-template-rows:1fr;transition:grid-template-rows .65s var(--ease),opacity .45s var(--ease)}
 .fold>div{min-height:0;overflow:hidden;padding:8px;margin:-8px}
 .fold.off{grid-template-rows:0fr;opacity:0;pointer-events:none}
 .tswt{position:relative;width:100%;overflow:hidden;--swt-ink:var(--fg);--swt-accent:var(--ct)}
 .tswt .swt-track{position:relative;display:flex;will-change:transform;touch-action:pan-y}
-.tswt .swt-page{flex:0 0 33.333%;min-width:0;display:flex;flex-direction:column;align-items:center;padding-top:62px;transition:padding .8s var(--ease)}
-.tswt .swt-nav{position:absolute;left:0;top:0;height:34px;z-index:6;display:flex;align-items:center;gap:22px;pointer-events:none;transition:opacity .45s var(--ease)}
-.tswt .swt-nav button{position:relative;height:100%;padding:0;font-size:1.15rem;font-weight:700;letter-spacing:-.03em;color:var(--swt-ink);pointer-events:auto;-webkit-tap-highlight-color:transparent}
+.tswt .swt-page{flex:0 0 33.333%;min-width:0;display:flex;flex-direction:column;align-items:center;padding-top:70px;transition:padding .8s var(--ease)}
+.tswt .swt-nav{position:absolute;left:0;right:0;top:0;height:38px;z-index:6;display:flex;align-items:center;justify-content:center;gap:30px;pointer-events:none;transition:opacity .45s var(--ease)}
+.tswt .swt-nav button{position:relative;height:100%;padding:0;font-size:1.3rem;font-weight:700;letter-spacing:-.03em;color:var(--swt-ink);pointer-events:auto;-webkit-tap-highlight-color:transparent}
 .tswt .swt-nav button span{display:block;transform-origin:0 70%;will-change:transform}
 .tswt .swt-ul{position:absolute;left:0;bottom:0;width:22px;height:3px;border-radius:2px;background:var(--swt-accent);will-change:transform;transition:background .5s var(--ease)}
 .tswt .lv{position:absolute;left:0;top:calc(100% + 5px);font-size:11px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap;color:#2fbf71}
@@ -782,8 +782,9 @@ $("#fsb").onclick=function(){var f=$(".app").classList.toggle("fs");this.classLi
     }
     function te() {
       if (mode !== 1) { mode = -1; return; } mode = -1;
-      var to = Math.round(cur + v * .18), r = Math.round(cur);
-      to = Math.max(r - 1, Math.min(r + 1, to)); if (Math.abs(to - p0) > 1) to = p0 + (to > p0 ? 1 : -1);
+      var W = el.offsetWidth || root.innerWidth, th = Math.min(.5, 64 / W), d = cur - p0, to = p0;   // kısa kaydırma yeter: ~64px ya da küçük bir fırlatma
+      if (d > th || v > .25) to = p0 + 1; else if (d < -th || v < -.25) to = p0 - 1;
+      to = Math.max(0, Math.min(n - 1, to));
       self.go(to, false, cur);
     }
     track.addEventListener('touchstart', ts, { passive: true });
