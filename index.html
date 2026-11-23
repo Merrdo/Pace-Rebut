@@ -198,6 +198,21 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .fsb:active{transform:scale(.92)}
 .fsb svg{grid-area:1/1;width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:opacity .3s,transform .5s var(--sp)}
 .fsb .i-c{opacity:0;transform:scale(.5)}.fsb.on .i-c{opacity:1;transform:none}.fsb.on .i-e{opacity:0;transform:scale(.5)}
+/* Pomodoro ayarları */
+.pgb{position:absolute;z-index:2;top:28px;right:80px;display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--surf);opacity:0;visibility:hidden;transform:scale(.6);pointer-events:none;transition:opacity .35s var(--ease),transform .55s var(--sp),visibility 0s .35s}
+.pgb.on{opacity:1;visibility:visible;transform:none;pointer-events:auto;transition-delay:0s}.pgb.on:active{transform:scale(.92)}
+.pgb svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+#pmc:focus{outline:none}
+.pm-l{margin-top:10px}
+.pm-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 0}
+.pm-row+.pm-row{border-top:1.5px solid var(--surf2)}
+.pm-row b{display:block;font-size:17px;font-weight:700;line-height:1.15}
+.pm-row small{display:block;margin-top:2px;font-size:13px;font-weight:500;color:var(--dim)}
+.pm-stp{display:flex;align-items:center;gap:6px;flex:none}
+.pm-stp button{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--surf2);font-size:22px;font-weight:700;line-height:1;touch-action:manipulation;transition:transform .5s var(--sp),opacity .3s}
+.pm-stp button:active{transform:scale(.9)}.pm-stp button:disabled{opacity:.35;pointer-events:none}
+.pm-stp output{min-width:66px;text-align:center;font-family:Outfit,Inter,system-ui,sans-serif;font-size:20px;font-weight:500;font-variant-numeric:tabular-nums}
+.card p.pm-n{margin-top:2px;font-size:13px}
 @media (max-width:1000px){#v-topics{grid-template-columns:300px 1fr}.topics{padding:28px 28px var(--dock-space)}.th h1{font-size:38px}.pc b{font-size:88px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 @media (max-width:767px){.app:before{content:"Bu uygulama şimdilik tablet için tasarlandı.";position:fixed;inset:0;z-index:9;display:grid;place-items:center;background:var(--bg);color:var(--dim);text-align:center;padding:30px}}
@@ -419,6 +434,7 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
     </section>
     <section class="view" id="v-timer">
       <button class="fsb" id="fsb" aria-label="Tam ekran"><svg class="i-e" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><svg class="i-c" viewBox="0 0 24 24"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg></button>
+      <button class="pgb" id="pgb" aria-label="Pomodoro ayarları" aria-haspopup="dialog"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/></svg></button>
       <div class="tw">
         <div class="tswt" id="tswt"><section class="swt-page" data-title="Kronometre"><div class="clk" data-m="sw"><b></b><i></i></div><div class="ts"></div></section><section class="swt-page" data-title="Geri sayım"><div class="clk" data-m="cd"><b></b><i></i></div><div class="ts"></div><div class="fold" id="pw"><div><div class="pre" id="pre"></div></div></div></section><section class="swt-page" data-title="Pomodoro"><div class="clk" data-m="pm"><b></b><i></i></div><div class="ts"></div></section></div>
         <div class="tctl">
@@ -432,6 +448,7 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
   </main>
   <div class="sheet" id="sheet"><button class="fl fl-l" id="fl">Dersler</button><div class="fl-r"><button class="fl fp" id="fp" aria-label="Yeni ders">+</button><button class="fl fk" id="sx">Kapat</button></div><div class="shw" id="shw"></div><div class="mod" id="mod"><div class="mc card" id="mc"></div></div></div>
   <div class="sheet" id="ksheet"><div class="fl-r kfr" id="kfr"><button class="fl fk" id="kbx2">Bitti</button></div><div class="shw"><div class="sh-h"><div><h1>Klavye kısa yolları</h1><p>Bir kısa yola dokun, ardından yeni tuşa bas. Backspace atamayı kaldırır, Esc vazgeçer.</p></div><button class="btn pr" id="kbx">Bitti</button></div><div class="card lc"><div><h2>Kısa yolları kullan</h2><p>Kapalıyken klavye uygulamada hiçbir şey yapmaz.</p></div><button class="tg on" data-kb="tg" aria-label="Klavye kısa yolları"><i></i></button></div><div id="kbl"></div><div class="card"><h2>Varsayılana dön</h2><p>Tüm kısa yollar ilk hâline döner.</p><div class="row"><button class="btn dg" id="kbr">Hepsini sıfırla</button></div></div></div><div class="kbt" id="kbt" role="status"></div></div>
+  <div class="mod" id="pset"><div class="mc card" id="pmc" tabindex="-1" role="dialog" aria-modal="true" aria-label="Pomodoro ayarları"><h2>Pomodoro ayarları</h2><p>Odak süreni, molalarını ve periyodunu ayarla.</p><div class="pm-l" id="pml"></div><p class="pm-n">Tur süresi değişirse o an süren tur sıfırlanır.</p><div class="row"><button class="btn" id="pdf">Varsayılan</button><button class="btn" id="pcn">Vazgeç</button><button class="btn pr" id="psv">Kaydet</button></div></div></div>
   <div class="dp" id="dp" aria-hidden="true">
     <div class="dp-bd" id="dpbd"></div>
     <div class="dp-card" id="dpc" role="dialog" aria-modal="true" aria-label="Sınav tarihini seç" tabindex="-1">
@@ -691,7 +708,7 @@ function drag(e,g,w){
 }
 
 /* Sure */
-var ST={sw:{run:false,t0:0,acc:0,done:false},cd:{run:false,t0:0,acc:0,done:false,cd:15e5},pm:{run:false,t0:0,acc:0,done:false,cd:15e5,ph:0,n:0}},PD=[15e5,3e5,9e5],PN=["Odak","Kısa mola","Uzun mola"],MS=["sw","cd","pm"],MODE="sw",T,AC=null,WL=null,LT={},TK={},TB;
+var ST={sw:{run:false,t0:0,acc:0,done:false},cd:{run:false,t0:0,acc:0,done:false,cd:15e5},pm:{run:false,t0:0,acc:0,done:false,cd:15e5,ph:0,n:0}},PD=[15e5,3e5,9e5],PS={f:25,s:5,l:15,r:4},PDF={f:25,s:5,l:15,r:4},PL={f:[1,180,"dk"],s:[1,60,"dk"],l:[1,120,"dk"],r:[2,12,"tur"]},PX={},PH1,PH2,PN=["Odak","Kısa mola","Uzun mola"],MS=["sw","cd","pm"],MODE="sw",T,AC=null,WL=null,LT={},TK={},TB;
 MS.forEach(function(m){var c=$('.clk[data-m="'+m+'"]');TK[m]={c:c,b:c.firstChild,i:c.lastChild,s:c.nextElementSibling}});
 (function(){
   var o=S.tm||{};
@@ -700,11 +717,11 @@ MS.forEach(function(m){var c=$('.clk[data-m="'+m+'"]');TK[m]={c:c,b:c.firstChild
   if(o.cd>=6e4)ST.cd.cd=Math.min(+o.cd,432e5);
   if(!o.sw&&!o.c)ld(ST[MODE],o);else{ld(ST.sw,o.sw);ld(ST.cd,o.c)}
   var q=o.p;if(q&&typeof q==="object"){ld(ST.pm,q);if(q.ph>=0&&q.ph<3)ST.pm.ph=q.ph|0;if(q.n>=0&&q.n<1e6)ST.pm.n=q.n|0}
-  ST.pm.cd=PD[ST.pm.ph];
+  PS=pcl(o.pc);PD=pdur();ST.pm.cd=PD[ST.pm.ph];
   T=ST[MODE];
 })();
 function pk(t){return{run:t.run,t0:t.t0,acc:t.acc,done:t.done}}
-function savT(){var p=pk(ST.pm);p.ph=ST.pm.ph;p.n=ST.pm.n;S.tm={m:MODE,cd:ST.cd.cd,sw:pk(ST.sw),c:pk(ST.cd),p:p};save()}
+function savT(){var p=pk(ST.pm);p.ph=ST.pm.ph;p.n=ST.pm.n;S.tm={m:MODE,cd:ST.cd.cd,sw:pk(ST.sw),c:pk(ST.cd),p:p,pc:PS};save()}
 function el(t){return t.acc+(t.run?Date.now()-t.t0:0)}
 function p2(n){return(n<10?"0":"")+n}
 function fm(s){var h=Math.floor(s/3600);return(h?h+":"+p2(Math.floor(s%3600/60)):p2(Math.floor(s/60)))+":"+p2(s%60)}
@@ -726,15 +743,16 @@ function paint(){
   if(!TB)return;
   $$("#tswt .swt-nav button").forEach(function(b,q){var m=MS[q],t=ST[m],v=b.lastChild,x="";if(m!==MODE){if(t.run)x=fm(m==="sw"?Math.floor(el(t)/1e3):Math.ceil(Math.max(0,t.cd-el(t))/1e3));else if(t.done)x="Bitti"}if(v.textContent!==x)v.textContent=x});
 }
-function pfin(p,q){if(p.ph===0){p.n++;p.ph=p.n%4===0?2:1}else p.ph=0;p.cd=PD[p.ph];p.acc=0;p.run=false;p.done=false;wk();savT();sync();paint();if(!q)beep()}
+function pfin(p,q){if(p.ph===0){p.n++;p.ph=p.n%PS.r===0?2:1}else p.ph=0;p.cd=PD[p.ph];p.acc=0;p.run=false;p.done=false;wk();savT();sync();paint();if(!q)beep()}
 function tick(){paint();var c=ST.cd,p=ST.pm;if(c.run&&el(c)>=c.cd)finish(c);if(p.run&&el(p)>=p.cd)pfin(p)}
 function sync(){
   var fs=$(".app").classList.contains("fs");
   MS.forEach(function(m){var t=ST[m],k=TK[m],st=t.done?"Süre doldu":t.run?"Çalışıyor":t.acc>0?"Duraklatıldı":"Hazır";
     k.c.classList.toggle("run",t.run);k.c.classList.toggle("done",t.done);
-    if(m==="pm")st=PN[t.ph]+(t.ph===0?" "+(t.n%4+1)+"/4":"")+" · "+st;
+    if(m==="pm")st=PN[t.ph]+(t.ph===0?" "+(t.n%PS.r+1)+"/"+PS.r:"")+" · "+st;
     k.s.textContent=st});
   $("#tgo").classList.toggle("on",T.run);
+  $("#pgb").classList.toggle("on",MODE==="pm"&&!fs);
   $("#pw").classList.toggle("off",fs||ST.cd.run||ST.cd.acc>0);
   $$(".chip[data-p]").forEach(function(b){b.classList.toggle("on",+b.dataset.p*6e4===ST.cd.cd)});
 }
@@ -751,6 +769,46 @@ function setCd(ms){ST.cd.cd=Math.max(6e4,Math.min(432e5,ms));savT();sync();paint
 $("#pre").innerHTML='<button class="chip" data-a="-5">−5 dk</button>'+[15,25,40,60,90].map(function(n){return'<button class="chip" data-p="'+n+'">'+n+' dk</button>'}).join("")+'<button class="chip" data-a="5">+5 dk</button>';
 $("#pre").addEventListener("click",function(e){var b=e.target.closest(".chip"),c=ST.cd;if(!b||c.run||c.acc)return;setCd(b.dataset.p?+b.dataset.p*6e4:c.cd+ +b.dataset.a*6e4)});
 $("#tgo").onclick=go;$("#trs").onclick=reset;
+/* Pomodoro ayar paneli */
+function pcl(x){var o={},k,v;for(k in PDF){v=x?Math.round(+x[k]):NaN;o[k]=v>=PL[k][0]&&v<=PL[k][1]?v:PDF[k]}return o}
+function pdur(){return[PS.f*6e4,PS.s*6e4,PS.l*6e4]}
+(function(){
+  var R=[["f","Pomodoro süresi","Odaklanma turu"],["s","Mola süresi","Kısa mola"],["l","Uzun mola","Periyot dolunca"],["r","Periyot","Uzun molaya kadar odak turu"]];
+  $("#pml").innerHTML=R.map(function(r){return'<div class="pm-row"><div><b>'+r[1]+'</b><small>'+r[2]+'</small></div><div class="pm-stp"><button data-pk="'+r[0]+'" data-d="-1" aria-label="'+r[1]+' azalt">−</button><output data-pv="'+r[0]+'"></output><button data-pk="'+r[0]+'" data-d="1" aria-label="'+r[1]+' artır">+</button></div></div>'}).join("");
+})();
+function pRender(){
+  $$("#pset [data-pv]").forEach(function(o){var k=o.dataset.pv;o.textContent=PX[k]+" "+PL[k][2]});
+  $$("#pset [data-pk]").forEach(function(b){var k=b.dataset.pk;b.disabled=+b.dataset.d<0?PX[k]<=PL[k][0]:PX[k]>=PL[k][1]});
+}
+function pStep(b){
+  var k=b.dataset.pk,v=Math.max(PL[k][0],Math.min(PL[k][1],PX[k]+ +b.dataset.d));
+  if(v===PX[k])return false;
+  PX[k]=v;pRender();try{navigator.vibrate&&navigator.vibrate(3)}catch(e){}return true;
+}
+function pStop(){clearTimeout(PH1);clearInterval(PH2)}
+function pOpen(){PX=pcl(PS);pRender();$("#pset").classList.add("on");setTimeout(function(){$("#pmc").focus()},60)}
+function pClose(){pStop();$("#pset").classList.remove("on");if($("#pgb").classList.contains("on"))$("#pgb").focus()}
+function pSave(){
+  var p=ST.pm,old=PD[p.ph];
+  PS=pcl(PX);PD=pdur();
+  if(PD[p.ph]!==old){p.run=false;p.acc=0;p.done=false}
+  p.cd=PD[p.ph];
+  wk();savT();sync();paint();pClose();
+}
+$("#pgb").onclick=pOpen;$("#psv").onclick=pSave;$("#pcn").onclick=pClose;
+$("#pdf").onclick=function(){PX=pcl(PDF);pRender()};
+$("#pset").addEventListener("click",function(e){
+  if(e.target===this){pClose();return}
+  var b=e.target.closest("[data-pk]");if(b&&e.detail===0)pStep(b);
+});
+$("#pset").addEventListener("pointerdown",function(e){
+  var b=e.target.closest("[data-pk]");if(!b||b.disabled)return;
+  e.preventDefault();pStop();
+  if(!pStep(b))return;
+  PH1=setTimeout(function(){PH2=setInterval(function(){if(!pStep(b))pStop()},90)},420);
+});
+window.addEventListener("pointerup",pStop);window.addEventListener("pointercancel",pStop);
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&$("#pset").classList.contains("on")){e.preventDefault();pClose()}});
 var FZ=0;
 /* Tam ekran: saat boyutu font-size geçişiyle değil, transform:scale ile (GPU) büyür/küçülür.
    Metin her karede yeniden yerleştirilip çizilmez; yalnızca bir kez son boyutta çizilir.
@@ -1756,7 +1814,7 @@ document.addEventListener("keydown",function(e){
   if(!KB.on||e.defaultPrevented||e.altKey||e.isComposing)return;
   var a=document.activeElement;
   if(a&&(/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)||a.isContentEditable))return;
-  if(DP.on||$("#sheet").classList.contains("on")||$("#ksheet").classList.contains("on"))return;
+  if(DP.on||$("#pset").classList.contains("on")||$("#sheet").classList.contains("on")||$("#ksheet").classList.contains("on"))return;
   var v=kView(),fs=$(".app").classList.contains("fs"),cs=$("#cset").classList.contains("on");
   if(e.key==="Escape"&&!e.ctrlKey&&!e.metaKey){
     if(fs){e.preventDefault();kFs()}
