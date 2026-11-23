@@ -45,16 +45,17 @@ main{position:relative;overflow:hidden;height:100dvh}
 .pc span{font-family:Inter,"SF Pro Display",system-ui,sans-serif;font-weight:500;font-size:36px;color:var(--dim);margin-left:4px}
 div.hl{margin-top:10px;font-size:20px;font-weight:700}
 div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);cursor:pointer;margin-top:2px}
-.grp{font-size:17px;font-weight:800;margin:24px 2px 12px}
-.sg{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.sub{position:relative;text-align:left;padding:14px 14px 24px;border-radius:18px;background:var(--surf);transition:background .4s var(--ease),transform .5s var(--sp)}
+.grp{display:flex;align-items:center;gap:12px;font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin:30px 2px 14px}
+.grp:after{content:"";flex:1;height:1px;background:var(--surf2)}
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sub{position:relative;text-align:left;padding:16px 16px 34px;border-radius:20px;background:var(--surf);box-shadow:0 1px 0 rgba(17,17,17,.04),0 6px 16px -8px rgba(17,17,17,.12);transition:background .4s var(--ease),transform .5s var(--sp),box-shadow .4s var(--ease)}
 .sub:active{transform:scale(.96)}
 .sub b{display:flex;align-items:center;gap:8px;font-size:18px;font-weight:700;line-height:1.1}
-.sub b:before{content:"";width:10px;height:10px;border-radius:50%;background:var(--c);flex:none;transition:background .4s var(--ease)}
-.sub small{display:block;margin-top:4px;font-family:Inter,"SF Pro Display",system-ui,sans-serif;font-size:13px;font-weight:500;font-variant-numeric:tabular-nums;color:var(--dim);transition:color .4s var(--ease)}
-.sub .pb{position:absolute;left:14px;right:14px;bottom:11px;height:4px;border-radius:4px;background:var(--surf2);overflow:hidden;transition:background .4s var(--ease)}
+.sub b:before{content:"";width:12px;height:12px;border-radius:50%;background:var(--c);flex:none;transition:background .4s var(--ease)}
+.sub small{display:block;margin-top:4px;font-family:Inter,"SF Pro Display",system-ui,sans-serif;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--dim);padding-left:20px;transition:color .4s var(--ease)}
+.sub .pb{position:absolute;left:16px;right:16px;bottom:14px;height:6px;border-radius:6px;background:var(--surf2);overflow:hidden;transition:background .4s var(--ease)}
 .sub .pb i{display:block;height:100%;background:var(--c);transform-origin:left;transform:scaleX(var(--p,0));transition:transform .8s var(--ease),background .4s var(--ease)}
-.sub.on{background:var(--c)}
+.sub.on{background:var(--c);box-shadow:0 10px 22px -10px var(--c)}
 .sub.on b:before{background:var(--ink)}
 .sub.on small{color:rgba(17,17,17,.6)}
 .sub.on .pb{background:rgba(17,17,17,.14)}
