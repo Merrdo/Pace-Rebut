@@ -1665,6 +1665,68 @@ $$(".db").forEach(function(b,n){b.onclick=function(){
   $$(".view").forEach(function(e){e.classList.toggle("on",e.id==="v-"+b.dataset.v)});
 }});
 
+/* Klavye kısayolları
+   Her yerde : 1-4 sekme değiştirir (Konular, Süre, Takvim, Ayarlar)
+   Süre      : Boşluk/Enter başlat-duraklat, R sıfırla, F tam ekran, Esc tam ekrandan çık,
+               ←/→ mod değiştir, ↑/↓ geri sayımda ±5 dk (hazırken)
+   Takvim    : ←/→ önceki/sonraki, T bugün, Enter seçili günü aç, Esc bir üst görünüm, F tam ekran, Ctrl/⌘+Z geri al (çizim)
+   Konular   : ←/↑ önceki ders, →/↓ sonraki ders (konular Tab ile gezilip Boşluk/Enter ile işaretlenir) */
+function kView(){var v=$(".view.on");return v?v.id.slice(2):""}
+document.addEventListener("keydown",function(e){
+  if(e.defaultPrevented||e.altKey||e.isComposing)return;
+  var a=document.activeElement,k=e.key,v=kView(),fs=$(".app").classList.contains("fs"),btn=a&&a.tagName==="BUTTON";
+  if(a&&(/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)||a.isContentEditable))return;
+  if(DP.on||$("#sheet").classList.contains("on"))return;
+  var cs=$("#cset").classList.contains("on");
+  if(e.ctrlKey||e.metaKey){
+    if((k==="z"||k==="Z")&&v==="cal"&&!cs&&IDY&&$(".dv")){e.preventDefault();iUndo()}
+    return;
+  }
+  var nv=k.length===1?"1234".indexOf(k):-1;
+  if(nv>-1){e.preventDefault();var b=$$(".db")[nv];if(b&&!b.classList.contains("on"))b.click();return}
+
+  if(v==="timer"){
+    if(k===" "||k==="Spacebar"||(k==="Enter"&&!btn)){
+      e.preventDefault();if(e.repeat)return;
+      if(btn)a.blur();
+      go();return;
+    }
+    if(k==="r"||k==="R"){e.preventDefault();reset();return}
+    if(k==="f"||k==="F"){e.preventDefault();$("#fsb").click();return}
+    if(k==="Escape"&&fs){e.preventDefault();$("#fsb").click();return}
+    if((k==="ArrowLeft"||k==="ArrowRight")&&!fs&&!(a&&a.closest&&a.closest(".swt-nav"))){
+      e.preventDefault();TB.go(TB.index+(k==="ArrowRight"?1:-1));return;
+    }
+    if((k==="ArrowUp"||k==="ArrowDown")&&MODE==="cd"&&!fs){
+      e.preventDefault();var c=$('.chip[data-a="'+(k==="ArrowUp"?"5":"-5")+'"]');if(c)c.click();return;
+    }
+  }else if(v==="cal"){
+    if(cs){if(k==="Escape"){e.preventDefault();$("#cset").classList.remove("on");paintK(true)}return}
+    if(k==="ArrowLeft"||k==="ArrowRight"){e.preventDefault();step(k==="ArrowRight"?1:-1);return}
+    if(k==="t"||k==="T"){e.preventDefault();$('#cal [data-a="td"]').click();return}
+    if(k==="f"||k==="F"){e.preventDefault();$('#cal [data-a="fs"]').click();return}
+    if(k==="Escape"){
+      e.preventDefault();
+      if(fs)$('#cal [data-a="fs"]').click();
+      else if(cv.l==="day")lvl("month","out");
+      else if(cv.l==="month")lvl("year","out");
+      return;
+    }
+    if(k==="Enter"&&!btn&&cv.l==="month"&&cv.sel){e.preventDefault();cv.d=cv.sel;lvl("day","in");return}
+  }else if(v==="topics"){
+    var d=k==="ArrowLeft"||k==="ArrowUp"?-1:k==="ArrowRight"||k==="ArrowDown"?1:0;
+    if(d){
+      e.preventDefault();
+      var L=vis(),i=0;L.forEach(function(s,n){if(s.id===S.sel)i=n});
+      i=Math.max(0,Math.min(L.length-1,i+d));
+      if(L[i].id!==S.sel){
+        S.sel=L[i].id;save();showSub(true);
+        var sb=$('.sub[data-i="'+S.sel+'"]');if(sb)sb.scrollIntoView({block:"nearest",behavior:"smooth"});
+      }
+    }
+  }
+});
+
 if("serviceWorker" in navigator&&location.protocol.indexOf("http")===0){navigator.serviceWorker.register("sw.js").catch(function(){})}
 })();
 </script>
