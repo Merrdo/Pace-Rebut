@@ -163,7 +163,7 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .fold.off{grid-template-rows:0fr;opacity:0;pointer-events:none}
 .tswt{position:relative;width:100%;overflow:hidden;--swt-ink:var(--fg);--swt-accent:var(--ct)}
 .tswt .swt-track{position:relative;display:flex;will-change:transform;touch-action:pan-y}
-.tswt .swt-page{flex:0 0 33.333%;min-width:0;display:flex;flex-direction:column;align-items:center;padding-top:70px;transition:padding .8s var(--ease),visibility 0s linear .85s}
+.tswt .swt-page{flex:0 0 33.333%;min-width:0;display:flex;flex-direction:column;align-items:center;padding-top:70px;transition:padding .8s var(--ease)}
 .tswt .swt-nav{position:absolute;left:0;right:0;top:0;height:38px;z-index:6;display:flex;align-items:center;justify-content:center;gap:30px;pointer-events:none;transition:opacity .45s var(--ease)}
 .tswt .swt-nav button{position:relative;height:100%;padding:0;font-size:1.3rem;font-weight:700;letter-spacing:-.03em;color:var(--swt-ink);pointer-events:auto;-webkit-tap-highlight-color:transparent}
 .tswt .swt-nav button span{display:block;transform-origin:0 70%;will-change:transform}
@@ -171,6 +171,7 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .tswt .lv{position:absolute;left:0;top:calc(100% + 5px);font-size:11px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap;color:#2fbf71}
 .app.fs .tswt .swt-nav{opacity:0;pointer-events:none}.app.fs .tswt .swt-page{padding-top:0}
 /* Tam ekranda aktif olmayan sayfalar görünmez (girişte hemen, çıkışta geçiş bitince geri gelir); geçişte boşuna layout/raster maliyeti yaratmasın */
+.app.fzx .tswt .swt-page{transition:padding .8s var(--ease),visibility 0s linear .85s}
 .app.fs .tswt .swt-page[inert]{visibility:hidden;transition:padding .8s var(--ease),visibility 0s}
 .clk{display:flex;align-items:baseline;margin:14px 0 6px;font-family:Outfit,Inter,"SF Pro Display",system-ui,sans-serif;font-weight:500;font-variant-numeric:tabular-nums;letter-spacing:.02em;line-height:1;white-space:nowrap;font-size:min(19vw,32vh);transition:font-size .85s var(--ease)}
 .clk.h{font-size:min(13.5vw,32vh)}
