@@ -192,7 +192,31 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .cb{position:relative;display:grid;place-items:center;width:66px;height:66px;border-radius:50%;background:var(--surf);transition:transform .5s var(--sp)}
 .cb:active{transform:scale(.92)}
 .cb.main{width:96px;height:96px;background:var(--fg);color:var(--bg)}
-.cb.sk{display:none}.tctl.pmx .cb.sk{display:grid}
+.cb.main.nt svg{transition:none}.cb.sk{display:none}.tctl.pmx .cb.sk{display:grid}
+/* Pomodoro arka planı: faza göre değişir (odak: pembe-lavanta, kısa mola: mavi-sarı, uzun mola: lavanta) */
+#v-timer{isolation:isolate}
+.pbg{position:absolute;inset:0;z-index:-1;overflow:hidden;opacity:0;pointer-events:none;--pa:#c2305f;--pb:#ff9fb2}
+.pbg[data-ph="1"],.pmp[data-ph="1"]{--pa:#1d63c9;--pb:#8fb8ff}
+.pbg[data-ph="2"],.pmp[data-ph="2"]{--pa:#7a3fd1;--pb:#c9a6ff}
+.pmp{--pa:#c2305f}
+.pbg .l{position:absolute;inset:0;opacity:0;transition:opacity 1.4s var(--ease)}
+.pbg[data-ph="0"] .l0,.pbg[data-ph="1"] .l1,.pbg[data-ph="2"] .l2{opacity:1}
+.pbg .l0{background:radial-gradient(120% 90% at 0% 100%,#ffd0d6 0%,transparent 62%),radial-gradient(100% 80% at 100% 0%,#e4d8ff 0%,transparent 62%),linear-gradient(135deg,#fbeef0,#f3ecfb)}
+.pbg .l1{background:radial-gradient(110% 90% at 0% 0%,#b4cdff 0%,transparent 62%),radial-gradient(90% 80% at 100% 100%,#f1edc9 0%,transparent 60%),linear-gradient(135deg,#d3e1ff,#e7ecf5)}
+.pbg .l2{background:radial-gradient(100% 90% at 70% 0%,#dcc2ff 0%,transparent 65%),radial-gradient(90% 80% at 0% 100%,#efdfff 0%,transparent 60%),linear-gradient(160deg,#eedcff,#e5d5fb)}
+.pbg .bl{position:absolute;width:54vmax;height:54vmax;border-radius:50%;background:var(--pb);filter:blur(80px);opacity:.38;will-change:transform;transition:background 1.2s var(--ease);animation:pdr 16s ease-in-out infinite;animation-play-state:paused}
+.pbg .bl1{left:-16vmax;top:-22vmax}
+.pbg .bl2{right:-20vmax;bottom:-26vmax;opacity:.3;animation-duration:20s;animation-delay:-6s;animation-direction:reverse}
+.pbg.run .bl{animation-play-state:running}
+#v-timer:not(.on) .pbg .bl{animation-play-state:paused!important}
+@keyframes pdr{50%{transform:translate(6vmax,4vmax) scale(1.1)}}
+.pp{position:absolute;left:0;right:0;bottom:0;height:5px;background:rgba(17,17,17,.06)}
+.pp i{display:block;height:100%;background:var(--pa);transform-origin:left;transform:scaleX(var(--v,0));transition:background 1.2s var(--ease)}
+.pmp .ts{display:flex;align-items:center;justify-content:center;gap:10px;color:var(--pa);transition:color 1.2s var(--ease)}
+.pdots{display:inline-flex;gap:6px}
+.pdots i{width:9px;height:9px;border-radius:50%;background:rgba(17,17,17,.14);transition:background .6s var(--ease),transform .6s var(--sp),box-shadow .6s var(--ease)}
+.pdots i.on{background:var(--pa)}
+.pdots i.cur{background:var(--pa);transform:scale(1.25);box-shadow:0 0 0 3px color-mix(in srgb,var(--pa) 24%,transparent)}
 .cb svg{width:28px;height:28px}.cb.sec svg{fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .cb.main svg{grid-area:1/1;width:38px;height:38px;transition:opacity .3s,transform .55s var(--sp)}
 .cb.main .i-p{opacity:0;transform:scale(.5)}.cb.main.on .i-p{opacity:1;transform:none}.cb.main.on .i-g{opacity:0;transform:scale(.5)}
@@ -436,10 +460,11 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
       <div class="topics" id="topics"></div>
     </section>
     <section class="view" id="v-timer">
+      <div class="pbg" id="pbg" data-ph="0"><i class="l l0"></i><i class="l l1"></i><i class="l l2"></i><i class="bl bl1"></i><i class="bl bl2"></i><div class="pp"><i id="ppf"></i></div></div>
       <button class="fsb" id="fsb" aria-label="Tam ekran"><svg class="i-e" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><svg class="i-c" viewBox="0 0 24 24"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg></button>
       <button class="pgb" id="pgb" aria-label="Pomodoro ayarları" aria-haspopup="dialog"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/></svg></button>
       <div class="tw">
-        <div class="tswt" id="tswt"><section class="swt-page" data-title="Kronometre"><div class="clk" data-m="sw"><b></b><i></i></div><div class="ts"></div></section><section class="swt-page" data-title="Geri sayım"><div class="clk" data-m="cd"><b></b><i></i></div><div class="ts"></div><div class="fold" id="pw"><div><div class="pre" id="pre"></div></div></div></section><section class="swt-page" data-title="Pomodoro"><div class="clk" data-m="pm"><b></b><i></i></div><div class="ts"></div></section></div>
+        <div class="tswt" id="tswt"><section class="swt-page" data-title="Kronometre"><div class="clk" data-m="sw"><b></b><i></i></div><div class="ts"></div></section><section class="swt-page" data-title="Geri sayım"><div class="clk" data-m="cd"><b></b><i></i></div><div class="ts"></div><div class="fold" id="pw"><div><div class="pre" id="pre"></div></div></div></section><section class="swt-page pmp" data-title="Pomodoro"><div class="clk" data-m="pm"><b></b><i></i></div><div class="ts"></div></section></div>
         <div class="tctl">
           <button class="cb sec" id="trs" aria-label="Sıfırla"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.6-5.9M4 4v4.5h4.5"/></svg></button>
           <button class="cb main" id="tgo" aria-label="Başlat / Duraklat"><svg class="i-g" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><svg class="i-p" viewBox="0 0 24 24"><path d="M8 5.5v13M16 5.5v13" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" fill="none"/></svg></button>
@@ -715,6 +740,16 @@ function drag(e,g,w){
 /* Sure */
 var ST={sw:{run:false,t0:0,acc:0,done:false},cd:{run:false,t0:0,acc:0,done:false,cd:15e5},pm:{run:false,t0:0,acc:0,done:false,cd:15e5,ph:0,n:0}},PD=[15e5,3e5,9e5],PS={f:25,s:5,l:15,r:4},PDF={f:25,s:5,l:15,r:4},PL={f:[1,180,"dk"],s:[1,60,"dk"],l:[1,120,"dk"],r:[2,8,"tur"]},PX={},PH1,PH2,PN=["Odak","Kısa mola","Uzun mola"],MS=["sw","cd","pm"],MODE="sw",T,AC=null,WL=null,LT={},TK={},TB;
 MS.forEach(function(m){var c=$('.clk[data-m="'+m+'"]');TK[m]={c:c,b:c.firstChild,i:c.lastChild,s:c.nextElementSibling}});
+/* Pomodoro görselleri: durum satırı (tur noktaları + metin), faza göre arka plan, alttaki ilerleme çizgisi */
+TK.pm.s.innerHTML='<span class="pdots"></span><span class="ptx"></span>';
+var PDS=TK.pm.s.firstChild,PTX=TK.pm.s.lastChild,PMP=TK.pm.c.parentNode,PBG=$("#pbg"),PPF=$("#ppf");
+function pmUi(){
+  var p=ST.pm,r=PS.r,c=p.n%r,dn=p.ph===0?c:(c===0?r:c),i,d,h="";
+  if(PDS.children.length!==r){for(i=0;i<r;i++)h+="<i></i>";PDS.innerHTML=h}
+  for(i=0;i<r;i++){d=PDS.children[i];d.classList.toggle("on",i<dn);d.classList.toggle("cur",p.ph===0&&i===dn)}
+  PBG.dataset.ph=p.ph;PMP.dataset.ph=p.ph;
+  PBG.classList.toggle("run",!!p.run&&MODE==="pm");
+}
 (function(){
   var o=S.tm||{};
   function ld(t,x){if(!x||typeof x!=="object")return;if(x.acc>0&&x.acc<1e10)t.acc=+x.acc;t.done=!!x.done;if(x.run&&+x.t0>0){t.run=true;t.t0=Math.min(+x.t0,Date.now())}}
@@ -745,6 +780,7 @@ function paint(){
     var c=cd?"":"."+p2(Math.floor(ms%1000/10));
     if(c!==LT[m+"c"]){LT[m+"c"]=c;k.i.textContent=c}
   });
+  var pp=ST.pm,pv=Math.round(Math.min(1,el(pp)/pp.cd)*1e3)/1e3;if(pv!==LT.pv){LT.pv=pv;PPF.style.setProperty("--v",pv)}
   if(!TB)return;
   $$("#tswt .swt-nav button").forEach(function(b,q){var m=MS[q],t=ST[m],v=b.lastChild,x="";if(m!==MODE){if(t.run)x=fm(m==="sw"?Math.floor(el(t)/1e3):Math.ceil(Math.max(0,t.cd-el(t))/1e3));else if(t.done)x="Bitti"}if(v.textContent!==x)v.textContent=x});
 }
@@ -755,7 +791,8 @@ function sync(){
   MS.forEach(function(m){var t=ST[m],k=TK[m],st=t.done?"Süre doldu":t.run||t.acc>0?"":"Hazır";
     k.c.classList.toggle("run",t.run);k.c.classList.toggle("done",t.done);
     if(m==="pm")st=PN[t.ph]+(t.ph===0?" "+(t.n%PS.r+1)+"/"+PS.r:"")+(st?" · "+st:"");
-    k.s.textContent=st});
+    if(m==="pm")PTX.textContent=st;else k.s.textContent=st});
+  pmUi();
   $("#tgo").classList.toggle("on",T.run);
   if(!T.run){clearTimeout(CHT);CHT=0;$(".tctl").classList.remove("hid")}
   $("#pgb").classList.toggle("on",(TB?MS[TB.index]:MODE)==="pm"&&!fs);
@@ -959,7 +996,7 @@ $("#fsb").onclick=function(){
   }
   root.SwipeTabs = SwipeTabs;
 })(window);
-TB=new SwipeTabs($("#tswt"),{index:MS.indexOf(MODE),onTarget:function(i){$(".tctl").classList.toggle("pmx",MS[i]==="pm");$("#pgb").classList.toggle("on",MS[i]==="pm"&&!$(".app").classList.contains("fs"))},canSwipe:function(){return!$(".app").classList.contains("fs")},haptic:function(){try{navigator.vibrate&&navigator.vibrate(4)}catch(e){}},onChange:function(i){MODE=MS[i];T=ST[MODE];savT();sync();paint();ctlPoke()}});
+TB=new SwipeTabs($("#tswt"),{index:MS.indexOf(MODE),onProgress:function(p){PBG.style.opacity=Math.max(0,Math.min(1,1-Math.abs(p-2))).toFixed(3)},onTarget:function(i){var g=$("#tgo");g.classList.add("nt");MODE=MS[i];T=ST[MODE];sync();paint();void g.offsetWidth;g.classList.remove("nt");$(".tctl").classList.toggle("pmx",MS[i]==="pm");$("#pgb").classList.toggle("on",MS[i]==="pm"&&!$(".app").classList.contains("fs"))},canSwipe:function(){return!$(".app").classList.contains("fs")},haptic:function(){try{navigator.vibrate&&navigator.vibrate(4)}catch(e){}},onChange:function(i){MODE=MS[i];T=ST[MODE];savT();sync();paint();ctlPoke()}});
 if(window.ResizeObserver)new ResizeObserver(function(){TB.refresh()}).observe($("#tswt"));
 if(ST.cd.run&&el(ST.cd)>=ST.cd.cd)finish(ST.cd,true);
 if(ST.pm.run&&el(ST.pm)>=ST.pm.cd)pfin(ST.pm,true);
