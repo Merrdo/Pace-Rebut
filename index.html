@@ -379,6 +379,26 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 @keyframes dpfl{40%{opacity:.25;transform:translateY(5px)}}
 .dfl{animation:dpfl .7s var(--ease)}
 @media (prefers-reduced-motion:reduce){.dp-card,.dp.on .dp-card,.dp-bd,.dp-v,.dp-d:before{transition-duration:.01s!important;animation-duration:.01s!important}}
+/* Klavye kisa yollari */
+.kbc{transition:transform .5s var(--sp)}.kbc:has(.kbo:active){transform:scale(.985)}
+.kbo{flex:1;min-width:0;display:flex;align-items:center;gap:12px;text-align:left;border-radius:14px}
+.kbo>div{flex:1;min-width:0}
+.kbo svg{width:20px;height:20px;flex:none;fill:none;stroke:var(--dim);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.card.kbg{padding:6px 20px}
+.kbl{transition:opacity .4s var(--ease)}.kbl.off{opacity:.5}
+.kbr{display:flex;align-items:center;gap:14px;padding:16px 0;border-bottom:1px solid var(--surf2)}.kbr:last-child{border-bottom:0}
+.kbr>div{flex:1;min-width:0}.kbr b{display:block;font-size:18px;font-weight:700}.kbr small{display:block;margin-top:2px;font-size:14px;font-weight:500;color:var(--dim)}
+.kbk{flex:none;min-width:64px;height:42px;padding:0 16px;border-radius:12px;background:var(--surf2);box-shadow:inset 0 -3px 0 rgba(0,0,0,.09);font:600 15px Inter,system-ui,sans-serif;white-space:nowrap;transition:transform .5s var(--sp),background .3s,color .3s}
+.kbk:active{transform:scale(.95)}
+.kbk.no{color:var(--dim);font-weight:500}
+.kbk.ls{background:var(--fg);color:var(--bg);animation:kbp 1.2s ease-in-out infinite}
+@keyframes kbp{50%{opacity:.6}}
+.kbk.fx{pointer-events:none;opacity:.55}
+.kbd{width:34px;height:34px;display:grid;place-items:center;border-radius:50%;background:var(--surf2);color:var(--dim);flex:none;transition:transform .5s var(--sp)}
+.kbd:active{transform:scale(.9)}
+.kbd svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.kbt{position:fixed;left:50%;bottom:calc(28px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);max-width:calc(100% - 48px);padding:12px 20px;border-radius:999px;background:var(--fg);color:var(--bg);font-size:15px;font-weight:700;text-align:center;opacity:0;pointer-events:none;transition:opacity .35s var(--ease),transform .55s var(--sp)}
+.kbt.on{opacity:1;transform:translate(-50%,0)}
 </style>
 </head>
 <body>
@@ -409,6 +429,7 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
     <section class="view" id="v-settings"><div class="set" id="set"></div></section>
   </main>
   <div class="sheet" id="sheet"><button class="fl fl-l" id="fl">Dersler</button><div class="fl-r"><button class="fl fp" id="fp" aria-label="Yeni ders">+</button><button class="fl fk" id="sx">Kapat</button></div><div class="shw" id="shw"></div><div class="mod" id="mod"><div class="mc card" id="mc"></div></div></div>
+  <div class="sheet" id="ksheet"><div class="shw"><div class="sh-h"><div><h1>Klavye kısa yolları</h1><p>Bir kısa yola dokun, ardından yeni tuşa bas. Backspace atamayı kaldırır, Esc vazgeçer.</p></div><button class="btn pr" id="kbx">Bitti</button></div><div class="card lc"><div><h2>Kısa yolları kullan</h2><p>Kapalıyken klavye uygulamada hiçbir şey yapmaz.</p></div><button class="tg on" data-kb="tg" aria-label="Klavye kısa yolları"><i></i></button></div><div id="kbl"></div><div class="card"><h2>Varsayılana dön</h2><p>Tüm kısa yollar ilk hâline döner.</p><div class="row"><button class="btn dg" id="kbr">Hepsini sıfırla</button></div></div></div><div class="kbt" id="kbt" role="status"></div></div>
   <div class="dp" id="dp" aria-hidden="true">
     <div class="dp-bd" id="dpbd"></div>
     <div class="dp-card" id="dpc" role="dialog" aria-modal="true" aria-label="Sınav tarihini seç" tabindex="-1">
@@ -451,6 +472,32 @@ var D=[
 var S={done:{},date:"2027-06-19",sel:0};
 try{var raw=localStorage.getItem("dd-state");if(raw)Object.assign(S,JSON.parse(raw))}catch(e){}
 function save(){try{localStorage.setItem("dd-state",JSON.stringify(S))}catch(e){}}
+/* Klavye kisa yollari: [id, kapsam(g=her yer,t=sure,c=takvim,k=konular), grup, ad, aciklama, varsayilan] */
+var KA=[
+["nav0","g","Genel","Konular sayfası","Derslerin ve konuların listesini açar.","1"],
+["nav1","g","Genel","Süre sayfası","Kronometre, geri sayım ve pomodoro sayfasını açar.","2"],
+["nav2","g","Genel","Takvim sayfası","Takvimi açar.","3"],
+["nav3","g","Genel","Ayarlar sayfası","Ayarlar sayfasını açar.","4"],
+["fs","g","Genel","Tam ekran","Her sayfada tam ekranı açar veya kapatır, alt çubuğu gizler.","f"],
+["tToggle","t","Süre","Başlat / duraklat","Seçili kronometreyi, geri sayımı ya da pomodoro'yu başlatır veya duraklatır."," "],
+["tReset","t","Süre","Sıfırla","Seçili sayacı başa alır.","r"],
+["tPrev","t","Süre","Önceki mod","Pomodoro, geri sayım ve kronometre arasında sola geçer.","ArrowLeft"],
+["tNext","t","Süre","Sonraki mod","Kronometre, geri sayım ve pomodoro arasında sağa geçer.","ArrowRight"],
+["tUp","t","Süre","Geri sayıma 5 dk ekle","Geri sayım hazırken süreyi 5 dakika artırır.","ArrowUp"],
+["tDown","t","Süre","Geri sayımdan 5 dk çıkar","Geri sayım hazırken süreyi 5 dakika azaltır.","ArrowDown"],
+["cPrev","c","Takvim","Geri git","Açık görünüme göre bir önceki ayı, günü ya da yılı gösterir.","ArrowLeft"],
+["cNext","c","Takvim","İleri git","Bir sonraki ayı, günü ya da yılı gösterir.","ArrowRight"],
+["cToday","c","Takvim","Bugüne git","Takvimi bugüne getirir.","t"],
+["cOpen","c","Takvim","Seçili günü aç","Ay görünümünde seçili günün sayfasını açar.","Enter"],
+["cUndo","c","Takvim","Son çizgiyi geri al","Gün sayfasında çizim yaparken son çizgiyi geri alır.","Mod+z"],
+["kPrev","k","Konular","Önceki ders","Konular sayfasında bir önceki dersi seçer.","ArrowLeft"],
+["kNext","k","Konular","Sonraki ders","Konular sayfasında bir sonraki dersi seçer.","ArrowRight"]
+],KDEF={},KB={on:1,map:{}};
+KA.forEach(function(a){KDEF[a[0]]=a[5]});
+try{var kj=JSON.parse(localStorage.getItem("dd-kb"));if(kj){KB.on=kj.on===0?0:1;if(kj.map&&typeof kj.map==="object")KA.forEach(function(a){if(Object.prototype.hasOwnProperty.call(kj.map,a[0])){var v=kj.map[a[0]];if(v===null||(typeof v==="string"&&v.length&&v.length<20))KB.map[a[0]]=v}})}}catch(e){}
+function kbSave(){try{localStorage.setItem("dd-kb",JSON.stringify(KB))}catch(e){}}
+function kbGet(id){return Object.prototype.hasOwnProperty.call(KB.map,id)?KB.map[id]:KDEF[id]}
+function kbPut(id,key){if(key===KDEF[id])delete KB.map[id];else KB.map[id]=key}
 function esc(t){return String(t).replace(/[&<>"']/g,function(c){return"&#"+c.charCodeAt(0)+";"})}
 if(!Array.isArray(S.extra))S.extra=[];if(!Array.isArray(S.order))S.order=[];if(!S.col||typeof S.col!=="object")S.col={};if(!S.gone||typeof S.gone!=="object")S.gone={};
 function addL(e){var id=D.length;D.push({id:id,g:e.g,n:e.n,t:e.t,c:e.c,ct:e.ct,x:1});return id}
@@ -511,11 +558,13 @@ function showSub(anim){
 function buildSettings(){
   $("#set").innerHTML='<div class="setw"><h1>Ayarlar</h1>'+
   '<div class="card lc"><div><h2>Dersler</h2><p>TYT ve AYT derslerini sırala, renklerini değiştir, yeni ders ekle.</p><div class="dots">'+vis().map(function(s){return'<i style="--c:'+s.c+'"></i>'}).join("")+'</div></div><button class="btn pr" id="ld">Düzenle</button></div>'+
+  '<div class="card lc kbc"><button class="kbo" id="kbo"><div><h2>Klavye kısa yolları</h2><p>Sayfa geçişi, süre ve takvim için kısa yolları gör ve özelleştir.</p></div><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button><button class="tg'+(KB.on?" on":"")+'" data-kb="tg" aria-label="Klavye kısa yolları"><i></i></button></div>'+
   '<div class="card"><h2>Sınav tarihi</h2><p>Geri sayım bu tarihe göre hesaplanır.</p><button class="dpb" id="sd" aria-haspopup="dialog"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span></span></button></div>'+
   '<div class="card"><h2>Yedek</h2><p>İlerlemeni metin olarak kopyala, gerekirse buradan geri yükle.</p><div class="row"><button class="btn pr" id="bk">Yedeği kopyala</button></div><textarea id="bt" placeholder="Yedek metnini buraya yapıştır"></textarea><div class="row"><button class="btn" id="br">Geri yükle</button></div><div class="msg" id="bm"></div></div>'+
   '<div class="card"><h2>İlerlemeyi sıfırla</h2><p>İşaretlenen tüm konular silinir. Sınav tarihi korunur.</p><div class="row"><button class="btn dg" id="rs">Sıfırla</button></div><div class="msg" id="rm"></div></div></div>';
   $("#sd").onclick=function(){openDP(this)};
   $("#ld").onclick=openSheet;
+  $("#kbo").onclick=openKb;
   $("#bk").onclick=function(){
     var t=exportData(),m=$("#bm");
     function fb(){var a=$("#bt");a.value=t;a.focus();a.select();m.textContent="Kopyalanamadı. Metni elle kopyala."}
@@ -1436,7 +1485,7 @@ function zInit(dv){
   $("#zc").addEventListener("click",function(e){var b=e.target.closest("[data-z]");if(!b)return;var k=b.dataset.z;zStep(k==="+"?1.6:k==="-"?1/1.6:0)});
 }
 document.addEventListener("keydown",function(e){
-  if(!IDY||!$(".dv")||e.ctrlKey||e.metaKey||e.altKey||!$("#v-cal").classList.contains("on")||$("#cset").classList.contains("on"))return;
+  if(!KB.on||!IDY||!$(".dv")||e.ctrlKey||e.metaKey||e.altKey||!$("#v-cal").classList.contains("on")||$("#cset").classList.contains("on"))return;
   var a=document.activeElement,k=e.key;if(a&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName))return;
   if(k==="+"||k==="=")zStep(1.6);else if(k==="-"||k==="_")zStep(1/1.6);else if(k==="0")zStep(0);else return;
   e.preventDefault();
@@ -1665,65 +1714,131 @@ $$(".db").forEach(function(b,n){b.onclick=function(){
   $$(".view").forEach(function(e){e.classList.toggle("on",e.id==="v-"+b.dataset.v)});
 }});
 
-/* Klavye kısayolları
-   Her yerde : 1-4 sekme değiştirir (Konular, Süre, Takvim, Ayarlar)
-   Süre      : Boşluk/Enter başlat-duraklat, R sıfırla, F tam ekran, Esc tam ekrandan çık,
-               ←/→ mod değiştir, ↑/↓ geri sayımda ±5 dk (hazırken)
-   Takvim    : ←/→ önceki/sonraki, T bugün, Enter seçili günü aç, Esc bir üst görünüm, F tam ekran, Ctrl/⌘+Z geri al (çizim)
-   Konular   : ←/↑ önceki ders, →/↓ sonraki ders (konular Tab ile gezilip Boşluk/Enter ile işaretlenir) */
+/* Klavye kısayolları: atamalar KA listesinde, kullanıcının değişiklikleri KB.map'te (Ayarlar > Klavye kısa yolları) */
+function kFs(){
+  $("#fsb").click();
+  var b=$('#cal [data-a="fs"]');if(b)b.classList.toggle("on",$(".app").classList.contains("fs"));
+}
 function kView(){var v=$(".view.on");return v?v.id.slice(2):""}
-document.addEventListener("keydown",function(e){
-  if(e.defaultPrevented||e.altKey||e.isComposing)return;
-  var a=document.activeElement,k=e.key,v=kView(),fs=$(".app").classList.contains("fs"),btn=a&&a.tagName==="BUTTON";
-  if(a&&(/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)||a.isContentEditable))return;
-  if(DP.on||$("#sheet").classList.contains("on"))return;
-  var cs=$("#cset").classList.contains("on");
-  if(e.ctrlKey||e.metaKey){
-    if((k==="z"||k==="Z")&&v==="cal"&&!cs&&IDY&&$(".dv")){e.preventDefault();iUndo()}
-    return;
-  }
-  var nv=k.length===1?"1234".indexOf(k):-1;
-  if(nv>-1){e.preventDefault();var b=$$(".db")[nv];if(b&&!b.classList.contains("on"))b.click();return}
-
-  if(v==="timer"){
-    if(k===" "||k==="Spacebar"||(k==="Enter"&&!btn)){
-      e.preventDefault();if(e.repeat)return;
-      if(btn)a.blur();
-      go();return;
-    }
-    if(k==="r"||k==="R"){e.preventDefault();reset();return}
-    if(k==="f"||k==="F"){e.preventDefault();$("#fsb").click();return}
-    if(k==="Escape"&&fs){e.preventDefault();$("#fsb").click();return}
-    if((k==="ArrowLeft"||k==="ArrowRight")&&!fs&&!(a&&a.closest&&a.closest(".swt-nav"))){
-      e.preventDefault();TB.go(TB.index+(k==="ArrowRight"?1:-1));return;
-    }
-    if((k==="ArrowUp"||k==="ArrowDown")&&MODE==="cd"&&!fs){
-      e.preventDefault();var c=$('.chip[data-a="'+(k==="ArrowUp"?"5":"-5")+'"]');if(c)c.click();return;
-    }
-  }else if(v==="cal"){
-    if(cs){if(k==="Escape"){e.preventDefault();$("#cset").classList.remove("on");paintK(true)}return}
-    if(k==="ArrowLeft"||k==="ArrowRight"){e.preventDefault();step(k==="ArrowRight"?1:-1);return}
-    if(k==="t"||k==="T"){e.preventDefault();$('#cal [data-a="td"]').click();return}
-    if(k==="f"||k==="F"){e.preventDefault();$('#cal [data-a="fs"]').click();return}
-    if(k==="Escape"){
-      e.preventDefault();
-      if(fs)$('#cal [data-a="fs"]').click();
-      else if(cv.l==="day")lvl("month","out");
-      else if(cv.l==="month")lvl("year","out");
-      return;
-    }
-    if(k==="Enter"&&!btn&&cv.l==="month"&&cv.sel){e.preventDefault();cv.d=cv.sel;lvl("day","in");return}
-  }else if(v==="topics"){
-    var d=k==="ArrowLeft"||k==="ArrowUp"?-1:k==="ArrowRight"||k==="ArrowDown"?1:0;
-    if(d){
-      e.preventDefault();
+function kbNorm(e){
+  var k=e.key;
+  if(!k||k==="Dead"||k==="Unidentified"||/^(Shift|Control|Alt|Meta|AltGraph|CapsLock|NumLock|ScrollLock|OS|Fn|FnLock|ContextMenu)$/.test(k))return null;
+  if(k.length===1)k=k.toLowerCase();
+  return(e.ctrlKey||e.metaKey?"Mod+":"")+k;
+}
+function kRun(id,e,c){
+  var k;
+  switch(id){
+    case"nav0":case"nav1":case"nav2":case"nav3":k=$$(".db")[+id.slice(3)];if(k&&!k.classList.contains("on"))k.click();return true;
+    case"fs":kFs();return true;
+    case"tToggle":if(!e.repeat)go();return true;
+    case"tReset":reset();return true;
+    case"tPrev":case"tNext":if(c.fs||(c.a&&c.a.closest&&c.a.closest(".swt-nav")))return false;TB.go(TB.index+(id==="tNext"?1:-1));return true;
+    case"tUp":case"tDown":if(MODE!=="cd"||c.fs)return false;k=$('.chip[data-a="'+(id==="tUp"?"5":"-5")+'"]');if(k)k.click();return true;
+    case"cPrev":case"cNext":if(c.cs)return false;step(id==="cNext"?1:-1);return true;
+    case"cToday":if(c.cs)return false;$('#cal [data-a="td"]').click();return true;
+    case"cOpen":if(c.cs||c.btn||cv.l!=="month"||!cv.sel)return false;cv.d=cv.sel;lvl("day","in");return true;
+    case"cUndo":if(c.cs||!IDY||!$(".dv"))return false;iUndo();return true;
+    case"kPrev":case"kNext":
       var L=vis(),i=0;L.forEach(function(s,n){if(s.id===S.sel)i=n});
-      i=Math.max(0,Math.min(L.length-1,i+d));
+      i=Math.max(0,Math.min(L.length-1,i+(id==="kNext"?1:-1)));
       if(L[i].id!==S.sel){
         S.sel=L[i].id;save();showSub(true);
         var sb=$('.sub[data-i="'+S.sel+'"]');if(sb)sb.scrollIntoView({block:"nearest",behavior:"smooth"});
       }
+      return true;
+  }
+  return false;
+}
+document.addEventListener("keydown",function(e){
+  if(!KB.on||e.defaultPrevented||e.altKey||e.isComposing)return;
+  var a=document.activeElement;
+  if(a&&(/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)||a.isContentEditable))return;
+  if(DP.on||$("#sheet").classList.contains("on")||$("#ksheet").classList.contains("on"))return;
+  var v=kView(),fs=$(".app").classList.contains("fs"),cs=$("#cset").classList.contains("on");
+  if(e.key==="Escape"&&!e.ctrlKey&&!e.metaKey){
+    if(fs){e.preventDefault();kFs()}
+    else if(v==="cal"){
+      e.preventDefault();
+      if(cs){$("#cset").classList.remove("on");paintK(true)}
+      else if(cv.l==="day")lvl("month","out");
+      else if(cv.l==="month")lvl("year","out");
     }
+    return;
+  }
+  var key=kbNorm(e);if(!key)return;
+  var sc=v==="timer"?"t":v==="cal"?"c":v==="topics"?"k":"",id=null;
+  KA.some(function(x){if((x[1]==="g"||x[1]===sc)&&kbGet(x[0])===key){id=x[0];return true}});
+  if(!id)return;
+  var btn=!!a&&a.tagName==="BUTTON";
+  if(kRun(id,e,{fs:fs,cs:cs,a:a,btn:btn})){e.preventDefault();if(btn&&(e.key===" "||e.key==="Enter"))a.blur()}
+});
+
+/* Klavye kısa yolları sayfası */
+var KL={id:null},kbAt=0,kbTt=0,MAC=/Mac|iPhone|iPad/.test(navigator.platform||navigator.userAgent||""),
+KFX=[["Esc","Tam ekrandan çık","Takvimde bir üst görünüme çıkar, açık pencereyi ve sayfayı kapatır."],["+ / − / 0","Gün sayfasında yakınlaştır","Takvim gün sayfasında yakınlaştırır, uzaklaştırır ya da sığdırır."],["Tab","Odağı ilerlet","Düğmeler ve konular arasında gezer. Konuyu Boşluk ya da Enter ile işaretleyebilirsin."]];
+function kbLab(k){
+  if(!k)return"Atanmadı";
+  var m=k.indexOf("Mod+")===0;if(m)k=k.slice(4);
+  var t={" ":"Boşluk",ArrowLeft:"←",ArrowRight:"→",ArrowUp:"↑",ArrowDown:"↓"}[k]||(k.length===1?k.toUpperCase():k);
+  return(m?(MAC?"⌘ + ":"Ctrl + "):"")+t;
+}
+function kbToast(t){var e=$("#kbt");e.textContent=t;e.classList.add("on");clearTimeout(kbTt);kbTt=setTimeout(function(){e.classList.remove("on")},3200)}
+function kbRender(){
+  var h="";
+  ["Genel","Süre","Takvim","Konular"].forEach(function(g){
+    h+='<div class="grp">'+g+'</div><div class="card kbg">';
+    KA.forEach(function(a){
+      if(a[2]!==g)return;
+      var cur=kbGet(a[0]),ls=KL.id===a[0],mod=cur!==KDEF[a[0]];
+      h+='<div class="kbr"><div><b>'+esc(a[3])+'</b><small>'+esc(a[4])+'</small></div>'+
+        (mod?'<button class="kbd" data-kr="'+a[0]+'" aria-label="Varsayılana döndür"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.6-5.9M4 4v4.5h4.5"/></svg></button>':'')+
+        '<button class="kbk'+(ls?" ls":cur?"":" no")+'" data-ka="'+a[0]+'" aria-label="'+esc(a[3])+' kısa yolunu değiştir">'+(ls?"Tuşa bas…":esc(kbLab(cur)))+'</button></div>';
+    });
+    h+='</div>';
+  });
+  h+='<div class="grp">Sabit kısayollar</div><div class="card kbg">';
+  KFX.forEach(function(f){h+='<div class="kbr"><div><b>'+esc(f[1])+'</b><small>'+esc(f[2])+'</small></div><span class="kbk fx">'+esc(f[0])+'</span></div>'});
+  h+='</div>';
+  var l=$("#kbl");l.className="kbl"+(KB.on?"":" off");l.innerHTML=h;
+  $$("[data-kb=tg]").forEach(function(b){b.classList.toggle("on",!!KB.on)});
+}
+function kbDisarm(){clearTimeout(kbAt);var b=$("#kbr");b.classList.remove("arm");b.textContent="Hepsini sıfırla"}
+function openKb(){KL.id=null;kbDisarm();kbRender();$("#ksheet").scrollTop=0;$("#ksheet").classList.add("on")}
+function closeKb(){KL.id=null;kbDisarm();$("#ksheet").classList.remove("on");$("#kbt").classList.remove("on")}
+function kbToggle(){KB.on=KB.on?0:1;if(!KB.on)KL.id=null;kbSave();kbRender()}
+function kbSet(id,key){
+  var a=KA.filter(function(x){return x[0]===id})[0],old=kbGet(id),sw=[];
+  if(key&&key!==old)KA.forEach(function(b){
+    if(b[0]!==id&&kbGet(b[0])===key&&(a[1]==="g"||b[1]==="g"||a[1]===b[1])){kbPut(b[0],old);sw.push("“"+b[3]+"”")}
+  });
+  kbPut(id,key);kbSave();KL.id=null;kbRender();
+  if(sw.length)kbToast(kbLab(key)+" tuşu "+sw.join(", ")+" kısa yolundaydı"+(old?", yer değiştirdiler.":", onun ataması kaldırıldı."));
+}
+/* Tuş yakalama: dinlerken tüm tuşlar bu işleyiciye gider */
+document.addEventListener("keydown",function(e){
+  if(!KL.id)return;
+  e.preventDefault();e.stopImmediatePropagation();
+  if(e.isComposing||e.altKey)return;
+  if(e.key==="Escape"){KL.id=null;kbRender();return}
+  if(e.key==="Backspace"||e.key==="Delete"){kbSet(KL.id,null);return}
+  if(e.key==="Tab"){kbToast("Tab tuşu odak gezinmesi için ayrılmış.");return}
+  var n=kbNorm(e);if(n)kbSet(KL.id,n);
+},true);
+document.addEventListener("keydown",function(e){
+  if(e.key==="Escape"&&!e.defaultPrevented&&$("#ksheet").classList.contains("on"))closeKb();
+});
+document.addEventListener("click",function(e){if(e.target.closest("[data-kb=tg]"))kbToggle()});
+$("#ksheet").addEventListener("click",function(e){
+  var t=e.target.closest("button"),ka=t&&t.dataset.ka;
+  if(KL.id&&!ka){KL.id=null;kbRender()}
+  if(!t)return;
+  if(ka){KL.id=ka===KL.id?null:ka;kbRender();return}
+  if(t.dataset.kr){kbPut(t.dataset.kr,KDEF[t.dataset.kr]);kbSave();kbRender();return}
+  if(t.id==="kbx")closeKb();
+  else if(t.id==="kbr"){
+    if(!t.classList.contains("arm")){t.classList.add("arm");t.textContent="Emin misin? Tekrar dokun";clearTimeout(kbAt);kbAt=setTimeout(kbDisarm,3000);return}
+    kbDisarm();KB.map={};kbSave();kbRender();kbToast("Tüm kısa yollar varsayılana döndü.");
   }
 });
 
