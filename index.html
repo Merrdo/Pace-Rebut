@@ -464,35 +464,14 @@ button.wn:active{transform:scale(.9)}button.wn:hover{background:var(--surf);colo
 .kbt{display:flex;align-items:center;gap:14px;position:fixed;left:50%;bottom:calc(28px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);max-width:calc(100% - 48px);padding:12px 20px;border-radius:999px;background:var(--fg);color:var(--bg);font-size:15px;font-weight:700;text-align:center;opacity:0;pointer-events:none;transition:opacity .35s var(--ease),transform .55s var(--sp)}
 .kbt.on{opacity:1;transform:translate(-50%,0)}
 .kbt.on.ac{pointer-events:auto}
-/* Takvim görünümü v2: birleşik ızgara, bugün vurgusu */
-:root{--ln:#e7e3db;--wkt:#faf8f4;--off:#f5f2ec;--hd:#d12f35}
-.kz.km .wk{gap:1px;padding:0 1px;margin-bottom:10px;font:700 12px Inter,system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase}
-.kz.km .wk span:nth-child(7),.kz.km .wk span:nth-child(8){color:var(--ct)}
-.kz.km .wk .t{color:var(--fg)}
-.mg2{gap:1px;padding:1px;background:var(--ln);border-radius:24px;overflow:hidden}
-.mg2>.wn{width:auto;height:auto;align-self:stretch;justify-self:stretch;border-radius:0;background:var(--off);font-size:12px}
-.mg2>.wn.cur{background:#ebe5db;color:var(--fg);font-weight:800}
-.mg2>button.wn:hover{background:#ece6dc}
-.mg2>.dc{border-radius:0;background:var(--surf);padding:9px 10px 6px;gap:3px;box-shadow:none}
-.mg2>.dc:active{transform:none;background:var(--off)}
-.mg2>.dc.we{background:var(--wkt)}
-.mg2>.dc.pd{background:var(--off);box-shadow:none;pointer-events:auto}
-.mg2>.dc.pd.we{background:#f1eee8}
-.mg2>.dc.pd>b{color:var(--dim);opacity:.6;font-weight:500}
-.mg2>.dc.pd .cp{opacity:.55}
-.mg2>.dc>b{min-width:28px;line-height:28px;border-radius:14px;font:600 15px Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums}
-.mg2>.dc.h>b{color:var(--hd)}
-.mg2>.dc .cp{font-size:11.5px;line-height:1.45;padding:1px 7px;border-radius:6px}
-.mg2>.dc .cp.mo{background:transparent;color:var(--dim);padding-left:2px;font-weight:700}
-.mg2>.dc.s{box-shadow:inset 0 0 0 2px var(--fg);z-index:1}
-.mg2>.dc.t{background:linear-gradient(180deg,rgba(255,144,232,.2),rgba(255,144,232,.04) 60%),var(--surf)}
-.mg2>.dc.t:before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--ct)}
-.mg2>.dc.t>b{background:var(--fg);color:var(--bg);min-width:30px;line-height:30px;border-radius:15px;font-size:16px;font-weight:700}
-.mg2>.dc.t:after{content:"Bugün";right:9px;top:11px;bottom:auto;padding:2px 7px;border-radius:999px;background:var(--ct);color:#fff;font:800 10px/1.4 Inter,system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase}
-.mg2>.dc.t .nk{top:auto;bottom:8px}
-.wc.t{background:linear-gradient(180deg,rgba(255,144,232,.22),rgba(255,144,232,.04) 55%),var(--surf);box-shadow:inset 0 3px 0 var(--ct)}
-.wc.t>b{background:var(--fg);color:var(--bg);padding:2px 12px;border-radius:999px}
-.mm.now{box-shadow:inset 0 0 0 2px var(--ct)}
+/* Takvim: bugün hücresi, hafta numarası, hafta sonu soluklaştırma */
+.dc.t:not(.s){background:color-mix(in srgb,var(--fg) 7%,var(--surf));box-shadow:inset 0 0 0 2px var(--fg)}
+button.wn:not(.cur){background:var(--surf2);color:#4a4742;font-weight:800}
+button.wn:not(.cur):hover{background:var(--surf);color:var(--fg)}
+.dc.we:not(.t):not(.pd){background:color-mix(in srgb,var(--surf) 40%,var(--bg))}
+.dc.we:not(.t)>b{opacity:.55}
+.dc.we:not(.t) .cp{opacity:.72}
+.wk>span:nth-child(7):not(.t),.wk>span:nth-child(8):not(.t){opacity:.55}
 </style>
 </head>
 <body>
@@ -1112,7 +1091,6 @@ function hol(y){
   if(RB[y])["Ramazan Bayramı","Kurban Bayramı"].forEach(function(n,j){var s=RB[y][j];for(var o=-1;o<(j?4:3);o++)add(s[0],s[1]+o,n+(o<0?" Arifesi":" "+(o+1)+". Gün"),"d")});
   return HC[y]=h;
 }
-function isOff(x){return(x.g==="r"||x.g==="d"&&/Bayram/.test(x.n))&&!/Arife/.test(x.n)}
 function ds(y,m,d){return y+"-"+p2(m+1)+"-"+p2(d)}
 function wdx(y,m,d){return(new Date(y,m,d).getDay()+6)%7}
 function dim(y,m){return new Date(y,m+1,0).getDate()}
@@ -1168,7 +1146,6 @@ function nkH(y,m,d){return INKD[ds(y,m,d)]?'<svg class="nk" viewBox="0 0 24 24">
 function markInk(){
   if(cv.l!=="month")return;
   $$(".dc[data-d]").forEach(function(b){if(nkH(cv.y,cv.m,+b.dataset.d)&&!b.querySelector(".nk"))b.insertAdjacentHTML("beforeend",nkH(cv.y,cv.m,+b.dataset.d))});
-  $$(".dc[data-od]").forEach(function(b){var k=nkH(+b.dataset.y,+b.dataset.m,+b.dataset.od);if(k&&!b.querySelector(".nk"))b.insertAdjacentHTML("beforeend",k)});
 }
 /* Alet paneli: bir kez kurulur, sonra yalnızca class/değişken değişir (iTbSync). Böylece geçişler animasyonlu olur ve dokunuş sırasında düğme yok edilmez. */
 function iTools(){
@@ -1739,12 +1716,9 @@ function rM(){
   var o=wdx(cv.y,cv.m,1),n=dim(cv.y,cv.m),rows=Math.ceil((o+n)/7),pn=new Date(cv.y,cv.m,0).getDate(),tw=cv.y===TD.getFullYear()&&cv.m===TD.getMonth()?wdx(TD.getFullYear(),TD.getMonth(),TD.getDate()):-1,h='<div class="wk"><span class="wn" style="width:auto">Hf</span>'+WD.map(function(x,q){return'<span'+(q===tw?' class="t"':'')+'>'+WS[q]+'</span>'}).join("")+'</div><div class="mg2" style="grid-template-rows:repeat('+rows+',1fr)">';
   for(var c=0;c<rows*7;c++){
     if(c%7===0){var fd=Math.max(1,c-o+1),wnn=isoW(new Date(cv.y,cv.m,fd));h+='<button class="wn'+(isCurWk(cv.y,cv.m,fd)?' cur':'')+'" data-a="w" data-d="'+fd+'" aria-label="'+wnn+'. hafta">'+wnn+'</button>'}
-    var d=c-o+1,out=d<1||d>n,q=out?new Date(cv.y,cv.m,d):null,Y=out?q.getFullYear():cv.y,M=out?q.getMonth():cv.m,D=out?q.getDate():d,
-    hh=hs(Y,M,D),off=hh.some(isOff),
-    ch=hh.map(function(x){return[x.n,GC[x.g]]}).concat(its(Y,M,D).map(function(x){return[x.t,KC[x.k]]})),v=ch.slice(0,3),
-    cls="dc"+(out?" pd":"")+(c%7>4?" we":"")+(off?" h":"")+(isT(Y,M,D)?" t":"")+(!out&&cv.sel===d?" s":""),
-    at=out?'data-a="o" data-y="'+Y+'" data-m="'+M+'" data-od="'+D+'"':'data-a="d" data-d="'+d+'"';
-    h+='<button class="'+cls+'" '+at+' style="--n:'+c+'"><b>'+D+'</b>'+v.map(function(x){return'<span class="cp" style="--k:'+x[1]+'">'+esc(x[0])+'</span>'}).join("")+(ch.length>3?'<span class="cp mo">+'+(ch.length-3)+' daha</span>':'')+nkH(Y,M,D)+'</button>';
+    var d=c-o+1;if(d<1||d>n){h+='<i class="dc pd" style="--n:'+c+'"><b>'+(d<1?pn+d:d-n)+'</b></i>';continue}
+    var ch=hs(cv.y,cv.m,d).map(function(x){return[x.n,GC[x.g]]}).concat(its(cv.y,cv.m,d).map(function(x){return[x.t,KC[x.k]]})),v=ch.slice(0,3);
+    h+='<button class="dc'+(c%7>4?" we":"")+(isT(cv.y,cv.m,d)?" t":"")+(cv.sel===d?" s":"")+'" data-a="d" data-d="'+d+'" style="--n:'+c+'"><b>'+d+'</b>'+v.map(function(x){return'<span class="cp" style="--k:'+x[1]+'">'+esc(x[0])+'</span>'}).join("")+(ch.length>3?'<span class="cp mo">+'+(ch.length-3)+' daha</span>':'')+nkH(cv.y,cv.m,d)+'</button>';
   }
   return h+'</div>';
 }
@@ -1763,7 +1737,6 @@ $("#cal").addEventListener("click",function(e){
   var b=e.target.closest("[data-a]");if(!b)return;var a=b.dataset.a;
   if(a==="m"){cv.m=+b.dataset.m;cv.d=Math.min(cv.d,dim(cv.y,cv.m));lvl("month","in")}
   else if(a==="d"){var n=+b.dataset.d;if(cv.sel===n){cv.d=n;lvl("day","in")}else{cv.sel=n;cv.d=n;$$(".dc[data-d]").forEach(function(x){x.classList.toggle("s",+x.dataset.d===n)})}}
-  else if(a==="o"){var y2=+b.dataset.y,m2=+b.dataset.m,d2=+b.dataset.od,fw=y2*12+m2>cv.y*12+cv.m;cv.y=y2;cv.m=m2;cv.d=d2;cv.sel=d2;cv.dir=fw?"nx":"pv";cv.ed=0;paintK()}
   else if(a==="w"){cv.d=+b.dataset.d;lvl("week","in")}
   else if(a==="tw"){var same=cv.l==="week"&&isCurWk(cv.y,cv.m,cv.d);cv.y=TD.getFullYear();cv.m=TD.getMonth();cv.d=TD.getDate();if(same){cv.sel=0;paintK(true)}else lvl("week","in")}
   else if(a==="wd"){cv.y=+b.dataset.y;cv.m=+b.dataset.m;cv.d=+b.dataset.d;lvl("day","in")}
