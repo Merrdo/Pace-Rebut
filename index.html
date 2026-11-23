@@ -171,7 +171,7 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .tswt .lv{position:absolute;left:0;top:calc(100% + 5px);font-size:11px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap;color:#2fbf71}
 .app.fs .tswt .swt-nav{opacity:0;pointer-events:none}.app.fs .tswt .swt-page{padding-top:0}
 /* Tam ekranda aktif olmayan sayfalar görünmez (girişte hemen, çıkışta geçiş bitince geri gelir); geçişte boşuna layout/raster maliyeti yaratmasın */
-.app.fzx .tswt .swt-page{transition:padding .8s var(--ease),visibility 0s linear .85s}
+.app.fzx .tswt .swt-page{transition:padding .8s var(--ease)}
 .app.fs .tswt .swt-page[inert]{visibility:hidden;transition:padding .8s var(--ease),visibility 0s}
 .clk{display:flex;align-items:baseline;margin:14px 0 6px;font-family:Outfit,Inter,"SF Pro Display",system-ui,sans-serif;font-weight:500;font-variant-numeric:tabular-nums;letter-spacing:.02em;line-height:1;white-space:nowrap;font-size:min(19vw,32vh);transition:font-size .85s var(--ease)}
 .clk.h{font-size:min(13.5vw,32vh)}
@@ -388,12 +388,14 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .kbl{transition:opacity .4s var(--ease)}.kbl.off{opacity:.5}
 .kbr{display:flex;align-items:center;gap:14px;padding:16px 0;border-bottom:1px solid var(--surf2)}.kbr:last-child{border-bottom:0}
 .kbr>div{flex:1;min-width:0}.kbr b{display:block;font-size:18px;font-weight:700}.kbr small{display:block;margin-top:2px;font-size:14px;font-weight:500;color:var(--dim)}
-.kbk{flex:none;min-width:64px;height:42px;padding:0 16px;border-radius:12px;background:var(--surf2);box-shadow:inset 0 -3px 0 rgba(0,0,0,.09);font:600 15px Inter,system-ui,sans-serif;white-space:nowrap;transition:transform .5s var(--sp),background .3s,color .3s}
+.kbk{flex:none;display:inline-flex;align-items:center;justify-content:center;min-width:112px;height:42px;padding:0 16px;border-radius:12px;background:var(--surf2);box-shadow:inset 0 -3px 0 rgba(0,0,0,.09);font:600 15px Inter,system-ui,sans-serif;white-space:nowrap;transition:transform .5s var(--sp),background .3s,color .3s}
 .kbk:active{transform:scale(.95)}
 .kbk.no{color:var(--dim);font-weight:500}
 .kbk.ls{background:var(--fg);color:var(--bg);animation:kbp 1.2s ease-in-out infinite}
 @keyframes kbp{50%{opacity:.6}}
 .kbk.fx{pointer-events:none;opacity:.55}
+.kfr{opacity:0;transform:translateY(-14px);pointer-events:none;transition:opacity .45s var(--ease),transform .55s var(--sp)}
+.kfr.on{opacity:1;transform:none;pointer-events:auto}
 .kbd{width:34px;height:34px;display:grid;place-items:center;border-radius:50%;background:var(--surf2);color:var(--dim);flex:none;transition:transform .5s var(--sp)}
 .kbd:active{transform:scale(.9)}
 .kbd svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
@@ -429,7 +431,7 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
     <section class="view" id="v-settings"><div class="set" id="set"></div></section>
   </main>
   <div class="sheet" id="sheet"><button class="fl fl-l" id="fl">Dersler</button><div class="fl-r"><button class="fl fp" id="fp" aria-label="Yeni ders">+</button><button class="fl fk" id="sx">Kapat</button></div><div class="shw" id="shw"></div><div class="mod" id="mod"><div class="mc card" id="mc"></div></div></div>
-  <div class="sheet" id="ksheet"><div class="shw"><div class="sh-h"><div><h1>Klavye kısa yolları</h1><p>Bir kısa yola dokun, ardından yeni tuşa bas. Backspace atamayı kaldırır, Esc vazgeçer.</p></div><button class="btn pr" id="kbx">Bitti</button></div><div class="card lc"><div><h2>Kısa yolları kullan</h2><p>Kapalıyken klavye uygulamada hiçbir şey yapmaz.</p></div><button class="tg on" data-kb="tg" aria-label="Klavye kısa yolları"><i></i></button></div><div id="kbl"></div><div class="card"><h2>Varsayılana dön</h2><p>Tüm kısa yollar ilk hâline döner.</p><div class="row"><button class="btn dg" id="kbr">Hepsini sıfırla</button></div></div></div><div class="kbt" id="kbt" role="status"></div></div>
+  <div class="sheet" id="ksheet"><div class="fl-r kfr" id="kfr"><button class="fl fk" id="kbx2">Bitti</button></div><div class="shw"><div class="sh-h"><div><h1>Klavye kısa yolları</h1><p>Bir kısa yola dokun, ardından yeni tuşa bas. Backspace atamayı kaldırır, Esc vazgeçer.</p></div><button class="btn pr" id="kbx">Bitti</button></div><div class="card lc"><div><h2>Kısa yolları kullan</h2><p>Kapalıyken klavye uygulamada hiçbir şey yapmaz.</p></div><button class="tg on" data-kb="tg" aria-label="Klavye kısa yolları"><i></i></button></div><div id="kbl"></div><div class="card"><h2>Varsayılana dön</h2><p>Tüm kısa yollar ilk hâline döner.</p><div class="row"><button class="btn dg" id="kbr">Hepsini sıfırla</button></div></div></div><div class="kbt" id="kbt" role="status"></div></div>
   <div class="dp" id="dp" aria-hidden="true">
     <div class="dp-bd" id="dpbd"></div>
     <div class="dp-card" id="dpc" role="dialog" aria-modal="true" aria-label="Sınav tarihini seç" tabindex="-1">
@@ -1804,7 +1806,8 @@ function kbRender(){
   $$("[data-kb=tg]").forEach(function(b){b.classList.toggle("on",!!KB.on)});
 }
 function kbDisarm(){clearTimeout(kbAt);var b=$("#kbr");b.classList.remove("arm");b.textContent="Hepsini sıfırla"}
-function openKb(){KL.id=null;kbDisarm();kbRender();$("#ksheet").scrollTop=0;$("#ksheet").classList.add("on")}
+function openKb(){KL.id=null;kbDisarm();kbRender();$("#ksheet").scrollTop=0;$("#kfr").classList.remove("on");$("#ksheet").classList.add("on")}
+$("#ksheet").addEventListener("scroll",function(){$("#kfr").classList.toggle("on",this.scrollTop>90)},{passive:true});
 function closeKb(){KL.id=null;kbDisarm();$("#ksheet").classList.remove("on");$("#kbt").classList.remove("on")}
 function kbToggle(){KB.on=KB.on?0:1;if(!KB.on)KL.id=null;kbSave();kbRender()}
 function kbSet(id,key){
@@ -1835,7 +1838,7 @@ $("#ksheet").addEventListener("click",function(e){
   if(!t)return;
   if(ka){KL.id=ka===KL.id?null:ka;kbRender();return}
   if(t.dataset.kr){kbPut(t.dataset.kr,KDEF[t.dataset.kr]);kbSave();kbRender();return}
-  if(t.id==="kbx")closeKb();
+  if(t.id==="kbx"||t.id==="kbx2")closeKb();
   else if(t.id==="kbr"){
     if(!t.classList.contains("arm")){t.classList.add("arm");t.textContent="Emin misin? Tekrar dokun";clearTimeout(kbAt);kbAt=setTimeout(kbDisarm,3000);return}
     kbDisarm();KB.map={};kbSave();kbRender();kbToast("Tüm kısa yollar varsayılana döndü.");
