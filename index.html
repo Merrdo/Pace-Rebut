@@ -177,7 +177,7 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .clk.h{font-size:min(13.5vw,32vh)}
 .app.fs .clk{font-size:min(24vw,50vh)}.app.fs .clk.h{font-size:min(16.5vw,50vh)}
 .app.fzx .clk{transition:none}
-.clk b{font-weight:inherit}
+.clk{position:relative}.clk b{font-weight:inherit}.clk s{display:inline-block;text-decoration:none}.clk .rp{transform-origin:0 0}.clk .hp{transform-origin:100% 50%}.clk .gh{position:absolute;pointer-events:none}
 .clk u{display:inline-block;position:relative;width:.3em;height:.727em;text-decoration:none}
 .clk u:before,.clk u:after{content:"";position:absolute;left:50%;width:.125em;height:.125em;margin-left:-.0625em;border-radius:50%;background:currentColor}
 .clk u:before{top:.18em}.clk u:after{bottom:.18em}
@@ -747,6 +747,8 @@ function pmUi(){
   var p=ST.pm,r=PS.r,c=p.n%r,dn=p.ph===0?c:(c===0?r:c),i,d,h="";
   if(PDS.children.length!==r){for(i=0;i<r;i++)h+="<i></i>";PDS.innerHTML=h}
   for(i=0;i<r;i++){d=PDS.children[i];d.classList.toggle("on",i<dn);d.classList.toggle("cur",p.ph===0&&i===dn)}
+  if(LT.pph!==undefined&&LT.pph!==p.ph&&fxOk()&&TK.pm.c.offsetWidth>0)TK.pm.c.animate([{opacity:.2,transform:"translateY(10px) scale(.97)"},{opacity:1,transform:"none"}],{duration:700,easing:FXE});
+  LT.pph=p.ph;
   PBG.dataset.ph=p.ph;PMP.dataset.ph=p.ph;
   PBG.classList.toggle("run",!!p.run&&MODE==="pm");
 }
@@ -771,23 +773,45 @@ function beep(){
   try{if(AC)[0,.4,.8].forEach(function(d){var o=AC.createOscillator(),g=AC.createGain(),t=AC.currentTime+d;o.frequency.value=880;o.connect(g);g.connect(AC.destination);g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.18,t+.03);g.gain.exponentialRampToValueAtTime(.001,t+.32);o.start(t);o.stop(t+.34)})}catch(e){}
   try{if(navigator.vibrate)navigator.vibrate([200,100,200])}catch(e){}
 }
+var FXE="cubic-bezier(.22,1,.36,1)",RMQ=window.matchMedia?matchMedia("(prefers-reduced-motion: reduce)"):null;
+function fxOk(){return!!(Element.prototype.animate)&&!document.hidden&&!(RMQ&&RMQ.matches)}
+function clkSet(k,m,hp,rp,wh,str){
+  var first=LT[m+"h"]===undefined,fl=!first&&LT[m+"h"]!==wh&&fxOk()&&k.c.offsetWidth>0,o=null,R=k.rp,H=k.hp,cs;
+  if(fl){
+    cs=getComputedStyle(k.c);o={fz:cs.fontSize,ls:cs.letterSpacing,cr:k.c.getBoundingClientRect(),rp:R?R.getBoundingClientRect():null,hp:H?H.getBoundingClientRect():null,hh:H?H.innerHTML:""};
+    k.c.style.transition="none";
+  }
+  if(!R){k.b.innerHTML='<s class="rp"></s>';R=k.rp=k.b.firstChild;k.rpS=""}
+  if(hp){
+    if(!H){H=k.hp=document.createElement("s");H.className="hp";k.b.insertBefore(H,R);k.hpS=""}
+    if(k.hpS!==hp){H.innerHTML=hp;k.hpS=hp}
+  }else if(H){H.remove();H=k.hp=null;k.hpS=""}
+  if(k.rpS!==rp){R.innerHTML=rp;k.rpS=rp}
+  LT[m]=str;LT[m+"h"]=wh;
+  k.c.classList.toggle("h",wh);
+  if(!fl)return;
+  var n=R.getBoundingClientRect(),cr=k.c.getBoundingClientRect(),fp=parseFloat(o.fz)||40,g;
+  k.c.style.transition="";
+  if(o.rp&&n.width>1&&n.height>1){
+    R.animate([{transform:"translate("+(o.rp.left-n.left)+"px,"+(o.rp.top-n.top)+"px) scale("+(o.rp.width/n.width)+","+(o.rp.height/n.height)+")"},{transform:"none"}],{duration:760,easing:FXE});
+  }
+  if(H){
+    H.animate([{opacity:0,transform:"translateX("+(-.14*fp)+"px) scale(.9)"},{opacity:1,transform:"none"}],{duration:620,delay:90,easing:FXE,fill:"backwards"});
+  }else if(o.hp){
+    g=document.createElement("s");g.className="hp gh";g.innerHTML=o.hh;g.style.cssText="left:"+(o.hp.left-cr.left)+"px;top:"+(o.hp.top-cr.top)+"px;font-size:"+o.fz+";letter-spacing:"+o.ls;
+    k.c.appendChild(g);
+    g.animate([{opacity:1,transform:"none"},{opacity:0,transform:"translateX("+(-.14*fp)+"px) scale(.9)"}],{duration:380,easing:"cubic-bezier(.4,0,.2,1)",fill:"forwards"}).onfinish=function(){g.remove()};
+  }
+}
+function txSwap(e,t){
+  if(e.textContent===t)return;var had=e.textContent!=="";e.textContent=t;
+  if(had&&t&&fxOk())e.animate([{opacity:0,transform:"translateY(6px)"},{opacity:1,transform:"none"}],{duration:480,easing:FXE});
+}
 function paint(){
   MS.forEach(function(m){
     var t=ST[m],cd=m!=="sw",e=el(t),ms=cd?Math.max(0,t.cd-e):e,tot=cd?Math.ceil(ms/1000):Math.floor(ms/1000),h=Math.floor(tot/3600),mi=Math.floor(tot%3600/60),sc=tot%60,k=TK[m],
-    str=(cd?(h?h+"<u></u>"+p2(mi):p2(mi)):p2(h)+"<u></u>"+p2(mi))+"<u></u>"+p2(sc);
-    var wh=cd?h>0:true,fl=LT[m+"h"]!==undefined&&LT[m+"h"]!==wh&&k.c.offsetWidth>0,w0=fl?k.c.getBoundingClientRect().width:0;
-    LT[m+"h"]=wh;
-    if(str!==LT[m]){LT[m]=str;k.b.innerHTML=str}
-    k.c.classList.toggle("h",wh);
-    if(fl){
-      clearTimeout(k.ft);k.c.style.transition="none";k.c.style.transform="none";
-      var w1=k.c.getBoundingClientRect().width;
-      if(w0&&w1&&Math.abs(w0-w1)>1){
-        k.c.style.transform="scale("+(w0/w1)+")";void k.c.offsetWidth;
-        k.c.style.transition="transform .75s cubic-bezier(.22,1,.36,1)";k.c.style.transform="scale(1)";
-        k.ft=setTimeout(function(){k.c.style.transition="";k.c.style.transform=""},800);
-      }else{k.c.style.transition="";k.c.style.transform=""}
-    }
+    hp=cd?(h?h+"<u></u>":""):p2(h)+"<u></u>",rp=p2(mi)+"<u></u>"+p2(sc),str=hp+"|"+rp,wh=!!hp;
+    if(str!==LT[m]||LT[m+"h"]!==wh)clkSet(k,m,hp,rp,wh,str);
     var c=cd?"":"."+p2(Math.floor(ms%1000/10));
     if(c!==LT[m+"c"]){LT[m+"c"]=c;k.i.textContent=c}
   });
@@ -799,10 +823,10 @@ function pfin(p,q){if(p.ph===0){p.n++;p.ph=p.n%PS.r===0?2:1}else p.ph=0;p.cd=PD[
 function tick(){paint();var c=ST.cd,p=ST.pm;if(c.run&&el(c)>=c.cd)finish(c);if(p.run&&el(p)>=p.cd)pfin(p)}
 function sync(){
   var fs=$(".app").classList.contains("fs");
-  MS.forEach(function(m){var t=ST[m],k=TK[m],st=t.done?"Süre doldu":t.run||t.acc>0?"":"Hazır";
+  MS.forEach(function(m){var t=ST[m],k=TK[m],st=t.done?"Süre doldu":(t.run||t.acc>0||m==="sw")?"":"Hazır";
     k.c.classList.toggle("run",t.run);k.c.classList.toggle("done",t.done);
     if(m==="pm")st=PN[t.ph]+(t.ph===0?" "+(t.n%PS.r+1)+"/"+PS.r:"")+(st?" · "+st:"");
-    if(m==="pm")PTX.textContent=st;else k.s.textContent=st});
+    if(m==="pm")txSwap(PTX,st);else txSwap(k.s,st)});
   pmUi();
   $("#tgo").classList.toggle("on",T.run);
   if(!T.run){clearTimeout(CHT);CHT=0;$(".tctl").classList.remove("hid")}
