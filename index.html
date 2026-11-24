@@ -473,6 +473,7 @@ button.wn:active{transform:scale(.9)}button.wn:hover{background:var(--surf);colo
     <button class="db on" data-v="topics"><svg viewBox="0 0 24 24"><path d="M5 6h14M5 12h14M5 18h9"/></svg>Konular</button>
     <button class="db" data-v="timer"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9.5 2.5h5"/></svg>Süre</button>
     <button class="db" data-v="cal"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/><text id="dkd" x="12" y="18" text-anchor="middle">22</text></svg>Takvim</button>
+    <button class="db" data-v="todo"><svg viewBox="0 0 24 24"><path d="M4 6.5l1.5 1.5L8 5M4 12.5l1.5 1.5L8 11M4 18.5l1.5 1.5L8 17M12 7h8M12 13h8M12 19h8"/></svg>To do</button>
     <button class="db" data-v="settings"><svg viewBox="0 0 24 24"><path d="M4 7h9M19 7h1M4 17h1M11 17h9"/><circle cx="16" cy="7" r="2.5"/><circle cx="8" cy="17" r="2.5"/></svg>Ayarlar</button>
   </nav>
   <main>
@@ -494,6 +495,7 @@ button.wn:active{transform:scale(.9)}button.wn:hover{background:var(--surf);colo
       </div>
     </section>
     <section class="view" id="v-cal"><div class="cal" id="cal"></div><div class="cset" id="cset"></div></section>
+    <section class="view" id="v-todo"></section>
     <section class="view" id="v-settings"><div class="set" id="set"></div></section>
   </main>
   <div class="sheet" id="sheet"><button class="fl fl-l" id="fl">Dersler</button><div class="fl-r"><button class="fl fp" id="fp" aria-label="Yeni ders">+</button><button class="fl fk" id="sx">Kapat</button></div><div class="shw" id="shw"></div><div class="mod" id="mod"><div class="mc card" id="mc"></div></div></div>
@@ -546,7 +548,8 @@ var KA=[
 ["nav0","g","Genel","Konular sayfası","Derslerin ve konuların listesini açar.","1"],
 ["nav1","g","Genel","Süre sayfası","Kronometre, geri sayım ve pomodoro sayfasını açar.","2"],
 ["nav2","g","Genel","Takvim sayfası","Takvimi açar.","3"],
-["nav3","g","Genel","Ayarlar sayfası","Ayarlar sayfasını açar.","4"],
+["nav3","g","Genel","To do sayfası","To do sayfasını açar.","4"],
+["nav4","g","Genel","Ayarlar sayfası","Ayarlar sayfasını açar.","5"],
 ["fs","g","Genel","Tam ekran","Her sayfada tam ekranı açar veya kapatır, alt çubuğu gizler.","f"],
 ["tToggle","t","Süre","Başlat / duraklat","Seçili kronometreyi, geri sayımı ya da pomodoro'yu başlatır veya duraklatır."," "],
 ["tReset","t","Süre","Sıfırla","Seçili sayacı başa alır.","r"],
@@ -1937,7 +1940,7 @@ function kbNorm(e){
 function kRun(id,e,c){
   var k;
   switch(id){
-    case"nav0":case"nav1":case"nav2":case"nav3":k=$$(".db")[+id.slice(3)];if(k&&!k.classList.contains("on"))k.click();return true;
+    case"nav0":case"nav1":case"nav2":case"nav3":case"nav4":k=$$(".db")[+id.slice(3)];if(k&&!k.classList.contains("on"))k.click();return true;
     case"fs":kFs();return true;
     case"tToggle":if(!e.repeat)go();return true;
     case"tReset":reset();return true;
