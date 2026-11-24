@@ -464,6 +464,14 @@ button.wn:active{transform:scale(.9)}button.wn:hover{background:var(--surf);colo
 .kbt{display:flex;align-items:center;gap:14px;position:fixed;left:50%;bottom:calc(28px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);max-width:calc(100% - 48px);padding:12px 20px;border-radius:999px;background:var(--fg);color:var(--bg);font-size:15px;font-weight:700;text-align:center;opacity:0;pointer-events:none;transition:opacity .35s var(--ease),transform .55s var(--sp)}
 .kbt.on{opacity:1;transform:translate(-50%,0)}
 .kbt.on.ac{pointer-events:auto}
+/* Takvim: bugün hücresi, hafta numarası, hafta sonu soluklaştırma */
+.dc.t:not(.s){background:color-mix(in srgb,var(--fg) 7%,var(--surf));box-shadow:inset 0 0 0 2px var(--fg)}
+button.wn:not(.cur){background:var(--surf2);color:#4a4742;font-weight:800}
+button.wn:not(.cur):hover{background:var(--surf);color:var(--fg)}
+.dc.we:not(.t):not(.pd){background:color-mix(in srgb,var(--surf) 40%,var(--bg))}
+.dc.we:not(.t)>b{opacity:.55}
+.dc.we:not(.t) .cp{opacity:.72}
+.wk>span:nth-child(7):not(.t),.wk>span:nth-child(8):not(.t){opacity:.55}
 </style>
 </head>
 <body>
@@ -1710,7 +1718,7 @@ function rM(){
     if(c%7===0){var fd=Math.max(1,c-o+1),wnn=isoW(new Date(cv.y,cv.m,fd));h+='<button class="wn'+(isCurWk(cv.y,cv.m,fd)?' cur':'')+'" data-a="w" data-d="'+fd+'" aria-label="'+wnn+'. hafta">'+wnn+'</button>'}
     var d=c-o+1;if(d<1||d>n){h+='<i class="dc pd" style="--n:'+c+'"><b>'+(d<1?pn+d:d-n)+'</b></i>';continue}
     var ch=hs(cv.y,cv.m,d).map(function(x){return[x.n,GC[x.g]]}).concat(its(cv.y,cv.m,d).map(function(x){return[x.t,KC[x.k]]})),v=ch.slice(0,3);
-    h+='<button class="dc'+(isT(cv.y,cv.m,d)?" t":"")+(cv.sel===d?" s":"")+'" data-a="d" data-d="'+d+'" style="--n:'+c+'"><b>'+d+'</b>'+v.map(function(x){return'<span class="cp" style="--k:'+x[1]+'">'+esc(x[0])+'</span>'}).join("")+(ch.length>3?'<span class="cp mo">+'+(ch.length-3)+' daha</span>':'')+nkH(cv.y,cv.m,d)+'</button>';
+    h+='<button class="dc'+(c%7>4?" we":"")+(isT(cv.y,cv.m,d)?" t":"")+(cv.sel===d?" s":"")+'" data-a="d" data-d="'+d+'" style="--n:'+c+'"><b>'+d+'</b>'+v.map(function(x){return'<span class="cp" style="--k:'+x[1]+'">'+esc(x[0])+'</span>'}).join("")+(ch.length>3?'<span class="cp mo">+'+(ch.length-3)+' daha</span>':'')+nkH(cv.y,cv.m,d)+'</button>';
   }
   return h+'</div>';
 }
