@@ -354,7 +354,8 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 #stbody .mdy:disabled{opacity:.4}
 #stbody .mdy.g{background:color-mix(in srgb,var(--g) 15%,var(--surf))}
 #stbody .mdy.g .n,#stbody .mdy.g b{color:#1f6b45}
-#stbody .mdy.td .n{display:grid;place-items:center;min-width:26px;height:26px;margin:-5px 0 0 -4px;padding:0 3px;border-radius:13px;background:var(--fg);color:var(--bg)}
+#stbody .mdy.td .n{color:var(--fg)}
+#stbody .mdy.td .n:after{content:"";display:inline-block;width:6px;height:6px;margin:0 0 2px 5px;border-radius:50%;background:var(--g);vertical-align:middle}
 #stbody .mdy.on{box-shadow:inset 0 0 0 2.5px var(--fg)}
 #stbody .mhint{margin-top:12px;font-size:13px}
 #stbody .mft{display:flex;align-items:flex-end;justify-content:space-between;gap:16px 24px;flex-wrap:wrap;margin-top:18px;padding-top:16px;border-top:1.5px solid var(--surf2)}
@@ -1247,7 +1248,7 @@ function stRender(first){
   for(i=1;i<=dim;i++){k=ds(my.getFullYear(),my.getMonth(),i);v=sg(k);mt+=v;if(k<=tk)el++;if(v)wd++;if(v>=G)gd++;if(v>lg){lg=v;lgd=i}
     cl+='<button class="mdy'+((off+i-1)%7>4?" wk":"")+(v>=G?" g":"")+(k===tk?" td":"")+(k===sel?" on":"")+'" data-a="d" data-k="'+k+'"'+(k>tk?" disabled":"")+' aria-label="'+i+' '+MN[my.getMonth()]+', '+(v?ft(v):"çalışma yok")+'"><span class="n">'+i+'</span>'+(v?'<b>'+fc(v)+'</b>':'')+'</button>'}
   h+='<div class="card mcal"><div class="hd mh"><button data-a="mp" aria-label="Önceki ay">'+CHV+'</button><h2>'+MN[my.getMonth()]+' '+my.getFullYear()+'</h2><button data-a="mn" aria-label="Sonraki ay"'+(STS.mo>=0?" disabled":"")+'>'+CHN+'</button><button class="msh" data-share aria-label="Paylaş">'+SHI+'</button></div>'+
-   '<div class="mgrid">'+SDAY.map(function(n){return'<b>'+n+'</b>'}).join("")+cl+'</div>'+'<p class="mhint">Süre eklemek için bir güne dokun.</p>'+
+   '<div class="mgrid">'+SDAY.map(function(n){return'<b>'+n+'</b>'}).join("")+cl+'</div>'+'<p class="mhint">Süre eklemek için bir günü seçip tekrar dokun.</p>'+
    '<div class="mft"><div class="mfl"><div>Çalışılan gün<b>'+wd+'</b></div><div>Hedefi tutan gün<b>'+gd+'</b></div><div>Günlük ortalama<b>'+(el?fc(Math.round(mt/el)):"—")+'</b></div><div>En uzun gün<b>'+(lg?fc(lg):"—")+'</b>'+(lg?'<small>'+lgd+' '+MN[my.getMonth()]+'</small>':'')+'</div></div>'+
    '<div class="mfr">Ay toplamı<b>'+fc(mt)+'</b></div></div></div>';
   $("#stbody").innerHTML=h;STK=Math.floor(sg(tk)/60);shPrep();
@@ -1256,10 +1257,11 @@ function stRender(first){
 }
 $("#stbody").addEventListener("click",function(e){
   var b=e.target.closest("[data-a]"),a,t,w,g;if(!b||b.disabled)return;a=b.dataset.a;
-  if(a==="d"){STS.sel=b.dataset.k;t=wkS(new Date());w=wkS(new Date(b.dataset.k+"T12:00:00"));STS.wo=Math.round((w-t)/6048e5)}
+  var op=0;
+  if(a==="d"){var kk=b.dataset.k;if(b.classList.contains("mdy")){op=STS.pk===kk;STS.pk=kk}else STS.pk="";STS.sel=kk;t=wkS(new Date());w=wkS(new Date(b.dataset.k+"T12:00:00"));STS.wo=Math.round((w-t)/6048e5)}
   else if(a==="wp")STS.wo--;else if(a==="wn")STS.wo++;else if(a==="mp"){STS.mo--;STS.dir=-1}else if(a==="mn"){STS.mo++;STS.dir=1}
   else{g=gsec()/60+(a==="g+"?30:-30);S.goal=Math.max(30,Math.min(960,g));save()}
-  stRender();if(a==="d"&&b.classList.contains("mdy"))saOpen(STS.sel);try{navigator.vibrate&&navigator.vibrate(3)}catch(x){}
+  stRender();if(op)saOpen(STS.sel);try{navigator.vibrate&&navigator.vibrate(3)}catch(x){}
 });
 (function(){
   var b=$("#stbody"),sx=0,sy=0,on=false;
@@ -1297,7 +1299,7 @@ function shData(){
   for(i=1;i<=n;i++){k=ds(Y,M,i);v=k>tk?0:sg(k);mt+=v;if(k<=tk)el++;if(v)wd++;if(v>=G)gd++;if(v>lg){lg=v;lgd=i}days.push({n:i,v:v,td:k===tk,fu:k>tk})}
   return{el:el,Y:Y,M:M,off:off,n:n,days:days,G:G,mt:mt,wd:wd,gd:gd,lg:lg,lgd:lgd,rows:Math.ceil((off+n)/7),now:now};
 }
-function shF(s){var h=Math.floor(s/3600),m=Math.floor(s%3600/60);return h?h+"sa"+(m?" "+m+"dk":""):m?m+"dk":s?"<1dk":"0dk"}
+function shF(s){var h=Math.floor(s/3600),m=Math.floor(s%3600/60);return h?h+" sa"+(m?" "+m+" dk":""):m?m+" dk":s?"<1 dk":"0 dk"}
 function shFont(w,s,b){return w+" "+s+"px "+(b?'"Baloo 2",ui-rounded,system-ui,sans-serif':'Inter,system-ui,sans-serif')}
 function shRR(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath()}
 function shLS(c,v){try{c.letterSpacing=v+"px"}catch(e){}}
@@ -1331,7 +1333,7 @@ async function shRender(){
   ST.forEach(function(q,k){
     var sx=P+k*colW+(k?28:0);
     c.textAlign="left";c.font=shFont(600,26,1);c.fillStyle=shS(T.dim);c.fillText(q[0],sx,sy);
-    shFit(c,q[1],800,46,0,colW-44);c.fillStyle=shS(T.fg);c.fillText(q[1],sx,sy+52);
+    shFit(c,q[1],800,46,1,colW-44);c.fillStyle=shS(T.fg);c.fillText(q[1],sx,sy+52);
     if(k){c.fillStyle=shS(T.surf2);c.fillRect(P+k*colW,sy-24,3,80)}
   });
   /* gün adları */
@@ -1342,21 +1344,16 @@ async function shRender(){
     d=D.days[i];var pos=D.off+i,full=d.v>=D.G;col=pos%7;row=(pos-col)/7;x=P+col*(CW+GAP);y=gy+row*(CH+GAP);
     c.save();c.globalAlpha=d.fu?.32:1;
     shRR(c,x,y,CW,CH,26);c.fillStyle=shS(full?T.gcell:T.cell);c.fill();
-    c.textAlign="left";c.font=shFont(700,22);c.fillStyle=shS(full?T.gtx:(col>4?T.fg:T.dim));c.fillText(""+d.n,x+16,y+36);
-    var cx=x+CW/2,cy=y+CH/2+16,L2=null,z;
+    c.textAlign="left";c.font=shFont(700,20,1);c.fillStyle=shS(full?T.gtx:(col>4?T.fg:T.dim));c.fillText(""+d.n,x+15,y+33);
+    var cx=x+CW/2,cy=y+CH/2;
     c.textAlign="center";
     if(d.v){
-      var h=Math.floor(d.v/3600),m=Math.floor(d.v%3600/60);
-      L2=h?(m?[h+"sa",m+"dk"]:[h+"sa"]):[m?m+"dk":"<1dk"];
-      c.fillStyle=shS(full?T.gtx:T.fg);
+      var h=Math.floor(d.v/3600),m=Math.floor(d.v%3600/60),vv=h?h+":"+p2(m):(m?""+m:"<1"),uu=h?"sa":"dk",
+      vz=shFit(c,vv,800,42,1,CW-22),cap=vz*.68,uz=Math.round(vz*.46),uc=uz*.68,gap=9,tp=cy-(cap+gap+uc)/2,vb=tp+cap;
+      c.font=shFont(800,vz,1);c.fillStyle=shS(full?T.gtx:T.fg);c.fillText(vv,cx,vb);
+      c.font=shFont(700,uz,1);c.globalAlpha=.7;c.fillStyle=shS(full?T.gtx:T.dim);c.fillText(uu,cx,vb+gap+uc);
     }else if(!d.fu){
-      L2=["0dk"];c.fillStyle=shS(T.dim);c.globalAlpha=.8;
-    }
-    if(L2){
-      z=34;L2.forEach(function(t){z=Math.min(z,shFit(c,t,800,34,0,CW-16))});
-      c.font=shFont(800,z);
-      if(L2.length===1)c.fillText(L2[0],cx,cy+z*.36);
-      else{c.fillText(L2[0],cx,cy-z*.16);c.fillText(L2[1],cx,cy+z*.84)}
+      c.font=shFont(800,30,1);c.fillStyle=shS(T.dim);c.globalAlpha=.8;c.fillText("0dk",cx,cy+10);
     }
     c.restore();
   }
@@ -1425,7 +1422,7 @@ async function shShare(btn){
 $("#stbody").addEventListener("click",function(e){var b=e.target.closest("[data-share]");if(b)shShare(b)});
 document.addEventListener("keydown",function(e){if(e.key==="Escape"&&SHV.close){e.preventDefault();e.stopImmediatePropagation();SHV.close()}},true);
 function stOpen(){
-  var b=$("#stbody");STS.sel=dk(new Date());STS.wo=0;STS.mo=0;stTrack();
+  var b=$("#stbody");STS.sel=dk(new Date());STS.pk="";STS.wo=0;STS.mo=0;stTrack();
   b.classList.add("in");stRender(true);setTimeout(function(){b.classList.remove("in")},1100);
   $("#stsheet").scrollTop=0;$("#stsheet").classList.add("on");$("#stx").focus();
   clearInterval(STI);STI=setInterval(function(){if(Math.floor(sg(dk(new Date()))/60)!==STK)stRender()},1000);
