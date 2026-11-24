@@ -236,7 +236,62 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .app.fs .stb{opacity:0;visibility:hidden;pointer-events:none;transform:scale(.6);transition:transform .5s var(--sp),opacity .35s var(--ease),visibility 0s .35s}
 #smc:focus{outline:none}
 .pm-row .tg{cursor:pointer}
-#stsheet .shw{min-height:calc(100dvh - 104px);display:flex;flex-direction:column}#stsheet .dsoon{flex:1}
+#stsheet .shw{max-width:880px;padding-top:34px}
+#stbody{--g:#2fbf71}
+#stbody .top{display:grid;grid-template-columns:1.2fr 1fr;gap:14px;margin-bottom:14px}
+#stbody .card{margin:0}#stbody>.card{margin-bottom:14px}
+#stbody small{font-weight:600;color:var(--dim)}
+#stbody .ring{display:flex;align-items:center;gap:22px;padding:24px}
+#stbody .rg{position:relative;width:176px;height:176px;flex:none}
+#stbody .rg svg{width:100%;height:100%;transform:rotate(-90deg)}
+#stbody .rg circle{fill:none;stroke-width:15;stroke-linecap:round}
+#stbody .rg .bg{stroke:var(--surf2)}
+#stbody .rg .pg{stroke:var(--fg);stroke-dasharray:528;transition:stroke-dashoffset 1.1s var(--ease),stroke .4s}
+#stbody .rg.ok .pg{stroke:var(--g)}
+#stbody .rg div{position:absolute;inset:0;display:grid;place-content:center;text-align:center;font-family:Inter,system-ui,sans-serif}
+#stbody .rg b{font-size:32px;font-weight:600;letter-spacing:-1px;line-height:1.05;white-space:nowrap}
+#stbody b small,#stbody output small{font-size:.5em;margin:0 3px 0 1px}
+#stbody .rg em{font-style:normal;font-size:14px;font-weight:700;color:var(--dim);margin-top:4px}
+#stbody .inf{min-width:0}#stbody .inf h2{font-size:24px;font-weight:800}
+#stbody .gs{display:flex;align-items:center;gap:8px;margin-top:16px;font-size:13px;font-weight:700;color:var(--dim)}
+#stbody .gs span{flex:1 1 100%;margin-bottom:-2px}
+#stbody .gs{flex-wrap:wrap}
+#stbody .gs button,#stbody .nv button{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--surf2);font-size:22px;font-weight:700;line-height:1;transition:transform .5s var(--sp),opacity .3s}
+#stbody .gs button:active,#stbody .nv button:active{transform:scale(.9)}
+#stbody .gs output{min-width:84px;text-align:center;font:600 19px Inter,system-ui,sans-serif;color:var(--fg)}
+#stbody .mini{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+#stbody .stm{display:flex;flex-direction:column;justify-content:space-between;gap:6px;padding:18px}
+#stbody .stm span{font-size:13px;font-weight:700;color:var(--dim)}
+#stbody .stm b{font:600 28px/1.05 Inter,system-ui,sans-serif;letter-spacing:-.5px;white-space:nowrap}
+#stbody .stm small{font-size:12px}
+#stbody .hd{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
+#stbody .hd p{margin-top:2px}
+#stbody .nv{display:flex;gap:8px}#stbody .nv button:disabled{opacity:.3;pointer-events:none}
+#stbody .nv svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+#stbody .ch{position:relative;height:190px;margin-top:22px}
+#stbody .ln{position:absolute;left:0;right:0;border-top:2px dashed rgba(17,17,17,.22);z-index:0}
+#stbody .ln em{position:absolute;right:0;top:-20px;font-style:normal;font-size:11px;font-weight:800;color:var(--dim)}
+#stbody .bars{position:absolute;inset:0;display:grid;grid-template-columns:repeat(7,1fr);gap:14px}
+#stbody .bx{position:relative;height:100%;transition:opacity .3s}#stbody .bx:disabled{opacity:.35}
+#stbody .bx i{position:absolute;left:8%;right:8%;bottom:0;height:max(var(--h),6px);border-radius:12px;background:#dedad2;transform-origin:bottom;transition:background .35s var(--ease)}
+#stbody .bx.g i{background:#9ae3b9}#stbody .bx.on i{background:var(--fg)}
+#stbody .bx span{position:absolute;left:-6px;right:-6px;bottom:calc(max(var(--h),6px) + 6px);text-align:center;font:700 12px Inter,system-ui,sans-serif;color:var(--dim);white-space:nowrap}
+#stbody .bx.on span{color:var(--fg)}
+#stbody .lb{display:grid;grid-template-columns:repeat(7,1fr);gap:14px;margin-top:12px;text-align:center;font-size:13px;font-weight:700;color:var(--dim)}
+#stbody .lb .td{color:var(--fg)}
+#stbody.in .bx i{animation:sxg .9s var(--ease) backwards}
+@keyframes sxg{from{transform:scaleY(0)}}
+#stbody .hm{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+#stbody .hm>b{font-size:12px;font-weight:700;color:var(--dim);text-align:center;padding-bottom:2px}
+#stbody .c{aspect-ratio:1;max-height:72px;width:100%;border-radius:14px;display:grid;place-items:center;font:700 14px Inter,system-ui,sans-serif;transition:transform .45s var(--sp),background .3s}
+#stbody button.c:active{transform:scale(.9)}
+#stbody .c.e{visibility:hidden}#stbody .c:disabled{opacity:.35}
+#stbody .l0{background:var(--surf2);color:#77736c}#stbody .l1{background:#d6f1e1;color:#3b7a58}#stbody .l2{background:#a8e4c2;color:#1f6b45}#stbody .l3{background:#62d097;color:#0f4f2f}#stbody .l4{background:var(--g);color:#fff}
+#stbody .c.td{box-shadow:inset 0 0 0 2.5px var(--fg)}
+#stbody .c.on{background:var(--fg);color:var(--bg);box-shadow:none}
+#stbody .lg{display:flex;align-items:center;justify-content:flex-end;gap:5px;margin-top:16px;font-size:12px;font-weight:700;color:var(--dim)}
+#stbody .lg i{width:16px;height:16px;border-radius:5px}
+@media (max-width:760px){#stbody .top{grid-template-columns:1fr}#stbody .ring{flex-direction:column;text-align:center}#stbody .gs{justify-content:center}}
 #pmc:focus{outline:none}
 .pm-l{margin-top:10px}
 .pm-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 0}
@@ -507,7 +562,7 @@ button.wn:active{transform:scale(.9)}button.wn:hover{background:var(--surf);colo
   <div class="sheet" id="sheet"><button class="fl fl-l" id="fl">Dersler</button><div class="fl-r"><button class="fl fp" id="fp" aria-label="Yeni ders">+</button><button class="fl fk" id="sx">Kapat</button></div><div class="shw" id="shw"></div><div class="mod" id="mod"><div class="mc card" id="mc"></div></div></div>
   <div class="sheet" id="ksheet"><div class="fl-r kfr" id="kfr"><button class="fl fk" id="kbx2">Bitti</button></div><div class="shw"><div class="sh-h"><div><h1>Klavye kısa yolları</h1><p>Bir kısa yola dokun, ardından yeni tuşa bas. Backspace atamayı kaldırır, Esc vazgeçer.</p></div><button class="btn pr" id="kbx">Bitti</button></div><div class="card lc"><div><h2>Kısa yolları kullan</h2><p>Kapalıyken klavye uygulamada hiçbir şey yapmaz.</p></div><button class="tg on" data-kb="tg" aria-label="Klavye kısa yolları"><i></i></button></div><div id="kbl"></div><div class="card"><h2>Varsayılana dön</h2><p>Tüm kısa yollar ilk hâline döner.</p><div class="row"><button class="btn dg" id="kbr">Hepsini sıfırla</button></div></div></div><div class="kbt" id="kbt" role="status"></div></div>
   <div class="mod" id="sset"><div class="mc card" id="smc" tabindex="-1" role="dialog" aria-modal="true" aria-label="Kronometre ayarları"><h2>Kronometre ayarları</h2><p>Kronometrenin nasıl görüneceğini seç.</p><div class="pm-l"><div class="pm-row"><div><b>Salise göster</b><small>Saniyenin yanında yüzde birlik kısım</small></div><button class="tg" data-sk="c" aria-label="Salise göster"><i></i></button></div><div class="pm-row"><div><b>Saat basamağı</b><small>Bir saati geçmeden de 00 olarak göster</small></div><button class="tg" data-sk="h" aria-label="Saat basamağı"><i></i></button></div></div><div class="row"><button class="btn" id="sdf">Varsayılan</button><button class="btn pr" id="sdn">Bitti</button></div></div></div>
-  <div class="sheet" id="stsheet"><div class="fl-r"><button class="fl fk" id="stx">Kapat</button></div><div class="shw"><div class="dsoon"><div class="dsi"><svg viewBox="0 0 24 24"><path d="M5 20V11M12 20V4M19 20v-6"/></svg></div><h2>Yakında</h2><p>İstatistikler sayfası üzerinde çalışıyoruz.</p></div></div></div>
+  <div class="sheet" id="stsheet"><div class="fl-r"><button class="fl fk" id="stx">Kapat</button></div><div class="shw"><div class="sh-h"><div><h1>İstatistikler</h1><p>Kronometre, geri sayım ve Pomodoro odak turlarında geçen süre günlük olarak burada toplanır.</p></div></div><div id="stbody"></div></div></div>
   <div class="mod" id="pset"><div class="mc card" id="pmc" tabindex="-1" role="dialog" aria-modal="true" aria-label="Pomodoro ayarları"><h2>Pomodoro ayarları</h2><p>Odak süreni, molalarını ve periyodunu ayarla.</p><div class="pm-l" id="pml"></div><p class="pm-n">Tur süresi değişirse o an süren tur sıfırlanır.</p><div class="row"><button class="btn" id="pdf">Varsayılan</button><button class="btn" id="pcn">Vazgeç</button><button class="btn pr" id="psv">Kaydet</button></div></div></div>
   <div class="dp" id="dp" aria-hidden="true">
     <div class="dp-bd" id="dpbd"></div>
@@ -593,7 +648,7 @@ function cnt(s){var c=0;s.t.forEach(function(_,i){if(S.done[s.id+"_"+i])c++});re
 var RE_DATE=/^\d{4}-\d{2}-\d{2}$/;
 function setDate(v){if(!RE_DATE.test(v))return false;S.date=v;save();return true}
 function resetDone(){S.done={};save()}
-function exportData(){return JSON.stringify({v:1,date:S.date,done:S.done})}
+function exportData(){return JSON.stringify({v:1,date:S.date,done:S.done,study:S.study||{},goal:S.goal})}
 function importData(txt){
   var o;try{o=JSON.parse(txt)}catch(e){return false}
   if(!o||typeof o.done!=="object"||!o.done)return false;
@@ -602,6 +657,8 @@ function importData(txt){
     var m=/^(\d+)_(\d+)$/.exec(k);
     if(m&&o.done[k]&&D[+m[1]]&&+m[2]<D[+m[1]].t.length)d[k]=1;
   }
+  if(o.study&&typeof o.study==="object"){var u={},q;for(q in o.study)if(RE_DATE.test(q)&&o.study[q]>0&&o.study[q]<864e5)u[q]=+o.study[q];S.study=u}
+  if(o.goal>=30&&o.goal<=960)S.goal=Math.round(o.goal);
   S.done=d;if(RE_DATE.test(o.date))S.date=o.date;save();return true;
 }
 function daysTo(v){var d=Math.ceil((new Date(v+"T10:00:00")-new Date())/864e5);return d>0?d:0}
@@ -853,7 +910,7 @@ function paint(){
   $$("#tswt .swt-nav button").forEach(function(b,q){var m=MS[q],t=ST[m],v=b.lastChild,x="";if(m!==MODE){if(t.run)x=fm(m==="sw"?Math.floor(el(t)/1e3):Math.ceil(Math.max(0,t.cd-el(t))/1e3));else if(t.done)x="Bitti"}if(v.textContent!==x)v.textContent=x});
 }
 function pfin(p,q){if(p.ph===0){p.n++;p.ph=p.n%PS.r===0?2:1}else p.ph=0;p.cd=PD[p.ph];p.acc=0;p.run=false;p.done=false;wk();savT();sync();paint();if(!q)beep()}
-function tick(){paint();var c=ST.cd,p=ST.pm;if(c.run&&el(c)>=c.cd)finish(c);if(p.run&&el(p)>=p.cd)pfin(p)}
+function tick(){stTrack();paint();var c=ST.cd,p=ST.pm;if(c.run&&el(c)>=c.cd)finish(c);if(p.run&&el(p)>=p.cd)pfin(p)}
 function sync(){
   var fs=$(".app").classList.contains("fs");
   MS.forEach(function(m){var t=ST[m],k=TK[m],st=t.done?"Süre doldu":"";
@@ -936,8 +993,65 @@ $("#sset").addEventListener("click",function(e){
 });
 $("#sdf").onclick=function(){SS.c=true;SS.h=true;sApply()};$("#sdn").onclick=sClose;
 $("#pgb").onclick=function(){(TB?MS[TB.index]:MODE)==="sw"?sOpen():pOpen()};
-function stOpen(){$("#stsheet").scrollTop=0;$("#stsheet").classList.add("on");$("#stx").focus()}
-function stClose(){$("#stsheet").classList.remove("on");$("#stb").focus()}
+/* Çalışma takibi: kronometre, geri sayım ve Pomodoro odak süresi güne yazılır */
+var SL=0,SLS=Date.now(),STS={sel:"",wo:0,mo:0},STI=0,STK=-1,SDAY=["Pzt","Sal","Çar","Per","Cum","Cmt","Paz"];
+function dk(d){return d.getFullYear()+"-"+p2(d.getMonth()+1)+"-"+p2(d.getDate())}
+function wkS(d){var x=new Date(d.getFullYear(),d.getMonth(),d.getDate());x.setDate(x.getDate()-(x.getDay()+6)%7);return x}
+function sg(k){return S.study&&S.study[k]>0?Math.round(S.study[k]):0}
+function gsec(){return(S.goal>=30&&S.goal<=960?S.goal:240)*60}
+function fh(s){var h=Math.floor(s/3600),m=Math.floor(s%3600/60);return h?h+"<small>sa</small> "+p2(m)+"<small>dk</small>":m+"<small>dk</small>"}
+function ft(s){var h=Math.floor(s/3600),m=Math.floor(s%3600/60);return h?h+" sa "+m+" dk":m+" dk"}
+function fb(s){var h=Math.floor(s/3600),m=Math.floor(s%3600/60);return h?h+":"+p2(m):m+"dk"}
+function stFlush(){SLS=Date.now();var o=S.study,k;if(o&&typeof o==="object"){k=dk(new Date());if(o[k])o[k]=Math.round(o[k]*10)/10;save()}}
+function stTrack(){
+  var n=Date.now(),d=SL?n-SL:0,k,o;SL=n;
+  if(d<=0||d>432e5||!(ST.sw.run||ST.cd.run||(ST.pm.run&&ST.pm.ph===0)))return;
+  if(!S.study||typeof S.study!=="object")S.study={};
+  o=S.study;k=dk(new Date(n));o[k]=(o[k]||0)+d/1000;
+  if(n-SLS>15000)stFlush();
+}
+document.addEventListener("visibilitychange",function(){if(document.hidden){stTrack();stFlush()}});
+window.addEventListener("pagehide",function(){stTrack();stFlush()});
+var CHV='<svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>',CHN='<svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>';
+function stRender(first){
+  var now=new Date(),tk=dk(now),G=gsec(),sel=STS.sel,sv=sg(sel),pc=Math.min(1,sv/G),ws=wkS(now),i,d,k,v,r,lv,D=[],mx=G,tot=0,cn=0,h="",C=528,sk=0,x=new Date(now),bs=0;
+  ws.setDate(ws.getDate()+STS.wo*7);
+  for(i=0;i<7;i++){d=new Date(ws.getFullYear(),ws.getMonth(),ws.getDate()+i);k=dk(d);v=sg(k);D.push([k,v]);if(v>mx)mx=v;tot+=v;if(k<=tk)cn++}
+  mx*=1.2;
+  if(!sg(tk))x.setDate(x.getDate()-1);
+  while(sg(dk(x))>=60){sk++;x.setDate(x.getDate()-1)}
+  for(k in S.study)if(S.study[k]>bs)bs=S.study[k];
+  var sd=new Date(sel+"T12:00:00"),lb=sel===tk?"Bugün":sd.getDate()+" "+MN[sd.getMonth()]+" "+WD[(sd.getDay()+6)%7],avg=cn?tot/cn:0;
+  function mini(l,t,s){return'<div class="card stm"><span>'+l+'</span><b>'+t+'</b><small>'+s+'</small></div>'}
+  h+='<div class="top"><div class="card ring"><div class="rg'+(pc>=1?" ok":"")+'"><svg viewBox="0 0 190 190"><circle class="bg" cx="95" cy="95" r="84"/><circle class="pg" id="str" cx="95" cy="95" r="84" style="stroke-dashoffset:'+(first?C:C*(1-pc))+'"/></svg><div><b>'+fh(sv)+'</b><em>%'+Math.round(pc*100)+'</em></div></div>'+
+   '<div class="inf"><h2>'+lb+'</h2><p>'+(pc>=1?"Günlük hedefi tamamladın.":sv?"Hedefe "+ft(G-sv)+" kaldı.":"Bu gün için çalışma kaydı yok.")+'</p><div class="gs"><span>Günlük hedef</span><button data-a="g-" aria-label="Hedefi azalt">−</button><output>'+fh(G)+'</output><button data-a="g+" aria-label="Hedefi artır">+</button></div></div></div>'+
+   '<div class="mini">'+mini("Hafta toplamı",fh(tot),"seçili hafta")+mini("Günlük ortalama",fh(avg),"hedefin %"+Math.round(avg/G*100))+mini("Seri",sk+"<small>gün</small>","art arda çalışma")+mini("En iyi gün",fh(bs),"şimdiye kadar")+'</div></div>';
+  h+='<div class="card"><div class="hd"><div><h2>Haftalık görünüm</h2><p>'+wkRange(ws.getFullYear(),ws.getMonth(),ws.getDate())+'</p></div><div class="nv"><button data-a="wp" aria-label="Önceki hafta">'+CHV+'</button><button data-a="wn" aria-label="Sonraki hafta"'+(STS.wo>=0?" disabled":"")+'>'+CHN+'</button></div></div>'+
+   '<div class="ch"><div class="ln" style="bottom:'+G/mx*100+'%"><em>hedef</em></div><div class="bars">'+D.map(function(a){return'<button class="bx'+(a[1]>=G?" g":"")+(a[0]===sel?" on":"")+'" data-a="d" data-k="'+a[0]+'"'+(a[0]>tk?" disabled":"")+' style="--h:'+a[1]/mx*100+'%"><span>'+(a[1]?fb(a[1]):"")+'</span><i></i></button>'}).join("")+'</div></div>'+
+   '<div class="lb">'+SDAY.map(function(n,j){return'<span'+(D[j][0]===tk?' class="td"':"")+'>'+n+'</span>'}).join("")+'</div></div>';
+  var my=new Date(now.getFullYear(),now.getMonth()+STS.mo,1),off=(my.getDay()+6)%7,dim=new Date(my.getFullYear(),my.getMonth()+1,0).getDate(),mt=0,cl="";
+  for(i=0;i<off;i++)cl+='<i class="c e"></i>';
+  for(i=1;i<=dim;i++){k=ds(my.getFullYear(),my.getMonth(),i);v=sg(k);mt+=v;r=v/G;lv=!v?0:r<.25?1:r<.5?2:r<1?3:4;
+    cl+='<button class="c l'+lv+(k===tk?" td":"")+(k===sel?" on":"")+'" data-a="d" data-k="'+k+'"'+(k>tk?" disabled":"")+' aria-label="'+i+' '+MN[my.getMonth()]+', '+ft(v)+'">'+i+'</button>'}
+  h+='<div class="card"><div class="hd"><div><h2>'+MN[my.getMonth()]+' '+my.getFullYear()+'</h2><p>Ay toplamı: '+ft(mt)+'</p></div><div class="nv"><button data-a="mp" aria-label="Önceki ay">'+CHV+'</button><button data-a="mn" aria-label="Sonraki ay"'+(STS.mo>=0?" disabled":"")+'>'+CHN+'</button></div></div>'+
+   '<div class="hm">'+SDAY.map(function(n){return'<b>'+n+'</b>'}).join("")+cl+'</div><div class="lg">Az'+[0,1,2,3,4].map(function(n){return'<i class="l'+n+'"></i>'}).join("")+'Çok</div></div>';
+  $("#stbody").innerHTML=h;STK=Math.floor(sg(tk)/60);
+  if(first)setTimeout(function(){var e=$("#str");if(e)e.style.strokeDashoffset=C*(1-pc)},60);
+}
+$("#stbody").addEventListener("click",function(e){
+  var b=e.target.closest("[data-a]"),a,t,w,g;if(!b||b.disabled)return;a=b.dataset.a;
+  if(a==="d"){STS.sel=b.dataset.k;t=wkS(new Date());w=wkS(new Date(b.dataset.k+"T12:00:00"));STS.wo=Math.round((w-t)/6048e5)}
+  else if(a==="wp")STS.wo--;else if(a==="wn")STS.wo++;else if(a==="mp")STS.mo--;else if(a==="mn")STS.mo++;
+  else{g=gsec()/60+(a==="g+"?30:-30);S.goal=Math.max(30,Math.min(960,g));save()}
+  stRender();try{navigator.vibrate&&navigator.vibrate(3)}catch(x){}
+});
+function stOpen(){
+  var b=$("#stbody");STS.sel=dk(new Date());STS.wo=0;STS.mo=0;stTrack();
+  b.classList.add("in");stRender(true);setTimeout(function(){b.classList.remove("in")},1100);
+  $("#stsheet").scrollTop=0;$("#stsheet").classList.add("on");$("#stx").focus();
+  clearInterval(STI);STI=setInterval(function(){if(Math.floor(sg(dk(new Date()))/60)!==STK)stRender()},1000);
+}
+function stClose(){clearInterval(STI);$("#stsheet").classList.remove("on");$("#stb").focus()}
 $("#stb").onclick=stOpen;$("#stx").onclick=stClose;
 $("#psv").onclick=pSave;$("#pcn").onclick=pClose;
 $("#pdf").onclick=function(){PX=pcl(PDF);pRender()};
