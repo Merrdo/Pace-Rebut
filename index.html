@@ -529,7 +529,7 @@ button.wn:active{transform:scale(.9)}button.wn:hover{background:var(--surf);colo
 
 /* Hareketli arka planlar */
 .abg{position:absolute;inset:0;z-index:-1;overflow:hidden;opacity:0;pointer-events:none;will-change:opacity;contain:strict}
-.abgi{position:absolute;inset:0;transition:opacity 1.2s var(--ease)}.abgi.off{opacity:0}
+.abgi{position:absolute;inset:0;transition:opacity 1.2s var(--ease)}.abgi.off{opacity:0}.abgi.hold{opacity:0!important;transition:none}
 @property --c0{syntax:"<color>";inherits:true;initial-value:#fff}
 @property --c1{syntax:"<color>";inherits:true;initial-value:#fff}
 @property --c2{syntax:"<color>";inherits:true;initial-value:#fff}
@@ -699,6 +699,9 @@ $("#bsheet").addEventListener("click",function(e){
 document.addEventListener("click",function(e){if(e.target.closest("[data-bg=tg]")){BG.on=BG.on?0:1;bgSave();bgApply();bgTg()}});
 document.addEventListener("keydown",function(e){if(e.key==="Escape"&&$("#bsheet").classList.contains("on")){e.preventDefault();closeBg()}});
 bgApply();bgRender();$("#bgo").onclick=openBg;
+/* Tam sayfa panelleri (İstatistikler, Arka planlar) açılırken kendi solma geçişleri arkadaki renkli arka planı şeffaf göstermesin: panel açıkken arka plan anında gizlenir, kapanırken yavaşça geri gelir */
+(function(){function f(){ABI.classList.toggle("hold",$("#stsheet").classList.contains("on")||$("#bsheet").classList.contains("on"))}
+["#stsheet","#bsheet"].forEach(function(q){new MutationObserver(f).observe($(q),{attributes:true,attributeFilter:["class"]})})})();
 
 function esc(t){return String(t).replace(/[&<>"']/g,function(c){return"&#"+c.charCodeAt(0)+";"})}
 if(!Array.isArray(S.extra))S.extra=[];if(!Array.isArray(S.order))S.order=[];if(!S.col||typeof S.col!=="object")S.col={};if(!S.gone||typeof S.gone!=="object")S.gone={};
