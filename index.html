@@ -547,7 +547,7 @@ button.wn:active{transform:scale(.9)}button.wn:hover{background:var(--surf);colo
 .bgc b{display:block;margin-top:12px;font-size:18px;font-weight:700}
 .bgp{position:relative;display:block;aspect-ratio:var(--sr,1.4);border-radius:22px;overflow:hidden;--bl:22px;transition:box-shadow .4s var(--ease)}
 .bgc.on .bgp{box-shadow:0 0 0 3px var(--bg),0 0 0 5.5px var(--fg)}
-.bgc:not(.on) .bgp .bgl,.bgc:not(.on) .bgp .bgl i,.app:has(#bsheet.on) .abg .bgl,.app:has(#bsheet.on) .abg .bgl i{animation-play-state:paused}
+.bgc:not(.on) .bgp .bgl,.bgc:not(.on) .bgp .bgl i,.abgi.hold .bgl,.abgi.hold .bgl i{animation-play-state:paused}
 #bgm{transition:opacity .4s var(--ease)}#bgm.off{opacity:.5}#bgmp .chip{min-width:0;padding:10px 18px;font-size:16px}
 @media (max-width:760px){.bgg{grid-template-columns:1fr 1fr}}
 </style>
@@ -682,8 +682,8 @@ function bgApply(){
 function abgOp(){var o=Math.max(0,Math.min(1,2-LP));ABG.style.opacity=o.toFixed(3);ABG.style.visibility=o?"visible":"hidden"}
 function bgTg(){$$("[data-bg=tg]").forEach(function(b){b.classList.toggle("on",!!BG.on)});$("#bgg").classList.toggle("off",!BG.on);$("#bgm").classList.toggle("off",BG.id!=="cycle")}
 function bgRender(){$("#bgg").style.setProperty("--sr",(innerWidth/innerHeight).toFixed(3));$("#bgg").innerHTML=[BGC].concat(BGS).map(function(b){return'<button class="bgc'+(b[0]===BG.id?" on":"")+'" data-bgk="'+b[0]+'"><span class="bgp">'+bgMk(b,1)+'</span><b>'+b[1]+'</b></button>'}).join("");$("#bgmp").innerHTML=BGM.map(function(m){return'<button class="chip'+(m===BG.m?" on":"")+'" data-bgm="'+m+'">'+m+" dk</button>"}).join("");bgTg()}
-function openBg(){bgRender();$("#bsheet").scrollTop=0;$("#bfr").classList.remove("on");$("#bsheet").classList.add("on")}
-function closeBg(){$("#bsheet").classList.remove("on")}
+function openBg(){$("#bgg").style.setProperty("--sr",(innerWidth/innerHeight).toFixed(3));ABI.classList.add("hold");$("#bsheet").scrollTop=0;$("#bfr").classList.remove("on");$("#bsheet").classList.add("on")}
+function closeBg(){$("#bsheet").classList.remove("on");ABI.classList.remove("hold")}
 $("#bsheet").addEventListener("scroll",function(){$("#bfr").classList.toggle("on",this.scrollTop>90)},{passive:true});
 $("#bsheet").addEventListener("click",function(e){
   var t=e.target.closest("button");if(!t)return;
@@ -693,7 +693,7 @@ $("#bsheet").addEventListener("click",function(e){
 });
 document.addEventListener("click",function(e){if(e.target.closest("[data-bg=tg]")){BG.on=BG.on?0:1;bgSave();bgApply();bgTg()}});
 document.addEventListener("keydown",function(e){if(e.key==="Escape"&&$("#bsheet").classList.contains("on")){e.preventDefault();closeBg()}});
-bgApply();bgTg();$("#bgo").onclick=openBg;
+bgApply();bgRender();$("#bgo").onclick=openBg;
 
 function esc(t){return String(t).replace(/[&<>"']/g,function(c){return"&#"+c.charCodeAt(0)+";"})}
 if(!Array.isArray(S.extra))S.extra=[];if(!Array.isArray(S.order))S.order=[];if(!S.col||typeof S.col!=="object")S.col={};if(!S.gone||typeof S.gone!=="object")S.gone={};
