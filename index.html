@@ -529,12 +529,8 @@ button.wn:active{transform:scale(.9)}button.wn:hover{background:var(--surf);colo
 
 /* Hareketli arka planlar */
 .abg{position:absolute;inset:0;z-index:-1;overflow:hidden;opacity:0;pointer-events:none;will-change:opacity;contain:strict}
-.abgi{position:absolute;inset:0;transition:opacity 1.2s var(--ease)}.abgi.off{opacity:0}.abgi.hold{opacity:0!important;transition:none}
-@property --c0{syntax:"<color>";inherits:true;initial-value:#fff}
-@property --c1{syntax:"<color>";inherits:true;initial-value:#fff}
-@property --c2{syntax:"<color>";inherits:true;initial-value:#fff}
-@property --c3{syntax:"<color>";inherits:true;initial-value:#fff}
-.bgl{position:absolute;inset:0;overflow:hidden;transition:--c0 var(--td,6s) ease-in-out,--c1 var(--td,6s) ease-in-out,--c2 var(--td,6s) ease-in-out,--c3 var(--td,6s) ease-in-out;background:linear-gradient(125deg,var(--c0),var(--c1),var(--c2))}
+.abgi{position:absolute;inset:0;transition:opacity 1.2s var(--ease)}.abgi.off{opacity:0}.abgi.hold{opacity:0!important;transition:opacity .45s var(--ease)}
+.bgl{position:absolute;inset:0;overflow:hidden;background:linear-gradient(125deg,var(--c0),var(--c1),var(--c2))}
 .bgl i{position:absolute;width:80%;aspect-ratio:1;border-radius:50%;background:radial-gradient(closest-side,var(--bc),transparent);opacity:.75;will-change:transform;animation:bgd 38s ease-in-out infinite alternate}
 .bgl .b0{left:-18%;top:-40%;--bc:var(--c3);--dx:22%;--dy:14%;--sc:1.15}
 .bgl .b1{right:-24%;top:8%;--bc:var(--c1);--dx:-20%;--dy:18%;--sc:.9;animation-duration:47s;animation-delay:-14s}
@@ -672,11 +668,17 @@ try{var bj=JSON.parse(localStorage.getItem("dd-bg"));if(bj){BG.on=bj.on===0?0:1;
 function bgSave(){try{localStorage.setItem("dd-bg",JSON.stringify(BG))}catch(e){}}
 function bgMk(b,on){return'<div class="bgl'+(on?" on":"")+'" data-k="'+b[0]+'" style="--c0:'+b[2]+';--c1:'+b[3]+';--c2:'+b[4]+';--c3:'+b[5]+'"><i class="b0"></i><i class="b1"></i><i class="b2"></i></div>'}
 function bgShow(b,td){
-  var L=ABI.querySelector(".bgl");
-  if(!L){ABI.innerHTML=bgMk(b,1);return}
-  if(L.dataset.k===b[0])return;
-  L.dataset.k=b[0];L.style.setProperty("--td",td+"s");
-  for(var i=0;i<4;i++)L.style.setProperty("--c"+i,b[i+2]);
+  var ls=ABI.querySelectorAll(".bgl"),top=ls[ls.length-1];
+  if(top&&top.dataset.k===b[0])return;
+  ABI.insertAdjacentHTML("beforeend",bgMk(b,1));
+  var N=ABI.lastElementChild;
+  function clean(){if(!N.parentNode)return;while(N.previousElementSibling)N.previousElementSibling.remove()}
+  /* Görünmüyorsa (panel açık / ilk açılış) anında değiştir; görünüyorsa eski ile yeni arasında yumuşak çapraz geçiş yap */
+  if(!top||ABI.classList.contains("hold")){clean();return}
+  N.style.opacity="0";void N.offsetWidth;
+  N.style.transition="opacity "+td+"s cubic-bezier(.45,0,.55,1)";N.style.opacity="1";
+  N.addEventListener("transitionend",function f(e){if(e.target!==N||e.propertyName!=="opacity")return;N.removeEventListener("transitionend",f);clean()});
+  setTimeout(clean,td*1000+300);
 }
 function bgApply(){
   clearInterval(BGT);BGT=0;ABI.classList.toggle("off",!BG.on);
