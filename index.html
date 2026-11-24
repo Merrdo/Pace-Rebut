@@ -233,9 +233,23 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .fsb svg{grid-area:1/1;width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:opacity .3s,transform .5s var(--sp)}
 .fsb .i-c{opacity:0;transform:scale(.5)}.fsb.on .i-c{opacity:1;transform:none}.fsb.on .i-e{opacity:0;transform:scale(.5)}
 /* Pomodoro ayarları */
-.pgb{position:absolute;z-index:2;top:28px;right:80px;display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--surf);opacity:0;visibility:hidden;transform:scale(.6);pointer-events:none;transition:opacity .35s var(--ease),transform .55s var(--sp),visibility 0s .35s}
-.pgb.on{opacity:1;visibility:visible;transform:none;pointer-events:auto;transition-delay:0s}.pgb.on:active{transform:scale(.92)}
-.pgb svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+/* Araçlar menüsü: tek yuvarlak buton, basınca aşağı doğru uzayan panel (Ses · Arka plan · Ayarlar) */
+.mn{position:absolute;z-index:3;top:28px;right:80px;display:flex;flex-direction:column;align-items:flex-end;width:46px;border-radius:26px;background:var(--surf);box-shadow:0 6px 18px rgba(0,0,0,.06);overflow:hidden;transition:width .6s var(--ease),box-shadow .5s var(--ease),transform .5s var(--sp),opacity .35s var(--ease),visibility 0s}
+.mn.on{width:204px;box-shadow:0 18px 44px rgba(0,0,0,.14)}
+.app.fs .mn{opacity:0;visibility:hidden;pointer-events:none;transform:scale(.6);transition:transform .5s var(--sp),opacity .35s var(--ease),visibility 0s .35s}
+.mnb{position:relative;flex:none;display:grid;place-items:center;width:46px;height:46px;border-radius:50%;transition:transform .5s var(--sp)}
+.mnb:active{transform:scale(.88)}
+.mnb svg{grid-area:1/1;width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:opacity .3s var(--ease),transform .6s var(--sp)}
+.mnb .i-x{opacity:0;transform:rotate(-90deg) scale(.5)}.mn.on .mnb .i-x{opacity:1;transform:none}.mn.on .mnb .i-o{opacity:0;transform:rotate(90deg) scale(.5)}
+.mnw{display:grid;grid-template-rows:0fr;width:204px;transition:grid-template-rows .6s var(--ease);visibility:hidden;transition:grid-template-rows .6s var(--ease),visibility 0s .6s}
+.mn.on .mnw{grid-template-rows:1fr;visibility:visible;transition-delay:0s}
+.mnl{min-height:0;overflow:hidden}
+.mni{display:flex;align-items:center;gap:12px;width:calc(100% - 12px);height:46px;margin:0 6px 6px;padding:0 14px;border-radius:20px;font-size:17px;font-weight:700;text-align:left;white-space:nowrap;opacity:0;transform:translateY(-8px);transition:opacity .25s var(--ease),transform .4s var(--ease),background .3s var(--ease)}
+.mn.on .mni{opacity:1;transform:none;transition:opacity .45s var(--ease) calc(var(--k)*55ms + 140ms),transform .6s var(--sp) calc(var(--k)*55ms + 140ms),background .3s var(--ease)}
+.mni:active{background:var(--surf2)}
+.mni svg{flex:none;width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.mni.pgb{display:none}.mni.pgb.on{display:flex}
+@media (hover:hover){.mni:hover{background:var(--surf2)}}
 .stb{position:absolute;z-index:2;top:28px;left:24px;display:flex;align-items:center;gap:8px;height:46px;padding:0 18px 0 14px;border-radius:999px;background:var(--surf);font-size:16px;font-weight:700;transition:transform .5s var(--sp),opacity .35s var(--ease),visibility 0s}
 .stb:active{transform:scale(.94)}
 .stb svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
@@ -558,9 +572,6 @@ button.wn:active{transform:scale(.9)}button.wn:hover{background:var(--surf);colo
 .bgp{contain:paint;isolation:isolate}.bgp .bgl i{animation:none!important;will-change:auto!important}.bgp .bgl i.b1,.bgp .bgl i.b2{display:none}
 @media (max-width:760px){.bgg{grid-template-columns:1fr 1fr}}
 /* Sesler */
-.snb{position:absolute;z-index:2;left:24px;bottom:calc(var(--nav-gap) + 6px + env(safe-area-inset-bottom,0px));display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--surf);box-shadow:0 6px 18px rgba(0,0,0,.06);transition:transform .5s var(--sp),opacity .35s var(--ease),visibility 0s}
-.snb:active{transform:scale(.92)}.snb svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
-.app.fs .snb{opacity:0;visibility:hidden;pointer-events:none;transform:scale(.6);transition:transform .5s var(--sp),opacity .35s var(--ease),visibility 0s .35s}
 .card #snv{padding:0;height:30px;background:none;accent-color:var(--fg);cursor:pointer}
 .sn-s{margin-top:20px}.sn-s b{display:block;font-size:18px;font-weight:700}.sn-s small{display:block;margin:2px 0 10px;font:600 13px Inter,system-ui,sans-serif;color:var(--dim)}.sn-s .pm-pick{margin-top:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px}.sn-s .pm-pick .chip{min-width:0;height:46px;padding:0 12px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600;line-height:1;white-space:nowrap}
 /* ============================================================
@@ -597,8 +608,14 @@ button.wn:active{transform:scale(.9)}button.wn:hover{background:var(--surf);colo
       <div class="pbg" id="pbg" data-ph="0"><i class="l l0"></i><i class="l l1"></i><i class="l l2"></i><i class="bl bl1"></i><i class="bl bl2"></i><div class="pp"><i id="ppf"></i></div></div>
       <button class="fsb" id="fsb" aria-label="Tam ekran"><svg class="i-e" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><svg class="i-c" viewBox="0 0 24 24"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg></button>
       <button class="stb" id="stb" aria-label="İstatistikler"><svg viewBox="0 0 24 24"><path d="M5 20V11M12 20V4M19 20v-6"/></svg>İstatistikler</button>
-      <button class="pgb" id="pgb" aria-label="Pomodoro ayarları" aria-haspopup="dialog"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/></svg></button>
-      <button class="snb" id="snb" aria-label="Sesler" aria-haspopup="dialog"><svg viewBox="0 0 24 24"><path d="M4 9.5v5h3.5l4.5 4v-13l-4.5 4zM15.5 9a4 4 0 010 6M18.2 6.5a8 8 0 010 11"/></svg></button>
+      <div class="mn" id="mn">
+        <button class="mnb" id="mnb" aria-label="Araçlar" aria-haspopup="true" aria-expanded="false" aria-controls="mnl"><svg class="i-o" viewBox="0 0 24 24"><rect x="4" y="4" width="6.5" height="6.5" rx="2"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="2"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="2"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="2"/></svg><svg class="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        <div class="mnw"><div class="mnl" id="mnl">
+          <button class="mni" id="snb" style="--k:0" aria-label="Sesler" aria-haspopup="dialog"><svg viewBox="0 0 24 24"><path d="M4 9.5v5h3.5l4.5 4v-13l-4.5 4zM15.5 9a4 4 0 010 6M18.2 6.5a8 8 0 010 11"/></svg><span>Sesler</span></button>
+          <button class="mni" id="mbg" style="--k:1" aria-label="Arka planlar" aria-haspopup="dialog"><svg viewBox="0 0 24 24"><path d="M12 3.5c4.9 0 8.5 3.4 8.5 7.6 0 2.6-1.9 3.9-3.8 3.9h-1.6a1.7 1.7 0 00-1.2 2.9c.6.8.1 2.1-1 2.1-4.6 0-8.4-3.4-8.4-8.2 0-4.8 3.7-8.3 7.5-8.3z"/><circle cx="8" cy="11" r=".9" fill="currentColor"/><circle cx="11.5" cy="7.8" r=".9" fill="currentColor"/><circle cx="15.5" cy="9" r=".9" fill="currentColor"/></svg><span>Arka plan</span></button>
+          <button class="mni pgb" id="pgb" style="--k:2" aria-label="Pomodoro ayarları" aria-haspopup="dialog"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/></svg><span>Ayarlar</span></button>
+        </div></div>
+      </div>
       <div class="tw">
         <div class="tswt" id="tswt"><section class="swt-page" data-title="Kronometre"><div class="clk" data-m="sw"><b></b><i></i></div><div class="ts"></div></section><section class="swt-page" data-title="Geri sayım"><div class="clk" data-m="cd"><b></b><i></i></div><div class="ts"></div><div class="fold" id="pw"><div><div class="pre" id="pre"></div></div></div></section><section class="swt-page pmp" data-title="Pomodoro"><div class="clk" data-m="pm"><b></b><i></i></div><div class="ts"></div></section></div>
         <div class="tctl">
@@ -613,9 +630,9 @@ button.wn:active{transform:scale(.9)}button.wn:hover{background:var(--surf);colo
   </main>
   <div class="sheet" id="sheet"><button class="fl fl-l" id="fl">Dersler</button><div class="fl-r"><button class="fl fp" id="fp" aria-label="Yeni ders">+</button><button class="fl fk" id="sx">Kapat</button></div><div class="shw" id="shw"></div><div class="mod" id="mod"><div class="mc card" id="mc"></div></div></div>
   <div class="sheet" id="ksheet"><div class="fl-r kfr" id="kfr"><button class="fl fk" id="kbx2">Bitti</button></div><div class="shw"><div class="sh-h"><div><h1>Klavye kısa yolları</h1><p>Bir kısa yola dokun, ardından yeni tuşa bas. Backspace atamayı kaldırır, Esc vazgeçer.</p></div><button class="btn pr" id="kbx">Bitti</button></div><div class="card lc"><div><h2>Kısa yolları kullan</h2><p>Kapalıyken klavye uygulamada hiçbir şey yapmaz.</p></div><button class="tg on" data-kb="tg" aria-label="Klavye kısa yolları"><i></i></button></div><div id="kbl"></div><div class="card"><h2>Varsayılana dön</h2><p>Tüm kısa yollar ilk hâline döner.</p><div class="row"><button class="btn dg" id="kbr">Hepsini sıfırla</button></div></div></div><div class="kbt" id="kbt" role="status"></div></div>
-  <div class="sheet" id="bsheet"><div class="fl-r kfr" id="bfr"><button class="fl fk" id="bx2">Bitti</button></div><div class="shw"><div class="sh-h"><div><h1>Arka planlar</h1><p>Bir arka plana dokun, Süre sayfasında hemen akmaya başlasın. Kronometre ve geri sayımda görünür; Pomodoro kendi renklerini korur.</p></div><button class="btn pr" id="bx">Bitti</button></div><div class="card lc"><div><h2>Hareketli arka planı kullan</h2><p>Kapalıyken Süre sayfası sade kalır.</p></div><button class="tg on" data-bg="tg" aria-label="Hareketli arka plan"><i></i></button></div><div class="card" id="bgm"><h2>Değişim süresi</h2><p>"Hepsi sırayla" seçiliyken arka plan bu sürede bir sıradaki renge geçer.</p><div class="pm-pick" id="bgmp"></div></div><div class="bgg" id="bgg"></div></div></div>
+  <div class="sheet" id="bsheet"><div class="fl-r kfr" id="bfr"><button class="fl fk" id="bx2">Bitti</button></div><div class="shw"><div class="sh-h"><div><h1>Arka planlar</h1><p>Bir arka plana dokun, Süre sayfasında hemen akmaya başlasın. Kronometre, geri sayım ve Pomodoro odak turunda görünür; Pomodoro molaları kendi sabit renklerini korur.</p></div><button class="btn pr" id="bx">Bitti</button></div><div class="card lc"><div><h2>Hareketli arka planı kullan</h2><p>Kapalıyken Süre sayfası sade kalır.</p></div><button class="tg on" data-bg="tg" aria-label="Hareketli arka plan"><i></i></button></div><div class="card" id="bgm"><h2>Değişim süresi</h2><p>"Hepsi sırayla" seçiliyken arka plan bu sürede bir sıradaki renge geçer.</p><div class="pm-pick" id="bgmp"></div></div><div class="bgg" id="bgg"></div></div></div>
   <div class="sheet" id="ssheet"><div class="fl-r kfr" id="sfr"><button class="fl fk" id="snx2">Bitti</button></div><div class="shw"><div class="sh-h"><div><h1>Sesler</h1><p>Bir sese dokun; seçilir ve hemen çalar. Her ses uygulamanın içinde üretilir, dosya gerekmez.</p></div><button class="btn pr" id="snx">Bitti</button></div><div class="card lc"><div><h2>Sesleri kullan</h2><p>Kapalıyken süre bitince yalnızca titreşim olur.</p></div><button class="tg on" data-sn="tg" aria-label="Sesleri kullan"><i></i></button></div><div class="card"><h2>Ses seviyesi</h2><input type="range" id="snv" min="0" max="100" step="1" aria-label="Ses seviyesi"></div><div id="snl"></div></div></div>
-  <div class="mod" id="sset"><div class="mc card" id="smc" tabindex="-1" role="dialog" aria-modal="true" aria-label="Kronometre ayarları"><h2>Kronometre ayarları</h2><p>Kronometrenin nasıl görüneceğini seç.</p><div class="pm-l"><div class="pm-row"><div><b>Salise göster</b><small>Saniyenin yanında yüzde birlik kısım</small></div><button class="tg" data-sk="c" aria-label="Salise göster"><i></i></button></div><div class="pm-row"><div><b>Saat basamağı</b><small>Bir saati geçmeden de 00 olarak göster</small></div><button class="tg" data-sk="h" aria-label="Saat basamağı"><i></i></button></div><div class="pm-row"><button class="kbo" id="bgo"><div><b>Arka planlar</b><small>Süre sayfasında yavaşça akan, sakin arka planlar</small></div><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button><button class="tg" data-bg="tg" aria-label="Hareketli arka plan"><i></i></button></div></div><div class="row"><button class="btn" id="sdf">Varsayılan</button><button class="btn pr" id="sdn">Bitti</button></div></div></div>
+  <div class="mod" id="sset"><div class="mc card" id="smc" tabindex="-1" role="dialog" aria-modal="true" aria-label="Kronometre ayarları"><h2>Kronometre ayarları</h2><p>Kronometrenin nasıl görüneceğini seç.</p><div class="pm-l"><div class="pm-row"><div><b>Salise göster</b><small>Saniyenin yanında yüzde birlik kısım</small></div><button class="tg" data-sk="c" aria-label="Salise göster"><i></i></button></div><div class="pm-row"><div><b>Saat basamağı</b><small>Bir saati geçmeden de 00 olarak göster</small></div><button class="tg" data-sk="h" aria-label="Saat basamağı"><i></i></button></div></div><div class="row"><button class="btn" id="sdf">Varsayılan</button><button class="btn pr" id="sdn">Bitti</button></div></div></div>
   <div class="sheet" id="stsheet"><div class="fl-r"><button class="fl fk" id="stx">Kapat</button></div><div class="shw"><div class="sh-h"><div><h1>İstatistikler</h1><p>Kronometre, geri sayım ve Pomodoro odak turlarında geçen süre günlük olarak burada toplanır.</p></div></div><div id="stbody"></div></div></div>
   <div class="mod" id="pset"><div class="mc card" id="pmc" tabindex="-1" role="dialog" aria-modal="true" aria-label="Pomodoro ayarları"><h2>Pomodoro ayarları</h2><p>Odak süreni, molalarını ve periyodunu ayarla.</p><div class="pm-l" id="pml"></div><p class="pm-n">Tur süresi değişirse o an süren tur sıfırlanır.</p><div class="row"><button class="btn" id="pdf">Varsayılan</button><button class="btn" id="pcn">Vazgeç</button><button class="btn pr" id="psv">Kaydet</button></div></div></div>
   <div class="dp" id="dp" aria-hidden="true">
@@ -727,7 +744,7 @@ $("#bsheet").addEventListener("click",function(e){
 });
 document.addEventListener("click",function(e){if(e.target.closest("[data-bg=tg]")){BG.on=BG.on?0:1;bgSave();bgApply();bgTg()}});
 document.addEventListener("keydown",function(e){if(e.key==="Escape"&&$("#bsheet").classList.contains("on")){e.preventDefault();closeBg()}});
-bgApply();bgRender();$("#bgo").onclick=openBg;
+bgApply();bgRender();$("#mbg").onclick=openBg;
 /* Tam sayfa panelleri (İstatistikler, Arka planlar) açılırken kendi solma geçişleri arkadaki renkli arka planı şeffaf göstermesin: panel açıkken arka plan anında gizlenir, kapanırken yavaşça geri gelir */
 (function(){function f(){ABI.classList.toggle("hold",$("#stsheet").classList.contains("on")||$("#bsheet").classList.contains("on")||$("#ssheet").classList.contains("on"))}
 ["#stsheet","#bsheet","#ssheet"].forEach(function(q){new MutationObserver(f).observe($(q),{attributes:true,attributeFilter:["class"]})})})();
@@ -1030,7 +1047,13 @@ function snR(){
   $$("[data-sn=tg]").forEach(function(b){b.classList.toggle("on",!!SND.on)});$("#snl").style.opacity=SND.on?1:.5;$("#snv").value=SND.v;
 }
 function snOpen(){snR();$("#ssheet").scrollTop=0;$("#sfr").classList.remove("on");$("#ssheet").classList.add("on")}
-function snClose(){$("#ssheet").classList.remove("on");$("#snb").focus()}
+function snClose(){$("#ssheet").classList.remove("on");$("#mnb").focus()}
+/* Araçlar menüsü */
+function mnSet(o){var m=$("#mn");if(m.classList.contains("on")===o)return;m.classList.toggle("on",o);$("#mnb").setAttribute("aria-expanded",o?"true":"false")}
+$("#mnb").onclick=function(e){e.stopPropagation();mnSet(!$("#mn").classList.contains("on"))};
+$("#mnl").addEventListener("click",function(e){if(e.target.closest(".mni"))mnSet(false)});
+document.addEventListener("click",function(e){if(!e.target.closest("#mn"))mnSet(false)});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&$("#mn").classList.contains("on")){e.preventDefault();mnSet(false);$("#mnb").focus()}});
 $("#snb").onclick=snOpen;$("#snx").onclick=$("#snx2").onclick=snClose;
 $("#ssheet").addEventListener("scroll",function(){$("#sfr").classList.toggle("on",this.scrollTop>90)},{passive:true});
 $("#ssheet").addEventListener("click",function(e){
@@ -1161,7 +1184,7 @@ function pStep(b){
 }
 function pStop(){clearTimeout(PH1);clearInterval(PH2)}
 function pOpen(){PX=pcl(PS);pRender();$("#pset").classList.add("on");setTimeout(function(){$("#pmc").focus()},60)}
-function pClose(){pStop();$("#pset").classList.remove("on");if($("#pgb").classList.contains("on"))$("#pgb").focus()}
+function pClose(){pStop();$("#pset").classList.remove("on");$("#mnb").focus()}
 function pSave(){
   var p=ST.pm,old=PD[p.ph];
   PS=pcl(PX);PD=pdur();
@@ -1171,7 +1194,7 @@ function pSave(){
 }
 function sRender(){$$("#sset [data-sk]").forEach(function(b){b.classList.toggle("on",!!SS[b.dataset.sk])})}
 function sOpen(){sRender();$("#sset").classList.add("on");setTimeout(function(){$("#smc").focus()},60)}
-function sClose(){$("#sset").classList.remove("on");if($("#pgb").classList.contains("on"))$("#pgb").focus()}
+function sClose(){$("#sset").classList.remove("on");$("#mnb").focus()}
 function sApply(){sRender();savT();paint()}
 $("#sset").addEventListener("click",function(e){
   if(e.target===this){sClose();return}
@@ -1388,7 +1411,7 @@ $("#fsb").onclick=function(){
   }
   root.SwipeTabs = SwipeTabs;
 })(window);
-TB=new SwipeTabs($("#tswt"),{index:MS.indexOf(MODE),onProgress:function(p){PBG.style.opacity=Math.max(0,Math.min(1,1-Math.abs(p-2))).toFixed(3);LP=p;abgOp()},onTarget:function(i){var g=$("#tgo");g.classList.add("nt");MODE=MS[i];T=ST[MODE];sync();paint();void g.offsetWidth;g.classList.remove("nt");$(".tctl").classList.toggle("pmx",MS[i]==="pm");$("#pgb").classList.toggle("on",MS[i]==="pm"&&!$(".app").classList.contains("fs"))},canSwipe:function(){return!$(".app").classList.contains("fs")},haptic:function(){try{navigator.vibrate&&navigator.vibrate(4)}catch(e){}},onChange:function(i){MODE=MS[i];T=ST[MODE];savT();sync();paint();ctlPoke()}});
+TB=new SwipeTabs($("#tswt"),{index:MS.indexOf(MODE),onProgress:function(p){PBG.style.opacity=Math.max(0,Math.min(1,1-Math.abs(p-2))).toFixed(3);LP=p;abgOp()},onTarget:function(i){mnSet(false);var g=$("#tgo");g.classList.add("nt");MODE=MS[i];T=ST[MODE];sync();paint();void g.offsetWidth;g.classList.remove("nt");$(".tctl").classList.toggle("pmx",MS[i]==="pm");$("#pgb").classList.toggle("on",MS[i]==="pm"&&!$(".app").classList.contains("fs"))},canSwipe:function(){return!$(".app").classList.contains("fs")},haptic:function(){try{navigator.vibrate&&navigator.vibrate(4)}catch(e){}},onChange:function(i){MODE=MS[i];T=ST[MODE];savT();sync();paint();ctlPoke()}});
 if(window.ResizeObserver)new ResizeObserver(function(){TB.refresh()}).observe($("#tswt"));
 if(ST.cd.run&&el(ST.cd)>=ST.cd.cd)finish(ST.cd,true);
 if(ST.pm.run&&el(ST.pm)>=ST.pm.cd)pfin(ST.pm,true);
