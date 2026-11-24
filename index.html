@@ -487,6 +487,9 @@ button.wn:active{transform:scale(.9)}button.wn:hover{background:var(--surf);colo
 .pc2{display:flex;gap:8px;padding:6px 6px 6px 16px;border-radius:999px;background:var(--bg);align-items:center}.pc2 input{flex:1;min-width:0;border:0;outline:0;background:none;font:600 15px Inter,system-ui,sans-serif;color:var(--fg);-webkit-user-select:text;user-select:text}
 .pc2 button{flex:none;width:38px;height:38px;border-radius:50%;background:var(--fg);color:var(--bg);font-size:22px;line-height:1;transition:transform .5s var(--sp)}.pc2 button:active{transform:scale(.88)}
 @media (max-aspect-ratio:1/1){.kz.km{flex-direction:column;gap:16px}.dpn{width:auto;max-height:42%;flex-direction:column}.pt b{font-size:56px}}
+.app.calfs .dock{transform:translate(-50%,160%);opacity:0;pointer-events:none}
+.app.calfs .cal{padding:calc(26px + env(safe-area-inset-top,0px)) 36px calc(26px + env(safe-area-inset-bottom,0px))}
+.kc .fl.kx{box-shadow:0 1px 0 rgba(17,17,17,.04),0 8px 22px -10px rgba(17,17,17,.25)}
 </style>
 </head>
 <body>
@@ -1118,7 +1121,7 @@ function paintK(q){
   iFlush();IDY=null;ICX={};
   var l=cv.l,t=l==="year"?'<span>'+cv.y+'</span>':l==="month"?'<button data-a="y">'+cv.y+'</button><span>'+MN[cv.m]+'</span>':l==="week"?'<button data-a="y">'+cv.y+'</button><button data-a="mo">'+MN[cv.m]+'</button><span>'+isoW(new Date(cv.y,cv.m,cv.d))+'. hafta<em>'+wkRange(cv.y,cv.m,cv.d)+'</em></span>':'<button data-a="y">'+cv.y+'</button><button data-a="mo">'+MN[cv.m]+'</button><span>'+cv.d+'</span>',
   fs=$(".app").classList.contains("fs");
-  $("#cal").innerHTML='<div class="kh"><div class="kt">'+t+'</div>'+(l==="day"&&CS.set.dm?iTools():"")+'<div class="kc">'+ib("pv","p")+(l==="month"||l==="week"?'<button class="kb w'+(l==="week"&&isCurWk(cv.y,cv.m,cv.d)?" on":"")+'" data-a="tw">Bu hafta</button>':'')+'<button class="kb w" data-a="td">Bugün</button>'+ib("nx","n")+'<button class="kb fsx'+(fs?" on":"")+'" data-a="fs" aria-label="Tam ekran"><svg class="i-e" viewBox="0 0 24 24">'+IC.fs+'</svg><svg class="i-c" viewBox="0 0 24 24">'+IC.fx+'</svg></button>'+ib("st","st")+'</div></div><div class="kbody"><div class="kz '+(q?"no":cv.dir)+(l==="month"?" km":l==="week"?" kw":"")+'">'+(l==="year"?rY():l==="month"?rM():l==="week"?rW():rD())+'</div></div>';
+  $("#cal").innerHTML='<div class="kh"><div class="kt">'+t+'</div>'+(l==="day"&&CS.set.dm?iTools():"")+'<div class="kc"><button class="fl kx" data-a="cx">Kapat</button></div></div><div class="kbody"><div class="kz '+(q?"no":cv.dir)+(l==="month"?" km":l==="week"?" kw":"")+'">'+(l==="year"?rY():l==="month"?rM():l==="week"?rW():rD())+'</div></div>';
   if(l==="day"&&CS.set.dm)iInit();
 }
 /* Gün sayfası: kalemle yazı, dokunarak işaret */
@@ -1757,6 +1760,7 @@ function step(n){
   cv.dir=n>0?"nx":"pv";cv.ed=0;cv.sel=0;paintK();
 }
 function lvl(l,dir){cv.sel=l==="month"&&cv.l==="day"?cv.d:0;cv.l=l;cv.dir=dir;cv.ed=0;paintK()}
+var PV="topics";function calClose(){var b=[].filter.call($$(".db"),function(x){return x.dataset.v===PV})[0]||$$(".db")[0];b.click()}
 var dt;
 $("#cal").addEventListener("click",function(e){
   var b=e.target.closest("[data-a]");if(!b)return;var a=b.dataset.a;
@@ -1766,7 +1770,7 @@ $("#cal").addEventListener("click",function(e){
   else if(a==="tw"){var same=cv.l==="week"&&isCurWk(cv.y,cv.m,cv.d);cv.y=TD.getFullYear();cv.m=TD.getMonth();cv.d=TD.getDate();if(same){cv.sel=0;paintK(true)}else lvl("week","in")}
   else if(a==="wd"){cv.y=+b.dataset.y;cv.m=+b.dataset.m;cv.d=+b.dataset.d;lvl("day","in")}
   else if(a==="y")lvl("year","out");else if(a==="mo")lvl("month","out");
-  else if(a==="pv")step(-1);else if(a==="nx")step(1);
+  else if(a==="cx")calClose();else if(a==="pv")step(-1);else if(a==="nx")step(1);
   else if(a==="td"){var sm=cv.y===TD.getFullYear()&&cv.m===TD.getMonth()&&(cv.l!=="day"||cv.d===TD.getDate());cv.y=TD.getFullYear();cv.m=TD.getMonth();cv.d=TD.getDate();cv.dir="in";cv.sel=0;paintK(sm)}
   else if(a==="fs"){$("#fsb").click();b.classList.toggle("on",$(".app").classList.contains("fs"))}
   else if(a==="st"){paintS();$("#cset").classList.add("on")}
@@ -1952,7 +1956,7 @@ $$(".db").forEach(function(b,n){b.onclick=function(){
     lvl("month","out");
     return;
   }
-  if(b.dataset.v==="timer")ctlPoke();
+  if(b.dataset.v==="timer")ctlPoke();var cu=$(".view.on");if(b.dataset.v==="cal"&&cu&&cu.id!=="v-cal")PV=cu.id.slice(2);$(".app").classList.toggle("calfs",b.dataset.v==="cal");
   $("#dock").style.setProperty("--i",n);
   $$(".db").forEach(function(x){x.classList.toggle("on",x===b)});
   $$(".view").forEach(function(e){e.classList.toggle("on",e.id==="v-"+b.dataset.v)});
@@ -2008,7 +2012,7 @@ document.addEventListener("keydown",function(e){
       e.preventDefault();
       if(cs){$("#cset").classList.remove("on");paintK(true)}
       else if(cv.l==="day"||cv.l==="week")lvl("month","out");
-      else if(cv.l==="month")lvl("year","out");
+      else if(cv.l==="month")lvl("year","out");else calClose();
     }
     return;
   }
