@@ -2503,7 +2503,8 @@ wst.addEventListener("click",function(e){var b=e.target.closest(".wd");if(!b)ret
 swipe(rul,function(w){var i=selI(),k=tk(rdate(i)),id=+w.dataset.id,a=X.rd[k]||(X.rd[k]=[]),j=a.indexOf(id);if(j>-1)a.splice(j,1);else a.push(id);if(!a.length)delete X.rd[k];sv();pop(w,j<0);wkU()},
   function(w){rm(w,X.ru,"Rutin silindi",wkU,function(){ruR()})});
 /* Yerlesim: L/R = buyuk panel solda/sagda, T/B = ustte/altta. Y.o[0] buyuk panel, digerleri sirayla kucuk. */
-function rects(){var W=ws.clientWidth-2*G,H=ws.clientHeight-2*G,hw=(W-G)/2,hh=(H-G)/2,o=Y.o,r={},t=Y.t;
+function eW(){return tde.classList.contains("on")?Math.min(400,Math.round(ws.clientWidth*.38)):0}
+function rects(){var E=eW(),W=ws.clientWidth-2*G-(E?E+G:0),H=ws.clientHeight-2*G,hw=(W-G)/2,hh=(H-G)/2,o=Y.o,r={},t=Y.t;
   if(t==="L"||t==="R"){var bx=t==="L"?0:hw+G,sx=t==="L"?hw+G:0;r[o[0]]=[bx,0,hw,H];r[o[1]]=[sx,0,hw,hh];r[o[2]]=[sx,hh+G,hw,hh]}
   else{var by=t==="T"?0:hh+G,sy=t==="T"?hh+G:0;r[o[0]]=[0,by,W,hh];r[o[1]]=[0,sy,hw,hh];r[o[2]]=[hw+G,sy,hw,hh]}
   return{r:r,W:W,H:H,hw:hw,hh:hh}}
@@ -2514,8 +2515,8 @@ function apply(nt){var m=rects();if(m.W<50)return;
     el.style.left=x+G+"px";el.style.top=y+G+"px";el.style.width=w+"px";el.style.height=h+"px";
     el.classList.toggle("hd",!!Y.fs&&!f);el.classList.toggle("fz",f);el.classList.toggle("bt",y+h>=m.H-1);el.classList.toggle("cmp",w<560||h<460);
     el.querySelector(".pfb").classList.toggle("on",f)});
-  var p=m.r.plan;tde.classList.toggle("lf",p[0]+p[2]/2>m.W/2+1);sync()}
-function zone(px,py,id){var w=ws.clientWidth,h=ws.clientHeight,fx=px/w,fy=py/h,t=fx<.2?"L":fx>.8?"R":fy<.16?"T":fy>.84?"B":null;if(t)return{t:t};
+  var E=eW();if(E)tde.style.width=E+"px";sync()}
+function zone(px,py,id){var w=ws.clientWidth-(eW()?eW()+G:0),h=ws.clientHeight,fx=px/w,fy=py/h,t=fx<.2?"L":fx>.8?"R":fy<.16?"T":fy>.84?"B":null;if(t)return{t:t};
   var m=rects(),f=null;ids.forEach(function(i){if(i===id)return;var q=m.r[i];if(px>=q[0]+G&&px<=q[0]+G+q[2]&&py>=q[1]+G&&py<=q[1]+G+q[3])f=i});return f?{s:f}:null}
 function showZ(z){var m=rects(),r=null,l="";
   if(z&&z.t){l="Büyük panel olsun";r=z.t==="L"?[0,0,m.hw,m.H]:z.t==="R"?[m.hw+G,0,m.hw,m.H]:z.t==="T"?[0,0,m.W,m.hh]:[0,m.hh+G,m.W,m.hh]}
@@ -2553,6 +2554,7 @@ function all(){clean();dgR();ruR()}
 document.addEventListener("visibilitychange",function(){if(!document.hidden)all()});
 chips();dgR();ruR();
 if(window.ResizeObserver)new ResizeObserver(function(){apply(true)}).observe(ws);
+new MutationObserver(function(){apply()}).observe(tde,{attributes:true,attributeFilter:["class"]});
 apply(true);
 })();
 
