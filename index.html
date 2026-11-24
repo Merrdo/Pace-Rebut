@@ -354,10 +354,9 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 #stbody .mdy:disabled{opacity:.4}
 #stbody .mdy.g{background:color-mix(in srgb,var(--g) 15%,var(--surf))}
 #stbody .mdy.g .n,#stbody .mdy.g b{color:#1f6b45}
-#stbody .mdy.td{box-shadow:inset 0 0 0 2.5px var(--fg)}
-#stbody .mdy.td .n{color:var(--fg)}
-#stbody .mdy.on{background:var(--fg);box-shadow:none}
-#stbody .mdy.on .n,#stbody .mdy.on b{color:var(--bg)}#stbody .mdy.on .n{opacity:.7}
+#stbody .mdy.td .n{display:grid;place-items:center;min-width:26px;height:26px;margin:-5px 0 0 -4px;padding:0 3px;border-radius:13px;background:var(--fg);color:var(--bg)}
+#stbody .mdy.on{box-shadow:inset 0 0 0 2.5px var(--fg)}
+#stbody .mhint{margin-top:12px;font-size:13px}
 #stbody .mft{display:flex;align-items:flex-end;justify-content:space-between;gap:16px 24px;flex-wrap:wrap;margin-top:18px;padding-top:16px;border-top:1.5px solid var(--surf2)}
 #stbody .mfl{display:flex;flex-wrap:wrap;gap:10px 22px}
 #stbody .mfl div,#stbody .mfr{display:flex;flex-direction:column;gap:3px;font-size:12px;font-weight:700;color:var(--dim)}
@@ -642,6 +641,10 @@ button.wn:active{transform:scale(.9)}button.wn:hover{background:var(--surf);colo
    ============================================================ */
 .sheet:not(#sheet) .shw{transform:none!important;transition:none!important}
 .sheet:not(#sheet) .card,.sheet:not(#sheet) .sh-h{animation:none!important}
+/* Süre ekle paneli */
+#sap .chip{min-width:74px;padding:10px 12px}
+#saz{display:none}#saz.on{display:inline-flex}
+#sak:disabled{opacity:.4;pointer-events:none}
 </style>
 </head>
 <body>
@@ -685,7 +688,7 @@ button.wn:active{transform:scale(.9)}button.wn:hover{background:var(--surf);colo
   <div class="sheet" id="ksheet"><div class="fl-r kfr" id="kfr"><button class="fl fk" id="kbx2">Bitti</button></div><div class="shw"><div class="sh-h"><div><h1>Klavye kısa yolları</h1><p>Bir kısa yola dokun, ardından yeni tuşa bas. Backspace atamayı kaldırır, Esc vazgeçer.</p></div><button class="btn pr" id="kbx">Bitti</button></div><div class="card lc"><div><h2>Kısa yolları kullan</h2><p>Kapalıyken klavye uygulamada hiçbir şey yapmaz.</p></div><button class="tg on" data-kb="tg" aria-label="Klavye kısa yolları"><i></i></button></div><div id="kbl"></div><div class="card"><h2>Varsayılana dön</h2><p>Tüm kısa yollar ilk hâline döner.</p><div class="row"><button class="btn dg" id="kbr">Hepsini sıfırla</button></div></div></div><div class="kbt" id="kbt" role="status"></div></div>
   <div class="mod" id="ssheet"><div class="mc card pn" id="snmc" tabindex="-1" role="dialog" aria-modal="true" aria-label="Sesler"><div class="pn-h"><h2>Sesler</h2><p>Süre bitince hangi sayaçların ses çalacağını seç. Oynat düğmesiyle sesi dinleyebilirsin.</p></div><div class="pn-b"><div class="pm-row"><div><b>Sesleri kullan</b><small>Kapalıyken süre bitince yalnızca titreşim olur.</small></div><button class="tg on" data-sn="tg" role="switch" aria-label="Sesleri kullan"><i></i></button></div><div class="pm-row sn-vr" id="snvr"><div class="sn-v"><svg viewBox="0 0 24 24"><path d="M4 9.5v5h3.5l4.5 4v-13l-4.5 4z"/></svg><input type="range" id="snv" min="0" max="100" step="1" aria-label="Ses seviyesi"><svg viewBox="0 0 24 24"><path d="M4 9.5v5h3.5l4.5 4v-13l-4.5 4zM15.5 9a4 4 0 010 6M18.2 6.5a8 8 0 010 11"/></svg><output id="snvo"></output></div></div><div id="snl"></div></div><div class="pn-f"><button class="btn pr" id="snx">Bitti</button></div></div></div>
   <div class="mod" id="sset"><div class="mc card" id="smc" tabindex="-1" role="dialog" aria-modal="true" aria-label="Kronometre ayarları"><h2>Kronometre ayarları</h2><p>Kronometrenin nasıl görüneceğini seç.</p><div class="pm-l"><div class="pm-row"><div><b>Salise göster</b><small>Saniyenin yanında yüzde birlik kısım</small></div><button class="tg" data-sk="c" aria-label="Salise göster"><i></i></button></div><div class="pm-row"><div><b>Saat basamağı</b><small>Bir saati geçmeden de 00 olarak göster</small></div><button class="tg" data-sk="h" aria-label="Saat basamağı"><i></i></button></div></div><div class="row"><button class="btn" id="sdf">Varsayılan</button><button class="btn pr" id="sdn">Bitti</button></div></div></div>
-  <div class="sheet" id="stsheet"><div class="fl-r"><button class="fl fk" id="stx">Kapat</button></div><div class="shw"><div class="sh-h"><div><h1>İstatistikler</h1><p>Kronometre, geri sayım ve Pomodoro odak turlarında geçen süre günlük olarak burada toplanır.</p></div></div><div id="stbody"></div></div></div>
+  <div class="sheet" id="stsheet"><div class="fl-r"><button class="fl fk" id="stx">Kapat</button></div><div class="shw"><div class="sh-h"><div><h1>İstatistikler</h1><p>Kronometre, geri sayım ve Pomodoro odak turlarında geçen süre günlük olarak burada toplanır.</p></div></div><div id="stbody"></div></div><div class="mod" id="stadd"><div class="mc card" id="stamc" tabindex="-1" role="dialog" aria-modal="true" aria-label="Süre ekle"><h2 id="sah"></h2><p id="sas"></p><div class="pm-l"><div class="pm-row"><div><b>Eklenecek süre</b><small>5 dakikalık adımlarla</small></div><div class="pm-stp"><button data-sa="-1" aria-label="Süreyi azalt">−</button><output id="sao"></output><button data-sa="1" aria-label="Süreyi artır">+</button></div></div><div class="pm-row pm-cr"><div class="pm-pick" id="sap"></div></div></div><div class="row"><button class="btn dg" id="saz">Günü sıfırla</button><button class="btn" id="sax">Vazgeç</button><button class="btn pr" id="sak">Ekle</button></div></div></div></div>
   <div class="mod" id="pset"><div class="mc card" id="pmc" tabindex="-1" role="dialog" aria-modal="true" aria-label="Pomodoro ayarları"><h2>Pomodoro ayarları</h2><p>Odak süreni, molalarını ve periyodunu ayarla.</p><div class="pm-l" id="pml"></div><p class="pm-n">Tur süresi değişirse o an süren tur sıfırlanır.</p><div class="row"><button class="btn" id="pdf">Varsayılan</button><button class="btn" id="pcn">Vazgeç</button><button class="btn pr" id="psv">Kaydet</button></div></div></div>
   <div class="dp" id="dp" aria-hidden="true">
     <div class="dp-bd" id="dpbd"></div>
@@ -1244,7 +1247,7 @@ function stRender(first){
   for(i=1;i<=dim;i++){k=ds(my.getFullYear(),my.getMonth(),i);v=sg(k);mt+=v;if(k<=tk)el++;if(v)wd++;if(v>=G)gd++;if(v>lg){lg=v;lgd=i}
     cl+='<button class="mdy'+((off+i-1)%7>4?" wk":"")+(v>=G?" g":"")+(k===tk?" td":"")+(k===sel?" on":"")+'" data-a="d" data-k="'+k+'"'+(k>tk?" disabled":"")+' aria-label="'+i+' '+MN[my.getMonth()]+', '+(v?ft(v):"çalışma yok")+'"><span class="n">'+i+'</span>'+(v?'<b>'+fc(v)+'</b>':'')+'</button>'}
   h+='<div class="card mcal"><div class="hd mh"><button data-a="mp" aria-label="Önceki ay">'+CHV+'</button><h2>'+MN[my.getMonth()]+' '+my.getFullYear()+'</h2><button data-a="mn" aria-label="Sonraki ay"'+(STS.mo>=0?" disabled":"")+'>'+CHN+'</button><button class="msh" data-share aria-label="Paylaş">'+SHI+'</button></div>'+
-   '<div class="mgrid">'+SDAY.map(function(n){return'<b>'+n+'</b>'}).join("")+cl+'</div>'+
+   '<div class="mgrid">'+SDAY.map(function(n){return'<b>'+n+'</b>'}).join("")+cl+'</div>'+'<p class="mhint">Süre eklemek için bir güne dokun.</p>'+
    '<div class="mft"><div class="mfl"><div>Çalışılan gün<b>'+wd+'</b></div><div>Hedefi tutan gün<b>'+gd+'</b></div><div>Günlük ortalama<b>'+(el?fc(Math.round(mt/el)):"—")+'</b></div><div>En uzun gün<b>'+(lg?fc(lg):"—")+'</b>'+(lg?'<small>'+lgd+' '+MN[my.getMonth()]+'</small>':'')+'</div></div>'+
    '<div class="mfr">Ay toplamı<b>'+fc(mt)+'</b></div></div></div>';
   $("#stbody").innerHTML=h;STK=Math.floor(sg(tk)/60);shPrep();
@@ -1256,7 +1259,7 @@ $("#stbody").addEventListener("click",function(e){
   if(a==="d"){STS.sel=b.dataset.k;t=wkS(new Date());w=wkS(new Date(b.dataset.k+"T12:00:00"));STS.wo=Math.round((w-t)/6048e5)}
   else if(a==="wp")STS.wo--;else if(a==="wn")STS.wo++;else if(a==="mp"){STS.mo--;STS.dir=-1}else if(a==="mn"){STS.mo++;STS.dir=1}
   else{g=gsec()/60+(a==="g+"?30:-30);S.goal=Math.max(30,Math.min(960,g));save()}
-  stRender();try{navigator.vibrate&&navigator.vibrate(3)}catch(x){}
+  stRender();if(a==="d"&&b.classList.contains("mdy"))saOpen(STS.sel);try{navigator.vibrate&&navigator.vibrate(3)}catch(x){}
 });
 (function(){
   var b=$("#stbody"),sx=0,sy=0,on=false;
@@ -1313,16 +1316,15 @@ async function shRender(){
   /* kartın kendisi: arkasında başka bir alan yok */
   c.fillStyle=shS(T.surf);c.fillRect(0,0,W,H);
   /* bugünün tarihi: sağ üst */
-  var dt=D.now.getDate()+" "+MN[D.now.getMonth()]+" "+D.now.getFullYear(),dw,pw,pH=58,pX,pY=P+10;
-  c.font=shFont(700,26,1);shLS(c,.4);dw=c.measureText(dt).width;shLS(c,0);
-  pw=dw+56;pX=W-P-pw;
-  shRR(c,pX,pY,pw,pH,pH/2);c.fillStyle=shS(T.cell);c.fill();
-  c.textAlign="center";c.fillStyle=shS(shM(T.fg,T.dim,.3));c.font=shFont(700,26,1);shLS(c,.4);
-  c.fillText(dt,pX+pw/2+.2,pY+pH/2+9);shLS(c,0);dw=pw;
+  var wdn=WD[(D.now.getDay()+6)%7].toLocaleUpperCase("tr"),dn=D.now.getDate()+" "+MN[D.now.getMonth()],dw,w1,w2;
+  c.textAlign="right";
+  c.font=shFont(800,21,1);shLS(c,3.5);w1=c.measureText(wdn).width;c.fillStyle=shS(T.dim);c.fillText(wdn,W-P+3.5,P+68);shLS(c,0);
+  c.font=shFont(800,38,1);shLS(c,-.4);w2=c.measureText(dn).width;c.fillStyle=shS(T.fg);c.fillText(dn,W-P,P+110);shLS(c,0);
+  dw=Math.max(w1,w2);
   /* başlık: ay + yıl (yıl soluk) */
   var mn=MN[D.M],ys=""+D.Y,fs=shFit(c,mn+" "+ys,800,104,1,W-2*P-dw-30),mw;
   shLS(c,-2);c.font=shFont(800,fs,1);c.textAlign="left";mw=c.measureText(mn+" ").width;
-  c.fillStyle=shS(T.fg);c.fillText(mn,P,P+110);c.fillStyle=shS(T.dim);c.fillText(ys,P+mw,P+110);shLS(c,0);
+  c.fillStyle=shS(T.fg);c.fillText(mn,P,P+110);c.fillStyle=shS(shM(T.g,[0,0,0],.18));c.fillText(ys,P+mw,P+110);shLS(c,0);
   /* özet (3 sütun, referans yerleşimi) */
   var avg=D.el?Math.round(D.mt/D.el):0,sy=P+190,colW=(W-2*P)/3,
   ST=[["Aylık toplam",shF(D.mt)],["Günlük ortalama",shF(avg)],["En uzun gün",shF(D.lg)]];
@@ -1430,6 +1432,54 @@ function stOpen(){
 }
 function stClose(){clearInterval(STI);$("#stsheet").classList.remove("on");$("#stb").focus()}
 $("#stb").onclick=stOpen;$("#stx").onclick=stClose;
+/* Gün için süre ekle paneli (İstatistikler > ay takvimi) */
+var SA={k:"",m:30,rt:0,h1:0,h2:0};
+function saL(m){var h=Math.floor(m/60),r=m%60;return h?h+" sa"+(r?" "+r+" dk":""):r+" dk"}
+function saMax(){return Math.max(5,Math.min(720,Math.floor((86400-sg(SA.k))/60)))}
+function saFull(){return 86400-sg(SA.k)<300}
+$("#sap").innerHTML=[15,30,45,60,120,180].map(function(n){return'<button class="chip" data-sc="'+n+'">'+saL(n)+'</button>'}).join("");
+function saR(){
+  var d=new Date(SA.k+"T12:00:00"),tot=sg(SA.k),mx=saMax(),full=saFull();
+  if(SA.m>mx)SA.m=mx;
+  $("#sah").textContent=d.getDate()+" "+MN[d.getMonth()]+" "+WD[(d.getDay()+6)%7];
+  $("#sas").textContent=tot?"Bu gün şu ana kadar "+ft(tot)+" çalışıldı.":"Bu gün için çalışma kaydı yok.";
+  $("#sao").textContent=saL(SA.m);
+  $$("#sap .chip").forEach(function(b){b.classList.toggle("on",+b.dataset.sc===SA.m)});
+  $$("#stadd [data-sa]").forEach(function(b){b.disabled=full||(+b.dataset.sa<0?SA.m<=5:SA.m>=mx)});
+  $("#sak").disabled=full;
+  $("#saz").classList.toggle("on",tot>0);
+}
+function saDis(){clearTimeout(SA.rt);var z=$("#saz");z.classList.remove("arm");z.textContent="Günü sıfırla"}
+function saStop(){clearTimeout(SA.h1);clearInterval(SA.h2)}
+function saStep(d){var v=Math.max(5,Math.min(saMax(),SA.m+d*5));if(v===SA.m)return false;SA.m=v;saR();try{navigator.vibrate&&navigator.vibrate(3)}catch(e){}return true}
+function saOpen(k){SA.k=k;SA.m=30;saDis();saR();$("#stadd").classList.add("on");setTimeout(function(){if($("#stadd").classList.contains("on"))$("#stamc").focus({preventScroll:true})},60)}
+function saClose(){saStop();saDis();$("#stadd").classList.remove("on")}
+function saAdd(){
+  if(saFull())return;
+  if(!S.study||typeof S.study!=="object")S.study={};
+  S.study[SA.k]=Math.min(86400,Math.round(sg(SA.k)+SA.m*60));save();saClose();stRender();
+}
+$("#stadd").addEventListener("click",function(e){
+  if(e.target===this){saClose();return}
+  var c=e.target.closest("[data-sc]"),b=e.target.closest("[data-sa]"),t=e.target.closest("button");
+  if(c){SA.m=Math.min(+c.dataset.sc,saMax());saR();try{navigator.vibrate&&navigator.vibrate(3)}catch(x){}return}
+  if(b){if(e.detail===0)saStep(+b.dataset.sa);return}
+  if(!t)return;
+  if(t.id==="sax")saClose();
+  else if(t.id==="sak")saAdd();
+  else if(t.id==="saz"){
+    if(!t.classList.contains("arm")){t.classList.add("arm");t.textContent="Emin misin? Tekrar dokun";clearTimeout(SA.rt);SA.rt=setTimeout(saDis,3000);return}
+    saDis();if(S.study)delete S.study[SA.k];save();saClose();stRender();
+  }
+});
+$("#stadd").addEventListener("pointerdown",function(e){
+  var b=e.target.closest("[data-sa]");if(!b||b.disabled)return;
+  e.preventDefault();saStop();
+  if(!saStep(+b.dataset.sa))return;
+  SA.h1=setTimeout(function(){SA.h2=setInterval(function(){if(!saStep(+b.dataset.sa))saStop()},90)},420);
+});
+window.addEventListener("pointerup",saStop);window.addEventListener("pointercancel",saStop);
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&$("#stadd").classList.contains("on")){e.preventDefault();e.stopImmediatePropagation();saClose()}},true);
 $("#psv").onclick=pSave;$("#pcn").onclick=pClose;
 $("#pdf").onclick=function(){PX=pcl(PDF);pRender()};
 $("#pset").addEventListener("click",function(e){
