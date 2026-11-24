@@ -106,7 +106,6 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .lc{display:flex;align-items:center;gap:16px}.lc>div:first-child{flex:1}
 .dots{display:flex;margin-top:14px;padding-left:4px}.dots i{width:20px;height:20px;border-radius:50%;background:var(--c);margin-left:-5px;border:2px solid var(--surf)}
 .sheet{position:fixed;inset:0;z-index:8;background:var(--bg);overflow:auto;padding:34px 24px 70px;overscroll-behavior:contain;opacity:0;visibility:hidden;transition:opacity .5s var(--ease),visibility 0s .5s}
-.sbg{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}.sbg .pbg{opacity:1}.sbg .bl{animation:none}
 .sheet.on{opacity:1;visibility:visible;transition-delay:0s}
 .shw{max-width:640px;margin:0 auto;transform:translateY(30px) scale(.985);transition:transform .75s var(--ease)}
 .sheet.on .shw{transform:none}
@@ -557,36 +556,61 @@ button.wn:active{transform:scale(.9)}button.wn:hover{background:var(--surf);colo
 .bgl .b2{left:16%;bottom:-60%;--bc:var(--c2);--dx:16%;--dy:-16%;--sc:1.1;animation-duration:57s;animation-delay:-30s}
 @keyframes bgd{from{transform:translate(0,0) scale(1)}to{transform:translate(var(--dx),var(--dy)) scale(var(--sc))}}
 #v-timer:not(.on) .bgl,#v-timer:not(.on) .bgl i,.abgi.off .bgl,.abgi.off .bgl i,#bsheet:not(.on) .bgl,#bsheet:not(.on) .bgl i{animation-play-state:paused}
-#bsheet .shw{max-width:980px}
-.bgg{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:6px;margin-top:6px;transition:opacity .4s var(--ease)}.bgg.off{opacity:.5}
+.bgg{display:grid;grid-template-columns:repeat(3,1fr);gap:20px 18px;padding:10px 8px 6px;margin-top:6px;transition:opacity .4s var(--ease)}.bgg.off{opacity:.5}
 .bgc{display:block;text-align:left;transition:transform .5s var(--sp)}.bgc:active{transform:scale(.97)}
-.bgc b{display:block;margin-top:12px;font-size:18px;font-weight:700}
-.bgp{position:relative;display:block;aspect-ratio:var(--sr,1.4);border-radius:22px;overflow:hidden;--bl:22px;transition:box-shadow .4s var(--ease)}
-.bgc.on .bgp{box-shadow:0 0 0 3px var(--bg),0 0 0 5.5px var(--fg)}
+.bgc b{display:block;margin-top:10px;font-size:17px;font-weight:700}
+.bgp{position:relative;display:block;aspect-ratio:var(--sr,1.7);border-radius:22px;overflow:hidden;--bl:22px;transition:box-shadow .4s var(--ease)}
+.bgc.on .bgp{box-shadow:0 0 0 3px var(--surf),0 0 0 5.5px var(--fg)}
 .bgc:not(.on) .bgp .bgl,.bgc:not(.on) .bgp .bgl i,.abgi.hold .bgl,.abgi.hold .bgl i{animation-play-state:paused}
-#bgm{transition:opacity .4s var(--ease)}#bgm.off{opacity:.5}#bgmp .chip{min-width:0;padding:10px 18px;font-size:16px}
+#bgm{transition:opacity .4s var(--ease)}#bgm.off{opacity:.45}#bgmp .chip{min-width:0;padding:9px 16px;font-size:15px}
 .bgp .bgl{transition:none}.bgp .bgl i{will-change:auto}.bgc:not(.on) .bgp .bgl i{animation:none}.bgc.on .bgp .bgl i{will-change:transform}
-#bfr .fl{-webkit-backdrop-filter:none;backdrop-filter:none}
-/* Arka planlar paneli: açılışta çizim yükü ve hareket olmasın */
-#bsheet .shw{transform:none;transition:none}
+/* Arka planlar paneli: önizlemeler hareketsiz, canlı arka plan panelin arkasında akar */
 .bgp{contain:paint;isolation:isolate}.bgp .bgl i{animation:none!important;will-change:auto!important}.bgp .bgl i.b1,.bgp .bgl i.b2{display:none}
-@media (max-width:760px){.bgg{grid-template-columns:1fr 1fr}}
+@media (max-width:900px){.bgg{grid-template-columns:1fr 1fr}}
 /* Sesler */
-.card #snv{padding:0;height:30px;background:none;accent-color:var(--fg);cursor:pointer}
-.sn-s{margin-top:20px}.sn-s b{display:block;font-size:18px;font-weight:700}.sn-s small{display:block;margin:2px 0 10px;font:600 13px Inter,system-ui,sans-serif;color:var(--dim)}.sn-s .pm-pick{margin-top:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px}.sn-s .pm-pick .chip{min-width:0;height:46px;padding:0 12px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600;line-height:1;white-space:nowrap}
+/* Paneller (Sesler, Arka planlar): ortak iskelet = başlık, kayan gövde, alt çubuk */
+.mc:focus{outline:none}
+.mc.pn{display:flex;flex-direction:column;padding:0;overflow:hidden}
+.pn-h{flex:none;padding:26px 28px 12px}
+.pn-h h2{font-size:28px;font-weight:800;letter-spacing:-.5px;line-height:1.05}
+.pn-h p{margin-top:6px;font-size:14px}
+.pn-b{flex:1;min-height:0;overflow:auto;padding:2px 28px 12px;overscroll-behavior:contain}
+.pn-f{flex:none;display:flex;justify-content:flex-end;gap:10px;padding:14px 28px 22px;border-top:1.5px solid var(--surf2)}
+.pn-f .btn{min-width:120px;height:48px;border-radius:16px;font-size:17px}
+#ssheet .mc{width:min(520px,100%)}
+#bsheet .mc{width:min(940px,100%)}
+#bsheet.mod{background:rgba(17,17,17,.12);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.pn-b .pm-row:first-child{padding-top:6px}
+.bg-m{flex-wrap:wrap}.bg-m .pm-pick{margin-top:0}
+/* Sesler paneli */
+.sn-vr{display:block}
+.sn-v{display:flex;align-items:center;gap:12px}
+.sn-v svg{flex:none;width:22px;height:22px;fill:none;stroke:var(--dim);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.sn-v output{flex:none;min-width:46px;text-align:right;font:600 16px Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums}
+.mc #snv{-webkit-appearance:none;appearance:none;display:block;flex:1;width:auto;max-width:none;height:32px;margin:0;padding:0;border-radius:0;background:transparent;cursor:pointer;--p:70%}
+#snv::-webkit-slider-runnable-track{height:8px;border-radius:8px;background:linear-gradient(90deg,var(--fg) var(--p),var(--surf2) var(--p))}
+#snv::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;margin-top:-10px;border-radius:50%;background:#fff;border:0;box-shadow:0 2px 8px rgba(0,0,0,.28),0 0 0 1px rgba(0,0,0,.06)}
+#snv::-moz-range-track{height:8px;border-radius:8px;background:var(--surf2)}
+#snv::-moz-range-progress{height:8px;border-radius:8px;background:var(--fg)}
+#snv::-moz-range-thumb{width:28px;height:28px;border:0;border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.28)}
+#snl{transition:opacity .35s var(--ease)}#snl.off,.sn-vr.off{opacity:.45}.sn-vr{transition:opacity .35s var(--ease)}
+.sn-g{margin:18px 0 2px;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.sn-r{display:flex;align-items:center;gap:14px;padding:11px 0}
+.sn-r+.sn-r{border-top:1.5px solid var(--surf2)}
+.sn-p{flex:none;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--surf2);transition:transform .5s var(--sp),background .3s,color .3s}
+.sn-p:active{transform:scale(.9)}.sn-p.ing{background:var(--fg);color:var(--bg)}
+.sn-p svg{width:18px;height:18px;margin-left:2px;fill:currentColor;stroke:currentColor;stroke-width:2;stroke-linejoin:round}
+.sn-t{flex:1;min-width:0}.sn-t b{display:block;font-size:17px;font-weight:700;line-height:1.15}.sn-t small{display:block;margin-top:2px;font-size:13px;font-weight:500;color:var(--dim)}
 /* ============================================================
    KORUMA: SHEET AÇILIŞINDA "YENİLENME / FLAŞ" EFEKTİ OLMAYACAK
    Kök neden: "açılışta hareket olmasın" düzeltmesi daha önce sadece #bsheet'e
-   yazılmıştı (kimliğe özel). Sesler/İstatistikler/Klavye sayfaları genel .sheet
+   yazılmıştı (kimliğe özel). İstatistikler/Klavye sayfaları genel .sheet
    kuralını kullandığı için içerik 30px kayarak + ölçeklenerek geliyordu.
    KURAL: Dersler (#sheet) dışındaki HER sheet (şimdiki ve ileride eklenecek)
    bu bloğa otomatik girer. Sheet'e özel düzeltme yazma, buraya ekle.
    ============================================================ */
 .sheet:not(#sheet) .shw{transform:none!important;transition:none!important}
-.sheet:not(#sheet) .card,.sheet:not(#sheet) .sn-s,.sheet:not(#sheet) .sh-h{animation:none!important}
-.sheet:not(#sheet) .sbg{contain:paint;isolation:isolate;transition:none!important}
-.sheet:not(#sheet) .sbg .bgl,.sheet:not(#sheet) .sbg .pbg{transition:none!important}
-.sheet:not(#sheet) .sbg .bgl i{will-change:auto!important}
+.sheet:not(#sheet) .card,.sheet:not(#sheet) .sh-h{animation:none!important}
 </style>
 </head>
 <body>
@@ -630,8 +654,8 @@ button.wn:active{transform:scale(.9)}button.wn:hover{background:var(--surf);colo
   </main>
   <div class="sheet" id="sheet"><button class="fl fl-l" id="fl">Dersler</button><div class="fl-r"><button class="fl fp" id="fp" aria-label="Yeni ders">+</button><button class="fl fk" id="sx">Kapat</button></div><div class="shw" id="shw"></div><div class="mod" id="mod"><div class="mc card" id="mc"></div></div></div>
   <div class="sheet" id="ksheet"><div class="fl-r kfr" id="kfr"><button class="fl fk" id="kbx2">Bitti</button></div><div class="shw"><div class="sh-h"><div><h1>Klavye kısa yolları</h1><p>Bir kısa yola dokun, ardından yeni tuşa bas. Backspace atamayı kaldırır, Esc vazgeçer.</p></div><button class="btn pr" id="kbx">Bitti</button></div><div class="card lc"><div><h2>Kısa yolları kullan</h2><p>Kapalıyken klavye uygulamada hiçbir şey yapmaz.</p></div><button class="tg on" data-kb="tg" aria-label="Klavye kısa yolları"><i></i></button></div><div id="kbl"></div><div class="card"><h2>Varsayılana dön</h2><p>Tüm kısa yollar ilk hâline döner.</p><div class="row"><button class="btn dg" id="kbr">Hepsini sıfırla</button></div></div></div><div class="kbt" id="kbt" role="status"></div></div>
-  <div class="sheet" id="bsheet"><div class="fl-r kfr" id="bfr"><button class="fl fk" id="bx2">Bitti</button></div><div class="shw"><div class="sh-h"><div><h1>Arka planlar</h1><p>Bir arka plana dokun, Süre sayfasında hemen akmaya başlasın. Kronometre, geri sayım ve Pomodoro odak turunda görünür; Pomodoro molaları kendi sabit renklerini korur.</p></div><button class="btn pr" id="bx">Bitti</button></div><div class="card lc"><div><h2>Hareketli arka planı kullan</h2><p>Kapalıyken Süre sayfası sade kalır.</p></div><button class="tg on" data-bg="tg" aria-label="Hareketli arka plan"><i></i></button></div><div class="card" id="bgm"><h2>Değişim süresi</h2><p>"Hepsi sırayla" seçiliyken arka plan bu sürede bir sıradaki renge geçer.</p><div class="pm-pick" id="bgmp"></div></div><div class="bgg" id="bgg"></div></div></div>
-  <div class="sheet" id="ssheet"><div class="fl-r kfr" id="sfr"><button class="fl fk" id="snx2">Bitti</button></div><div class="shw"><div class="sh-h"><div><h1>Sesler</h1><p>Bir sese dokun; seçilir ve hemen çalar. Her ses uygulamanın içinde üretilir, dosya gerekmez.</p></div><button class="btn pr" id="snx">Bitti</button></div><div class="card lc"><div><h2>Sesleri kullan</h2><p>Kapalıyken süre bitince yalnızca titreşim olur.</p></div><button class="tg on" data-sn="tg" aria-label="Sesleri kullan"><i></i></button></div><div class="card"><h2>Ses seviyesi</h2><input type="range" id="snv" min="0" max="100" step="1" aria-label="Ses seviyesi"></div><div id="snl"></div></div></div>
+  <div class="mod" id="bsheet"><div class="mc card pn" id="bmc" tabindex="-1" role="dialog" aria-modal="true" aria-label="Arka planlar"><div class="pn-h"><h2>Arka planlar</h2><p>Bir arka plana dokun, Süre sayfasında hemen akmaya başlasın. Kronometre, geri sayım ve Pomodoro odak turunda görünür; Pomodoro molaları kendi sabit renklerini korur.</p></div><div class="pn-b"><div class="pm-row"><div><b>Hareketli arka planı kullan</b><small>Kapalıyken Süre sayfası sade kalır.</small></div><button class="tg on" data-bg="tg" aria-label="Hareketli arka plan"><i></i></button></div><div class="pm-row bg-m" id="bgm"><div><b>Değişim süresi</b><small>Yalnızca "Hepsi sırayla" seçiliyken geçerli.</small></div><div class="pm-pick" id="bgmp"></div></div><div class="bgg" id="bgg"></div></div><div class="pn-f"><button class="btn pr" id="bx">Bitti</button></div></div></div>
+  <div class="mod" id="ssheet"><div class="mc card pn" id="snmc" tabindex="-1" role="dialog" aria-modal="true" aria-label="Sesler"><div class="pn-h"><h2>Sesler</h2><p>Süre bitince hangi sayaçların ses çalacağını seç. Oynat düğmesiyle sesi dinleyebilirsin.</p></div><div class="pn-b"><div class="pm-row"><div><b>Sesleri kullan</b><small>Kapalıyken süre bitince yalnızca titreşim olur.</small></div><button class="tg on" data-sn="tg" role="switch" aria-label="Sesleri kullan"><i></i></button></div><div class="pm-row sn-vr" id="snvr"><div class="sn-v"><svg viewBox="0 0 24 24"><path d="M4 9.5v5h3.5l4.5 4v-13l-4.5 4z"/></svg><input type="range" id="snv" min="0" max="100" step="1" aria-label="Ses seviyesi"><svg viewBox="0 0 24 24"><path d="M4 9.5v5h3.5l4.5 4v-13l-4.5 4zM15.5 9a4 4 0 010 6M18.2 6.5a8 8 0 010 11"/></svg><output id="snvo"></output></div></div><div id="snl"></div></div><div class="pn-f"><button class="btn pr" id="snx">Bitti</button></div></div></div>
   <div class="mod" id="sset"><div class="mc card" id="smc" tabindex="-1" role="dialog" aria-modal="true" aria-label="Kronometre ayarları"><h2>Kronometre ayarları</h2><p>Kronometrenin nasıl görüneceğini seç.</p><div class="pm-l"><div class="pm-row"><div><b>Salise göster</b><small>Saniyenin yanında yüzde birlik kısım</small></div><button class="tg" data-sk="c" aria-label="Salise göster"><i></i></button></div><div class="pm-row"><div><b>Saat basamağı</b><small>Bir saati geçmeden de 00 olarak göster</small></div><button class="tg" data-sk="h" aria-label="Saat basamağı"><i></i></button></div></div><div class="row"><button class="btn" id="sdf">Varsayılan</button><button class="btn pr" id="sdn">Bitti</button></div></div></div>
   <div class="sheet" id="stsheet"><div class="fl-r"><button class="fl fk" id="stx">Kapat</button></div><div class="shw"><div class="sh-h"><div><h1>İstatistikler</h1><p>Kronometre, geri sayım ve Pomodoro odak turlarında geçen süre günlük olarak burada toplanır.</p></div></div><div id="stbody"></div></div></div>
   <div class="mod" id="pset"><div class="mc card" id="pmc" tabindex="-1" role="dialog" aria-modal="true" aria-label="Pomodoro ayarları"><h2>Pomodoro ayarları</h2><p>Odak süreni, molalarını ve periyodunu ayarla.</p><div class="pm-l" id="pml"></div><p class="pm-n">Tur süresi değişirse o an süren tur sıfırlanır.</p><div class="row"><button class="btn" id="pdf">Varsayılan</button><button class="btn" id="pcn">Vazgeç</button><button class="btn pr" id="psv">Kaydet</button></div></div></div>
@@ -732,40 +756,21 @@ function bgApply(){
 }
 function abgOp(){var o=Math.max(0,Math.min(1,2-LP));if(ST.pm.ph===0&&LP>1)o=1;ABG.style.opacity=o.toFixed(3);ABG.style.visibility=(o||ABG.classList.contains("pt"))?"visible":"hidden"}
 function bgTg(){$$("[data-bg=tg]").forEach(function(b){b.classList.toggle("on",!!BG.on)});$("#bgg").classList.toggle("off",!BG.on);$("#bgm").classList.toggle("off",BG.id!=="cycle")}
-function bgRender(){$("#bgg").style.setProperty("--sr",(innerWidth/innerHeight).toFixed(3));$("#bgg").innerHTML=[BGC].concat(BGS).map(function(b){return'<button class="bgc'+(b[0]===BG.id?" on":"")+'" data-bgk="'+b[0]+'"><span class="bgp">'+bgMk(b,1)+'</span><b>'+b[1]+'</b></button>'}).join("");$("#bgmp").innerHTML=BGM.map(function(m){return'<button class="chip'+(m===BG.m?" on":"")+'" data-bgm="'+m+'">'+m+" dk</button>"}).join("");bgTg()}
-function openBg(){$("#bgg").style.setProperty("--sr",(innerWidth/innerHeight).toFixed(3));ABI.classList.add("hold");$("#bsheet").scrollTop=0;$("#bfr").classList.remove("on");$("#bsheet").classList.add("on")}
-function closeBg(){$("#bsheet").classList.remove("on");ABI.classList.remove("hold")}
-$("#bsheet").addEventListener("scroll",function(){$("#bfr").classList.toggle("on",this.scrollTop>90)},{passive:true});
+function bgRender(){$("#bgg").innerHTML=[BGC].concat(BGS).map(function(b){return'<button class="bgc'+(b[0]===BG.id?" on":"")+'" data-bgk="'+b[0]+'"><span class="bgp">'+bgMk(b,1)+'</span><b>'+b[1]+'</b></button>'}).join("");$("#bgmp").innerHTML=BGM.map(function(m){return'<button class="chip'+(m===BG.m?" on":"")+'" data-bgm="'+m+'">'+m+" dk</button>"}).join("");bgTg()}
+function openBg(){$("#bsheet .pn-b").scrollTop=0;$("#bsheet").classList.add("on");$("#bmc").focus({preventScroll:true})}
+function closeBg(){$("#bsheet").classList.remove("on");$("#mnb").focus()}
 $("#bsheet").addEventListener("click",function(e){
+  if(e.target===this){closeBg();return}
   var t=e.target.closest("button");if(!t)return;
   if(t.dataset.bgk){BG.id=t.dataset.bgk;BG.on=1;bgSave();bgApply();bgTg();$$(".bgc").forEach(function(b){b.classList.toggle("on",b.dataset.bgk===BG.id)})}
   else if(t.dataset.bgm){BG.m=+t.dataset.bgm;bgSave();bgApply();$$("#bgmp .chip").forEach(function(b){b.classList.toggle("on",+b.dataset.bgm===BG.m)})}
-  else if(t.id==="bx"||t.id==="bx2")closeBg();
+  else if(t.id==="bx")closeBg();
 });
 document.addEventListener("click",function(e){if(e.target.closest("[data-bg=tg]")){BG.on=BG.on?0:1;bgSave();bgApply();bgTg()}});
 document.addEventListener("keydown",function(e){if(e.key==="Escape"&&$("#bsheet").classList.contains("on")){e.preventDefault();closeBg()}});
 bgApply();bgRender();$("#mbg").onclick=openBg;
-/* Tam sayfa panelleri (İstatistikler, Arka planlar) açılırken kendi solma geçişleri arkadaki renkli arka planı şeffaf göstermesin: panel açıkken arka plan anında gizlenir, kapanırken yavaşça geri gelir */
-(function(){function f(){ABI.classList.toggle("hold",$("#stsheet").classList.contains("on")||$("#bsheet").classList.contains("on")||$("#ssheet").classList.contains("on"))}
-["#stsheet","#bsheet","#ssheet"].forEach(function(q){new MutationObserver(f).observe($(q),{attributes:true,attributeFilter:["class"]})})})();
-
-/* İstatistikler ve Sesler sayfaları, Süre ekranında o an görünen arka planı kullanır */
-(function(){
-  function build(sh){
-    var i,o=sh.children;for(i=0;i<o.length;i++)if(o[i].classList.contains("sbg")){o[i].remove();break}
-    var d=document.createElement("div"),cm=TB?MS[TB.index]:MODE,c;d.className="sbg";
-    if(cm==="pm"&&ST.pm.ph!==0){c=PBG.cloneNode(true);c.removeAttribute("id");var pp=c.querySelector(".pp");if(pp)pp.remove();c.classList.remove("run");c.style.opacity="1";d.appendChild(c)}
-    else if(BG.on){var ls=ABI.querySelectorAll(".bgl"),top=ls[ls.length-1];
-      if(top){c=top.cloneNode(true);c.style.opacity="";c.style.transition="";d.appendChild(c);
-        try{var a=top.querySelectorAll("i"),b=c.querySelectorAll("i");for(i=0;i<a.length;i++){var x=a[i].getAnimations()[0],y=b[i].getAnimations()[0];if(x&&y)y.currentTime=x.currentTime}}catch(e){}}}
-    if(d.firstChild)sh.insertBefore(d,sh.firstChild)
-  }
-  ["#stsheet","#ssheet"].forEach(function(q){var sh=$(q);
-    new MutationObserver(function(){
-      if(sh.classList.contains("on"))build(sh);
-      else setTimeout(function(){if(!sh.classList.contains("on")){var o=sh.children;for(var i=0;i<o.length;i++)if(o[i].classList.contains("sbg")){o[i].remove();break}}},700)
-    }).observe(sh,{attributes:true,attributeFilter:["class"]})})
-})();
+/* Tam sayfa İstatistikler açılırken kendi solma geçişleri arkadaki renkli arka planı şeffaf göstermesin: panel açıkken arka plan anında gizlenir, kapanırken yavaşça geri gelir */
+(function(){var st=$("#stsheet");new MutationObserver(function(){ABI.classList.toggle("hold",st.classList.contains("on"))}).observe(st,{attributes:true,attributeFilter:["class"]})})();
 
 function esc(t){return String(t).replace(/[&<>"']/g,function(c){return"&#"+c.charCodeAt(0)+";"})}
 if(!Array.isArray(S.extra))S.extra=[];if(!Array.isArray(S.order))S.order=[];if(!S.col||typeof S.col!=="object")S.col={};if(!S.gone||typeof S.gone!=="object")S.gone={};
@@ -1008,11 +1013,11 @@ function fm(s){var h=Math.floor(s/3600);return(h?h+":"+p2(Math.floor(s%3600/60))
 function wl(on){try{if(on&&navigator.wakeLock)navigator.wakeLock.request("screen").then(function(l){WL=l}).catch(function(){});else if(!on&&WL){WL.release();WL=null}}catch(e){}}
 function wk(){wl(ST.sw.run||ST.cd.run||ST.pm.run)}
 /* Sesler: tamamen Web Audio ile üretilen çan, cam, marimba vb. sesler */
-var SD={bell:["Çan","bell",[[523.25,0],[783.99,.38]],2.6],glass:["Cam","glass",[[523.25,0],[659.25,.09],[783.99,.18],[1046.5,.27]],1.7],marimba:["Marimba","mallet",[[783.99,0],[659.25,.17],[523.25,.34],[783.99,.51]],.6],bowl:["Kase","bowl",[[261.63,0],[392,.55]],4.2],kalimba:["Kalimba","pluck",[[523.25,0],[659.25,.14],[783.99,.28],[659.25,.42],[1046.5,.56]],1],drop:["Damla","drop",[[620,0],[830,.22],[540,.5]],.55],gong:["Gong","gong",[[196,0]],4.8],rise:["Sabah","bell",[[523.25,0],[587.33,.15],[783.99,.3],[1046.5,.48]],1.5],tick:["Tık","mallet",[[1318.5,0]],.18],tok:["Tok","mallet",[[392,0]],.24]},
-TIM={bell:[[1,1,1],[2.01,.3,.7],[2.76,.45,.55],[5.4,.2,.3],[8.93,.1,.15]],glass:[[1,1,1],[2.4,.28,.4],[4.7,.12,.2]],mallet:[[1,1,1],[3.9,.35,.12],[9.2,.1,.05]],bowl:[[1,1,1],[1.006,.9,1],[2.74,.35,.6],[4.1,.15,.4]],pluck:[[1,1,1],[2,.15,.4],[5.4,.2,.08]],gong:[[1,1,1],[1.5,.3,.8],[2,.5,.7],[2.76,.4,.5],[3.5,.2,.3]]},
-SG=[["Kronometre",[["lap","Tur sesi","Tur özelliği eklenince her turda çalacak"]]],["Geri sayım",[["cd","Bitiş sesi","Sayaç sıfırlanınca çalar"]]],["Pomodoro",[["pf","Odak bitişi","Odak turu bitince çalar"],["ps","Mola bitişi","Kısa mola bitince çalar"],["pl","Uzun mola bitişi","Uzun mola bitince çalar"]]]],
-SND={on:1,v:70,m:{lap:"tick",cd:"glass",pf:"bell",ps:"marimba",pl:"bowl"}},BUS=null;
-try{var sj=JSON.parse(localStorage.getItem("dd-snd"));if(sj){SND.on=sj.on===0?0:1;if(sj.v>=0&&sj.v<=100)SND.v=+sj.v;for(var sk in SND.m)if(sj.m&&(sj.m[sk]==="off"||SD[sj.m[sk]]))SND.m[sk]=sj.m[sk]}}catch(e){}
+var SD={cd:["Cam","glass",[[523.25,0],[659.25,.09],[783.99,.18],[1046.5,.27]],1.7],pf:["Çan","bell",[[523.25,0],[783.99,.38]],2.6],ps:["Marimba","mallet",[[783.99,0],[659.25,.17],[523.25,.34],[783.99,.51]],.6],pl:["Kase","bowl",[[261.63,0],[392,.55]],4.2]},
+TIM={bell:[[1,1,1],[2.01,.3,.7],[2.76,.45,.55],[5.4,.2,.3],[8.93,.1,.15]],glass:[[1,1,1],[2.4,.28,.4],[4.7,.12,.2]],mallet:[[1,1,1],[3.9,.35,.12],[9.2,.1,.05]],bowl:[[1,1,1],[1.006,.9,1],[2.74,.35,.6],[4.1,.15,.4]]},
+SG=[["Geri sayım",[["cd","Bitiş sesi","Sayaç sıfırlanınca çalar"]]],["Pomodoro",[["pf","Odak bitişi","Odak turu bitince çalar"],["ps","Mola bitişi","Kısa mola bitince çalar"],["pl","Uzun mola bitişi","Uzun mola bitince çalar"]]]],
+SND={on:1,v:70,e:{cd:1,pf:1,ps:1,pl:1}},BUS=null;
+try{var sj=JSON.parse(localStorage.getItem("dd-snd"));if(sj){SND.on=sj.on===0?0:1;if(sj.v>=0&&sj.v<=100)SND.v=+sj.v;for(var sk in SND.e){if(sj.e&&typeof sj.e==="object"){if(sj.e[sk]===0)SND.e[sk]=0}else if(sj.m&&sj.m[sk]==="off")SND.e[sk]=0}}}catch(e){}
 function snSave(){try{localStorage.setItem("dd-snd",JSON.stringify(SND))}catch(e){}}
 function acx(){if(!AC){try{AC=new(window.AudioContext||window.webkitAudioContext)()}catch(e){return null}}if(AC.state==="suspended"&&AC.resume)AC.resume();return AC}
 function snBus(){
@@ -1025,8 +1030,6 @@ function snBus(){
 }
 function snVol(){if(BUS)BUS.m.gain.value=Math.pow(SND.v/100,1.6)}
 function snNote(tm,f,t,d){
-  var o=AC.createOscillator(),g=AC.createGain();
-  if(tm==="drop"){o.frequency.setValueAtTime(f*1.7,t);o.frequency.exponentialRampToValueAtTime(f,t+.07);g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(.3,t+.008);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(BUS.i);o.start(t);o.stop(t+d+.05);return}
   TIM[tm].forEach(function(q){
     var os=AC.createOscillator(),gg=AC.createGain(),dd=d*q[2],at=tm==="bowl"?.1:.006;
     os.frequency.value=f*q[0];gg.gain.setValueAtTime(.0001,t);gg.gain.linearRampToValueAtTime(.2*q[1],t+at);gg.gain.exponentialRampToValueAtTime(.0001,t+dd);
@@ -1034,19 +1037,21 @@ function snNote(tm,f,t,d){
   });
 }
 function sndPlay(slot,force){
-  var id=SND.m[slot];if((!SND.on&&!force)||!SD[id]||!acx())return;
-  try{var x=SD[id],bus=snBus(),t0=AC.currentTime+.03;x[2].forEach(function(n){snNote(x[1],n[0],t0+n[1],x[3])})}catch(e){}
+  var x=SD[slot];if(!x||(!force&&(!SND.on||!SND.e[slot]))||!acx())return;
+  try{bus=snBus(),t0=AC.currentTime+.03;x[2].forEach(function(n){snNote(x[1],n[0],t0+n[1],x[3])})}catch(e){}
 }
-function sndLap(){sndPlay("lap")}
 function beep(slot){sndPlay(slot);try{if(navigator.vibrate)navigator.vibrate([200,100,200])}catch(e){}}
 /* Ses motoru ilk dokunuşta hazırlanır: süre bitince ağır ilk kurulum ve takılma olmasın */
 (function(){function w(){document.removeEventListener("pointerdown",w,true);document.removeEventListener("keydown",w,true);setTimeout(function(){if(SND.on&&acx())try{snBus()}catch(e){}},400)}document.addEventListener("pointerdown",w,true);document.addEventListener("keydown",w,true)})();
 function snR(){
-  if(!snR.b){snR.b=1;$("#snl").innerHTML=SG.map(function(g){return'<div class="card"><h2>'+g[0]+'</h2>'+g[1].map(function(r){return'<div class="sn-s"><b>'+r[1]+'</b><small>'+r[2]+'</small><div class="pm-pick">'+[["off",["Sessiz"]]].concat(Object.keys(SD).map(function(k){return[k,SD[k]]})).map(function(x){return'<button class="chip'+(SND.m[r[0]]===x[0]?" on":"")+'" data-sl="'+r[0]+'" data-sd="'+x[0]+'">'+x[1][0]+'</button>'}).join("")+'</div></div>'}).join("")+'</div>'}).join("")}
-  $$("#snl [data-sl]").forEach(function(b){b.classList.toggle("on",SND.m[b.dataset.sl]===b.dataset.sd)});
-  $$("[data-sn=tg]").forEach(function(b){b.classList.toggle("on",!!SND.on)});$("#snl").style.opacity=SND.on?1:.5;$("#snv").value=SND.v;
+  if(!snR.b){snR.b=1;$("#snl").innerHTML=SG.map(function(g){return'<div class="sn-g">'+g[0]+'</div>'+g[1].map(function(r){return'<div class="sn-r"><button class="sn-p" data-pl="'+r[0]+'" aria-label="'+r[1]+' sesini dinle"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></button><div class="sn-t"><b>'+r[1]+'</b><small>'+r[2]+'</small></div><button class="tg" data-e="'+r[0]+'" role="switch" aria-label="'+r[1]+'"><i></i></button></div>'}).join("")}).join("")}
+  $$("#snl [data-e]").forEach(function(b){var o=!!SND.e[b.dataset.e];b.classList.toggle("on",o);b.setAttribute("aria-checked",o)});
+  $$("[data-sn=tg]").forEach(function(b){b.classList.toggle("on",!!SND.on);b.setAttribute("aria-checked",!!SND.on)});
+  $("#snl").classList.toggle("off",!SND.on);$("#snvr").classList.toggle("off",!SND.on);snVs();
 }
-function snOpen(){snR();$("#ssheet").scrollTop=0;$("#sfr").classList.remove("on");$("#ssheet").classList.add("on")}
+function snVs(){var v=$("#snv");v.value=SND.v;v.style.setProperty("--p",SND.v+"%");$("#snvo").textContent=SND.v+"%"}
+function snFl(k){var b=$('#snl [data-pl="'+k+'"]');if(!b)return;b.classList.add("ing");clearTimeout(b._t);b._t=setTimeout(function(){b.classList.remove("ing")},Math.min(SD[k][3]*1000,1400))}
+function snOpen(){snR();$("#ssheet .pn-b").scrollTop=0;$("#ssheet").classList.add("on");$("#snmc").focus({preventScroll:true})}
 function snClose(){$("#ssheet").classList.remove("on");$("#mnb").focus()}
 /* Araçlar menüsü */
 function mnSet(o){var m=$("#mn");if(m.classList.contains("on")===o)return;m.classList.toggle("on",o);$("#mnb").setAttribute("aria-expanded",o?"true":"false")}
@@ -1054,15 +1059,17 @@ $("#mnb").onclick=function(e){e.stopPropagation();mnSet(!$("#mn").classList.cont
 $("#mnl").addEventListener("click",function(e){if(e.target.closest(".mni"))mnSet(false)});
 document.addEventListener("click",function(e){if(!e.target.closest("#mn"))mnSet(false)});
 document.addEventListener("keydown",function(e){if(e.key==="Escape"&&$("#mn").classList.contains("on")){e.preventDefault();mnSet(false);$("#mnb").focus()}});
-$("#snb").onclick=snOpen;$("#snx").onclick=$("#snx2").onclick=snClose;
-$("#ssheet").addEventListener("scroll",function(){$("#sfr").classList.toggle("on",this.scrollTop>90)},{passive:true});
+$("#snb").onclick=snOpen;
 $("#ssheet").addEventListener("click",function(e){
+  if(e.target===this){snClose();return}
   var t=e.target.closest("button");if(!t)return;
-  if(t.dataset.sl){SND.m[t.dataset.sl]=t.dataset.sd;snSave();snR();sndPlay(t.dataset.sl,1)}
+  if(t.dataset.pl){snFl(t.dataset.pl);sndPlay(t.dataset.pl,1)}
+  else if(t.dataset.e){var k=t.dataset.e;SND.e[k]=SND.e[k]?0:1;snSave();snR();if(SND.e[k]){snFl(k);sndPlay(k,1)}}
   else if(t.dataset.sn){SND.on=SND.on?0:1;snSave();snR()}
+  else if(t.id==="snx")snClose();
 });
-$("#snv").addEventListener("input",function(){SND.v=+this.value;acx();if(AC)snBus();snVol()});
-$("#snv").addEventListener("change",function(){snSave();sndPlay("cd",1)});
+$("#snv").addEventListener("input",function(){SND.v=+this.value;snVs();acx();if(AC)snBus();snVol()});
+$("#snv").addEventListener("change",function(){snSave();snFl("cd");sndPlay("cd",1)});
 snR();
 document.addEventListener("keydown",function(e){if(e.key==="Escape"&&$("#ssheet").classList.contains("on")){e.preventDefault();snClose()}});
 var FXE="cubic-bezier(.22,1,.36,1)",RMQ=window.matchMedia?matchMedia("(prefers-reduced-motion: reduce)"):null;
@@ -1287,7 +1294,7 @@ $("#pset").addEventListener("pointerdown",function(e){
   PH1=setTimeout(function(){PH2=setInterval(function(){if(!pStep(b))pStop()},90)},420);
 });
 window.addEventListener("pointerup",pStop);window.addEventListener("pointercancel",pStop);
-document.addEventListener("keydown",function(e){if(e.key!=="Escape"||$("#bsheet").classList.contains("on"))return;if($("#pset").classList.contains("on")){e.preventDefault();pClose()}else if($("#sset").classList.contains("on")){e.preventDefault();sClose()}else if($("#stsheet").classList.contains("on")){e.preventDefault();stClose()}});
+document.addEventListener("keydown",function(e){if(e.key!=="Escape"||$("#bsheet").classList.contains("on")||$("#ssheet").classList.contains("on"))return;if($("#pset").classList.contains("on")){e.preventDefault();pClose()}else if($("#sset").classList.contains("on")){e.preventDefault();sClose()}else if($("#stsheet").classList.contains("on")){e.preventDefault();stClose()}});
 var FZ=0;
 /* Tam ekran: saat boyutu font-size geçişiyle değil, transform:scale ile (GPU) büyür/küçülür.
    Metin her karede yeniden yerleştirilip çizilmez; yalnızca bir kez son boyutta çizilir.
@@ -2322,7 +2329,7 @@ document.addEventListener("keydown",function(e){
   if(!KB.on||e.defaultPrevented||e.altKey||e.isComposing)return;
   var a=document.activeElement;
   if(a&&(/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)||a.isContentEditable))return;
-  if(DP.on||$("#pset").classList.contains("on")||$("#sset").classList.contains("on")||$("#stsheet").classList.contains("on")||$("#sheet").classList.contains("on")||$("#ksheet").classList.contains("on")||$("#bsheet").classList.contains("on"))return;
+  if(DP.on||$("#pset").classList.contains("on")||$("#sset").classList.contains("on")||$("#stsheet").classList.contains("on")||$("#sheet").classList.contains("on")||$("#ksheet").classList.contains("on")||$("#bsheet").classList.contains("on")||$("#ssheet").classList.contains("on"))return;
   var v=kView(),fs=$(".app").classList.contains("fs"),cs=$("#cset").classList.contains("on");
   if(e.key==="Escape"&&!e.ctrlKey&&!e.metaKey){
     if(fs){e.preventDefault();kFs()}
