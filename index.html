@@ -293,14 +293,14 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 #stbody .mh .msh.busy{pointer-events:none}
 @media (hover:hover){#stbody .mh .msh:hover .ar{transform:translateY(-2px)}}
 /* Paylaş önizlemesi: önce "Pace" düşer, sonra görsel yumuşakça açılır */
-.shv-ov{--shv-ac:var(--accent-color,var(--c,#ff90e8));position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;overflow:hidden;
+.shv-ov{position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;overflow:hidden;
   padding:calc(20px + env(safe-area-inset-top,0px)) 20px calc(20px + env(safe-area-inset-bottom,0px));box-sizing:border-box;
   background:rgba(0,0,0,0);-webkit-backdrop-filter:blur(0px);backdrop-filter:blur(0px);
   transition:background .5s ease,backdrop-filter .5s ease,-webkit-backdrop-filter .5s ease,opacity .32s ease;font-family:"Baloo 2",ui-rounded,system-ui,sans-serif}
 .shv-ov.is-in{background:rgba(0,0,0,.74);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px)}
 .shv-ov.is-out{opacity:0}
 .shv-ov::before{content:"";position:absolute;inset:-25%;pointer-events:none;opacity:0;z-index:0;filter:blur(36px);will-change:transform;
-  background:radial-gradient(circle min(34vw,28vh) at 36.7% 42%,color-mix(in srgb,var(--shv-ac) 46%,transparent),transparent 72%),radial-gradient(34% 30% at 72% 70%,rgba(110,140,255,.30),transparent 72%);
+  background:radial-gradient(circle min(34vw,28vh) at 36.7% 42%,rgba(255,255,255,.20),transparent 72%),radial-gradient(34% 30% at 72% 70%,rgba(255,255,255,.09),transparent 72%);
   transition:opacity 1.2s ease;animation:shvAurora 9s ease-in-out infinite alternate}
 .shv-ov.is-in::before{opacity:1}
 .shv-ov::after{content:"";position:absolute;left:0;right:0;top:0;z-index:2;pointer-events:none;opacity:0;transition:opacity .5s ease;height:calc(env(safe-area-inset-top,0px) + 28px);
@@ -312,18 +312,18 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .shv-fall{--fs:clamp(64px,21vw,116px);position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;width:min(100%,460px);height:calc(var(--fs) * 5.2);max-height:calc(100dvh - 190px);overflow:visible;
   transition:opacity .5s ease,transform .7s cubic-bezier(.16,1,.3,1),filter .5s ease}
 .shv-fall b{display:block;font:800 var(--fs)/.98 "Baloo 2",ui-rounded,system-ui,sans-serif;letter-spacing:-.01em;color:#fff;opacity:0;animation:shvDrop 1.15s linear calc(var(--k) * 300ms) both;will-change:transform,opacity}
-.shv-fall b:nth-child(1){color:var(--shv-ac);--o:1}
+.shv-fall b:nth-child(1){--o:1}
 .shv-fall b:nth-child(2){--o:.92}.shv-fall b:nth-child(3){--o:.72}.shv-fall b:nth-child(4){--o:.5}.shv-fall b:nth-child(5){--o:.3}
 .shv-fall.is-done{opacity:0;transform:translateY(14px) scale(.97);filter:blur(10px);pointer-events:none}
 .shv-fall.is-letters{flex-direction:row;align-items:flex-end;justify-content:center;--fs:clamp(84px,28vw,150px)}
 .shv-fall.is-letters b{--o:1;color:#fff;animation-name:shvDropL;animation-delay:calc(var(--k) * 330ms)}
-.shv-fall.is-letters b:nth-child(4){color:var(--shv-ac)}
+
 @keyframes shvDropL{0%{opacity:0;transform:translateY(-90dvh) rotate(var(--rot,0deg));animation-timing-function:cubic-bezier(.55,0,.9,.55)}10%{opacity:1}64%{opacity:1;transform:translateY(0) rotate(0deg);animation-timing-function:cubic-bezier(.2,.7,.3,1)}80%{opacity:1;transform:translateY(-9px) rotate(0deg);animation-timing-function:cubic-bezier(.5,0,.5,1)}100%{opacity:1;transform:translateY(0) rotate(0deg)}}
 @keyframes shvDrop{0%{opacity:0;transform:translateY(-95dvh);animation-timing-function:cubic-bezier(.55,0,.9,.55)}10%{opacity:var(--o,1)}64%{opacity:var(--o,1);transform:translateY(0);animation-timing-function:cubic-bezier(.2,.7,.3,1)}80%{opacity:var(--o,1);transform:translateY(-7px);animation-timing-function:cubic-bezier(.5,0,.5,1)}100%{opacity:var(--o,1);transform:translateY(0)}}
 .shv-status{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;transition:opacity .35s ease,transform .5s cubic-bezier(.16,1,.3,1);animation:shvTxt .7s cubic-bezier(.16,1,.3,1) .5s both}
 .shv-row.is-ready .shv-status{opacity:0;transform:translateY(-10px);pointer-events:none}
 .shv-bar{width:min(240px,58vw);height:3px;border-radius:9px;background:rgba(255,255,255,.16);overflow:hidden}
-.shv-bar i{display:block;height:100%;border-radius:inherit;transform-origin:left center;transform:scaleX(0);transition:transform var(--shv-ms,2400ms) linear;background:linear-gradient(90deg,var(--shv-ac),#fff);box-shadow:0 0 14px var(--shv-ac)}
+.shv-bar i{display:block;height:100%;border-radius:inherit;transform-origin:left center;transform:scaleX(0);transition:transform var(--shv-ms,2400ms) linear;background:linear-gradient(90deg,rgba(255,255,255,.45),#fff);box-shadow:0 0 14px rgba(255,255,255,.45)}
 .shv-txt{font:700 15px "Baloo 2",ui-rounded,system-ui,sans-serif;letter-spacing:.03em;color:transparent;-webkit-text-fill-color:transparent;background:linear-gradient(100deg,rgba(255,255,255,.42) 35%,#fff 50%,rgba(255,255,255,.42) 65%) 100% 0/250% 100%;-webkit-background-clip:text;background-clip:text;animation:shvText 2.2s linear infinite}
 .shv-imgwrap{position:relative;display:grid;max-width:100%;overflow:hidden;border-radius:26px;box-shadow:0 40px 90px -30px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.1);opacity:0;transform:translateY(22px) scale(.93);filter:blur(14px);pointer-events:none;
   transition:opacity .75s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1),filter .7s ease}
@@ -332,7 +332,7 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .shv-imgwrap.is-ready::after{animation:shvSheen 1.2s cubic-bezier(.4,0,.2,1) .3s both}
 .shv-img{display:block;max-width:100%;max-height:calc(100dvh - 140px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));width:auto;height:auto;-webkit-user-select:none;user-select:none}
 .shv-btn{font:700 16px "Baloo 2",ui-rounded,system-ui,sans-serif;padding:12px 24px;border-radius:999px;border:0;cursor:pointer;background:rgba(255,255,255,.16);color:#fff;opacity:0;transform:translateY(16px);pointer-events:none}
-.shv-btn.is-primary{background:var(--shv-ac);color:var(--on-accent,#16171b)}
+.shv-btn.is-primary{background:#fff;color:#111}
 .shv-row.is-ready .shv-btn{opacity:1;transform:none;pointer-events:auto;transition:opacity .5s ease,transform .6s cubic-bezier(.34,1.56,.64,1);transition-delay:calc(.45s + var(--i) * 80ms)}
 .shv-row.is-ready .shv-btn:active{transform:scale(.94);transition-delay:0s;transition-duration:.12s}
 @keyframes shvSheen{0%{opacity:0;transform:translateX(-120%)}20%{opacity:1}100%{opacity:0;transform:translateX(120%)}}
@@ -1283,7 +1283,7 @@ function shLum(c){return(.2126*c[0]+.7152*c[1]+.0722*c[2])/255}
 function shTheme(){
   var rs=getComputedStyle(document.documentElement),bs=getComputedStyle($("#stbody"));
   function v(n,s,f){return((s||rs).getPropertyValue(n)||"").trim()||f}
-  var T={bg:shRGB(v("--bg",0,"#f4f2ee")),fg:shRGB(v("--fg",0,"#111")),dim:shRGB(v("--dim",0,"#8a8782")),surf:shRGB(v("--surf",0,"#fff")),surf2:shRGB(v("--surf2",0,"#e9e6e0")),g:shRGB(v("--g",bs,"#2fbf71")),ac:shRGB(v("--accent-color",0,"")||v("--c",0,"#ff90e8"))};
+  var T={bg:shRGB(v("--bg",0,"#f4f2ee")),fg:shRGB(v("--fg",0,"#111")),dim:shRGB(v("--dim",0,"#8a8782")),surf:shRGB(v("--surf",0,"#fff")),surf2:shRGB(v("--surf2",0,"#e9e6e0")),g:shRGB(v("--g",bs,"#2fbf71"))};
   T.cell=shM(T.surf2,T.surf,.5);T.gcell=shM(T.surf,T.g,.15);
   T.gtx=shLum(T.surf)>.5?shM(T.g,[0,0,0],.5):shM(T.g,[255,255,255],.25);
   return T;
@@ -1301,34 +1301,42 @@ function shLS(c,v){try{c.letterSpacing=v+"px"}catch(e){}}
 function shFit(c,t,w,sz,b,max){var z=sz;c.font=shFont(w,z,b);while(z>12&&c.measureText(t).width>max){z-=1;c.font=shFont(w,z,b)}return z}
 function shKey(){
   var D=shData(),r=getComputedStyle(document.documentElement),i=[];
-  ["--bg","--fg","--dim","--surf","--surf2","--accent-color","--c"].forEach(function(n){i.push(r.getPropertyValue(n))});
+  ["--bg","--fg","--dim","--surf","--surf2"].forEach(function(n){i.push(r.getPropertyValue(n))});
   return D.Y+"-"+D.M+"|"+D.G+"|"+D.days.map(function(d){return d.v}).join(",")+"|"+i.join(",")+"|"+D.now.toDateString();
 }
 async function shRender(){
   try{await Promise.race([Promise.all(['800 40px "Baloo 2"','700 40px "Baloo 2"','600 40px "Baloo 2"','700 30px Inter','800 30px Inter'].map(function(f){return document.fonts.load(f,"Aa0Kasım")})),new Promise(function(r){setTimeout(r,1800)})])}catch(e){}
-  var D=shData(),T=shTheme(),W=1080,M=36,PD=52,X0=M+PD,X1=W-M-PD,GAP=12,CW=(X1-X0-6*GAP)/7,CH=128,rows=D.rows,
-  y0=M+PD,tb=y0+84,wb=tb+74,gy=wb+22,gh=rows*CH+(rows-1)*GAP,fy=gy+gh+34,vb=fy+270,H=vb+56+M,
+  var D=shData(),T=shTheme(),W=1080,P=64,GAP=12,CW=(W-2*P-6*GAP)/7,CH=128,rows=D.rows,
+  topH=370,gy=topH+56,gh=rows*CH+(rows-1)*GAP,H=Math.max(1350,gy+gh+110),
   cv=document.createElement("canvas"),c,i,d,x,y,col,row;
   cv.width=W;cv.height=H;c=cv.getContext("2d");c.textBaseline="alphabetic";
-  c.fillStyle=shS(T.bg);c.fillRect(0,0,W,H);
-  c.save();c.shadowColor="rgba(0,0,0,.08)";c.shadowBlur=44;c.shadowOffsetY=14;c.fillStyle=shS(T.surf);shRR(c,M,M,W-2*M,H-2*M,56);c.fill();c.restore();
+  /* kartın kendisi: arkasında başka bir alan yok */
+  c.fillStyle=shS(T.surf);c.fillRect(0,0,W,H);
   /* bugünün tarihi: sağ üst */
   var dt=D.now.getDate()+" "+MN[D.now.getMonth()]+" "+D.now.getFullYear(),dw;
   c.font="italic 600 27px "+shFont(600,27,1).split("px ")[1];shLS(c,1);dw=c.measureText(dt).width;
-  c.textAlign="right";c.fillStyle=shS(T.dim);c.fillText(dt,X1,y0+30);shLS(c,0);
-  /* başlık: ay + yıl (yıl vurgu renginde) */
-  var mn=MN[D.M],ys=""+D.Y,fs=shFit(c,mn+" "+ys,800,100,1,X1-X0-dw-30),mw;
+  c.textAlign="right";c.fillStyle=shS(T.dim);c.fillText(dt,W-P,P+38);shLS(c,0);
+  /* başlık: ay + yıl (yıl soluk) */
+  var mn=MN[D.M],ys=""+D.Y,fs=shFit(c,mn+" "+ys,800,104,1,W-2*P-dw-30),mw;
   shLS(c,-2);c.font=shFont(800,fs,1);c.textAlign="left";mw=c.measureText(mn+" ").width;
-  c.fillStyle=shS(T.fg);c.fillText(mn,X0-3,tb);c.fillStyle=shS(T.ac);c.fillText(ys,X0-3+mw,tb);shLS(c,0);
+  c.fillStyle=shS(T.fg);c.fillText(mn,P,P+110);c.fillStyle=shS(T.dim);c.fillText(ys,P+mw,P+110);shLS(c,0);
+  /* özet (3 sütun, referans yerleşimi) */
+  var avg=D.wd?Math.round(D.mt/D.wd):0,sy=P+190,colW=(W-2*P)/3,
+  ST=[["Aylık toplam",shF(D.mt)],["Günlük ortalama",shF(avg)],["En uzun gün",shF(D.lg)]];
+  ST.forEach(function(q,k){
+    var sx=P+k*colW+(k?28:0);
+    c.textAlign="left";c.font=shFont(600,26,1);c.fillStyle=shS(T.dim);c.fillText(q[0],sx,sy);
+    shFit(c,q[1],800,46,0,colW-44);c.fillStyle=shS(T.fg);c.fillText(q[1],sx,sy+52);
+    if(k){c.fillStyle=shS(T.surf2);c.fillRect(P+k*colW,sy-24,3,80)}
+  });
   /* gün adları */
-  c.font=shFont(800,24,1);c.textAlign="center";shLS(c,2);
-  SDAY.forEach(function(n,j){c.fillStyle=shS(j>4?T.fg:T.dim);c.fillText(n.toLocaleUpperCase("tr"),X0+j*(CW+GAP)+CW/2+1,wb)});shLS(c,0);
-  /* günler */
+  var wy=topH+20;c.font=shFont(800,24,1);c.textAlign="center";shLS(c,2);
+  SDAY.forEach(function(n,j){c.fillStyle=shS(j>4?T.fg:T.dim);c.fillText(n.toLocaleUpperCase("tr"),P+j*(CW+GAP)+CW/2+1,wy)});shLS(c,0);
+  /* günler: bugün ayrıca vurgulanmaz */
   for(i=0;i<D.n;i++){
-    d=D.days[i];var pos=D.off+i,full=d.v>=D.G;col=pos%7;row=(pos-col)/7;x=X0+col*(CW+GAP);y=gy+row*(CH+GAP);
+    d=D.days[i];var pos=D.off+i,full=d.v>=D.G;col=pos%7;row=(pos-col)/7;x=P+col*(CW+GAP);y=gy+row*(CH+GAP);
     c.save();c.globalAlpha=d.fu?.4:1;
     shRR(c,x,y,CW,CH,26);c.fillStyle=shS(full?T.gcell:T.cell);c.fill();
-    if(d.td){shRR(c,x+2,y+2,CW-4,CH-4,24);c.strokeStyle=shS(T.fg);c.lineWidth=4;c.stroke()}
     c.textAlign="left";c.font=shFont(700,24);c.fillStyle=shS(full?T.gtx:(col>4?T.fg:T.dim));c.fillText(""+d.n,x+16,y+37);
     if(d.v){
       var h=Math.floor(d.v/3600),m=Math.floor(d.v%3600/60),L=h?(m?[h+"sa",m+"dk"]:[h+"sa"]):[m?m+"dk":"<1dk"];
@@ -1337,17 +1345,8 @@ async function shRender(){
     }
     c.restore();
   }
-  /* alt bilgi */
-  c.fillStyle=shS(T.surf2);c.fillRect(X0,fy,X1-X0,3);
-  var avg=D.wd?Math.round(D.mt/D.wd):0,cwid=(X1-X0)/4,
-  L2=[["Çalışılan gün",""+D.wd,""],["Hedefi tutan gün",""+D.gd,""],["Günlük ortalama",D.wd?shF(avg):"—",""],["En uzun gün",D.lg?shF(D.lg):"—",D.lg?D.lgd+" "+MN[D.M]:""]];
-  L2.forEach(function(q,j){var lx=X0+j*cwid;c.textAlign="left";c.font=shFont(700,24,1);c.fillStyle=shS(T.dim);c.fillText(q[0],lx,fy+58);
-    shFit(c,q[1],800,42,0,cwid-22);c.fillStyle=shS(T.fg);c.fillText(q[1],lx,fy+108);
-    if(q[2]){c.font=shFont(600,22,1);c.fillStyle=shS(T.dim);c.fillText(q[2],lx,fy+140)}});
-  c.textAlign="left";c.font=shFont(700,26,1);c.fillStyle=shS(T.dim);c.fillText("Ay toplamı",X0,fy+190);
-  shLS(c,-1);var tz=shFit(c,shF(D.mt),800,76,0,520);c.fillStyle=shS(T.fg);c.fillText(shF(D.mt),X0,vb);shLS(c,0);
   /* Pace imzası: sağ alt */
-  c.textAlign="right";c.font=shFont(800,76,1);shLS(c,-1);c.fillStyle=shS(T.fg);c.fillText("Pace",X1,vb);shLS(c,0);
+  c.textAlign="right";c.font=shFont(800,64,1);shLS(c,-1);c.fillStyle=shS(T.fg);c.fillText("Pace",W-P,H-P+6);shLS(c,0);
   return new Promise(function(res){cv.toBlob(res,"image/png")});
 }
 /* Önceden hazırlama: Paylaş'a dokunulduğunda görsel çoğu zaman hazır olur */
