@@ -717,6 +717,19 @@ function cnt(s){var c=0;s.t.forEach(function(_,i){if(S.done[s.id+"_"+i])c++});re
 var RE_DATE=/^\d{4}-\d{2}-\d{2}$/;
 function setDate(v){if(!RE_DATE.test(v))return false;S.date=v;save();return true}
 function resetDone(){S.done={};save()}
+/* Tam sıfırlama: "dd-" önekiyle saklanan HER ŞEY (durum, kısa yollar, takvim, arka plan, kalem ayarı, tuval yedekleri...) ve tuval veritabanı silinir.
+   Yeni bir özellik veri saklayacaksa anahtarı "dd-" ile başlatmalı; böylece sıfırlama onu da otomatik kapsar. */
+var WIPING=0;
+function wipeAll(){
+  if(WIPING)return;WIPING=1;
+  try{Storage.prototype.setItem=function(){}}catch(e){}
+  try{var ks=[],i;for(i=0;i<localStorage.length;i++)ks.push(localStorage.key(i));ks.forEach(function(k){if(k&&k.indexOf("dd-")===0)localStorage.removeItem(k)})}catch(e){}
+  try{sessionStorage.clear()}catch(e){}
+  try{if(IDB)IDB.close()}catch(e){}
+  function done(){location.reload()}
+  try{var r=indexedDB.deleteDatabase("dd-ink");r.onsuccess=r.onerror=done}catch(e){done()}
+  setTimeout(done,1500);
+}
 function exportData(){return JSON.stringify({v:1,date:S.date,done:S.done,study:S.study||{},goal:S.goal})}
 function importData(txt){
   var o;try{o=JSON.parse(txt)}catch(e){return false}
@@ -768,7 +781,7 @@ function buildSettings(){
   '<div class="card lc kbc"><button class="kbo" id="kbo"><div><h2>Klavye kısa yolları</h2><p>Sayfa geçişi, süre ve takvim için kısa yolları gör ve özelleştir.</p></div><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button><button class="tg'+(KB.on?" on":"")+'" data-kb="tg" aria-label="Klavye kısa yolları"><i></i></button></div>'+
   '<div class="card"><h2>Sınav tarihi</h2><p>Geri sayım bu tarihe göre hesaplanır.</p><button class="dpb" id="sd" aria-haspopup="dialog"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span></span></button></div>'+
   '<div class="card"><h2>Yedek</h2><p>İlerlemeni metin olarak kopyala, gerekirse buradan geri yükle.</p><div class="row"><button class="btn pr" id="bk">Yedeği kopyala</button></div><textarea id="bt" placeholder="Yedek metnini buraya yapıştır"></textarea><div class="row"><button class="btn" id="br">Geri yükle</button></div><div class="msg" id="bm"></div></div>'+
-  '<div class="card"><h2>İlerlemeyi sıfırla</h2><p>İşaretlenen tüm konular silinir. Sınav tarihi korunur.</p><div class="row"><button class="btn dg" id="rs">Sıfırla</button></div><div class="msg" id="rm"></div></div></div>';
+  '<div class="card"><h2>Tüm verileri sıfırla</h2><p>Konular, istatistikler, sınav tarihi, takvim ve çizimler, ders düzeni, klavye kısa yolları ve arka plan ayarları silinir. Uygulama ilk açıldığı hâle döner. Geri alınamaz.</p><div class="row"><button class="btn dg" id="rs">Sıfırla</button></div><div class="msg" id="rm"></div></div></div>';
   $("#sd").onclick=function(){openDP(this)};
   $("#ld").onclick=openSheet;
   $("#kbo").onclick=openKb;
@@ -790,7 +803,7 @@ function buildSettings(){
       clearTimeout(rt);rt=setTimeout(function(){b.classList.remove("arm");b.textContent="Sıfırla"},3000);return;
     }
     clearTimeout(rt);b.classList.remove("arm");b.textContent="Sıfırla";
-    resetDone();showSub(false);$("#rm").textContent="İlerleme sıfırlandı.";
+    $("#rm").textContent="Siliniyor…";wipeAll();
   };
 }
 buildSubs();buildSettings();showSub(false);
@@ -1071,7 +1084,7 @@ function gsec(){return(S.goal>=30&&S.goal<=960?S.goal:240)*60}
 function fh(s){var h=Math.floor(s/3600),m=Math.floor(s%3600/60);return h?h+"<small>sa</small> "+p2(m)+"<small>dk</small>":m+"<small>dk</small>"}
 function ft(s){var h=Math.floor(s/3600),m=Math.floor(s%3600/60);return h?h+" sa "+m+" dk":m+" dk"}
 function fb(s){var h=Math.floor(s/3600),m=Math.floor(s%3600/60);return h?h+":"+p2(m):m+"dk"}
-function stFlush(){SLS=Date.now();var o=S.study,k;if(o&&typeof o==="object"){k=dk(new Date());if(o[k])o[k]=Math.round(o[k]*10)/10;save()}}
+function stFlush(){SLS=Date.now();S.lt=SLS;var o=S.study,k;if(o&&typeof o==="object"){k=dk(new Date());if(o[k])o[k]=Math.round(o[k]*10)/10;save()}}
 function stTrack(){
   var n=Date.now(),d=SL?n-SL:0,k,o;SL=n;
   if(d<=0||d>432e5||!(ST.sw.run||ST.cd.run||(ST.pm.run&&ST.pm.ph===0)))return;
@@ -1080,6 +1093,15 @@ function stTrack(){
   if(n-SLS>15000)stFlush();
 }
 document.addEventListener("visibilitychange",function(){if(document.hidden){stTrack();stFlush()}});
+/* Uygulama sayaç çalışırken yeniden yüklendiyse (iPad belleği temizleyebilir), kapalı kalan süre de istatistiğe işlensin */
+(function(){
+  var l=+S.lt||0,t=[],n=Date.now(),a,k;
+  [ST.sw,ST.cd].forEach(function(x){if(x.run)t.push(x.t0)});if(ST.pm.run&&ST.pm.ph===0)t.push(ST.pm.t0);
+  if(!l||!t.length)return;a=Math.max(l,Math.min.apply(null,t));
+  if(n-a<=0||n-a>432e5)return;
+  if(!S.study||typeof S.study!=="object")S.study={};
+  k=dk(new Date(n));S.study[k]=(S.study[k]||0)+(n-a)/1000;S.lt=n;save();
+})();
 window.addEventListener("pagehide",function(){stTrack();stFlush()});
 var CHV='<svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>',CHN='<svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>';
 function stRender(first){
