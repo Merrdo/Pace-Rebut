@@ -286,8 +286,9 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 @keyframes sxg{from{transform:scaleY(0)}}
 #stbody .mcal{touch-action:pan-y}
 #stbody .mh{justify-content:flex-start;gap:6px}
+#stbody .msh{margin-left:auto}
 #stbody .mh h2{min-width:164px;text-align:center;font-size:22px;font-weight:800;letter-spacing:-.3px}
-#stbody .mgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+#stbody .mgrid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
 #stbody .mgrid>b{padding-bottom:6px;text-align:center;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
 #stbody .mgrid>b:nth-child(n+6){color:var(--fg)}
 #stbody .mdy{position:relative;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;min-height:88px;padding:10px 9px;border-radius:18px;text-align:left;background:var(--surf2);background:color-mix(in srgb,var(--surf2) 50%,var(--surf));transition:transform .45s var(--sp),background .3s,box-shadow .3s}
@@ -305,7 +306,7 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 #stbody .mdy.on{background:var(--fg);box-shadow:none}
 #stbody .mdy.on .n,#stbody .mdy.on b{color:var(--bg)}#stbody .mdy.on .n{opacity:.7}
 #stbody .mft{display:flex;align-items:flex-end;justify-content:space-between;gap:16px 24px;flex-wrap:wrap;margin-top:18px;padding-top:16px;border-top:1.5px solid var(--surf2)}
-#stbody .mfl{display:flex;flex-wrap:wrap;gap:10px 26px}
+#stbody .mfl{display:flex;flex-wrap:wrap;gap:10px 22px}
 #stbody .mfl div,#stbody .mfr{display:flex;flex-direction:column;gap:3px;font-size:12px;font-weight:700;color:var(--dim)}
 #stbody .mfl b{font:700 18px/1.1 Inter,system-ui,sans-serif;letter-spacing:-.3px;color:var(--fg)}
 #stbody .mfl small{font-size:12px}
@@ -1166,6 +1167,7 @@ document.addEventListener("visibilitychange",function(){if(document.hidden){stTr
   k=dk(new Date(n));S.study[k]=(S.study[k]||0)+(n-a)/1000;S.lt=n;save();
 })();
 window.addEventListener("pagehide",function(){stTrack();stFlush()});
+var SHI='<svg viewBox="0 0 24 24"><path d="M12 15V4M8 8l4-4 4 4M7 11H6a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-7a1 1 0 0 0-1-1h-1"/></svg>';
 var CHV='<svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>',CHN='<svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>';
 function stRender(first){
   var now=new Date(),tk=dk(now),G=gsec(),sel=STS.sel,sv=sg(sel),pc=Math.min(1,sv/G),ws=wkS(now),i,d,k,v,r,lv,D=[],mx=G,tot=0,cn=0,h="",C=528,sk=0,x=new Date(now),bs=0;
@@ -1188,9 +1190,9 @@ function stRender(first){
   for(i=0;i<off;i++)cl+='<span class="mdy e"></span>';
   for(i=1;i<=dim;i++){k=ds(my.getFullYear(),my.getMonth(),i);v=sg(k);mt+=v;if(v)wd++;if(v>=G)gd++;if(v>lg){lg=v;lgd=i}
     cl+='<button class="mdy'+((off+i-1)%7>4?" wk":"")+(v>=G?" g":"")+(k===tk?" td":"")+(k===sel?" on":"")+'" data-a="d" data-k="'+k+'"'+(k>tk?" disabled":"")+' aria-label="'+i+' '+MN[my.getMonth()]+', '+(v?ft(v):"çalışma yok")+'"><span class="n">'+i+'</span>'+(v?'<b>'+fc(v)+'</b>':'')+'</button>'}
-  h+='<div class="card mcal"><div class="hd mh"><button data-a="mp" aria-label="Önceki ay">'+CHV+'</button><h2>'+MN[my.getMonth()]+' '+my.getFullYear()+'</h2><button data-a="mn" aria-label="Sonraki ay"'+(STS.mo>=0?" disabled":"")+'>'+CHN+'</button></div>'+
+  h+='<div class="card mcal"><div class="hd mh"><button data-a="mp" aria-label="Önceki ay">'+CHV+'</button><h2>'+MN[my.getMonth()]+' '+my.getFullYear()+'</h2><button data-a="mn" aria-label="Sonraki ay"'+(STS.mo>=0?" disabled":"")+'>'+CHN+'</button><button class="msh" data-share aria-label="Paylaş">'+SHI+'</button></div>'+
    '<div class="mgrid">'+SDAY.map(function(n){return'<b>'+n+'</b>'}).join("")+cl+'</div>'+
-   '<div class="mft"><div class="mfl"><div>Çalışılan gün<b>'+wd+'</b></div><div>Hedefi tutan gün<b>'+gd+'</b></div><div>En uzun gün<b>'+(lg?fc(lg):"—")+'</b>'+(lg?'<small>'+lgd+' '+MN[my.getMonth()]+'</small>':'')+'</div></div>'+
+   '<div class="mft"><div class="mfl"><div>Çalışılan gün<b>'+wd+'</b></div><div>Hedefi tutan gün<b>'+gd+'</b></div><div>Günlük ortalama<b>'+(wd?fc(Math.round(mt/wd)):"—")+'</b></div><div>En uzun gün<b>'+(lg?fc(lg):"—")+'</b>'+(lg?'<small>'+lgd+' '+MN[my.getMonth()]+'</small>':'')+'</div></div>'+
    '<div class="mfr">Ay toplamı<b>'+fc(mt)+'</b></div></div></div>';
   $("#stbody").innerHTML=h;STK=Math.floor(sg(tk)/60);
   if(STS.dir){var dr=STS.dir;STS.dir=0;if(fxOk())$$("#stbody .mcal h2,#stbody .mcal .mgrid,#stbody .mcal .mft").forEach(function(e){e.animate([{opacity:0,transform:"translateX("+dr*38+"px)"},{opacity:1,transform:"none"}],{duration:420,easing:FXE})})}
