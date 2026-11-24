@@ -546,26 +546,33 @@ button.wn:active{transform:scale(.9)}button.wn:hover{background:var(--surf);colo
 .kbt.on{opacity:1;transform:translate(-50%,0)}
 .kbt.on.ac{pointer-events:auto}
 
-/* Hareketli arka planlar */
+/* Hareketli arka planlar — YENİDEN TASARIM
+   * Canlı arka plan TEK sabit katmandır (#abgi); DOM'a hiçbir şey eklenip çıkarılmaz, animasyonlar hiç yeniden başlamaz.
+   * Renk değişimi @property ile kayıtlı --c0..--c3 üzerinde CSS geçişidir: arka arkaya seçimler eski geçişi kaldığı
+     yerden yeni hedefe çevirir (çapraz solma katmanı yok, sıçrama/titreme yok).
+   * Panel (#bsheet) bulanıklaştırma (backdrop-filter) KULLANMAZ: hareketli içeriğin üstünde her karede yeniden bulanıklaştırmak
+     titreme/"yenilenme" yaratıyordu. Önizlemeler tamamen statik, sade gradyanlardır. */
+@property --c0{syntax:"<color>";inherits:true;initial-value:#ffe3d6}
+@property --c1{syntax:"<color>";inherits:true;initial-value:#ffd0dc}
+@property --c2{syntax:"<color>";inherits:true;initial-value:#e9dcff}
+@property --c3{syntax:"<color>";inherits:true;initial-value:#ffc9b5}
 .abg{position:absolute;inset:0;z-index:-1;overflow:hidden;opacity:0;pointer-events:none;will-change:opacity;contain:strict}
-.abgi{position:absolute;inset:0;transition:opacity 1.2s var(--ease)}.abgi.off{opacity:0}.abgi.hold{opacity:0!important;transition:opacity .45s var(--ease)}
-.bgl{position:absolute;inset:0;overflow:hidden;background:linear-gradient(125deg,var(--c0),var(--c1),var(--c2))}
-.bgl i{position:absolute;width:80%;aspect-ratio:1;border-radius:50%;background:radial-gradient(closest-side,var(--bc),transparent);opacity:.75;will-change:transform;animation:bgd 38s ease-in-out infinite alternate}
-.bgl .b0{left:-18%;top:-40%;--bc:var(--c3);--dx:22%;--dy:14%;--sc:1.15}
-.bgl .b1{right:-24%;top:8%;--bc:var(--c1);--dx:-20%;--dy:18%;--sc:.9;animation-duration:47s;animation-delay:-14s}
-.bgl .b2{left:16%;bottom:-60%;--bc:var(--c2);--dx:16%;--dy:-16%;--sc:1.1;animation-duration:57s;animation-delay:-30s}
-@keyframes bgd{from{transform:translate(0,0) scale(1)}to{transform:translate(var(--dx),var(--dy)) scale(var(--sc))}}
-#v-timer:not(.on) .bgl,#v-timer:not(.on) .bgl i,.abgi.off .bgl,.abgi.off .bgl i,#bsheet:not(.on) .bgl,#bsheet:not(.on) .bgl i{animation-play-state:paused}
+.abgi{position:absolute;inset:0;overflow:hidden;--td:0s;background:linear-gradient(125deg,var(--c0),var(--c1),var(--c2));transition:opacity .8s var(--ease),--c0 var(--td) ease-in-out,--c1 var(--td) ease-in-out,--c2 var(--td) ease-in-out,--c3 var(--td) ease-in-out}
+.abgi.off{opacity:0}.abgi.hold{opacity:0!important;transition:opacity .45s var(--ease)}
+.abgi i{position:absolute;width:80%;aspect-ratio:1;border-radius:50%;background:radial-gradient(closest-side,var(--bc),transparent);opacity:.75;will-change:transform;animation:bgd 38s ease-in-out infinite alternate}
+.abgi .b0{left:-18%;top:-40%;--bc:var(--c3);--dx:22%;--dy:14%;--sc:1.15}
+.abgi .b1{right:-24%;top:8%;--bc:var(--c1);--dx:-20%;--dy:18%;--sc:.9;animation-duration:47s;animation-delay:-14s}
+.abgi .b2{left:16%;bottom:-60%;--bc:var(--c2);--dx:16%;--dy:-16%;--sc:1.1;animation-duration:57s;animation-delay:-30s}
+@keyframes bgd{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(var(--dx),var(--dy),0) scale(var(--sc))}}
+#v-timer:not(.on) .abgi i,.abgi.off i,.abgi.hold i,.abgi.pz i{animation-play-state:paused}
+@media (prefers-reduced-motion:reduce){.abgi i{animation:none}}
 .bgg{display:grid;grid-template-columns:repeat(3,1fr);gap:20px 18px;padding:10px 8px 6px;margin-top:6px;transition:opacity .4s var(--ease)}.bgg.off{opacity:.5}
 .bgc{display:block;text-align:left;transition:transform .5s var(--sp)}.bgc:active{transform:scale(.97)}
 .bgc b{display:block;margin-top:10px;font-size:17px;font-weight:700}
-.bgp{position:relative;display:block;aspect-ratio:var(--sr,1.7);border-radius:22px;overflow:hidden;--bl:22px;transition:box-shadow .4s var(--ease)}
+.bgp{position:relative;display:block;aspect-ratio:var(--sr,1.7);border-radius:22px;overflow:hidden;transition:box-shadow .3s var(--ease);
+  background:radial-gradient(70% 90% at 12% 8%,var(--c3),transparent 70%),radial-gradient(60% 80% at 92% 40%,var(--c1),transparent 70%),radial-gradient(75% 80% at 40% 112%,var(--c2),transparent 70%),linear-gradient(125deg,var(--c0),var(--c1),var(--c2))}
 .bgc.on .bgp{box-shadow:0 0 0 3px var(--surf),0 0 0 5.5px var(--fg)}
-.bgc:not(.on) .bgp .bgl,.bgc:not(.on) .bgp .bgl i,.abgi.hold .bgl,.abgi.hold .bgl i{animation-play-state:paused}
 #bgm{transition:opacity .4s var(--ease)}#bgm.off{opacity:.45}#bgmp .chip{min-width:0;padding:9px 16px;font-size:15px}
-.bgp .bgl{transition:none}.bgp .bgl i{will-change:auto}.bgc:not(.on) .bgp .bgl i{animation:none}.bgc.on .bgp .bgl i{will-change:transform}
-/* Arka planlar paneli: önizlemeler hareketsiz, canlı arka plan panelin arkasında akar */
-.bgp{contain:paint;isolation:isolate}.bgp .bgl i{animation:none!important;will-change:auto!important}.bgp .bgl i.b1,.bgp .bgl i.b2{display:none}
 @media (max-width:900px){.bgg{grid-template-columns:1fr 1fr}}
 /* Sesler */
 /* Paneller (Sesler, Arka planlar): ortak iskelet = başlık, kayan gövde, alt çubuk */
@@ -579,7 +586,7 @@ button.wn:active{transform:scale(.9)}button.wn:hover{background:var(--surf);colo
 .pn-f .btn{min-width:120px;height:48px;border-radius:16px;font-size:17px}
 #ssheet .mc{width:min(520px,100%)}
 #bsheet .mc{width:min(940px,100%)}
-#bsheet.mod{background:rgba(17,17,17,.12);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+#bsheet.mod{background:rgba(17,17,17,.16);-webkit-backdrop-filter:none;backdrop-filter:none}
 .pn-b .pm-row:first-child{padding-top:6px}
 .bg-m{flex-wrap:wrap}.bg-m .pm-pick{margin-top:0}
 /* Sesler paneli */
@@ -628,7 +635,7 @@ button.wn:active{transform:scale(.9)}button.wn:hover{background:var(--surf);colo
       <div class="topics" id="topics"></div>
     </section>
     <section class="view" id="v-timer">
-      <div class="abg" id="abg"><div class="abgi" id="abgi"></div></div>
+      <div class="abg" id="abg"><div class="abgi" id="abgi"><i class="b0"></i><i class="b1"></i><i class="b2"></i></div></div>
       <div class="pbg" id="pbg" data-ph="0"><i class="l l0"></i><i class="l l1"></i><i class="l l2"></i><i class="bl bl1"></i><i class="bl bl2"></i><div class="pp"><i id="ppf"></i></div></div>
       <button class="fsb" id="fsb" aria-label="Tam ekran"><svg class="i-e" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><svg class="i-c" viewBox="0 0 24 24"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg></button>
       <button class="stb" id="stb" aria-label="İstatistikler"><svg viewBox="0 0 24 24"><path d="M5 20V11M12 20V4M19 20v-6"/></svg>İstatistikler</button>
@@ -731,34 +738,28 @@ function kbGet(id){return Object.prototype.hasOwnProperty.call(KB.map,id)?KB.map
 function kbPut(id,key){if(key===KDEF[id])delete KB.map[id];else KB.map[id]=key}
 /* Hareketli arka planlar: [id, ad, c0, c1, c2, c3] */
 var BGS=[["dawn","Şafak","#ffe3d6","#ffd0dc","#e9dcff","#ffc9b5"],["ocean","Okyanus","#d9ecff","#bfe3f2","#d4f3ec","#a9d4ff"],["mist","Sis","#e4f1e2","#cfe6d6","#f1f3dc","#b5dcc0"],["sunset","Gün batımı","#ffe6c4","#ffd0b8","#ffc4d4","#ffb199"],["lav","Lavanta","#ece3ff","#d9ddff","#f6dcf0","#c9b8ff"],["lemon","Limon","#fff5c2","#f1f6c8","#e2f4d4","#ffe38f"],["aurora","Aurora","#d6f5ee","#d9e0ff","#ecd9ff","#8fe3d0"],["cloud","Bulut","#eef1f6","#dfe6ef","#f6f3ee","#c7d3e3"]],
-BGC=["cycle","Hepsi sırayla","#ffe3d6","#d9ecff","#e9dcff","#d4f3ec"],BGM=[1,2,5,10,15,30],BG={on:1,id:"cycle",m:1},BGI=0,BGT=0,LP=0,ABG=$("#abg"),ABI=$("#abgi");
+BGC=["cycle","Hepsi sırayla","#ffe3d6","#d9ecff","#e9dcff","#d4f3ec"],BGM=[1,2,5,10,15,30],BG={on:1,id:"cycle",m:1},BGI=0,BGT=0,BGK="",LP=0,ABG=$("#abg"),ABI=$("#abgi");
 try{var bj=JSON.parse(localStorage.getItem("dd-bg"));if(bj){BG.on=bj.on===0?0:1;if(BGM.indexOf(+bj.m)>-1)BG.m=+bj.m;if(bj.id==="cycle"||BGS.some(function(b){return b[0]===bj.id}))BG.id=bj.id}}catch(e){}
 function bgSave(){try{localStorage.setItem("dd-bg",JSON.stringify(BG))}catch(e){}}
-function bgMk(b,on){return'<div class="bgl'+(on?" on":"")+'" data-k="'+b[0]+'" style="--c0:'+b[2]+';--c1:'+b[3]+';--c2:'+b[4]+';--c3:'+b[5]+'"><i class="b0"></i><i class="b1"></i><i class="b2"></i></div>'}
+function bgCur(){return BG.id==="cycle"?BGS[BGI]:BGS.filter(function(x){return x[0]===BG.id})[0]}
+function bgPv(b){return"--c0:"+b[2]+";--c1:"+b[3]+";--c2:"+b[4]+";--c3:"+b[5]}
+/* Tek katman: yalnızca renk değişkenleri güncellenir. Görünmüyorsa (kapalı / başka sayfa / İstatistikler açık) geçişsiz anında. */
 function bgShow(b,td){
-  var ls=ABI.querySelectorAll(".bgl"),top=ls[ls.length-1];
-  if(top&&top.dataset.k===b[0])return;
-  ABI.insertAdjacentHTML("beforeend",bgMk(b,1));
-  var N=ABI.lastElementChild;
-  function clean(){if(!N.parentNode)return;while(N.previousElementSibling)N.previousElementSibling.remove()}
-  /* Görünmüyorsa (panel açık / ilk açılış) anında değiştir; görünüyorsa eski ile yeni arasında yumuşak çapraz geçiş yap */
-  if(!top||ABI.classList.contains("hold")){clean();return}
-  N.style.opacity="0";void N.offsetWidth;
-  N.style.transition="opacity "+td+"s cubic-bezier(.45,0,.55,1)";N.style.opacity="1";
-  N.addEventListener("transitionend",function f(e){if(e.target!==N||e.propertyName!=="opacity")return;N.removeEventListener("transitionend",f);clean()});
-  setTimeout(clean,td*1000+300);
+  var see=BG.on&&!ABI.classList.contains("hold")&&$("#v-timer").classList.contains("on")&&BGK;
+  ABI.style.setProperty("--td",(see?td:0)+"s");
+  ABI.style.setProperty("--c0",b[2]);ABI.style.setProperty("--c1",b[3]);ABI.style.setProperty("--c2",b[4]);ABI.style.setProperty("--c3",b[5]);
+  BGK=b[0];
 }
 function bgApply(){
   clearInterval(BGT);BGT=0;ABI.classList.toggle("off",!BG.on);
-  if(!BG.on)return;
-  bgShow(BG.id==="cycle"?BGS[BGI]:BGS.filter(function(x){return x[0]===BG.id})[0],BG.id==="cycle"?12:6);
-  if(BG.id==="cycle")BGT=setInterval(function(){BGI=(BGI+1)%BGS.length;bgShow(BGS[BGI],12)},BG.m*60000);
+  bgShow(bgCur(),BG.id==="cycle"?10:1.1);
+  if(BG.on&&BG.id==="cycle")BGT=setInterval(function(){BGI=(BGI+1)%BGS.length;bgShow(BGS[BGI],10)},BG.m*60000);
 }
 function abgOp(){var o=Math.max(0,Math.min(1,2-LP));if(ST.pm.ph===0&&LP>1)o=1;ABG.style.opacity=o.toFixed(3);ABG.style.visibility=(o||ABG.classList.contains("pt"))?"visible":"hidden"}
 function bgTg(){$$("[data-bg=tg]").forEach(function(b){b.classList.toggle("on",!!BG.on)});$("#bgg").classList.toggle("off",!BG.on);$("#bgm").classList.toggle("off",BG.id!=="cycle")}
-function bgRender(){$("#bgg").innerHTML=[BGC].concat(BGS).map(function(b){return'<button class="bgc'+(b[0]===BG.id?" on":"")+'" data-bgk="'+b[0]+'"><span class="bgp">'+bgMk(b,1)+'</span><b>'+b[1]+'</b></button>'}).join("");$("#bgmp").innerHTML=BGM.map(function(m){return'<button class="chip'+(m===BG.m?" on":"")+'" data-bgm="'+m+'">'+m+" dk</button>"}).join("");bgTg()}
-function openBg(){$("#bsheet .pn-b").scrollTop=0;$("#bsheet").classList.add("on");$("#bmc").focus({preventScroll:true})}
-function closeBg(){$("#bsheet").classList.remove("on");$("#mnb").focus()}
+function bgRender(){$("#bgg").innerHTML=[BGC].concat(BGS).map(function(b){return'<button class="bgc'+(b[0]===BG.id?" on":"")+'" data-bgk="'+b[0]+'"><span class="bgp" style="'+bgPv(b)+'"></span><b>'+b[1]+'</b></button>'}).join("");$("#bgmp").innerHTML=BGM.map(function(m){return'<button class="chip'+(m===BG.m?" on":"")+'" data-bgm="'+m+'">'+m+" dk</button>"}).join("");bgTg()}
+function openBg(){ABI.classList.add("pz");$("#bsheet .pn-b").scrollTop=0;$("#bsheet").classList.add("on");$("#bmc").focus({preventScroll:true})}
+function closeBg(){ABI.classList.remove("pz");$("#bsheet").classList.remove("on");$("#mnb").focus()}
 $("#bsheet").addEventListener("click",function(e){
   if(e.target===this){closeBg();return}
   var t=e.target.closest("button");if(!t)return;
