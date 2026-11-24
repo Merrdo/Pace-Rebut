@@ -551,6 +551,9 @@ button.wn:active{transform:scale(.9)}button.wn:hover{background:var(--surf);colo
 #bgm{transition:opacity .4s var(--ease)}#bgm.off{opacity:.5}#bgmp .chip{min-width:0;padding:10px 18px;font-size:16px}
 .bgp .bgl{transition:none}.bgp .bgl i{will-change:auto}.bgc:not(.on) .bgp .bgl i{animation:none}.bgc.on .bgp .bgl i{will-change:transform}
 #bfr .fl{-webkit-backdrop-filter:none;backdrop-filter:none}
+/* Arka planlar paneli: açılışta çizim yükü ve hareket olmasın */
+#bsheet .shw{transform:none;transition:none}
+.bgp{contain:paint;isolation:isolate}.bgp .bgl i{animation:none!important;will-change:auto!important}.bgp .bgl i.b1,.bgp .bgl i.b2{display:none}
 @media (max-width:760px){.bgg{grid-template-columns:1fr 1fr}}
 </style>
 </head>
