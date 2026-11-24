@@ -549,6 +549,8 @@ button.wn:active{transform:scale(.9)}button.wn:hover{background:var(--surf);colo
 .bgc.on .bgp{box-shadow:0 0 0 3px var(--bg),0 0 0 5.5px var(--fg)}
 .bgc:not(.on) .bgp .bgl,.bgc:not(.on) .bgp .bgl i,.abgi.hold .bgl,.abgi.hold .bgl i{animation-play-state:paused}
 #bgm{transition:opacity .4s var(--ease)}#bgm.off{opacity:.5}#bgmp .chip{min-width:0;padding:10px 18px;font-size:16px}
+.bgp .bgl{transition:none}.bgp .bgl i{will-change:auto}.bgc:not(.on) .bgp .bgl i{animation:none}.bgc.on .bgp .bgl i{will-change:transform}
+#bfr .fl{-webkit-backdrop-filter:none;backdrop-filter:none}
 @media (max-width:760px){.bgg{grid-template-columns:1fr 1fr}}
 </style>
 </head>
