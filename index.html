@@ -561,6 +561,29 @@ button.wn:active{transform:scale(.9)}button.wn:hover{background:var(--surf);colo
 .ti i{position:relative;transition:background .3s var(--ease)}
 .ti.tpop i{animation:tpp .45s var(--sp)}@keyframes tpp{40%{transform:scale(1.4)}}
 
+/* Takvim: tam ekran + çıkış paneli */
+#v-cal{--s:46px}
+.app.calfull .dock{transform:translate(-50%,160%);opacity:0;pointer-events:none}
+#v-cal .cal{padding:22px 28px 24px}
+#v-cal .cset{padding-bottom:34px}
+#v-cal .kh{padding-left:calc(var(--s) + 16px)}
+.kx-bd{position:absolute;inset:0;z-index:3;display:none}.kx-bd.on{display:block}
+.kx{position:absolute;z-index:3;left:28px;top:22px;width:var(--s);height:var(--s);border-radius:calc(var(--s)/2);background:var(--surf);box-shadow:0 6px 18px rgba(0,0,0,.06);overflow:hidden;transition:height .45s var(--ease),box-shadow .4s var(--ease)}
+.kx.on{height:calc(var(--s)*(1 + var(--n,4)) + var(--n,4)*2px + 8px);box-shadow:0 18px 44px rgba(0,0,0,.16),0 2px 8px rgba(0,0,0,.06);transition:height .7s var(--sp),box-shadow .4s var(--ease)}
+.kx-t{position:relative;display:grid;place-items:center;width:var(--s);height:var(--s);border-radius:50%;transition:transform .5s var(--sp)}
+.kx-t:active{transform:scale(.92)}
+.kx-t svg{grid-area:1/1;width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:opacity .3s var(--ease),transform .55s var(--sp)}
+.kx-t .i-x{opacity:0;transform:rotate(-90deg) scale(.5)}
+.kx.on .kx-t .i-x{opacity:1;transform:none}
+.kx.on .kx-t .i-g{opacity:0;transform:rotate(90deg) scale(.5)}
+.kx-l{display:flex;flex-direction:column;gap:2px;padding-bottom:6px}
+.kx-i{display:grid;place-items:center;width:var(--s);height:var(--s);border-radius:50%;color:var(--fg);opacity:0;transform:translateY(-14px) scale(.7);transition:opacity .2s var(--ease),transform .3s var(--ease),background .3s}
+.kx.on .kx-i{opacity:1;transform:none;transition:opacity .4s var(--ease) calc(var(--i)*50ms + 120ms),transform .6s var(--sp) calc(var(--i)*50ms + 120ms),background .3s}
+.kx.on .kx-i:active{transform:scale(.88);transition-delay:0s}
+.kx-i svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+@media (hover:hover){.kx-i:hover{background:var(--surf2)}}
+@media (max-width:1100px){#v-cal{--s:40px}}
+@media (max-width:1000px){#v-cal .cal{padding:18px 20px 20px}.kx{left:20px;top:18px}}
 </style>
 </head>
 <body>
@@ -591,7 +614,10 @@ button.wn:active{transform:scale(.9)}button.wn:hover{background:var(--surf);colo
         </div>
       </div>
     </section>
-    <section class="view" id="v-cal"><div class="cal" id="cal"></div><div class="cset" id="cset"></div></section>
+    <section class="view" id="v-cal"><div class="cal" id="cal"></div><div class="cset" id="cset"></div>
+      <div class="kx-bd" id="kxbd"></div>
+      <div class="kx" id="kx"><button class="kx-t" id="kxt" aria-label="Takvimden çık" aria-expanded="false" aria-haspopup="true"><svg class="i-g" viewBox="0 0 24 24"><rect x="4" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.8"/></svg><svg class="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button><div class="kx-l" id="kxl"></div></div>
+    </section>
     <section class="view" id="v-todo">
       <div class="td">
         <div class="tdh"><div><h1 id="tdn1"></h1><small id="tdn2"></small></div><div class="tdn"><button class="btn" id="tdp" aria-label="Önceki gün">‹</button><button class="btn" id="tdb">Bugün</button><button class="btn" id="tdx" aria-label="Sonraki gün">›</button></div></div>
@@ -1201,7 +1227,7 @@ function paintK(q){
   iFlush();IDY=null;ICX={};
   var l=cv.l,t=l==="year"?'<span>'+cv.y+'</span>':l==="month"?'<button data-a="y">'+cv.y+'</button><span>'+MN[cv.m]+'</span>':l==="week"?'<button data-a="y">'+cv.y+'</button><button data-a="mo">'+MN[cv.m]+'</button><span>'+isoW(new Date(cv.y,cv.m,cv.d))+'. hafta<em>'+wkRange(cv.y,cv.m,cv.d)+'</em></span>':'<button data-a="y">'+cv.y+'</button><button data-a="mo">'+MN[cv.m]+'</button><span>'+cv.d+'</span>',
   fs=$(".app").classList.contains("fs");
-  $("#cal").innerHTML='<div class="kh"><div class="kt">'+t+'</div>'+(l==="day"&&CS.set.dm?iTools():"")+'<div class="kc">'+ib("pv","p")+(l==="month"||l==="week"?'<button class="kb w'+(l==="week"&&isCurWk(cv.y,cv.m,cv.d)?" on":"")+'" data-a="tw">Bu hafta</button>':'')+'<button class="kb w" data-a="td">Bugün</button>'+ib("nx","n")+'<button class="kb fsx'+(fs?" on":"")+'" data-a="fs" aria-label="Tam ekran"><svg class="i-e" viewBox="0 0 24 24">'+IC.fs+'</svg><svg class="i-c" viewBox="0 0 24 24">'+IC.fx+'</svg></button>'+ib("st","st")+'</div></div><div class="kbody"><div class="kz '+(q?"no":cv.dir)+(l==="month"?" km":l==="week"?" kw":"")+'">'+(l==="year"?rY():l==="month"?rM():l==="week"?rW():rD())+'</div></div>';
+  $("#cal").innerHTML='<div class="kh"><div class="kt">'+t+'</div>'+(l==="day"&&CS.set.dm?iTools():"")+'<div class="kc">'+ib("pv","p")+'<button class="kb w" data-a="td">Bugün</button>'+ib("nx","n")+ib("st","st")+'</div></div><div class="kbody"><div class="kz '+(q?"no":cv.dir)+(l==="month"?" km":l==="week"?" kw":"")+'">'+(l==="year"?rY():l==="month"?rM():l==="week"?rW():rD())+'</div></div>';
   if(l==="day"&&CS.set.dm)iInit();
 }
 /* Gün sayfası: kalemle yazı, dokunarak işaret */
@@ -1830,13 +1856,14 @@ function step(n){
   cv.dir=n>0?"nx":"pv";cv.ed=0;cv.sel=0;paintK();
 }
 function lvl(l,dir){cv.sel=l==="month"&&cv.l==="day"?cv.d:0;cv.l=l;cv.dir=dir;cv.ed=0;paintK()}
+function goWeek(){var same=cv.l==="week"&&isCurWk(cv.y,cv.m,cv.d);cv.y=TD.getFullYear();cv.m=TD.getMonth();cv.d=TD.getDate();if(same){cv.sel=0;paintK(true)}else lvl("week","in")}
 var dt;
 $("#cal").addEventListener("click",function(e){
   var b=e.target.closest("[data-a]");if(!b)return;var a=b.dataset.a;
   if(a==="m"){cv.m=+b.dataset.m;cv.d=Math.min(cv.d,dim(cv.y,cv.m));lvl("month","in")}
   else if(a==="d"){var n=+b.dataset.d;if(cv.sel===n){cv.d=n;lvl("day","in")}else{cv.sel=n;cv.d=n;$$(".dc[data-d]").forEach(function(x){x.classList.toggle("s",+x.dataset.d===n)})}}
   else if(a==="w"){cv.d=+b.dataset.d;lvl("week","in")}
-  else if(a==="tw"){var same=cv.l==="week"&&isCurWk(cv.y,cv.m,cv.d);cv.y=TD.getFullYear();cv.m=TD.getMonth();cv.d=TD.getDate();if(same){cv.sel=0;paintK(true)}else lvl("week","in")}
+  else if(a==="tw")goWeek();
   else if(a==="wd"){cv.y=+b.dataset.y;cv.m=+b.dataset.m;cv.d=+b.dataset.d;lvl("day","in")}
   else if(a==="y")lvl("year","out");else if(a==="mo")lvl("month","out");
   else if(a==="pv")step(-1);else if(a==="nx")step(1);
@@ -2026,7 +2053,25 @@ $$(".db").forEach(function(b,n){b.onclick=function(){
   $("#dock").style.setProperty("--i",n);
   $$(".db").forEach(function(x){x.classList.toggle("on",x===b)});
   $$(".view").forEach(function(e){e.classList.toggle("on",e.id==="v-"+b.dataset.v)});
+  $(".app").classList.toggle("calfull",b.dataset.v==="cal");kxSet(0);
 }});
+
+/* Takvim: tam ekran çıkış paneli (üstteki düğme aşağı doğru açılır, içinde sayfa ikonları) */
+var KXE=$("#kx"),KXB=$("#kxt"),KXL=$("#kxl"),KXD=$("#kxbd");
+(function(){
+  var bs=$$(".db").filter(function(b){return b.dataset.v!=="cal"});
+  KXL.innerHTML=bs.map(function(b,i){var n=b.textContent.trim();return'<button class="kx-i" style="--i:'+i+'" data-go="'+b.dataset.v+'" aria-label="'+esc(n)+'" title="'+esc(n)+'">'+b.querySelector("svg").outerHTML+'</button>'}).join("");
+  KXE.style.setProperty("--n",bs.length);KXL.inert=true;
+})();
+function kxSet(v){v=!!v;KXE.classList.toggle("on",v);KXD.classList.toggle("on",v);KXB.setAttribute("aria-expanded",v);KXB.setAttribute("aria-label",v?"Menüyü kapat":"Takvimden çık");KXL.inert=!v}
+KXB.onclick=function(){kxSet(!KXE.classList.contains("on"))};
+KXD.onclick=function(){kxSet(0)};
+KXL.addEventListener("click",function(e){
+  var b=e.target.closest("[data-go]");if(!b)return;
+  kxSet(0);
+  var t=$('.db[data-v="'+b.dataset.go+'"]');setTimeout(function(){if(t)t.click()},140);
+});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&KXE.classList.contains("on")){e.preventDefault();e.stopPropagation();kxSet(0)}},true);
 
 /* Klavye kısayolları: atamalar KA listesinde, kullanıcının değişiklikleri KB.map'te (Ayarlar > Klavye kısa yolları) */
 function kFs(){
@@ -2052,7 +2097,7 @@ function kRun(id,e,c){
     case"tUp":case"tDown":if(MODE!=="cd"||c.fs)return false;k=$('.chip[data-a="'+(id==="tUp"?"5":"-5")+'"]');if(k)k.click();return true;
     case"cPrev":case"cNext":if(c.cs)return false;step(id==="cNext"?1:-1);return true;
     case"cToday":if(c.cs)return false;$('#cal [data-a="td"]').click();return true;
-    case"cWeek":if(c.cs)return false;$('#cal [data-a="tw"]').click();return true;
+    case"cWeek":if(c.cs)return false;goWeek();return true;
     case"cOpen":if(c.cs||c.btn||cv.l!=="month"||!cv.sel)return false;cv.d=cv.sel;lvl("day","in");return true;
     case"cUndo":if(c.cs||!IDY||!$(".dv"))return false;iUndo();return true;
     case"kPrev":case"kNext":
