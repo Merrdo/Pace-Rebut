@@ -1313,9 +1313,12 @@ async function shRender(){
   /* kartın kendisi: arkasında başka bir alan yok */
   c.fillStyle=shS(T.surf);c.fillRect(0,0,W,H);
   /* bugünün tarihi: sağ üst */
-  var dt=D.now.getDate()+" "+MN[D.now.getMonth()]+" "+D.now.getFullYear(),dw;
-  c.font="italic 600 27px "+shFont(600,27,1).split("px ")[1];shLS(c,1);dw=c.measureText(dt).width;
-  c.textAlign="right";c.fillStyle=shS(T.dim);c.fillText(dt,W-P,P+38);shLS(c,0);
+  var dt=D.now.getDate()+" "+MN[D.now.getMonth()]+" "+D.now.getFullYear(),dw,pw,pH=58,pX,pY=P+10;
+  c.font=shFont(700,26,1);shLS(c,.4);dw=c.measureText(dt).width;shLS(c,0);
+  pw=dw+56;pX=W-P-pw;
+  shRR(c,pX,pY,pw,pH,pH/2);c.fillStyle=shS(T.cell);c.fill();
+  c.textAlign="center";c.fillStyle=shS(shM(T.fg,T.dim,.3));c.font=shFont(700,26,1);shLS(c,.4);
+  c.fillText(dt,pX+pw/2+.2,pY+pH/2+9);shLS(c,0);dw=pw;
   /* başlık: ay + yıl (yıl soluk) */
   var mn=MN[D.M],ys=""+D.Y,fs=shFit(c,mn+" "+ys,800,104,1,W-2*P-dw-30),mw;
   shLS(c,-2);c.font=shFont(800,fs,1);c.textAlign="left";mw=c.measureText(mn+" ").width;
@@ -1342,6 +1345,8 @@ async function shRender(){
       var h=Math.floor(d.v/3600),m=Math.floor(d.v%3600/60),L=h?(m?[h+"sa",m+"dk"]:[h+"sa"]):[m?m+"dk":"<1dk"];
       c.font=shFont(800,29);c.fillStyle=shS(full?T.gtx:T.fg);
       L.forEach(function(t,k){c.fillText(t,x+16,y+CH-16-(L.length-1-k)*32)});
+    }else if(!d.fu){
+      c.font=shFont(800,29);c.fillStyle=shS(T.dim);c.globalAlpha=.75;c.fillText("0dk",x+16,y+CH-16);
     }
     c.restore();
   }
