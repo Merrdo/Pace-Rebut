@@ -559,6 +559,19 @@ button.wn:active{transform:scale(.9)}button.wn:hover{background:var(--surf);colo
 .app.fs .snb{opacity:0;visibility:hidden;pointer-events:none;transform:scale(.6);transition:transform .5s var(--sp),opacity .35s var(--ease),visibility 0s .35s}
 .card #snv{padding:0;height:30px;background:none;accent-color:var(--fg);cursor:pointer}
 .sn-s{margin-top:20px}.sn-s b{display:block;font-size:18px;font-weight:700}.sn-s small{display:block;margin:2px 0 10px;font:600 13px Inter,system-ui,sans-serif;color:var(--dim)}.sn-s .pm-pick{margin-top:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px}.sn-s .pm-pick .chip{min-width:0;height:46px;padding:0 12px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600;line-height:1;white-space:nowrap}
+/* ============================================================
+   KORUMA: SHEET AÇILIŞINDA "YENİLENME / FLAŞ" EFEKTİ OLMAYACAK
+   Kök neden: "açılışta hareket olmasın" düzeltmesi daha önce sadece #bsheet'e
+   yazılmıştı (kimliğe özel). Sesler/İstatistikler/Klavye sayfaları genel .sheet
+   kuralını kullandığı için içerik 30px kayarak + ölçeklenerek geliyordu.
+   KURAL: Dersler (#sheet) dışındaki HER sheet (şimdiki ve ileride eklenecek)
+   bu bloğa otomatik girer. Sheet'e özel düzeltme yazma, buraya ekle.
+   ============================================================ */
+.sheet:not(#sheet) .shw{transform:none!important;transition:none!important}
+.sheet:not(#sheet) .card,.sheet:not(#sheet) .sn-s,.sheet:not(#sheet) .sh-h{animation:none!important}
+.sheet:not(#sheet) .sbg{contain:paint;isolation:isolate;transition:none!important}
+.sheet:not(#sheet) .sbg .bgl,.sheet:not(#sheet) .sbg .pbg{transition:none!important}
+.sheet:not(#sheet) .sbg .bgl i{will-change:auto!important}
 </style>
 </head>
 <body>
@@ -712,8 +725,8 @@ document.addEventListener("click",function(e){if(e.target.closest("[data-bg=tg]"
 document.addEventListener("keydown",function(e){if(e.key==="Escape"&&$("#bsheet").classList.contains("on")){e.preventDefault();closeBg()}});
 bgApply();bgRender();$("#bgo").onclick=openBg;
 /* Tam sayfa panelleri (İstatistikler, Arka planlar) açılırken kendi solma geçişleri arkadaki renkli arka planı şeffaf göstermesin: panel açıkken arka plan anında gizlenir, kapanırken yavaşça geri gelir */
-(function(){function f(){ABI.classList.toggle("hold",$("#stsheet").classList.contains("on")||$("#bsheet").classList.contains("on"))}
-["#stsheet","#bsheet"].forEach(function(q){new MutationObserver(f).observe($(q),{attributes:true,attributeFilter:["class"]})})})();
+(function(){function f(){ABI.classList.toggle("hold",$("#stsheet").classList.contains("on")||$("#bsheet").classList.contains("on")||$("#ssheet").classList.contains("on"))}
+["#stsheet","#bsheet","#ssheet"].forEach(function(q){new MutationObserver(f).observe($(q),{attributes:true,attributeFilter:["class"]})})})();
 
 /* İstatistikler ve Sesler sayfaları, Süre ekranında o an görünen arka planı kullanır */
 (function(){
@@ -1006,7 +1019,8 @@ function beep(slot){sndPlay(slot);try{if(navigator.vibrate)navigator.vibrate([20
 /* Ses motoru ilk dokunuşta hazırlanır: süre bitince ağır ilk kurulum ve takılma olmasın */
 (function(){function w(){document.removeEventListener("pointerdown",w,true);document.removeEventListener("keydown",w,true);setTimeout(function(){if(SND.on&&acx())try{snBus()}catch(e){}},400)}document.addEventListener("pointerdown",w,true);document.addEventListener("keydown",w,true)})();
 function snR(){
-  $("#snl").innerHTML=SG.map(function(g){return'<div class="card"><h2>'+g[0]+'</h2>'+g[1].map(function(r){return'<div class="sn-s"><b>'+r[1]+'</b><small>'+r[2]+'</small><div class="pm-pick">'+[["off",["Sessiz"]]].concat(Object.keys(SD).map(function(k){return[k,SD[k]]})).map(function(x){return'<button class="chip'+(SND.m[r[0]]===x[0]?" on":"")+'" data-sl="'+r[0]+'" data-sd="'+x[0]+'">'+x[1][0]+'</button>'}).join("")+'</div></div>'}).join("")+'</div>'}).join("");
+  if(!snR.b){snR.b=1;$("#snl").innerHTML=SG.map(function(g){return'<div class="card"><h2>'+g[0]+'</h2>'+g[1].map(function(r){return'<div class="sn-s"><b>'+r[1]+'</b><small>'+r[2]+'</small><div class="pm-pick">'+[["off",["Sessiz"]]].concat(Object.keys(SD).map(function(k){return[k,SD[k]]})).map(function(x){return'<button class="chip'+(SND.m[r[0]]===x[0]?" on":"")+'" data-sl="'+r[0]+'" data-sd="'+x[0]+'">'+x[1][0]+'</button>'}).join("")+'</div></div>'}).join("")+'</div>'}).join("")}
+  $$("#snl [data-sl]").forEach(function(b){b.classList.toggle("on",SND.m[b.dataset.sl]===b.dataset.sd)});
   $$("[data-sn=tg]").forEach(function(b){b.classList.toggle("on",!!SND.on)});$("#snl").style.opacity=SND.on?1:.5;$("#snv").value=SND.v;
 }
 function snOpen(){snR();$("#ssheet").scrollTop=0;$("#sfr").classList.remove("on");$("#ssheet").classList.add("on")}
@@ -1020,6 +1034,7 @@ $("#ssheet").addEventListener("click",function(e){
 });
 $("#snv").addEventListener("input",function(){SND.v=+this.value;acx();if(AC)snBus();snVol()});
 $("#snv").addEventListener("change",function(){snSave();sndPlay("cd",1)});
+snR();
 document.addEventListener("keydown",function(e){if(e.key==="Escape"&&$("#ssheet").classList.contains("on")){e.preventDefault();snClose()}});
 var FXE="cubic-bezier(.22,1,.36,1)",RMQ=window.matchMedia?matchMedia("(prefers-reduced-motion: reduce)"):null;
 function fxOk(){return!!(Element.prototype.animate)&&!document.hidden&&!(RMQ&&RMQ.matches)}
@@ -2381,6 +2396,13 @@ $("#ksheet").addEventListener("click",function(e){
     kbDisarm();KB.map={};kbSave();kbRender();kbToast("Tüm kısa yollar varsayılana döndü.");
   }
 });
+
+/* KORUMA NÖBETÇİSİ: yazı tipleri açılıştan önce hazır olsun (geç gelen font = yeniden dizilim/flaş).
+   Ayrıca herhangi bir sheet ileride yeniden kayma/animasyon kazanırsa konsola uyarı verir:
+   Konsolda  ddSheetGuard()  yazıp çalıştırarak da elle test edebilirsin. */
+try{if(document.fonts&&document.fonts.load){["500 18px Outfit","600 16px Outfit","700 16px 'Baloo 2'","600 13px Inter"].forEach(function(f){document.fonts.load(f,"Aa Çş")})}}catch(e){}
+window.ddSheetGuard=function(){var bad=[];$$(".sheet").forEach(function(sh){if(sh.id==="sheet")return;var w=sh.querySelector(".shw");if(!w)return;var cs=getComputedStyle(w);if((cs.transform&&cs.transform!=="none")||parseFloat(cs.transitionDuration)>0)bad.push(sh.id||"(adsız sheet)")});if(bad.length)console.warn("[KORUMA] Açılışta kayma/animasyon var:",bad);else console.log("[KORUMA] Tüm sheet'ler temiz.");return bad};
+try{setTimeout(function(){var b=window.ddSheetGuard();if(b.length)console.warn("[KORUMA] Sheet açılış koruması bozulmuş. CSS'teki KORUMA bloğunu kontrol et.")},1500)}catch(e){}
 
 if("serviceWorker" in navigator&&location.protocol.indexOf("http")===0){navigator.serviceWorker.register("sw.js").catch(function(){})}
 })();
