@@ -554,19 +554,18 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .qb:active{transform:scale(.95)}
 .qb.pr{background:var(--fg);color:var(--bg)}
 .qb svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
-.qg{column-count:4;column-gap:14px}
-@media (max-width:1100px){.qg{column-count:3}}
-@media (max-width:760px){.qg{column-count:2}#v-questions{padding:28px 20px var(--dock-space)}}
-.qi{position:relative;display:block;width:100%;margin:0 0 14px;padding:0;break-inside:avoid;border-radius:18px;overflow:hidden;background:var(--surf2);box-shadow:0 1px 0 rgba(17,17,17,.04),0 6px 16px -8px rgba(17,17,17,.14);transition:transform .5s var(--sp);animation:up .6s var(--ease) backwards}
+.qg{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media (max-width:760px){.qg{grid-template-columns:repeat(2,1fr)}#v-questions{padding:28px 20px var(--dock-space)}}
+.qi{position:relative;display:block;width:100%;aspect-ratio:4/3;margin:0;padding:0;border-radius:18px;overflow:hidden;background:var(--surf2);box-shadow:0 1px 0 rgba(17,17,17,.04),0 6px 16px -8px rgba(17,17,17,.14);transition:transform .5s var(--sp);animation:up .6s var(--ease) backwards}
 .qi:active{transform:scale(.97)}
-.qi img{display:block;width:100%;height:auto;pointer-events:none;-webkit-user-drag:none}
+.qi img{display:block;width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-drag:none}
 .qi small{position:absolute;left:8px;bottom:8px;padding:3px 9px;border-radius:999px;background:rgba(17,17,17,.62);color:#fff;font:600 11px Inter,system-ui,sans-serif;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 .qe{display:grid;place-items:center;text-align:center;gap:6px;padding:70px 24px;border-radius:26px;border:2px dashed var(--surf2);color:var(--dim);width:100%;transition:background .3s,transform .5s var(--sp)}
 .qe:active{transform:scale(.99);background:var(--surf)}
 .qe svg{width:46px;height:46px;fill:none;stroke:var(--fg);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;margin:0 auto 6px}
 .qe b{font-size:22px;color:var(--fg)}
 .qe span{font-size:15px;font-weight:500}
-.qs{position:fixed;left:50%;top:calc(20px + env(safe-area-inset-top,0px));transform:translate(-50%,-80px);z-index:12;padding:10px 20px;border-radius:999px;background:var(--fg);color:var(--bg);font-size:15px;font-weight:700;transition:transform .6s var(--ease);pointer-events:none}
+.qs{position:fixed;left:50%;top:calc(20px + env(safe-area-inset-top,0px));transform:translate(-50%,-80px);z-index:14;padding:10px 20px;border-radius:999px;background:var(--fg);color:var(--bg);font-size:15px;font-weight:700;transition:transform .6s var(--ease);pointer-events:none}
 .qs.on{transform:translate(-50%,0)}
 .qv{position:fixed;inset:0;z-index:11;display:flex;align-items:center;justify-content:center;background:rgba(17,17,17,.92);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);opacity:0;visibility:hidden;transition:opacity .4s var(--ease),visibility 0s .4s}
 .qv.on{opacity:1;visibility:visible;transition-delay:0s}
@@ -581,6 +580,22 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .qvn[hidden]{display:none}
 .qvn svg{width:24px;height:24px;fill:none;stroke:var(--fg);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
 .qvn.l{left:20px}.qvn.r{right:20px}
+
+.qc{position:fixed;inset:0;z-index:13;display:flex;flex-direction:column;background:#111;color:#fff;opacity:0;visibility:hidden;transition:opacity .4s var(--ease),visibility 0s .4s}
+.qc.on{opacity:1;visibility:visible;transition-delay:0s}
+.qct{flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:calc(14px + env(safe-area-inset-top,0px)) 20px 10px;font:600 15px Inter,system-ui,sans-serif}
+.qct b{font:700 17px "Baloo 2",system-ui,sans-serif}
+.qct .fl{color:var(--fg)}
+.qcs{position:relative;flex:1;min-height:0;overflow:hidden;touch-action:none;cursor:grab;-webkit-user-select:none;user-select:none}
+.qcs:active{cursor:grabbing}
+.qcs canvas{position:absolute;left:0;top:0;transform-origin:0 0;max-width:none;will-change:transform;pointer-events:none}
+.qcf{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);border:2px solid #fff;border-radius:6px;box-shadow:0 0 0 200vmax rgba(17,17,17,.66);pointer-events:none;background:linear-gradient(to right,transparent calc(33.33% - .5px),rgba(255,255,255,.35) calc(33.33% - .5px),rgba(255,255,255,.35) calc(33.33% + .5px),transparent calc(33.33% + .5px),transparent calc(66.66% - .5px),rgba(255,255,255,.35) calc(66.66% - .5px),rgba(255,255,255,.35) calc(66.66% + .5px),transparent calc(66.66% + .5px)),linear-gradient(to bottom,transparent calc(33.33% - .5px),rgba(255,255,255,.35) calc(33.33% - .5px),rgba(255,255,255,.35) calc(33.33% + .5px),transparent calc(33.33% + .5px),transparent calc(66.66% - .5px),rgba(255,255,255,.35) calc(66.66% - .5px),rgba(255,255,255,.35) calc(66.66% + .5px),transparent calc(66.66% + .5px))}
+.qcb{flex:none;display:flex;align-items:center;gap:14px;padding:12px 20px calc(18px + env(safe-area-inset-bottom,0px))}
+.qcb .fl{color:var(--fg);display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.qcb .fl svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.qcb .fl.pr{background:#fff}
+.qcb input[type=range]{flex:1;min-width:80px;height:44px;accent-color:#fff;background:none;margin:0;padding:0;border:0;max-width:none}
+.qcb small{flex:none;font:500 12px Inter,system-ui,sans-serif;opacity:.7}
 </style>
 </head>
 <body>
@@ -638,6 +653,15 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
   <div class="mod" id="sset"><div class="mc card" id="smc" tabindex="-1" role="dialog" aria-modal="true" aria-label="Kronometre ayarları"><h2>Kronometre ayarları</h2><p>Kronometrenin nasıl görüneceğini seç.</p><div class="pm-l"><div class="pm-row"><div><b>Salise göster</b><small>Saniyenin yanında yüzde birlik kısım</small></div><button class="tg" data-sk="c" aria-label="Salise göster"><i></i></button></div><div class="pm-row"><div><b>Saat basamağı</b><small>Bir saati geçmeden de 00 olarak göster</small></div><button class="tg" data-sk="h" aria-label="Saat basamağı"><i></i></button></div></div><div class="row"><button class="btn" id="sdf">Varsayılan</button><button class="btn pr" id="sdn">Bitti</button></div></div></div>
   <div class="sheet" id="stsheet"><div class="fl-r"><button class="fl fk" id="stx">Kapat</button></div><div class="shw"><div class="sh-h"><div><h1>İstatistikler</h1><p>Kronometre, geri sayım ve Pomodoro odak turlarında geçen süre günlük olarak burada toplanır.</p></div></div><div id="stbody"></div></div><div class="mod" id="stadd"><div class="mc card" id="stamc" tabindex="-1" role="dialog" aria-modal="true" aria-label="Süre ekle"><h2 id="sah"></h2><p id="sas"></p><div class="pm-l"><div class="pm-row"><div><b>Eklenecek süre</b><small>5 dakikalık adımlarla</small></div><div class="pm-stp"><button data-sa="-1" aria-label="Süreyi azalt">−</button><output id="sao"></output><button data-sa="1" aria-label="Süreyi artır">+</button></div></div><div class="pm-row pm-cr"><div class="pm-pick" id="sap"></div></div></div><div class="row"><button class="btn dg" id="saz">Günü sıfırla</button><button class="btn" id="sax">Vazgeç</button><button class="btn pr" id="sak">Ekle</button></div></div></div></div>
   <div class="mod" id="pset"><div class="mc card" id="pmc" tabindex="-1" role="dialog" aria-modal="true" aria-label="Pomodoro ayarları"><h2>Pomodoro ayarları</h2><p>Odak süreni, molalarını ve periyodunu ayarla.</p><div class="pm-l" id="pml"></div><p class="pm-n">Tur süresi değişirse o an süren tur sıfırlanır.</p><div class="row"><button class="btn" id="pdf">Varsayılan</button><button class="btn" id="pcn">Vazgeç</button><button class="btn pr" id="psv">Kaydet</button></div></div></div>
+  <div class="qc" id="qc" role="dialog" aria-modal="true" aria-label="Fotoğrafı kırp">
+    <div class="qct"><button class="fl" id="qcx" type="button">Vazgeç</button><b id="qcn">Kırp</b><button class="fl" id="qcs2" type="button">Atla</button></div>
+    <div class="qcs" id="qcst"><canvas id="qcv"></canvas><div class="qcf" id="qcf"></div></div>
+    <div class="qcb">
+      <button class="fl" id="qcr" type="button" aria-label="Döndür"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.6-5.9M20 4v4.5h-4.5"/></svg>Döndür</button>
+      <input type="range" id="qcz" min="1" max="4" step="0.01" value="1" aria-label="Yakınlaştır"><small>Sürükle · iki parmakla yakınlaştır</small>
+      <button class="fl pr" id="qck" type="button">Kaydet</button>
+    </div>
+  </div>
   <div class="qs" id="qs" role="status"></div>
   <div class="qv" id="qv" role="dialog" aria-modal="true" aria-label="Soru fotoğrafı">
     <div class="qvt"><span id="qvc"></span><div class="fl-row" style="display:flex;gap:10px"><button class="fl dg" id="qvd" type="button">Sil</button><button class="fl" id="qvx" type="button">Kapat</button></div></div>
@@ -1959,35 +1983,107 @@ function render(){
   b.innerHTML="";b.appendChild(g);
 }
 
-/* Görseli küçült: uzun kenar en fazla max px, JPEG */
-function shrink(file,max,q){return new Promise(function(res,rej){
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+/* Kırpma: her soru fotoğrafı sabit boyutta (OW x OH) kaydedilir. Oran/boyut değişecekse sadece bu sabitleri değiştir.
+   Kırpılan alan ne kadar küçük olursa olsun çıktı hep aynı boyuta ölçeklenir. */
+var OW=1600,OH=1200,TW=520,TH=390,SRC_MAX=3200;
+var C=null,PT={},pinch=null;
+function cvOf(w,h){var c=document.createElement("canvas");c.width=w;c.height=h;return c}
+function loadSrc(file){return new Promise(function(res,rej){
   var u=URL.createObjectURL(file),im=new Image();
   im.onload=function(){
-    var w=im.naturalWidth,h=im.naturalHeight,k=Math.min(1,max/Math.max(w,h)),c=document.createElement("canvas");
-    c.width=Math.max(1,Math.round(w*k));c.height=Math.max(1,Math.round(h*k));
+    var w=im.naturalWidth,h=im.naturalHeight,k=Math.min(1,SRC_MAX/Math.max(w,h)),c=cvOf(Math.max(1,Math.round(w*k)),Math.max(1,Math.round(h*k)));
     var x=c.getContext("2d");x.fillStyle="#fff";x.fillRect(0,0,c.width,c.height);x.drawImage(im,0,0,c.width,c.height);
-    URL.revokeObjectURL(u);
-    c.toBlob(function(b){b?res(b):rej(new Error("blob"))},"image/jpeg",q);
+    URL.revokeObjectURL(u);res(c);
   };
   im.onerror=function(){URL.revokeObjectURL(u);rej(new Error("img"))};
   im.src=u;
 })}
-function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function cLayout(){
+  var st=$("#qcst"),W=st.clientWidth,H=st.clientHeight,pad=24,r=OW/OH;
+  var fw=Math.min(W-pad*2,(H-pad*2)*r),fh=fw/r;
+  C.W=W;C.H=H;C.fw=fw;C.fh=fh;
+  var f=$("#qcf");f.style.width=fw+"px";f.style.height=fh+"px";
+  C.min=Math.max(fw/C.src.width,fh/C.src.height);
+}
+function cClamp(){
+  var s=C.min*C.z,hx=C.fw/(2*s),hy=C.fh/(2*s);
+  C.cx=Math.min(C.src.width-hx,Math.max(hx,C.cx));
+  C.cy=Math.min(C.src.height-hy,Math.max(hy,C.cy));
+}
+function cPaint(){
+  cClamp();
+  var s=C.min*C.z,cv=$("#qcv");
+  cv.style.transform="translate("+(C.W/2-C.cx*s)+"px,"+(C.H/2-C.cy*s)+"px) scale("+s+")";
+  $("#qcz").value=C.z;
+}
+function cShow(src){
+  C.src=src;var cv=$("#qcv");cv.width=src.width;cv.height=src.height;cv.getContext("2d").drawImage(src,0,0);
+  cLayout();C.z=1;C.cx=src.width/2;C.cy=src.height/2;cPaint();
+}
+function cRotate(){
+  var o=C.src,n=cvOf(o.height,o.width),x=n.getContext("2d");
+  x.translate(n.width,0);x.rotate(Math.PI/2);x.drawImage(o,0,0);
+  cShow(n);
+}
+function cOut(){
+  var s=C.min*C.z,sx=C.cx-C.fw/(2*s),sy=C.cy-C.fh/(2*s),sw=C.fw/s,sh=C.fh/s;
+  var o=cvOf(OW,OH),x=o.getContext("2d");x.imageSmoothingQuality="high";x.drawImage(C.src,sx,sy,sw,sh,0,0,OW,OH);
+  var t=cvOf(TW,TH),y=t.getContext("2d");y.imageSmoothingQuality="high";y.drawImage(o,0,0,TW,TH);
+  return Promise.all([new Promise(function(r){o.toBlob(r,"image/jpeg",.88)}),new Promise(function(r){t.toBlob(r,"image/jpeg",.8)})]);
+}
+/* Bir fotoğrafı kırptır: {blob,thumb} | "skip" | null (hepsini iptal) */
+function openCrop(file,i,n){return new Promise(function(res){
+  loadSrc(file).then(function(src){
+    C={};$("#qcn").textContent=n>1?"Kırp  "+(i+1)+" / "+n:"Kırp";
+    $("#qcs2").style.display=n>1?"":"none";$("#qck").textContent=(n>1&&i<n-1)?"Kaydet ve sonraki":"Kaydet";
+    $("#qc").classList.add("on");cShow(src);
+    function end(v){$("#qc").classList.remove("on");C=null;PT={};pinch=null;
+      ["#qck","#qcx","#qcs2"].forEach(function(q){$(q).onclick=null});document.removeEventListener("keydown",key,true);res(v)}
+    function key(e){if(e.key==="Escape"){e.preventDefault();e.stopImmediatePropagation();end(null)}else if(e.key==="Enter"){e.preventDefault();e.stopImmediatePropagation();$("#qck").click()}else e.stopImmediatePropagation()}
+    document.addEventListener("keydown",key,true);
+    $("#qcx").onclick=function(){end(null)};
+    $("#qcs2").onclick=function(){end("skip")};
+    $("#qck").onclick=function(){cOut().then(function(r){end({blob:r[0],thumb:r[1]})})};
+  },function(){toast("Fotoğraf açılamadı");res("skip")});
+})}
+(function(){
+  var st=$("#qcst");
+  st.addEventListener("pointerdown",function(e){if(!C)return;st.setPointerCapture(e.pointerId);PT[e.pointerId]={x:e.clientX,y:e.clientY};pinch=null});
+  st.addEventListener("pointermove",function(e){
+    if(!C||!PT[e.pointerId])return;
+    var ids=Object.keys(PT),p=PT[e.pointerId],dx=e.clientX-p.x,dy=e.clientY-p.y;
+    p.x=e.clientX;p.y=e.clientY;
+    if(ids.length===1){var s=C.min*C.z;C.cx-=dx/s;C.cy-=dy/s;cPaint()}
+    else if(ids.length===2){
+      var a=PT[ids[0]],b=PT[ids[1]],d=Math.hypot(a.x-b.x,a.y-b.y);
+      if(!pinch)pinch={d:d,z:C.z};
+      else if(pinch.d>0){C.z=Math.min(4,Math.max(1,pinch.z*d/pinch.d));cPaint()}
+    }
+  });
+  function up(e){delete PT[e.pointerId];pinch=null}
+  st.addEventListener("pointerup",up);st.addEventListener("pointercancel",up);
+  st.addEventListener("wheel",function(e){if(!C)return;e.preventDefault();C.z=Math.min(4,Math.max(1,C.z*Math.exp(-e.deltaY*.0025)));cPaint()},{passive:false});
+  $("#qcz").addEventListener("input",function(){if(C){C.z=+this.value;cPaint()}});
+  $("#qcr").onclick=function(){if(C)cRotate()};
+  window.addEventListener("resize",function(){if(C){cLayout();cPaint()}});
+})();
+
 function add(files){
   files=[].slice.call(files).filter(function(f){return /^image\//.test(f.type)||/\.(heic|heif|jpe?g|png|webp)$/i.test(f.name)});
   if(!files.length)return;
-  var done=0,fail=0,t0=Date.now();
-  toast("Yükleniyor… 0/"+files.length);
-  files.reduce(function(p,f,i){
-    return p.then(function(){
-      return Promise.all([shrink(f,1800,.85),shrink(f,520,.78)]).then(function(r){
-        return tx("readwrite",function(st){st.put({id:uid(),ts:t0+i,blob:r[0],thumb:r[1]})});
-      }).then(function(){done++},function(){fail++}).then(function(){toast("Yükleniyor… "+(done+fail)+"/"+files.length)});
+  var done=0,t0=Date.now(),chain=Promise.resolve(),stop=false;
+  files.forEach(function(f,i){
+    chain=chain.then(function(){
+      if(stop)return;
+      return openCrop(f,i,files.length).then(function(r){
+        if(r===null){stop=true;return}
+        if(r==="skip")return;
+        return tx("readwrite",function(st){st.put({id:uid(),ts:t0+i,blob:r.blob,thumb:r.thumb})}).then(function(){done++},function(){toast("Kaydedilemedi")});
+      });
     });
-  },Promise.resolve()).then(loadAll).then(function(){
-    render();
-    toast(fail?done+" eklendi, "+fail+" eklenemedi":(done===1?"Soru eklendi":done+" soru eklendi"));
   });
+  chain.then(loadAll).then(function(){render();if(done)toast(done===1?"Soru eklendi":done+" soru eklendi")});
 }
 
 /* Büyük görünüm */
