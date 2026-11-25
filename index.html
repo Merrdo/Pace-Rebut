@@ -993,10 +993,8 @@ textarea.qfi{height:140px;resize:none}
 .tzrc b{font-size:30px;font-weight:700;font-variant-numeric:tabular-nums}.tzrc span{font-size:16px;font-weight:600;color:var(--dim)}
 .tzrr{display:flex;align-items:center;gap:10px}
 .tzrm{font:700 16px Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;color:#55524d}
-.tzrp{display:flex;align-items:center;gap:12px;margin:0 20px 14px}
-.tzrpb{flex:1;height:8px;border-radius:8px;background:var(--surf2);overflow:hidden}
-.tzrpb i{display:block;height:100%;width:0;border-radius:8px;background:var(--fg);transition:width .6s var(--ease)}
-.tzrp span{flex:none;min-width:34px;text-align:right;font:700 13px/1 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;color:var(--dim)}
+.tzrp{height:5px;margin:0 20px 12px;border-radius:5px;background:var(--surf2);overflow:hidden}
+.tzrp i{display:block;height:100%;width:0;border-radius:5px;background:var(--fg);transition:width .5s var(--ease)}
 .tzrb{flex:1;min-height:0;display:grid;grid-template-rows:minmax(0,1fr) auto;gap:14px;padding:0 20px calc(18px + env(safe-area-inset-bottom,0px))}
 .tzri{min-height:0;border-radius:22px;background:#fff;overflow:auto;display:grid;place-items:center;padding:10px;box-shadow:0 6px 16px -10px rgba(17,17,17,.2);cursor:zoom-in}
 .tzri img{display:block;max-width:100%;max-height:100%;min-height:0;object-fit:contain}
@@ -1183,50 +1181,36 @@ textarea.qfi{height:140px;resize:none}
 /* ===== Test kipinde soru görüntüleyici ===== */
 .qv.tm .qvo,.qv.tm .qvok,.qv.tm .qvq{display:none!important}
 .qv.tm.fs .qvx,.qv.tm.fs .qvz,.qv.tm.fs .qvc,.qv.tm.fs .qvt{display:none!important}
-/* Test tam ekran: Sorular görüntüleyicisiyle aynı dil (koyu zemin, yuvarlak düğmeler, dokununca açılıp kapanan arayüz) */
-.tmt{position:fixed;top:0;left:0;right:0;z-index:12;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:calc(18px + env(safe-area-inset-top,0px)) 16px 0;color:#fff;pointer-events:none;opacity:0;visibility:hidden;transform:translateY(-14px);transition:opacity .25s,transform .45s var(--ease),visibility 0s .25s}
-.tmt>*{pointer-events:auto}
-.tmg{display:flex;align-items:center;gap:8px}
-.tmi,.tmp,.tmbt{height:46px;border-radius:23px;font:700 16px/1 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;white-space:nowrap;transition:transform .35s var(--sp),background .2s}
-.tmi,.tmp{background:#2e2e2e;color:#fff;box-shadow:0 8px 22px -10px rgba(0,0,0,.7)}
-.tmi{display:grid;place-items:center;width:46px;padding:0;border-radius:50%}
-.tmi svg,.tmp svg{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
-.tmp{display:inline-flex;align-items:center;gap:8px;padding:0 16px 0 14px}
-.tmp span{color:#a3a3a3;font-weight:600}
-.tmbt{padding:0 22px;background:#fff;color:#111;box-shadow:0 8px 22px -10px rgba(0,0,0,.7)}
-.tmi:active,button.tmp:active,.tmbt:active{transform:scale(.93)}
-.tmb{position:fixed;left:0;right:0;bottom:calc(14px + max(env(safe-area-inset-bottom,0px),var(--kb,0px)));z-index:12;width:min(440px,calc(100% - 24px));margin:0 auto;padding:14px 12px 12px;border-radius:30px;background:rgba(28,28,28,.88);-webkit-backdrop-filter:blur(22px);backdrop-filter:blur(22px);box-shadow:0 20px 48px -14px rgba(0,0,0,.8),inset 0 0 0 1px rgba(255,255,255,.07);color:#fff;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(28px) scale(.97);transition:opacity .25s,transform .5s var(--sp),visibility 0s .25s}
-#qv.on.tm.fs.ui~.tmt,#qv.on.tm.fs.ui~.tmb{opacity:1;visibility:visible;transform:none;transition-delay:0s}
-#qv.on.tm.fs.ui~.tmb{pointer-events:auto}
-.tmpg{display:flex;align-items:center;gap:12px;padding:0 6px;margin-bottom:12px}
-.tmpg div{flex:1;height:4px;border-radius:4px;background:rgba(255,255,255,.14);overflow:hidden}
-.tmpg i{display:block;height:100%;width:0;border-radius:4px;background:#fff;transition:width .6s var(--ease)}
-.tmpg span{flex:none;font:600 12px/1 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;color:#a3a3a3}
-.tmlt{display:flex;gap:8px}
-.tmlt button{flex:1;min-width:0;height:54px;border-radius:19px;background:#2e2e2e;color:#fff;font:800 22px/1 Inter,system-ui,sans-serif;transition:transform .4s var(--sp),background .2s,color .2s}
-.tmlt button.on{background:var(--c,#fff);color:#111;animation:tzPop .42s var(--sp)}
-.tmlt button:active{transform:scale(.92)}
-.tmta{display:block;width:100%;height:54px;min-height:54px;max-height:130px;padding:16px 18px;border:0;border-radius:20px;background:#2e2e2e;color:#fff;font:500 16px/1.3 Inter,system-ui,sans-serif;resize:none;overflow:auto;-webkit-user-select:text;user-select:text}
+.tmt,.tmb{position:fixed;left:0;right:0;z-index:12;background:rgba(20,20,20,.95);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);color:#fff;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .25s,transform .45s var(--ease),visibility 0s .25s}
+.tmt{top:0;padding:calc(12px + env(safe-area-inset-top,0px)) 16px 12px;border-radius:0 0 28px 28px;transform:translateY(-24px)}
+.tmb{bottom:0;padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px));border-radius:28px 28px 0 0;transform:translateY(24px)}
+#qv.on.tm.fs.ui~.tmt,#qv.on.tm.fs.ui~.tmb{opacity:1;visibility:visible;pointer-events:auto;transform:none;transition-delay:0s}
+.tmw{max-width:640px;margin:0 auto}
+.tmr{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.tmrr{display:flex;gap:8px}
+.tmbtn{height:44px;padding:0 20px;border-radius:22px;background:#2e2e2e;color:#fff;font:700 16px Inter,system-ui,sans-serif;white-space:nowrap;transition:transform .35s var(--sp),background .2s,opacity .2s}
+.tmbtn.pr{background:#fff;color:#111}
+.tmbtn:active{transform:scale(.94)}
+.tmbtn[disabled]{opacity:.35;pointer-events:none}
+.tmic{display:grid;place-items:center;width:44px;height:44px;padding:0;border-radius:50%;background:#2e2e2e;color:#fff;transition:transform .35s var(--sp)}
+.tmic:active{transform:scale(.92)}
+.tmic svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round}
+.tmc{flex:1;text-align:center;font:700 22px Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;color:#fff}
+.tmd{display:flex;gap:8px;overflow-x:auto;padding:12px 2px 2px;scrollbar-width:none;touch-action:pan-x;overscroll-behavior:contain}
+.tmd::-webkit-scrollbar{display:none}
+.tmd button{flex:none;min-width:40px;height:40px;padding:0 6px;border-radius:13px;background:#2e2e2e;color:#fff;font:700 15px Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;transition:background .3s,color .3s,box-shadow .3s,transform .45s var(--sp)}
+.tmd button.dn{box-shadow:inset 0 0 0 2px #fff}
+.tmd button.cur{background:#fff;color:#111;box-shadow:none;transform:scale(1.1)}
+.tmal{margin-bottom:10px;font:800 12px Inter,system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#b5b5b5}
+.tml{display:flex;gap:10px;justify-content:center}
+.tml button{flex:1;max-width:76px;height:58px;border-radius:19px;background:#2e2e2e;color:#fff;font:800 24px Inter,system-ui,sans-serif;transition:transform .4s var(--sp),background .2s,color .2s}
+.tml button.on{background:#fff;color:#111;animation:tzPop .42s var(--sp)}
+.tml button:active{transform:scale(.92)}
+.tmta{display:block;width:100%;height:96px;padding:12px 14px;border:0;border-radius:18px;background:#2e2e2e;color:#fff;font:500 16px Inter,system-ui,sans-serif;resize:none;-webkit-user-select:text;user-select:text}
 .tmta::placeholder{color:#9a9a9a}
-.tmta:focus{outline:0;box-shadow:inset 0 0 0 2px rgba(255,255,255,.9)}
-.qv.tm.fs .qvzb{bottom:auto;top:calc(78px + env(safe-area-inset-top,0px))}
-/* Soru listesi (alttan açılan beyaz sayfa, Sorular görüntüleyicisindeki detay paneliyle aynı dil) */
-.tmsc{position:fixed;inset:0;z-index:12;background:#000;opacity:0;visibility:hidden;transition:opacity .3s ease,visibility 0s .3s}
-.tmls{position:fixed;left:50%;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:12;width:min(520px,calc(100% - 24px));max-height:74%;overflow:auto;padding:0 20px 22px;border-radius:32px;background:#fff;color:#111;transform:translate(-50%,56px) scale(.97);opacity:0;visibility:hidden;transition:transform .5s var(--sp),opacity .25s ease,visibility 0s .5s;overscroll-behavior:contain}
-#qv.on.tm.fs~.tmsc.on{opacity:.6;visibility:visible;transition-delay:0s}
-#qv.on.tm.fs~.tmls.on{transform:translate(-50%,0);opacity:1;visibility:visible;transition-delay:0s}
-.tmlg{position:sticky;top:0;z-index:1;display:block;width:100%;height:30px;background:#fff}
-.tmlg:after{content:"";position:absolute;left:50%;top:11px;width:40px;height:5px;margin-left:-20px;border-radius:3px;background:#d9d5cd}
-.tmlh{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0 2px 16px}
-.tmlh b{font:800 22px/1.15 Inter,system-ui,sans-serif;letter-spacing:-.3px}
-.tmlh span{font:600 14px/1 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;color:#8a8782}
-.tmlgr{display:grid;grid-template-columns:repeat(auto-fill,minmax(56px,1fr));gap:10px}
-.tmlgr button{position:relative;aspect-ratio:1;border-radius:18px;background:#f4f2ee;color:#111;font:800 18px/1 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;transition:transform .35s var(--sp),background .3s}
-.tmlgr button.dn{background:var(--c,#d9d5cd)}
-.tmlgr button.dn:after{content:"";position:absolute;left:50%;bottom:8px;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:#111}
-.tmlgr button.cur{box-shadow:inset 0 0 0 3px #111}
-.tmlgr button:active{transform:scale(.92)}
-@media (max-width:360px){.tmp{padding:0 12px 0 11px}.tmbt{padding:0 17px}}
+.tmta:focus{outline:0;box-shadow:inset 0 0 0 2px #fff}
+.tmn{display:flex;gap:10px;margin-top:14px}
+.tmn .tmbtn{flex:1;height:50px}
 #tzrz{width:44px;padding:0;display:grid;place-items:center}
 #tzrz svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 
@@ -1397,7 +1381,7 @@ textarea.qfi{height:140px;resize:none}
   </div>
   <div class="tzr" id="tzr" role="dialog" aria-modal="true" aria-label="Test">
     <div class="tzrt"><button class="fl" id="tzrx" type="button">Çık</button><div class="tzrc"><b id="tzrn">1</b><span id="tzrnt"></span></div><div class="tzrr"><span class="tzrm" id="tzrm">0:00</span><button class="fl" id="tzrz" type="button" aria-label="Tam ekran"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button><button class="fl pr" id="tzrf" type="button">Bitir</button></div></div>
-    <div class="tzrp"><div class="tzrpb"><i id="tzrpi"></i></div><span id="tzrpt">0/0</span></div>
+    <div class="tzrp"><i id="tzrpi"></i></div>
     <div class="tzrb">
       <div class="tzri" id="tzri"><img id="tzrimg" alt="Soru" draggable="false"></div>
       <aside class="tzrs">
@@ -1454,19 +1438,11 @@ textarea.qfi{height:140px;resize:none}
     <div class="qvsh" id="qvsh" role="region" aria-label="Soru detayı"><button class="qvgr" id="qvgr" type="button" aria-label="Kapat"></button><div id="qvbd"></div></div>
     <div class="qvdg" id="qvdg"><div class="qvdc" role="alertdialog" aria-modal="true" aria-labelledby="qvdh"><div class="qvdi"><svg viewBox="0 0 24 24"><path d="M4 7h16M9.5 7V4.5h5V7M6.5 7l.8 12a1.5 1.5 0 001.5 1.4h6.4a1.5 1.5 0 001.5-1.4l.8-12M10 11v6M14 11v6"/></svg></div><h3 id="qvdh">Bu soru silinsin mi?</h3><p>Fotoğraf ve cevabı kalıcı olarak silinir. Bu işlem geri alınamaz.</p><div class="qvdb"><button class="c" id="qvdn" type="button">Vazgeç</button><button class="d" id="qvdk" type="button">Sil</button></div></div></div>
   </div>
-  <div class="tmt" id="tmt">
-    <div class="tmg">
-      <button class="tmi" id="tms" type="button" aria-label="Tam ekrandan çık"><svg viewBox="0 0 24 24"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg></button>
-      <span class="tmp" role="timer" aria-label="Geçen süre"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg><b id="tmc">0:00</b></span>
-    </div>
-    <div class="tmg">
-      <button class="tmp" id="tml" type="button" aria-label="Soru listesi"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.8"/></svg><b id="tmn1">1</b><span id="tmn2">/ 1</span></button>
-      <button class="tmbt" id="tmf" type="button">Bitir</button>
-    </div>
-  </div>
-  <div class="tmb" id="tmb"><div class="tmpg"><div><i id="tmpi"></i></div><span id="tmpt">0 cevaplandı</span></div><div id="tmbi"></div></div>
-  <div class="tmsc" id="tmsc"></div>
-  <div class="tmls" id="tmls" role="dialog" aria-label="Soru listesi"><button class="tmlg" id="tmlg" type="button" aria-label="Kapat"></button><div class="tmlh"><b>Sorular</b><span id="tmlc"></span></div><div class="tmlgr" id="tmlgr"></div></div>
+  <div class="tmt" id="tmt"><div class="tmw">
+    <div class="tmr"><button class="tmbtn" id="tmx" type="button">Çık</button><span class="tmc" id="tmc">0:00</span><div class="tmrr"><button class="tmic" id="tms" type="button" aria-label="Tam ekrandan çık"><svg viewBox="0 0 24 24"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg></button><button class="tmbtn pr" id="tmf" type="button">Bitir</button></div></div>
+    <div class="tmd" id="tmd"></div>
+  </div></div>
+  <div class="tmb" id="tmb"><div class="tmw" id="tmbi"></div></div>
   <div class="dp" id="dp" aria-hidden="true">
     <div class="dp-bd" id="dpbd"></div>
     <div class="dp-card" id="dpc" role="dialog" aria-modal="true" aria-label="Sınav tarihini seç" tabindex="-1">
@@ -3933,7 +3909,7 @@ function ansOf(id){return String(R.ans[id]==null?"":R.ans[id])}
 function paintRun(){
   var id=R.ids[R.idx],it=imap()[id],n=R.ids.length;
   $("#tzrn").textContent=R.idx+1;$("#tzrnt").textContent="/ "+n;
-  var done=R.ids.filter(function(i){return ansOf(i).trim()}).length;$("#tzrpi").style.width=(done/n*100)+"%";$("#tzrpt").textContent=done+"/"+n;
+  var done=R.ids.filter(function(i){return ansOf(i).trim()}).length;$("#tzrpi").style.width=(done/n*100)+"%";
   var im=$("#tzrimg"),box=$("#tzri");box.classList.remove("z");box.scrollTop=box.scrollLeft=0;
   if(it){im.src=RU[id]||(RU[id]=URL.createObjectURL(it.blob))}
   if(RPI!==R.idx){RPI=R.idx;im.classList.remove("tzsl");void im.offsetWidth;im.classList.add("tzsl")}
@@ -3979,10 +3955,9 @@ function runFinish(force){
 
 /* ---------- Test: tam ekran (soru havuzu görüntüleyicisiyle) ---------- */
 function tmTick(){var t=fclk(relapsed());$("#tzrm").textContent=t;$("#tmc").textContent=t}
-var tmLs=false;
 function tmOpen(fs){
   if(!R)return;
-  Q.openIn(R.ids[R.idx],R.ids,{test:true,fs:!!fs,nav:tmNav,key:tmKey,close:function(){tmList(false);if(R)paintRun()}});
+  Q.openIn(R.ids[R.idx],R.ids,{test:true,fs:!!fs,nav:tmNav,key:tmKey,close:function(){if(R)paintRun()}});
 }
 function tmNav(id){
   if(!R)return;var k=R.ids.indexOf(id);
@@ -3990,7 +3965,6 @@ function tmNav(id){
   paintRun();
 }
 function tmKey(e){
-  if(e.key==="Escape"&&tmLs){tmList(false);return true}
   if(!R||e.ctrlKey||e.metaKey||e.altKey)return false;
   var k=e.key.length===1?e.key.toUpperCase():"";
   if(LET.indexOf(k)<0)return false;
@@ -3998,63 +3972,39 @@ function tmKey(e){
   if(!it||qtype(it)!=="mc")return false;
   runAns(ansOf(id)===k?"":k);paintRunAns();return true;
 }
-function tmFit(){var t=$("#tmta");if(!t)return;t.style.height="auto";t.style.height=Math.min(130,Math.max(54,t.scrollHeight))+"px"}
 function tmPaint(){
   if(!R)return;
-  var id=R.ids[R.idx],it=imap()[id],n=R.ids.length,a=ansOf(id),h;
-  $("#tmb").style.setProperty("--c",it&&it.ders?Q.lcol(it):"#fff");
-  if(it&&qtype(it)==="mc")h='<div class="tmlt">'+LET.map(function(l){return'<button type="button" data-l="'+l+'" aria-label="Şık '+l+'" class="'+(a===l?"on":"")+'">'+l+'</button>'}).join("")+'</div>';
-  else h='<textarea class="tmta" id="tmta" rows="1" placeholder="Cevabını yaz" maxlength="2000">'+esc(a)+'</textarea>';
-  $("#tmbi").innerHTML=h;
-  $("#tmn1").textContent=R.idx+1;$("#tmn2").textContent="/ "+n;
-  tmFit();tmDots();tmTick();
+  var id=R.ids[R.idx],it=imap()[id],n=R.ids.length,a=ansOf(id);
+  var row=$("#tmd");
+  row.innerHTML=R.ids.map(function(i,k){return'<button type="button" data-i="'+k+'" class="'+(ansOf(i).trim()?"dn ":"")+(k===R.idx?"cur":"")+'">'+(k+1)+'</button>'}).join("");
+  var c=row.querySelector(".cur");if(c){var x=c.offsetLeft-(row.clientWidth-c.offsetWidth)/2;row.scrollLeft=Math.max(0,x)}
+  var h='<div class="tmal">Cevabın</div>';
+  if(it&&qtype(it)==="mc")h+='<div class="tml">'+LET.map(function(l){return'<button type="button" data-l="'+l+'" class="'+(a===l?"on":"")+'">'+l+'</button>'}).join("")+'</div>';
+  else h+='<textarea class="tmta" id="tmta" placeholder="Cevabını buraya yaz" maxlength="2000">'+esc(a)+'</textarea>';
+  h+='<div class="tmn"><button type="button" class="tmbtn" data-n="-1"'+(R.idx===0?" disabled":"")+'>Önceki</button><button type="button" class="tmbtn pr" data-n="1">'+(R.idx===n-1?"Bitir":"Sonraki")+'</button></div>';
+  $("#tmbi").innerHTML=h;tmTick();
 }
 function tmDots(){
   if(!R||!Q.testOn())return;
-  var n=R.ids.length,done=R.ids.filter(function(i){return ansOf(i).trim()}).length,a=ansOf(R.ids[R.idx]);
-  [].forEach.call(document.querySelectorAll("#tmbi .tmlt button"),function(c){c.classList.toggle("on",c.dataset.l===a)});
-  $("#tmpi").style.width=(done/n*100)+"%";$("#tmpt").textContent=done+" cevaplandı";
-  if(tmLs)tmGrid();
-}
-function tmGrid(){
-  var im=imap(),done=0,ls=$("#tmls");
-  $("#tmlgr").innerHTML=R.ids.map(function(i,k){
-    var it=im[i],d=!!ansOf(i).trim();if(d)done++;
-    return'<button type="button" data-i="'+k+'" class="'+(d?"dn ":"")+(k===R.idx?"cur":"")+'" style="--c:'+(it&&it.ders?Q.lcol(it):"#d9d5cd")+'" aria-label="Soru '+(k+1)+(d?", cevaplandı":"")+'">'+(k+1)+'</button>';
-  }).join("");
-  $("#tmlc").textContent=done+" / "+R.ids.length+" cevaplandı";
-}
-function tmList(on){
-  on=!!on&&!!R;if(!on&&!tmLs)return;
-  tmLs=on;
-  if(on){tmGrid();var ls=$("#tmls"),c=ls.querySelector(".cur");if(c)ls.scrollTop=Math.max(0,c.offsetTop-ls.clientHeight/2)}
-  $("#tmls").classList.toggle("on",on);$("#tmsc").classList.toggle("on",on);
+  var a=ansOf(R.ids[R.idx]);
+  [].forEach.call(document.querySelectorAll("#tmbi .tml button"),function(c){c.classList.toggle("on",c.dataset.l===a)});
+  [].forEach.call(document.querySelectorAll("#tmd button"),function(c,k){c.classList.toggle("dn",!!ansOf(R.ids[k]).trim())});
 }
 $("#tmt").addEventListener("click",function(e){
   var b=e.target.closest("button");if(!b)return;
-  if(b.id==="tmf")$("#tzrf").click();
-  else if(b.id==="tml")tmList(true);
-  else if(b.id==="tms"){tmList(false);Q.closeView()}
+  if(b.id==="tmx")$("#tzrx").click();
+  else if(b.id==="tmf")$("#tzrf").click();
+  else if(b.id==="tms")Q.closeView();
+  else if(b.dataset.i!=null&&R){var id=R.ids[+b.dataset.i];if(id!=null)Q.jump(id)}
 });
 $("#tmb").addEventListener("click",function(e){
-  if(!R)return;var b=e.target.closest("[data-l]");if(!b)return;
-  var id=R.ids[R.idx];runAns(ansOf(id)===b.dataset.l?"":b.dataset.l);paintRunAns();
+  if(!R)return;var b;
+  if(b=e.target.closest("[data-l]")){var id=R.ids[R.idx];runAns(ansOf(id)===b.dataset.l?"":b.dataset.l);paintRunAns();return}
+  if(b=e.target.closest("[data-n]")){
+    if(b.dataset.n==="1"){if(R.idx>=R.ids.length-1)runFinish();else Q.step(1)}else Q.step(-1);
+  }
 });
-$("#tmb").addEventListener("input",function(e){if(e.target.id==="tmta"&&R){runAns(e.target.value);tmFit();paintDots()}});
-$("#tmlgr").addEventListener("click",function(e){
-  var b=e.target.closest("[data-i]");if(!b||!R)return;
-  var id=R.ids[+b.dataset.i];tmList(false);if(id!=null&&id!==R.ids[R.idx])Q.jump(id);
-});
-$("#tmsc").onclick=$("#tmlg").onclick=function(){tmList(false)};
-(function(){var s=$("#tmls"),y0=null;
-  s.addEventListener("touchstart",function(e){y0=(s.scrollTop<=0&&e.touches.length===1)?e.touches[0].clientY:null},{passive:true});
-  s.addEventListener("touchend",function(e){if(y0===null)return;var dy=e.changedTouches[0].clientY-y0;y0=null;if(dy>70)tmList(false)},{passive:true});
-})();
-/* Klavye açılınca yüzen çubuk klavyenin üstüne çıksın */
-(function(){var vv=window.visualViewport;if(!vv)return;
-  function f(){var kb=Math.max(0,window.innerHeight-vv.height-vv.offsetTop);document.documentElement.style.setProperty("--kb",(kb>80?kb:0)+"px")}
-  vv.addEventListener("resize",f);vv.addEventListener("scroll",f);
-})();
+$("#tmb").addEventListener("input",function(e){if(e.target.id==="tmta"&&R){runAns(e.target.value);paintDots()}});
 
 /* ---------- Sonuç ---------- */
 var RSU=[],RSID=null,RSLIVE=false;
@@ -4274,7 +4224,7 @@ function paintRunAns(){
   paintDots();
 }
 function paintDots(){
-  var n=R.ids.length,done=R.ids.filter(function(i){return ansOf(i).trim()}).length;$("#tzrpi").style.width=(done/n*100)+"%";$("#tzrpt").textContent=done+"/"+n;$("#tzrdc").textContent=done+"/"+n+" cevaplandı";
+  var n=R.ids.length,done=R.ids.filter(function(i){return ansOf(i).trim()}).length;$("#tzrpi").style.width=(done/n*100)+"%";$("#tzrdc").textContent=done+"/"+n+" cevaplandı";
   [].forEach.call(document.querySelectorAll("#tzrd button"),function(c,k){c.classList.toggle("dn",!!ansOf(R.ids[k]).trim())});
   tmDots();
 }
