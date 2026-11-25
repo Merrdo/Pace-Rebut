@@ -1146,6 +1146,26 @@ textarea.qfi{height:140px;resize:none}
 .tztr .tzdt.tzlast .dt{fill:currentColor}
 .tztr .tzdt:hover,.tztr .tzdt:focus-visible{transform:scale(1.3)}
 .tztr .tzdt:active{transform:scale(.9)}
+
+/* Paket kartı: sade */
+.tzpk{position:relative;padding:18px 18px 16px;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;transition:transform .45s var(--sp),box-shadow .3s,background .35s var(--ease)}
+.tzpt2{display:flex;align-items:center;gap:12px}
+.tzpt2 h3{flex:1;min-width:0}
+.tzpn{flex:none;display:flex;align-items:baseline;gap:5px}
+.tzpn b{font-size:21px;font-weight:800;line-height:1.1;font-variant-numeric:tabular-nums}
+.tzpn i{font-style:normal;font:600 13px Inter,system-ui,sans-serif;color:var(--dim)}
+.tzhint.tzphn{margin:0 2px 12px}
+.tzpk .ac{display:grid;grid-template-columns:2fr 1fr;gap:8px;margin-top:18px}
+.tzpk .ac .tzb{width:100%;height:46px;padding:0 10px;font-size:15px}
+.tzpk.pk{transform:scale(.97);box-shadow:0 14px 28px -12px rgba(17,17,17,.35)}
+.tzpc{flex:none;display:grid;place-items:center;width:0;height:24px;margin-right:-12px;border-radius:50%;box-shadow:inset 0 0 0 2px #cfcbc4;opacity:0;transform:scale(.4);overflow:hidden;transition:width .4s var(--ease),margin .4s var(--ease),opacity .25s,transform .5s var(--sp),background .25s,box-shadow .25s}
+.tzpc svg{width:14px;height:14px;fill:none;stroke:#fff;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;opacity:0;transition:opacity .15s}
+.tzpk.sm .tzpc{width:24px;margin-right:0;opacity:1;transform:none}
+.tzpk.sel .tzpc{background:var(--fg);box-shadow:none}.tzpk.sel .tzpc svg{opacity:1}
+.tzpk.sel{box-shadow:inset 0 0 0 3px var(--fg)}
+.tzpk.sm .ac{opacity:.45}
+.tzbar .tzb.dgb{background:#ff5a4d;color:#111}
+.tzbar{animation:tzRise .5s var(--ease) backwards}
 </style>
 </head>
 <body>
@@ -3527,9 +3547,10 @@ $("#tzt").insertAdjacentHTML("afterbegin",'<i class="tzpl"></i>');
 
 /* ---------- Ana sayfa (hub) ---------- */
 var HUB={tab:"gen",hf:"all",k:null,fxt:""};
-function hubOpen(tab){if(tab)HUB.tab=tab;HUB.k=null;$("#tz").classList.add("on");hubRender()}
-function hubClose(){$("#tz").classList.remove("on")}
+function hubOpen(tab){if(tab)HUB.tab=tab;HUB.k=null;PSL.on=false;PSL.ids={};tpClose();$("#tz").classList.add("on");hubRender()}
+function hubClose(){$("#tz").classList.remove("on");tpClose();PSL.on=false;PSL.ids={}}
 function hubRender(){
+  if(HUB.tab!=="pk"&&PSL.on){PSL.on=false;PSL.ids={}}
   [].forEach.call(document.querySelectorAll("#tzt button"),function(b){b.classList.toggle("on",b.dataset.t===HUB.tab)});
   var b=$("#tzb"),t=document.createElement("div");
   if(HUB.tab==="gen")rGen(t);else if(HUB.tab==="pk")rPk(t);else rHi(t);
@@ -3595,21 +3616,66 @@ function pkRecs(id){return HI.filter(function(r){return r.packId===id}).sort(fun
 function sum(rec){var o={c:0,w:0,b:0,u:0};rec.items.forEach(function(x){o[x.st]++});return o}
 function rpct(rec){var s=sum(rec),d=rec.items.length-s.u;return d>0?Math.round(s.c/d*100):null}
 function pkStat(p){var r=pkRecs(p.id),ps=r.map(rpct).filter(function(x){return x!=null});return{n:r.length,last:r[r.length-1],best:ps.length?Math.max.apply(null,ps):null,avg:ps.length?Math.round(ps.reduce(function(a,b){return a+b},0)/ps.length):null,recs:r}}
+var PSL={on:false,ids:{},sup:0},TCK='<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
 function rPk(b){
-  var im=imap(),h=resumeBanner();
+  var im=imap(),h=resumeBanner(),sm=PSL.on,nsel=Object.keys(PSL.ids).length;
   h+='<div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap"><button class="tzb pr" type="button" data-a="new" style="height:48px">+ Yeni paket</button><button class="tzch'+(SHUF?" on":"")+'" type="button" data-a="shuf" style="height:48px">Başlarken karıştır</button></div>';
   if(!PK.length){b.innerHTML=h+'<div class="tzemp"><b>Henüz paket yok</b><span>İstediğin soruları seçip paket yap, sonra istediğin zaman test olarak çöz. Sorular sayfasında soruları seçip de paket oluşturabilirsin.</span></div>';return}
-  h+='<div class="tzpg">';
+  h+='<div class="tzhint tzphn">Düzenlemek, seçmek ve silmek için pakete basılı tut.</div><div class="tzpg">';
   PK.forEach(function(p){
-    var ex=p.ids.filter(function(i){return im[i]}),uns=ex.filter(function(i){return!im[i].solved}).length,st=pkStat(p),ds={};
-    ex.forEach(function(i){var it=im[i],k=dlab(it);if(!ds[k])ds[k]={c:it.ders?Q.lcol(it):"#cfcbc4",n:0};ds[k].n++});
-    var ks=Object.keys(ds),chips=ks.slice(0,3).map(function(k){return'<span style="--c:'+ds[k].c+'">'+esc(k)+' · '+ds[k].n+'</span>'}).join("")+(ks.length>3?'<span style="--c:#cfcbc4">+'+(ks.length-3)+'</span>':'');
-    h+='<div class="tzpk" data-id="'+p.id+'"><h3>'+esc(p.name)+'</h3><div class="mt">'+ex.length+' soru · '+uns+' çözülmemiş'+(ex.length<p.ids.length?' · '+(p.ids.length-ex.length)+' silinmiş':'')+'</div><div class="cs">'+chips+'</div>';
-    h+='<div class="sts">'+(st.n?st.n+' kez çözüldü · Son: '+fdate(st.last.ts)+(rpct(st.last)!=null?' · %'+rpct(st.last):'')+(st.best!=null?' · En iyi %'+st.best:''):'Henüz çözülmedi')+'</div>';
-    h+='<div class="ac"><button class="tzb pr" type="button" data-a="go"'+(ex.length?"":" disabled")+'>Başlat</button><button class="tzb" type="button" data-a="st">İstatistik</button><button class="tzb" type="button" data-a="ed">Düzenle</button><button class="tzb dg" type="button" data-a="dl">Sil</button></div></div>';
+    var ex=p.ids.filter(function(i){return im[i]}),on=!!PSL.ids[p.id];
+    h+='<div class="tzpk'+(sm?" sm":"")+(on?" sel":"")+'" data-id="'+p.id+'"><div class="tzpt2"><span class="tzpc">'+TCK+'</span><h3>'+esc(p.name)+'</h3><div class="tzpn"><b>'+ex.length+'</b><i>soru</i></div></div>';
+    h+='<div class="ac"><button class="tzb pr" type="button" data-a="go"'+(ex.length&&!sm?"":" disabled")+'>Başlat</button><button class="tzb" type="button" data-a="st"'+(sm?" disabled":"")+'>İstatistik</button></div></div>';
   });
-  b.innerHTML=h+'</div>';
+  h+='</div>';
+  if(sm)h+='<div class="tzbar"><div><b>'+nsel+' seçili</b><small>Silmek için paketlere dokun</small></div><button type="button" class="tzb" data-a="selx">Vazgeç</button><button type="button" class="tzb dgb" data-a="seld"'+(nsel?"":" disabled")+'>Sil</button></div>';
+  b.innerHTML=h;
 }
+function psOff(){PSL.on=false;PSL.ids={};if(HUB.tab==="pk")hubRender()}
+function psToggle(id){if(PSL.ids[id])delete PSL.ids[id];else PSL.ids[id]=1;hubRender()}
+function psDelete(){
+  var ids=Object.keys(PSL.ids);if(!ids.length)return;
+  mdl({h:ids.length>1?ids.length+" paket silinsin mi?":"Paket silinsin mi?",p:"Sorular ve geçmiş sonuçlar silinmez.",btns:[{t:"Vazgeç",v:"cancel"},{t:"Sil",v:"ok",c:"dg"}]}).then(function(r){
+    if(r.v!=="ok")return;PK=PK.filter(function(x){return!PSL.ids[x.id]});sv(K_PK,PK);PSL.on=false;PSL.ids={};refreshHub();Q.toast(ids.length>1?ids.length+" paket silindi":"Paket silindi");
+  });
+}
+/* Pakete basılı tutunca açılan hızlı panel */
+var tpOn=false,tpId=null,tpEl=document.createElement("div");
+tpEl.className="qpop";tpEl.id="tzpop";tpEl.setAttribute("role","menu");tpEl.setAttribute("aria-label","Paket işlemleri");
+tpEl.innerHTML='<button type="button" role="menuitem" data-a="ed"><svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16v4zM13.5 6.5l4 4"/></svg>Düzenle</button><button type="button" role="menuitem" data-a="se"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg>Seç</button><hr><button type="button" role="menuitem" class="dg" data-a="dl"><svg viewBox="0 0 24 24"><path d="M4 7h16M9.5 7V4.5h5V7M6.5 7l.8 12a1.5 1.5 0 001.5 1.4h6.4a1.5 1.5 0 001.5-1.4l.8-12"/></svg>Sil</button>';
+document.body.appendChild(tpEl);
+function tpClose(){tpOn=false;tpId=null;tpEl.classList.remove("on");[].forEach.call(document.querySelectorAll(".tzpk.pk"),function(c){c.classList.remove("pk")})}
+function tpOpen(card,x,y){
+  tpClose();tpOn=true;tpId=card.dataset.id;card.classList.add("pk");
+  var W=window.innerWidth,H=window.innerHeight,w=tpEl.offsetWidth,h=tpEl.offsetHeight,m=12;
+  var l=x+20;if(l+w>W-m)l=x-20-w;l=Math.max(m,Math.min(l,W-w-m));
+  var tp=Math.max(m,Math.min(y-24,H-h-m));
+  tpEl.style.left=l+"px";tpEl.style.top=tp+"px";tpEl.style.transformOrigin=(x-l)+"px "+(y-tp)+"px";
+  void tpEl.offsetWidth;tpEl.classList.add("on");
+}
+tpEl.onclick=function(e){
+  var b=e.target.closest("button");if(!b||!tpOn)return;var a=b.dataset.a,id=tpId;tpClose();
+  if(a==="ed"){var p=PK.filter(function(x){return x.id===id})[0];if(p)peOpen(p)}
+  else if(a==="se"){PSL.on=true;PSL.ids={};PSL.ids[id]=1;hubRender()}
+  else if(a==="dl")pkDelete(id);
+};
+document.addEventListener("pointerdown",function(e){if(tpOn&&!e.target.closest("#tzpop")){tpClose();PSL.sup=Date.now()}},true);
+document.addEventListener("keydown",function(e){if(e.key!=="Escape")return;if(tpOn){e.preventDefault();e.stopImmediatePropagation();tpClose()}else if(PSL.on&&hubOn()&&!$("#tzp").classList.contains("on")&&!$("#tzd").classList.contains("on")&&!$("#tzs").classList.contains("on")&&!$("#tzpd").classList.contains("on")){e.preventDefault();e.stopImmediatePropagation();psOff()}});
+(function(){
+  var b=$("#tzb"),t=0,sx=0,sy=0,tg=null,LP=450;
+  function cancel(){clearTimeout(t);t=0;tg=null}
+  b.addEventListener("pointerdown",function(e){
+    var c=e.target.closest(".tzpk");if(!c||e.button>0||PSL.on)return;
+    sx=e.clientX;sy=e.clientY;tg=c;
+    t=setTimeout(function(){t=0;if(!tg)return;var card=tg;tg=null;PSL.sup=1;try{navigator.vibrate&&navigator.vibrate(12)}catch(x){}tpOpen(card,sx,sy)},LP);
+  });
+  b.addEventListener("pointermove",function(e){if(t&&(Math.abs(e.clientX-sx)>10||Math.abs(e.clientY-sy)>10))cancel()});
+  ["pointerup","pointercancel","pointerleave"].forEach(function(n){b.addEventListener(n,function(){if(n==="pointerup"&&PSL.sup===1)PSL.sup=Date.now();cancel()})});
+  $("#tz").addEventListener("scroll",function(){cancel();if(tpOn)tpClose()});
+  b.addEventListener("click",function(e){if(PSL.sup>1&&Date.now()-PSL.sup<400){e.stopPropagation();e.preventDefault()}},true);
+  b.addEventListener("contextmenu",function(e){if(e.target.closest(".tzpk"))e.preventDefault()});
+})();
+
 function pkStart(id){
   var p=PK.filter(function(x){return x.id===id})[0];if(!p)return;
   var im=imap(),ids=p.ids.filter(function(i){return im[i]});if(!ids.length){Q.toast("Pakette soru kalmamış");return}
@@ -3867,6 +3933,11 @@ $("#tzx").onclick=hubClose;
 $("#tzt").onclick=function(e){var b=e.target.closest("button");if(!b)return;HUB.tab=b.dataset.t;hubRender();$("#tz").scrollTop=0};
 $("#tzb").addEventListener("click",function(e){
   var t=e.target,b;
+  if(PSL.on){
+    var bt=t.closest("[data-a=selx],[data-a=seld]");
+    if(bt){if(bt.dataset.a==="selx")psOff();else psDelete();return}
+    var cd=t.closest(".tzpk");if(cd){psToggle(cd.dataset.id);return}
+  }
   if(b=t.closest("[data-a]")){
     var a=b.dataset.a;
     if(a==="rgo")runResume();
