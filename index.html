@@ -542,6 +542,45 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 #sap .chip{min-width:74px;padding:10px 12px}
 #saz{display:none}#saz.on{display:inline-flex}
 #sak:disabled{opacity:.4;pointer-events:none}
+
+/* Sorular */
+#v-questions{overflow:auto;padding:34px 48px var(--dock-space);overscroll-behavior:contain}
+.qw{max-width:1100px;margin:0 auto}
+.qh{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:26px}
+.qh h1{font-size:50px;font-weight:800;letter-spacing:-1px;line-height:1}
+.qh h1 em{font-style:normal;color:var(--dim);font-size:26px;letter-spacing:0;margin-left:10px;font-family:Inter,system-ui,sans-serif;font-weight:500}
+.qa{display:flex;gap:10px;flex:none}
+.qb{display:inline-flex;align-items:center;gap:8px;height:48px;padding:0 20px;border-radius:999px;background:var(--surf);font-size:16px;font-weight:700;box-shadow:0 6px 16px -8px rgba(17,17,17,.14);transition:transform .5s var(--sp)}
+.qb:active{transform:scale(.95)}
+.qb.pr{background:var(--fg);color:var(--bg)}
+.qb svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.qg{column-count:4;column-gap:14px}
+@media (max-width:1100px){.qg{column-count:3}}
+@media (max-width:760px){.qg{column-count:2}#v-questions{padding:28px 20px var(--dock-space)}}
+.qi{position:relative;display:block;width:100%;margin:0 0 14px;padding:0;break-inside:avoid;border-radius:18px;overflow:hidden;background:var(--surf2);box-shadow:0 1px 0 rgba(17,17,17,.04),0 6px 16px -8px rgba(17,17,17,.14);transition:transform .5s var(--sp);animation:up .6s var(--ease) backwards}
+.qi:active{transform:scale(.97)}
+.qi img{display:block;width:100%;height:auto;pointer-events:none;-webkit-user-drag:none}
+.qi small{position:absolute;left:8px;bottom:8px;padding:3px 9px;border-radius:999px;background:rgba(17,17,17,.62);color:#fff;font:600 11px Inter,system-ui,sans-serif;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.qe{display:grid;place-items:center;text-align:center;gap:6px;padding:70px 24px;border-radius:26px;border:2px dashed var(--surf2);color:var(--dim);width:100%;transition:background .3s,transform .5s var(--sp)}
+.qe:active{transform:scale(.99);background:var(--surf)}
+.qe svg{width:46px;height:46px;fill:none;stroke:var(--fg);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;margin:0 auto 6px}
+.qe b{font-size:22px;color:var(--fg)}
+.qe span{font-size:15px;font-weight:500}
+.qs{position:fixed;left:50%;top:calc(20px + env(safe-area-inset-top,0px));transform:translate(-50%,-80px);z-index:12;padding:10px 20px;border-radius:999px;background:var(--fg);color:var(--bg);font-size:15px;font-weight:700;transition:transform .6s var(--ease);pointer-events:none}
+.qs.on{transform:translate(-50%,0)}
+.qv{position:fixed;inset:0;z-index:11;display:flex;align-items:center;justify-content:center;background:rgba(17,17,17,.92);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);opacity:0;visibility:hidden;transition:opacity .4s var(--ease),visibility 0s .4s}
+.qv.on{opacity:1;visibility:visible;transition-delay:0s}
+.qv img{max-width:100%;max-height:100%;object-fit:contain;padding:76px 20px 90px;transform:scale(.97);transition:transform .5s var(--ease),opacity .25s;touch-action:pinch-zoom}
+.qv.on img{transform:none}
+.qvt{position:absolute;top:calc(18px + env(safe-area-inset-top,0px));left:24px;right:24px;display:flex;justify-content:space-between;align-items:center;color:#fff;font:600 15px Inter,system-ui,sans-serif}
+.qvt .fl{color:var(--fg)}
+.qvt .fl.dg{background:#d12f35;color:#fff}
+.qvt .fl.dg.arm{background:#fff;color:#d12f35;box-shadow:0 0 0 3px #d12f35}
+.qvn{position:absolute;top:50%;width:52px;height:52px;margin-top:-26px;border-radius:50%;background:rgba(255,255,255,.88);display:grid;place-items:center;transition:transform .5s var(--sp),opacity .3s}
+.qvn:active{transform:scale(.9)}
+.qvn[hidden]{display:none}
+.qvn svg{width:24px;height:24px;fill:none;stroke:var(--fg);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.qvn.l{left:20px}.qvn.r{right:20px}
 </style>
 </head>
 <body>
@@ -551,6 +590,7 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
     <button class="db on" data-v="topics"><svg viewBox="0 0 24 24"><path d="M5 6h14M5 12h14M5 18h9"/></svg>Konular</button>
     <button class="db" data-v="timer"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9.5 2.5h5"/></svg>Süre</button>
     <button class="db" data-v="cal"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/><text id="dkd" x="12" y="18" text-anchor="middle">22</text></svg>Takvim</button>
+    <button class="db" data-v="questions"><svg viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="3"/><circle cx="9" cy="10" r="1.6"/><path d="M20.5 15.5l-4.5-4.5-8.5 8.5"/></svg>Sorular</button>
     <button class="db" data-v="settings"><svg viewBox="0 0 24 24"><path d="M4 7h9M19 7h1M4 17h1M11 17h9"/><circle cx="16" cy="7" r="2.5"/><circle cx="8" cy="17" r="2.5"/></svg>Ayarlar</button>
   </nav>
   <main>
@@ -579,6 +619,17 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
       </div>
     </section>
     <section class="view" id="v-cal"><div class="cal" id="cal"></div><div class="cset" id="cset"></div></section>
+    <section class="view" id="v-questions"><div class="qw">
+      <div class="qh"><h1>Sorular<em id="qcnt"></em></h1>
+        <div class="qa">
+          <button class="qb" id="qcam" type="button"><svg viewBox="0 0 24 24"><path d="M4 8h3l1.6-2.5h6.8L17 8h3a1 1 0 011 1v9a1 1 0 01-1 1H4a1 1 0 01-1-1V9a1 1 0 011-1z"/><circle cx="12" cy="13.2" r="3.4"/></svg>Fotoğraf çek</button>
+          <button class="qb pr" id="qadd" type="button"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Yükle</button>
+        </div>
+      </div>
+      <div id="qbody"></div>
+      <input type="file" id="qfile" accept="image/*" multiple hidden>
+      <input type="file" id="qfcam" accept="image/*" capture="environment" hidden>
+    </div></section>
     <section class="view" id="v-settings"><div class="set" id="set"></div></section>
   </main>
   <div class="sheet" id="sheet"><button class="fl fl-l" id="fl">Dersler</button><div class="fl-r"><button class="fl fp" id="fp" aria-label="Yeni ders">+</button><button class="fl fk" id="sx">Kapat</button></div><div class="shw" id="shw"></div><div class="mod" id="mod"><div class="mc card" id="mc"></div></div></div>
@@ -587,6 +638,13 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
   <div class="mod" id="sset"><div class="mc card" id="smc" tabindex="-1" role="dialog" aria-modal="true" aria-label="Kronometre ayarları"><h2>Kronometre ayarları</h2><p>Kronometrenin nasıl görüneceğini seç.</p><div class="pm-l"><div class="pm-row"><div><b>Salise göster</b><small>Saniyenin yanında yüzde birlik kısım</small></div><button class="tg" data-sk="c" aria-label="Salise göster"><i></i></button></div><div class="pm-row"><div><b>Saat basamağı</b><small>Bir saati geçmeden de 00 olarak göster</small></div><button class="tg" data-sk="h" aria-label="Saat basamağı"><i></i></button></div></div><div class="row"><button class="btn" id="sdf">Varsayılan</button><button class="btn pr" id="sdn">Bitti</button></div></div></div>
   <div class="sheet" id="stsheet"><div class="fl-r"><button class="fl fk" id="stx">Kapat</button></div><div class="shw"><div class="sh-h"><div><h1>İstatistikler</h1><p>Kronometre, geri sayım ve Pomodoro odak turlarında geçen süre günlük olarak burada toplanır.</p></div></div><div id="stbody"></div></div><div class="mod" id="stadd"><div class="mc card" id="stamc" tabindex="-1" role="dialog" aria-modal="true" aria-label="Süre ekle"><h2 id="sah"></h2><p id="sas"></p><div class="pm-l"><div class="pm-row"><div><b>Eklenecek süre</b><small>5 dakikalık adımlarla</small></div><div class="pm-stp"><button data-sa="-1" aria-label="Süreyi azalt">−</button><output id="sao"></output><button data-sa="1" aria-label="Süreyi artır">+</button></div></div><div class="pm-row pm-cr"><div class="pm-pick" id="sap"></div></div></div><div class="row"><button class="btn dg" id="saz">Günü sıfırla</button><button class="btn" id="sax">Vazgeç</button><button class="btn pr" id="sak">Ekle</button></div></div></div></div>
   <div class="mod" id="pset"><div class="mc card" id="pmc" tabindex="-1" role="dialog" aria-modal="true" aria-label="Pomodoro ayarları"><h2>Pomodoro ayarları</h2><p>Odak süreni, molalarını ve periyodunu ayarla.</p><div class="pm-l" id="pml"></div><p class="pm-n">Tur süresi değişirse o an süren tur sıfırlanır.</p><div class="row"><button class="btn" id="pdf">Varsayılan</button><button class="btn" id="pcn">Vazgeç</button><button class="btn pr" id="psv">Kaydet</button></div></div></div>
+  <div class="qs" id="qs" role="status"></div>
+  <div class="qv" id="qv" role="dialog" aria-modal="true" aria-label="Soru fotoğrafı">
+    <div class="qvt"><span id="qvc"></span><div class="fl-row" style="display:flex;gap:10px"><button class="fl dg" id="qvd" type="button">Sil</button><button class="fl" id="qvx" type="button">Kapat</button></div></div>
+    <button class="qvn l" id="qvp" type="button" aria-label="Önceki"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <img id="qvi" alt="">
+    <button class="qvn r" id="qvn" type="button" aria-label="Sonraki"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+  </div>
   <div class="dp" id="dp" aria-hidden="true">
     <div class="dp-bd" id="dpbd"></div>
     <div class="dp-card" id="dpc" role="dialog" aria-modal="true" aria-label="Sınav tarihini seç" tabindex="-1">
@@ -635,6 +693,7 @@ var KA=[
 ["nav1","g","Genel","Süre sayfası","Kronometre, geri sayım ve pomodoro sayfasını açar.","2"],
 ["nav2","g","Genel","Takvim sayfası","Takvimi açar.","3"],
 ["nav3","g","Genel","Ayarlar sayfası","Ayarlar sayfasını açar.","4"],
+["nav4","g","Genel","Sorular sayfası","Soru fotoğraflarının galerisini açar.","5"],
 ["fs","g","Genel","Tam ekran","Her sayfada tam ekranı açar veya kapatır, alt çubuğu gizler.","f"],
 ["tToggle","t","Süre","Başlat / duraklat","Seçili kronometreyi, geri sayımı ya da pomodoro'yu başlatır veya duraklatır."," "],
 ["tReset","t","Süre","Sıfırla","Seçili sayacı başa alır.","r"],
@@ -674,7 +733,7 @@ function wipeAll(){
   try{var ks=[],i;for(i=0;i<localStorage.length;i++)ks.push(localStorage.key(i));ks.forEach(function(k){if(k&&k.indexOf("dd-")===0)localStorage.removeItem(k)})}catch(e){}
   try{sessionStorage.clear()}catch(e){}
   function done(){location.reload()}
-  try{var r=indexedDB.deleteDatabase("dd-ink");r.onsuccess=r.onerror=done}catch(e){done()}
+  try{indexedDB.deleteDatabase("dd-q");var r=indexedDB.deleteDatabase("dd-ink");r.onsuccess=r.onerror=done}catch(e){done()}
   setTimeout(done,1500);
 }
 function exportData(){return JSON.stringify({v:1,date:S.date,done:S.done,study:S.study||{},goal:S.goal})}
@@ -1729,7 +1788,7 @@ function kbNorm(e){
 function kRun(id,e,c){
   var k;
   switch(id){
-    case"nav0":case"nav1":case"nav2":case"nav3":k=$$(".db")[+id.slice(3)];if(k&&!k.classList.contains("on"))k.click();return true;
+    case"nav0":case"nav1":case"nav2":case"nav3":case"nav4":k=$('.db[data-v="'+["topics","timer","cal","settings","questions"][+id.slice(3)]+'"]');if(k&&!k.classList.contains("on"))k.click();return true;
     case"fs":kFs();return true;
     case"tToggle":if(!e.repeat)go();return true;
     case"tReset":reset();return true;
@@ -1858,6 +1917,128 @@ window.ddSheetGuard=function(){var bad=[];$$(".sheet").forEach(function(sh){if(s
 try{setTimeout(function(){var b=window.ddSheetGuard();if(b.length)console.warn("[KORUMA] Sheet açılış koruması bozulmuş. CSS'teki KORUMA bloğunu kontrol et.")},1500)}catch(e){}
 
 if("serviceWorker" in navigator&&location.protocol.indexOf("http")===0){navigator.serviceWorker.register("sw.js").catch(function(){})}
+})();
+</script>
+<script>
+/* Sorular: yapamadığın sorunun fotosunu yükle, galeride gör. Fotoğraflar bu cihazda IndexedDB'de ("dd-q") saklanır. */
+(function(){
+var $=function(s){return document.querySelector(s)};
+var DB=null,ITEMS=[],URLS=[],cur=-1,armT=0,toastT=0;
+function open(){return new Promise(function(res,rej){
+  var r;try{r=indexedDB.open("dd-q",1)}catch(e){rej(e);return}
+  r.onupgradeneeded=function(){r.result.createObjectStore("q",{keyPath:"id"})};
+  r.onsuccess=function(){res(r.result)};r.onerror=function(){rej(r.error)};
+})}
+function tx(mode,fn){return new Promise(function(res,rej){
+  var t=DB.transaction("q",mode),st=t.objectStore("q"),out=fn(st);
+  t.oncomplete=function(){res(out&&out.result)};t.onerror=t.onabort=function(){rej(t.error)};
+})}
+function loadAll(){return tx("readonly",function(st){return st.getAll()}).then(function(a){ITEMS=(a||[]).sort(function(x,y){return y.ts-x.ts})})}
+function toast(t){var e=$("#qs");e.textContent=t;e.classList.add("on");clearTimeout(toastT);toastT=setTimeout(function(){e.classList.remove("on")},2400)}
+function fmt(ts){var d=new Date(ts),m=["Oca","Şub","Mar","Nis","May","Haz","Tem","Ağu","Eyl","Eki","Kas","Ara"][d.getMonth()];return d.getDate()+" "+m+" "+("0"+d.getHours()).slice(-2)+":"+("0"+d.getMinutes()).slice(-2)}
+
+function render(){
+  URLS.forEach(function(u){URL.revokeObjectURL(u)});URLS=[];
+  var b=$("#qbody"),n=ITEMS.length;
+  $("#qcnt").textContent=n?n:"";
+  if(!n){
+    b.innerHTML='<button class="qe" id="qempty" type="button"><svg viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="3"/><circle cx="9" cy="10" r="1.6"/><path d="M20.5 15.5l-4.5-4.5-8.5 8.5"/></svg><b>Henüz soru yok</b><span>Yapamadığın sorunun fotoğrafını çek ya da galeriden yükle.</span></button>';
+    $("#qempty").onclick=function(){$("#qfile").click()};
+    return;
+  }
+  var g=document.createElement("div");g.className="qg";
+  ITEMS.forEach(function(it,i){
+    var u=URL.createObjectURL(it.thumb||it.blob);URLS.push(u);
+    var bt=document.createElement("button");bt.type="button";bt.className="qi";bt.style.animationDelay=Math.min(i,12)*30+"ms";
+    bt.setAttribute("aria-label","Soruyu aç");
+    var im=document.createElement("img");im.src=u;im.alt="Soru";im.loading="lazy";im.draggable=false;
+    var sm=document.createElement("small");sm.textContent=fmt(it.ts);
+    bt.appendChild(im);bt.appendChild(sm);bt.onclick=function(){view(i)};
+    g.appendChild(bt);
+  });
+  b.innerHTML="";b.appendChild(g);
+}
+
+/* Görseli küçült: uzun kenar en fazla max px, JPEG */
+function shrink(file,max,q){return new Promise(function(res,rej){
+  var u=URL.createObjectURL(file),im=new Image();
+  im.onload=function(){
+    var w=im.naturalWidth,h=im.naturalHeight,k=Math.min(1,max/Math.max(w,h)),c=document.createElement("canvas");
+    c.width=Math.max(1,Math.round(w*k));c.height=Math.max(1,Math.round(h*k));
+    var x=c.getContext("2d");x.fillStyle="#fff";x.fillRect(0,0,c.width,c.height);x.drawImage(im,0,0,c.width,c.height);
+    URL.revokeObjectURL(u);
+    c.toBlob(function(b){b?res(b):rej(new Error("blob"))},"image/jpeg",q);
+  };
+  im.onerror=function(){URL.revokeObjectURL(u);rej(new Error("img"))};
+  im.src=u;
+})}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function add(files){
+  files=[].slice.call(files).filter(function(f){return /^image\//.test(f.type)||/\.(heic|heif|jpe?g|png|webp)$/i.test(f.name)});
+  if(!files.length)return;
+  var done=0,fail=0,t0=Date.now();
+  toast("Yükleniyor… 0/"+files.length);
+  files.reduce(function(p,f,i){
+    return p.then(function(){
+      return Promise.all([shrink(f,1800,.85),shrink(f,520,.78)]).then(function(r){
+        return tx("readwrite",function(st){st.put({id:uid(),ts:t0+i,blob:r[0],thumb:r[1]})});
+      }).then(function(){done++},function(){fail++}).then(function(){toast("Yükleniyor… "+(done+fail)+"/"+files.length)});
+    });
+  },Promise.resolve()).then(loadAll).then(function(){
+    render();
+    toast(fail?done+" eklendi, "+fail+" eklenemedi":(done===1?"Soru eklendi":done+" soru eklendi"));
+  });
+}
+
+/* Büyük görünüm */
+function view(i){
+  if(i<0||i>=ITEMS.length)return;
+  cur=i;disarm();
+  var it=ITEMS[i],im=$("#qvi");
+  if(im._u)URL.revokeObjectURL(im._u);
+  im._u=URL.createObjectURL(it.blob);im.src=im._u;
+  $("#qvc").textContent=(i+1)+" / "+ITEMS.length+"  ·  "+fmt(it.ts);
+  $("#qvp").hidden=i===0;$("#qvn").hidden=i===ITEMS.length-1;
+  $("#qv").classList.add("on");
+}
+function closeV(){$("#qv").classList.remove("on");cur=-1;disarm()}
+function disarm(){clearTimeout(armT);var d=$("#qvd");d.classList.remove("arm");d.textContent="Sil"}
+function del(){
+  var d=$("#qvd");
+  if(!d.classList.contains("arm")){d.classList.add("arm");d.textContent="Emin misin?";armT=setTimeout(disarm,3000);return}
+  var it=ITEMS[cur];if(!it)return;var keep=cur;disarm();
+  tx("readwrite",function(st){st.delete(it.id)}).then(loadAll).then(function(){
+    render();
+    if(!ITEMS.length)closeV();else view(Math.min(keep,ITEMS.length-1));
+    toast("Silindi");
+  },function(){toast("Silinemedi")});
+}
+
+$("#qadd").onclick=function(){$("#qfile").click()};
+$("#qcam").onclick=function(){$("#qfcam").click()};
+["#qfile","#qfcam"].forEach(function(s){var e=$(s);e.onchange=function(){var f=e.files;add(f);setTimeout(function(){e.value=""},0)}});
+$("#qvx").onclick=closeV;$("#qvd").onclick=del;
+$("#qvp").onclick=function(){view(cur-1)};$("#qvn").onclick=function(){view(cur+1)};
+$("#qv").addEventListener("click",function(e){if(e.target===this||e.target.id==="qvi")closeV()});
+/* Açıkken tüm tuşlar burada kalır; uygulamanın diğer kısayolları araya girmez */
+document.addEventListener("keydown",function(e){
+  if(!$("#qv").classList.contains("on"))return;
+  if(e.key==="Escape")closeV();
+  else if(e.key==="ArrowLeft")view(cur-1);
+  else if(e.key==="ArrowRight")view(cur+1);
+  else return;
+  e.preventDefault();e.stopImmediatePropagation();
+},true);
+/* Yatay kaydırma ile önceki/sonraki */
+(function(){var x0=null,y0=0,v=$("#qv");
+  v.addEventListener("touchstart",function(e){if(e.touches.length===1){x0=e.touches[0].clientX;y0=e.touches[0].clientY}else x0=null},{passive:true});
+  v.addEventListener("touchend",function(e){if(x0===null)return;var t=e.changedTouches[0],dx=t.clientX-x0,dy=t.clientY-y0;x0=null;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5)view(cur+(dx<0?1:-1))},{passive:true});
+})();
+
+open().then(function(d){DB=d;return loadAll()}).then(render,function(){
+  $("#qbody").innerHTML='<div class="qe"><b>Depolama açılamadı</b><span>Tarayıcı bu cihazda fotoğraf saklamaya izin vermiyor (özel gezinti açık olabilir).</span></div>';
+  $("#qadd").disabled=$("#qcam").disabled=true;
+});
 })();
 </script>
 </body>
