@@ -2420,8 +2420,7 @@ function render(){
     bt.appendChild(im);
     if(it.ders){var dc=document.createElement("span");dc.className="qdc";dc.style.setProperty("--c",lcol(it));dc.textContent=it.g+" · "+it.ders;bt.appendChild(dc)}
     bt.insertAdjacentHTML("beforeend",'<span class="qck"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>');
-    bt.insertAdjacentHTML("beforeend",'<span class="qok" aria-hidden="true"><svg viewBox="0 0 24 24"><path pathLength="1" d="M4.5 12.8l5 5L19.5 7"/></svg></span>');
-    if(it.solved)bt.classList.add("ok");
+    if(it.solved){bt.insertAdjacentHTML("beforeend",OKH);bt.classList.add("ok")}
     bt.onclick=function(){if(selOn)selToggle(it.id);else view(i)};
     g.appendChild(bt);
   });
@@ -2697,6 +2696,7 @@ function setFs(on,quiet){
 function vurl(it){return VU[it.id]||(VU[it.id]=URL.createObjectURL(it.blob))}
 function warm(j){var t=ITEMS[j];if(!t)return;var x=new Image();x.src=vurl(t);if(x.decode)x.decode().catch(function(){})}
 function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
+var OKH='<span class="qok" aria-hidden="true"><svg viewBox="0 0 24 24"><path pathLength="1" d="M4.5 12.8l5 5L19.5 7"/></svg></span>';
 function okUi(it){
   var b=$("#qvok"),on=!!(it&&it.solved);b.classList.toggle("on",on);b.setAttribute("aria-pressed",on?"true":"false");
   b.setAttribute("aria-label",on?"Çözüldü işaretini kaldır":"Çözüldü olarak işaretle");
@@ -2705,7 +2705,8 @@ function setSolved(id,val){
   var it=null;for(var i=0;i<ITEMS.length;i++)if(ITEMS[i].id===id){it=ITEMS[i];break}
   if(!it)return;val=!!val;
   function paint(){
-    var c=document.querySelector('#qbody .qi[data-id="'+id+'"]');if(c)c.classList.toggle("ok",!!it.solved);
+    var c=document.querySelector('#qbody .qi[data-id="'+id+'"]');
+    if(c){if(it.solved&&!c.querySelector(".qok")){c.insertAdjacentHTML("beforeend",OKH);void c.offsetWidth}c.classList.toggle("ok",!!it.solved)}
     if(ITEMS[cur]===it)okUi(it);
   }
   it.solved=val;if(val)it.solvedTs=Date.now();else delete it.solvedTs;paint();
