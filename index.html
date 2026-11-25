@@ -689,6 +689,49 @@ textarea.qfi{height:140px;resize:none}
   .qvav{font-size:48px}
   .qvh{letter-spacing:.06em;padding:0 10px 0 14px}.qva.tx.on{width:calc(100vw - 32px)}
 }
+/* Sorular: arama + Kaynaklarım */
+.qsr{display:flex;gap:10px;margin:-4px 0 22px}
+.qsr[hidden]{display:none}
+.qsb{position:relative;flex:1;min-width:0}
+.qsb>svg{position:absolute;left:16px;top:50%;width:20px;height:20px;margin-top:-10px;fill:none;stroke:var(--dim);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.qfi.qsi{height:48px;padding:0 48px 0 46px;border-radius:999px;box-shadow:0 6px 16px -8px rgba(17,17,17,.14),inset 0 0 0 2px transparent}
+.qfi.qsi:focus{box-shadow:0 6px 16px -8px rgba(17,17,17,.14),inset 0 0 0 2px var(--fg)}
+.qsx{position:absolute;right:6px;top:50%;display:grid;place-items:center;width:36px;height:36px;margin-top:-18px;border-radius:50%;background:var(--surf2);color:var(--fg);transition:transform .35s var(--sp)}
+.qsx[hidden]{display:none}
+.qsx:active{transform:scale(.86)}
+.qsx svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round}
+.qi[hidden]{display:none}
+.qnr{display:grid;place-items:center;gap:6px;padding:60px 24px;text-align:center;color:var(--dim)}
+.qnr[hidden]{display:none}
+.qnr b{font-size:20px;color:var(--fg)}
+.qnr span{font-size:15px;font-weight:500}
+@media (max-width:560px){#qsrc span{display:none}#qsrc{width:48px;padding:0;justify-content:center}}
+.qk{position:fixed;inset:0;z-index:12;display:flex;align-items:flex-end;justify-content:center;opacity:0;visibility:hidden;transition:opacity .3s ease,visibility 0s .3s}
+.qk.on{opacity:1;visibility:visible;transition-delay:0s}
+.qkb{position:absolute;inset:0;background:rgba(17,17,17,.45)}
+.qkp{position:relative;display:flex;flex-direction:column;width:min(560px,100%);max-height:88%;border-radius:32px 32px 0 0;background:var(--bg);color:var(--fg);box-shadow:0 -20px 60px -24px rgba(17,17,17,.4);transform:translateY(56px);transition:transform .55s var(--ease)}
+.qk.on .qkp{transform:none}
+@media (min-width:761px){.qk{align-items:center}.qkp{border-radius:32px;max-height:80%;transform:translateY(28px) scale(.97)}.qk.on .qkp{transform:none}}
+.qkh{flex:none;display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:26px 24px 14px}
+.qkh h2{font:800 32px/1.05 "Baloo 2",system-ui,sans-serif;letter-spacing:-.5px}
+.qkh p{margin-top:6px;font-size:15px;font-weight:500;color:var(--dim)}
+.qkx{flex:none;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--surf);color:var(--fg);transition:transform .35s var(--sp)}
+.qkx:active{transform:scale(.9)}
+.qkx svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round}
+.qkl{flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column;gap:10px;padding:4px 20px calc(24px + env(safe-area-inset-bottom,0px));overscroll-behavior:contain}
+.qkr{display:flex;align-items:center;gap:14px;flex:none;width:100%;padding:14px 16px;border-radius:22px;background:var(--surf);color:var(--fg);text-align:left;box-shadow:0 6px 16px -10px rgba(17,17,17,.18);transition:transform .4s var(--sp)}
+.qkr:active{transform:scale(.98)}
+.qki{flex:none;display:grid;place-items:center;width:46px;height:46px;border-radius:15px;background:var(--bg)}
+.qki svg{width:22px;height:22px;fill:none;stroke:var(--fg);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.qkt{flex:1;min-width:0}
+.qkt b{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;font:700 17px/1.25 Inter,system-ui,sans-serif;overflow:hidden;word-break:break-word}
+.qkt small{display:block;margin-top:3px;font:500 13px/1.3 Inter,system-ui,sans-serif;color:var(--dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.qkc{flex:none;min-width:46px;text-align:center}
+.qkc b{display:block;font:800 26px/1 Inter,system-ui,sans-serif}
+.qkc small{display:block;margin-top:4px;font:600 12px/1 Inter,system-ui,sans-serif;color:var(--dim)}
+.qke{display:grid;gap:6px;padding:34px 20px;text-align:center;border-radius:22px;border:2px dashed var(--surf2);color:var(--dim);font-size:15px;font-weight:500}
+.qke b{font-size:18px;color:var(--fg)}
+.qkf{padding:6px 6px 0;text-align:center;font-size:13px;font-weight:500;color:var(--dim)}
 /* Sorular: ekleme sihirbazı (opak, sade; yalnızca transform/opacity canlandırılır) */
 .qc{position:fixed;inset:0;z-index:13;display:flex;flex-direction:column;background:var(--bg);color:var(--fg);opacity:0;visibility:hidden;transition:opacity .3s ease,visibility 0s .3s}
 .qc.on{opacity:1;visibility:visible;transition-delay:0s}
@@ -781,6 +824,10 @@ textarea.qfi{height:140px;resize:none}
           <button class="qb pr" id="qadd" type="button"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Yükle</button>
         </div>
       </div>
+      <div class="qsr" id="qsr" hidden>
+        <div class="qsb"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input class="qfi qsi" id="qsi" type="text" placeholder="Kaynak veya ders ara…" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" aria-label="Soru ara" maxlength="80"><button class="qsx" id="qsx" type="button" aria-label="Aramayı temizle" hidden><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17"/></svg></button></div>
+        <button class="qb" id="qsrc" type="button" aria-label="Kaynaklarım"><svg viewBox="0 0 24 24"><path d="M5 4.5h10.5A2.5 2.5 0 0118 7v12.5H7.5A2.5 2.5 0 015 17V4.5zM5 17a2.5 2.5 0 012.5-2.5H18"/></svg><span>Kaynaklarım</span></button>
+      </div>
       <div id="qbody"></div>
       <input type="file" id="qfile" accept="image/*" multiple hidden>
       <input type="file" id="qfcam" accept="image/*" capture="environment" hidden>
@@ -825,6 +872,13 @@ textarea.qfi{height:140px;resize:none}
       </div></div>
     </div>
     <div class="qnv"><button class="fl" id="qbk" type="button"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>Geri</button><button class="fl pr" id="qgo" type="button">Devam</button></div>
+  </div>
+  <div class="qk" id="qk" role="dialog" aria-modal="true" aria-label="Kaynaklarım">
+    <div class="qkb" id="qkb"></div>
+    <div class="qkp">
+      <div class="qkh"><div><h2>Kaynaklarım</h2><p id="qkn"></p></div><button class="qkx" id="qkx" type="button" aria-label="Kapat"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+      <div class="qkl" id="qkl"></div>
+    </div>
   </div>
   <div class="qs" id="qs" role="status"></div>
   <div class="qv" id="qv" role="dialog" aria-modal="true" aria-label="Soru fotoğrafı">
@@ -2144,6 +2198,57 @@ function loadAll(){return tx("readonly",function(st){return st.getAll()}).then(f
 function toast(t){var e=$("#qs");e.textContent=t;e.classList.add("on");clearTimeout(toastT);toastT=setTimeout(function(){e.classList.remove("on")},2400)}
 function fmt(ts){var d=new Date(ts),m=["Oca","Şub","Mar","Nis","May","Haz","Tem","Ağu","Eyl","Eki","Kas","Ara"][d.getMonth()];return d.getDate()+" "+m+" "+("0"+d.getHours()).slice(-2)+":"+("0"+d.getMinutes()).slice(-2)}
 
+/* Arama: gizle/göster ile süzülür (yeniden çizim ve animasyon yok) */
+var QT=[];
+function norm(t){return String(t==null?"":t).toLocaleLowerCase("tr").replace(/ı/g,"i").replace(/ş/g,"s").replace(/ğ/g,"g").replace(/ü/g,"u").replace(/ö/g,"o").replace(/ç/g,"c").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/\s+/g," ").trim()}
+function match(it){
+  if(!QT.length)return true;
+  var h=it._h||(it._h=norm([it.g,it.ders,it.g+" "+it.ders,it.book,it.page?"sayfa "+it.page:"",it.note].join(" ")));
+  for(var k=0;k<QT.length;k++)if(h.indexOf(QT[k])<0)return false;
+  return true;
+}
+function VL(){var a=[];for(var i=0;i<ITEMS.length;i++)if(match(ITEMS[i]))a.push(i);return a}
+function go(d){var L=VL(),p=L.indexOf(cur);if(p<0)return;var j=L[p+d];if(j!=null)view(j,d)}
+function warmN(L,p){if(L[p+1]!=null)warm(L[p+1]);if(L[p-1]!=null)warm(L[p-1])}
+function applyFilter(){
+  var q=$("#qsi").value,n=0;QT=norm(q).split(" ").filter(Boolean);
+  $("#qsx").hidden=!q;$("#qsr").hidden=!ITEMS.length;
+  var g=$("#qbody .qg");
+  if(g){var k=g.children;for(var i=0;i<k.length&&i<ITEMS.length;i++){var m=match(ITEMS[i]);if(k[i].hidden===m)k[i].hidden=!m;if(m)n++}}
+  var e=$("#qnr");if(e)e.hidden=!(ITEMS.length&&QT.length&&!n);
+  $("#qcnt").textContent=ITEMS.length?(QT.length?n+" / "+ITEMS.length:ITEMS.length):"";
+}
+/* Kaynaklarım */
+var qkOn=false;
+function sources(){
+  var m={},a=[];
+  ITEMS.forEach(function(it){
+    var b=String(it.book||"").replace(/\s+/g," ").trim();if(!b)return;
+    var k=norm(b),o=m[k];if(!o){o=m[k]={name:b,n:0,d:{}};a.push(o)}
+    o.n++;if(it.ders)o.d[it.ders]=1;
+  });
+  a.sort(function(x,y){return y.n-x.n||x.name.localeCompare(y.name,"tr")});
+  return a;
+}
+function qkFill(){
+  var a=sources(),l=$("#qkl"),tot=0;l.innerHTML="";
+  a.forEach(function(o){
+    tot+=o.n;
+    var r=el("button","qkr"),i=el("span","qki"),t=el("div","qkt"),c=el("div","qkc"),ds=Object.keys(o.d);
+    r.type="button";i.innerHTML='<svg viewBox="0 0 24 24"><path d="M5 4.5h10.5A2.5 2.5 0 0118 7v12.5H7.5A2.5 2.5 0 015 17V4.5zM5 17a2.5 2.5 0 012.5-2.5H18"/></svg>';
+    t.appendChild(el("b","",o.name));
+    if(ds.length)t.appendChild(el("small","",ds.slice(0,3).join(" · ")+(ds.length>3?" +"+(ds.length-3):"")));
+    c.appendChild(el("b","",o.n));c.appendChild(el("small","","soru"));
+    r.appendChild(i);r.appendChild(t);r.appendChild(c);
+    r.onclick=function(){qk(false);$("#qsi").value=o.name;applyFilter();$("#v-questions").scrollTop=0};
+    l.appendChild(r);
+  });
+  if(!a.length){var e=el("div","qke");e.appendChild(el("b","","Henüz kaynak yok"));e.appendChild(el("span","","Soru eklerken kitap adını yazarsan burada listelenir."));l.appendChild(e)}
+  else if(ITEMS.length>tot)l.appendChild(el("div","qkf","Kaynağı girilmemiş "+(ITEMS.length-tot)+" soru daha var"));
+  $("#qkn").textContent=a.length?a.length+" kaynak · "+tot+" soru":"Kaynak listesi boş";
+}
+function qk(on){qkOn=!!on;if(qkOn)qkFill();$("#qk").classList.toggle("on",qkOn)}
+
 function render(){
   URLS.forEach(function(u){URL.revokeObjectURL(u)});URLS=[];
   var b=$("#qbody"),n=ITEMS.length;
@@ -2151,7 +2256,7 @@ function render(){
   if(!n){
     b.innerHTML='<button class="qe" id="qempty" type="button"><svg viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="3"/><circle cx="9" cy="10" r="1.6"/><path d="M20.5 15.5l-4.5-4.5-8.5 8.5"/></svg><b>Henüz soru yok</b><span>Yapamadığın sorunun fotoğrafını çek ya da galeriden yükle.</span></button>';
     $("#qempty").onclick=function(){$("#qfile").click()};
-    return;
+    applyFilter();return;
   }
   var g=document.createElement("div");g.className="qg";
   ITEMS.forEach(function(it,i){
@@ -2166,6 +2271,8 @@ function render(){
     g.appendChild(bt);
   });
   b.innerHTML="";b.appendChild(g);
+  var nr=el("div","qnr");nr.id="qnr";nr.hidden=true;nr.appendChild(el("b","","Eşleşen soru yok"));nr.appendChild(el("span","","Başka bir kaynak veya ders adı dene."));b.appendChild(nr);
+  applyFilter();
 }
 
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
@@ -2425,12 +2532,13 @@ function view(i,dir){
   if(i<0||i>=ITEMS.length)return;
   cur=i;sheet(false);menu(false);
   var it=ITEMS[i],im=$("#qvi"),v=$("#qv"),opened=v.classList.contains("on"),u=vurl(it),tok=++vTok;
-  $("#qvcn").textContent=i+1;$("#qvct").textContent="/ "+ITEMS.length;$("#qvc").style.setProperty("--p",(i+1)/ITEMS.length);flashCn();
-  $("#qvp").hidden=i===0;$("#qvn").hidden=i===ITEMS.length-1;
+  var L=VL(),pos=L.indexOf(i);if(pos<0){L=[i];pos=0}
+  $("#qvcn").textContent=pos+1;$("#qvct").textContent="/ "+L.length;$("#qvc").style.setProperty("--p",(pos+1)/L.length);flashCn();
+  $("#qvp").hidden=pos<=0;$("#qvn").hidden=pos>=L.length-1;
   var dec=function(){return im.decode?im.decode().catch(function(){}):Promise.resolve()};
   if(!opened||typeof dir!=="number"||REDUCE||!im.animate){
     im.src=u;fill(it);
-    Promise.race([dec(),new Promise(function(r){setTimeout(r,450)})]).then(function(){if(tok===vTok){v.classList.add("on");warm(i+1);warm(i-1)}});
+    Promise.race([dec(),new Promise(function(r){setTimeout(r,450)})]).then(function(){if(tok===vTok){v.classList.add("on");warmN(L,pos)}});
     return;
   }
   var pre=new Image();pre.src=u;
@@ -2444,7 +2552,7 @@ function view(i,dir){
     if(tok!==vTok)return;
     im.getAnimations().forEach(function(a){a.cancel()});
     im.animate([{opacity:0,transform:"translateX("+(14*dir)+"px)"},{opacity:1,transform:"none"}],{duration:260,easing:"cubic-bezier(.25,.8,.25,1)"});
-    warm(i+1);warm(i-1);
+    warmN(L,pos);
   },function(){});
 }
 function closeV(){
@@ -2457,7 +2565,7 @@ function del(){
   tx("readwrite",function(st){st.delete(it.id)}).then(loadAll).then(function(){
     if(VU[it.id]){URL.revokeObjectURL(VU[it.id]);delete VU[it.id]}
     render();
-    if(!ITEMS.length)closeV();else view(Math.min(keep,ITEMS.length-1),0);
+    var L=VL();if(!L.length)closeV();else{var j=L.filter(function(x){return x>=keep})[0];view(j==null?L[L.length-1]:j,0)}
     toast("Silindi");
   },function(){toast("Silinemedi")});
 }
@@ -2476,14 +2584,14 @@ $("#qvz").onclick=function(){setFs(!fsOn);if(fsOn)showUi()};
 $("#qvmn").onclick=function(e){var b=e.target.closest("button");if(!b)return;var a=b.getAttribute("data-a");menu(false);if(a==="d")sheet(true);else if(a==="x")dlg(true)};
 $("#qv").addEventListener("click",function(e){if(mnOn&&!e.target.closest("#qvmn,#qvo"))menu(false)});$("#qvgr").onclick=function(){sheet(false)};$("#qvat").onclick=function(){ansSet(true,true)};
 $("#qvr").onclick=function(e){if(!$("#qva").classList.contains("tx")||e.target.closest(".qvh"))ansSet(false,true)};$("#qvsc").onclick=function(){sheet(false)};
-$("#qvp").onclick=function(){view(cur-1,-1)};$("#qvn").onclick=function(){view(cur+1,1)};
+$("#qvp").onclick=function(){go(-1)};$("#qvn").onclick=function(){go(1)};
 /* Açıkken tüm tuşlar burada kalır; uygulamanın diğer kısayolları araya girmez */
 document.addEventListener("keydown",function(e){
   if(!$("#qv").classList.contains("on"))return;
   if(e.key==="Escape"){if(dgOn)dlg(false);else if(mnOn)menu(false);else if(sheetOn)sheet(false);else if(fsOn)setFs(false);else closeV()}
   else if(dgOn)return;
-  else if(e.key==="ArrowLeft"&&!sheetOn)view(cur-1,-1);
-  else if(e.key==="ArrowRight"&&!sheetOn)view(cur+1,1);
+  else if(e.key==="ArrowLeft"&&!sheetOn)go(-1);
+  else if(e.key==="ArrowRight"&&!sheetOn)go(1);
   else if((e.key===" "||e.key==="ArrowDown")&&!sheetOn)ansSet(!ansOn,true);
   else if(e.key==="ArrowUp"&&!sheetOn)sheet(true);
   else return;
@@ -2492,12 +2600,19 @@ document.addEventListener("keydown",function(e){
 /* Yatay kaydırma ile önceki/sonraki */
 (function(){var x0=null,y0=0,v=$("#qv");
   v.addEventListener("touchstart",function(e){if(e.touches.length===1&&!sheetOn&&!dgOn){x0=e.touches[0].clientX;y0=e.touches[0].clientY}else x0=null},{passive:true});
-  v.addEventListener("touchend",function(e){if(x0===null)return;var t=e.changedTouches[0],dx=t.clientX-x0,dy=t.clientY-y0;x0=null;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5)view(cur+(dx<0?1:-1),dx<0?1:-1);else if(dy<-80&&Math.abs(dy)>Math.abs(dx)*1.5)sheet(true)},{passive:true});
+  v.addEventListener("touchend",function(e){if(x0===null)return;var t=e.changedTouches[0],dx=t.clientX-x0,dy=t.clientY-y0;x0=null;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5)go(dx<0?1:-1);else if(dy<-80&&Math.abs(dy)>Math.abs(dx)*1.5)sheet(true)},{passive:true});
   (function(){var y0=null,s=$("#qvsh");
     s.addEventListener("touchstart",function(e){y0=(s.scrollTop<=0&&e.touches.length===1)?e.touches[0].clientY:null},{passive:true});
     s.addEventListener("touchend",function(e){if(y0===null)return;var dy=e.changedTouches[0].clientY-y0;y0=null;if(dy>70)sheet(false)},{passive:true});
   })();
 })();
+
+$("#qsi").addEventListener("input",applyFilter);
+$("#qsi").addEventListener("keydown",function(e){if(e.key==="Enter")this.blur();else if(e.key==="Escape"&&this.value){this.value="";applyFilter();e.stopPropagation()}});
+$("#qsx").addEventListener("pointerdown",function(e){e.preventDefault()});
+$("#qsx").onclick=function(){var q=$("#qsi");q.value="";applyFilter();q.focus()};
+$("#qsrc").onclick=function(){qk(true)};$("#qkx").onclick=$("#qkb").onclick=function(){qk(false)};
+document.addEventListener("keydown",function(e){if(qkOn&&e.key==="Escape"){qk(false);e.preventDefault();e.stopImmediatePropagation()}},true);
 
 open().then(function(d){DB=d;return loadAll()}).then(render,function(){
   $("#qbody").innerHTML='<div class="qe"><b>Depolama açılamadı</b><span>Tarayıcı bu cihazda fotoğraf saklamaya izin vermiyor (özel gezinti açık olabilir).</span></div>';
