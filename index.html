@@ -718,8 +718,28 @@ textarea.qfi{height:140px;resize:none}
 .qbar button:active{transform:scale(.94)}
 .qbar button svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .qbar button[disabled]{opacity:.4;pointer-events:none}
-.qbar .qbd{background:#ff5a4d;color:#111}
-.qbar .qbd.arm{background:#fff}
+.qbar .qbd{background:#ff5a4d;color:#111;--hf:#fff}
+[data-hold]{position:relative;overflow:hidden;isolation:isolate;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+[data-hold]::after{content:"";position:absolute;inset:0;z-index:-1;background:var(--hf,#d12f35);transform:scaleX(0);transform-origin:left center;transition:transform .22s var(--ease);pointer-events:none}
+[data-hold].holding::after{transform:scaleX(1);transition:transform .9s linear}
+[data-hold].holding{color:#fff!important;transition:color .45s .15s}
+.qbar .qbd.holding{color:#111!important}
+[data-hold].shake{animation:hshake .38s}
+@keyframes hshake{20%{transform:translateX(-5px)}45%{transform:translateX(5px)}70%{transform:translateX(-3px)}100%{transform:none}}
+.qpop{position:fixed;left:0;top:0;z-index:15;min-width:210px;padding:6px;border-radius:22px;background:rgba(255,255,255,.94);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:0 18px 40px -12px rgba(17,17,17,.4),0 0 0 1px rgba(17,17,17,.06);visibility:hidden;opacity:0;transform:scale(.7);transition:transform .45s var(--sp),opacity .2s,visibility 0s .45s;pointer-events:none}
+.qpop.on{visibility:visible;opacity:1;transform:none;pointer-events:auto;transition:transform .45s var(--sp),opacity .2s}
+.qpop button{display:flex;align-items:center;gap:12px;width:100%;height:48px;padding:0 14px;border-radius:16px;font:700 16px/1 Inter,system-ui,sans-serif;color:var(--fg);text-align:left;transition:background .2s,transform .3s var(--sp)}
+.qpop button:active{background:var(--surf2);transform:scale(.97)}
+.qpop button svg{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.qpop button small{margin-left:auto;font-size:12px;font-weight:600;opacity:.6}
+.qpop .dg{color:#d12f35}
+.qpop hr{height:1px;margin:4px 8px;border:0;background:rgba(17,17,17,.1)}
+.qi.pk{transform:scale(.95)}
+.qi.pk::after{box-shadow:inset 0 0 0 4px var(--fg);background:rgba(17,17,17,.12)}
+.lpm{display:flex;gap:8px;margin-top:12px}
+.lpm button{flex:1;height:46px;border-radius:14px;background:var(--surf2);font-weight:700;font-size:15px;transition:transform .35s var(--sp)}
+.lpm button:active{transform:scale(.96)}
+.lpm button.on{background:var(--fg);color:var(--bg)}
 .qbar .qbx{width:44px;padding:0;justify-content:center}
 .app.qsel .dock{transform:translate(-50%,160%);opacity:0;pointer-events:none}
 @media (max-width:560px){.qbar button span{display:none}.qbar button{width:44px;padding:0;justify-content:center}}
@@ -859,10 +879,10 @@ textarea.qfi{height:140px;resize:none}
     <section class="view" id="v-settings"><div class="set" id="set"></div></section>
   </main>
   <div class="sheet" id="sheet"><button class="fl fl-l" id="fl">Dersler</button><div class="fl-r"><button class="fl fp" id="fp" aria-label="Yeni ders">+</button><button class="fl fk" id="sx">Kapat</button></div><div class="shw" id="shw"></div><div class="mod" id="mod"><div class="mc card" id="mc"></div></div></div>
-  <div class="sheet" id="ksheet"><div class="fl-r kfr" id="kfr"><button class="fl fk" id="kbx2">Bitti</button></div><div class="shw"><div class="sh-h"><div><h1>Klavye kısa yolları</h1><p>Bir kısa yola dokun, ardından yeni tuşa bas. Backspace atamayı kaldırır, Esc vazgeçer.</p></div><button class="btn pr" id="kbx">Bitti</button></div><div class="card lc"><div><h2>Kısa yolları kullan</h2><p>Kapalıyken klavye uygulamada hiçbir şey yapmaz.</p></div><button class="tg on" data-kb="tg" aria-label="Klavye kısa yolları"><i></i></button></div><div id="kbl"></div><div class="card"><h2>Varsayılana dön</h2><p>Tüm kısa yollar ilk hâline döner.</p><div class="row"><button class="btn dg" id="kbr">Hepsini sıfırla</button></div></div></div><div class="kbt" id="kbt" role="status"></div></div>
+  <div class="sheet" id="ksheet"><div class="fl-r kfr" id="kfr"><button class="fl fk" id="kbx2">Bitti</button></div><div class="shw"><div class="sh-h"><div><h1>Klavye kısa yolları</h1><p>Bir kısa yola dokun, ardından yeni tuşa bas. Backspace atamayı kaldırır, Esc vazgeçer.</p></div><button class="btn pr" id="kbx">Bitti</button></div><div class="card lc"><div><h2>Kısa yolları kullan</h2><p>Kapalıyken klavye uygulamada hiçbir şey yapmaz.</p></div><button class="tg on" data-kb="tg" aria-label="Klavye kısa yolları"><i></i></button></div><div id="kbl"></div><div class="card"><h2>Varsayılana dön</h2><p>Tüm kısa yollar ilk hâline döner.</p><div class="row"><button class="btn dg" id="kbr" data-hold>Hepsini sıfırla</button></div></div></div><div class="kbt" id="kbt" role="status"></div></div>
   <div class="mod" id="ssheet"><div class="mc card pn" id="snmc" tabindex="-1" role="dialog" aria-modal="true" aria-label="Sesler"><div class="pn-h"><h2>Sesler</h2><p>Süre bitince hangi sayaçların ses çalacağını seç. Oynat düğmesiyle sesi dinleyebilirsin.</p></div><div class="pn-b"><div class="pm-row"><div><b>Sesleri kullan</b><small>Kapalıyken süre bitince yalnızca titreşim olur.</small></div><button class="tg on" data-sn="tg" role="switch" aria-label="Sesleri kullan"><i></i></button></div><div class="pm-row sn-vr" id="snvr"><div class="sn-v"><svg viewBox="0 0 24 24"><path d="M4 9.5v5h3.5l4.5 4v-13l-4.5 4z"/></svg><input type="range" id="snv" min="0" max="100" step="1" aria-label="Ses seviyesi"><svg viewBox="0 0 24 24"><path d="M4 9.5v5h3.5l4.5 4v-13l-4.5 4zM15.5 9a4 4 0 010 6M18.2 6.5a8 8 0 010 11"/></svg><output id="snvo"></output></div></div><div id="snl"></div></div><div class="pn-f"><button class="btn pr" id="snx">Bitti</button></div></div></div>
   <div class="mod" id="sset"><div class="mc card" id="smc" tabindex="-1" role="dialog" aria-modal="true" aria-label="Kronometre ayarları"><h2>Kronometre ayarları</h2><p>Kronometrenin nasıl görüneceğini seç.</p><div class="pm-l"><div class="pm-row"><div><b>Salise göster</b><small>Saniyenin yanında yüzde birlik kısım</small></div><button class="tg" data-sk="c" aria-label="Salise göster"><i></i></button></div><div class="pm-row"><div><b>Saat basamağı</b><small>Bir saati geçmeden de 00 olarak göster</small></div><button class="tg" data-sk="h" aria-label="Saat basamağı"><i></i></button></div></div><div class="row"><button class="btn" id="sdf">Varsayılan</button><button class="btn pr" id="sdn">Bitti</button></div></div></div>
-  <div class="sheet" id="stsheet"><div class="fl-r"><button class="fl fk" id="stx">Kapat</button></div><div class="shw"><div class="sh-h"><div><h1>İstatistikler</h1><p>Kronometre, geri sayım ve Pomodoro odak turlarında geçen süre günlük olarak burada toplanır.</p></div></div><div id="stbody"></div></div><div class="mod" id="stadd"><div class="mc card" id="stamc" tabindex="-1" role="dialog" aria-modal="true" aria-label="Süre ekle"><h2 id="sah"></h2><p id="sas"></p><div class="pm-l"><div class="pm-row"><div><b>Eklenecek süre</b><small>5 dakikalık adımlarla</small></div><div class="pm-stp"><button data-sa="-1" aria-label="Süreyi azalt">−</button><output id="sao"></output><button data-sa="1" aria-label="Süreyi artır">+</button></div></div><div class="pm-row pm-cr"><div class="pm-pick" id="sap"></div></div></div><div class="row"><button class="btn dg" id="saz">Günü sıfırla</button><button class="btn" id="sax">Vazgeç</button><button class="btn pr" id="sak">Ekle</button></div></div></div></div>
+  <div class="sheet" id="stsheet"><div class="fl-r"><button class="fl fk" id="stx">Kapat</button></div><div class="shw"><div class="sh-h"><div><h1>İstatistikler</h1><p>Kronometre, geri sayım ve Pomodoro odak turlarında geçen süre günlük olarak burada toplanır.</p></div></div><div id="stbody"></div></div><div class="mod" id="stadd"><div class="mc card" id="stamc" tabindex="-1" role="dialog" aria-modal="true" aria-label="Süre ekle"><h2 id="sah"></h2><p id="sas"></p><div class="pm-l"><div class="pm-row"><div><b>Eklenecek süre</b><small>5 dakikalık adımlarla</small></div><div class="pm-stp"><button data-sa="-1" aria-label="Süreyi azalt">−</button><output id="sao"></output><button data-sa="1" aria-label="Süreyi artır">+</button></div></div><div class="pm-row pm-cr"><div class="pm-pick" id="sap"></div></div></div><div class="row"><button class="btn dg" id="saz" data-hold>Günü sıfırla</button><button class="btn" id="sax">Vazgeç</button><button class="btn pr" id="sak">Ekle</button></div></div></div></div>
   <div class="mod" id="pset"><div class="mc card" id="pmc" tabindex="-1" role="dialog" aria-modal="true" aria-label="Pomodoro ayarları"><h2>Pomodoro ayarları</h2><p>Odak süreni, molalarını ve periyodunu ayarla.</p><div class="pm-l" id="pml"></div><p class="pm-n">Tur süresi değişirse o an süren tur sıfırlanır.</p><div class="row"><button class="btn" id="pdf">Varsayılan</button><button class="btn" id="pcn">Vazgeç</button><button class="btn pr" id="psv">Kaydet</button></div></div></div>
   <div class="qc" id="qc" role="dialog" aria-modal="true" aria-label="Soru ekle">
     <div class="qct">
@@ -905,7 +925,13 @@ textarea.qfi{height:140px;resize:none}
     </div>
   </div>
   <div class="qs" id="qs" role="status"></div>
-  <div class="qbar" id="qbar" role="toolbar" aria-label="Seçili sorular"><button class="qbx" id="qbx" type="button" aria-label="Seçimi kapat"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17"/></svg></button><b id="qbn">0 seçili</b><button id="qba" type="button"><svg viewBox="0 0 24 24"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Tümünü seç</span></button><button class="qbd" id="qbd" type="button" aria-label="Seçilenleri sil"><svg viewBox="0 0 24 24"><path d="M4 7h16M9.5 7V4.5h5V7M6.5 7l.8 12a1.5 1.5 0 001.5 1.4h6.4a1.5 1.5 0 001.5-1.4l.8-12"/></svg><span>Sil</span></button></div>
+  <div class="qpop" id="qpop" role="menu" aria-label="Soru işlemleri">
+    <button type="button" role="menuitem" data-a="o"><svg viewBox="0 0 24 24"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.8"/></svg>Aç</button>
+    <button type="button" role="menuitem" data-a="s"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg>Seç</button>
+    <hr>
+    <button type="button" role="menuitem" class="dg" data-a="x" data-hold><svg viewBox="0 0 24 24"><path d="M4 7h16M9.5 7V4.5h5V7M6.5 7l.8 12a1.5 1.5 0 001.5 1.4h6.4a1.5 1.5 0 001.5-1.4l.8-12"/></svg><span>Sil</span><small>basılı tut</small></button>
+  </div>
+  <div class="qbar" id="qbar" role="toolbar" aria-label="Seçili sorular"><button class="qbx" id="qbx" type="button" aria-label="Seçimi kapat"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17"/></svg></button><b id="qbn">0 seçili</b><button id="qba" type="button"><svg viewBox="0 0 24 24"><path d="M4.5 12.5l5 5 10-11"/></svg><span>Tümünü seç</span></button><button class="qbd" id="qbd" type="button" data-hold aria-label="Seçilenleri sil"><svg viewBox="0 0 24 24"><path d="M4 7h16M9.5 7V4.5h5V7M6.5 7l.8 12a1.5 1.5 0 001.5 1.4h6.4a1.5 1.5 0 001.5-1.4l.8-12"/></svg><span>Sil</span></button></div>
   <div class="qv" id="qv" role="dialog" aria-modal="true" aria-label="Soru fotoğrafı">
     <button class="qvb qvx" id="qvx" type="button" aria-label="Kapat"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
     <span class="qvt" id="qvt"></span>
@@ -946,6 +972,47 @@ textarea.qfi{height:140px;resize:none}
     </div>
   </div>
 </div>
+<script>
+/* Basılı tutarak onay: silme/sıfırlama düğmeleri "Emin misin?" yerine dolarak onaylanır. data-hold taşıyan düğmeler. */
+window.ddHold=(function(){
+  var DUR=900,cur=null,tm=0,x0=0,y0=0;
+  function lab(b){return b.querySelector("span")||b}
+  function start(b,x,y){
+    if(cur||b.disabled)return;if(b._h!=null){clearTimeout(b._ht);lab(b).textContent=b._h;b._h=null}cur=b;x0=x;y0=y;b.classList.remove("shake");b.classList.add("holding");
+    try{navigator.vibrate&&navigator.vibrate(6)}catch(e){}
+    tm=setTimeout(function(){var q=cur;stop(true);if(q){q._ok=1;q._sup=1;try{navigator.vibrate&&navigator.vibrate([18])}catch(e){}q.click()}},DUR);
+  }
+  function stop(ok){
+    clearTimeout(tm);
+    if(cur){cur.classList.remove("holding");if(!ok){var b=cur;b.classList.remove("shake");void b.offsetWidth;b.classList.add("shake")}}
+    cur=null;
+  }
+  function ok(b){
+    if(b._ok){b._ok=0;return true}
+    if(b._sup)return false;
+    var l=lab(b);if(b._h==null)b._h=l.textContent;l.textContent="Basılı tut";
+    b.classList.remove("shake");void b.offsetWidth;b.classList.add("shake");
+    clearTimeout(b._ht);b._ht=setTimeout(function(){l.textContent=b._h;b._h=null},1300);
+    return false;
+  }
+  document.addEventListener("pointerdown",function(e){
+    var b=e.target.closest&&e.target.closest("[data-hold]");
+    if(b&&e.button===0){e.preventDefault();start(b,e.clientX,e.clientY)}
+  },true);
+  document.addEventListener("pointermove",function(e){if(cur&&Math.abs(e.clientX-x0)+Math.abs(e.clientY-y0)>28)stop(false)},true);
+  document.addEventListener("pointerout",function(e){if(cur&&e.target===cur&&!(e.relatedTarget&&cur.contains(e.relatedTarget)))stop(false)},true);
+  ["pointerup","pointercancel"].forEach(function(n){document.addEventListener(n,function(){
+    stop(false);
+    setTimeout(function(){var a=document.querySelectorAll("[data-hold]");for(var i=0;i<a.length;i++)a[i]._sup=0},350);
+  },true)});
+  document.addEventListener("keydown",function(e){
+    var b=e.target.closest&&e.target.closest("[data-hold]");
+    if(b&&(e.key==="Enter"||e.key===" ")){e.preventDefault();if(!e.repeat)start(b,0,0)}
+  },true);
+  document.addEventListener("keyup",function(e){if(cur&&(e.key==="Enter"||e.key===" "))stop(false)},true);
+  return{ok:ok};
+})();
+</script>
 <script>
 (function(){
 var $=function(s){return document.querySelector(s)},$$=function(s){return [].slice.call(document.querySelectorAll(s))};
@@ -1072,7 +1139,12 @@ function buildSettings(){
   '<div class="card lc kbc"><button class="kbo" id="kbo"><div><h2>Klavye kısa yolları</h2><p>Sayfa geçişi, süre ve konular için kısa yolları gör ve özelleştir.</p></div><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button><button class="tg'+(KB.on?" on":"")+'" data-kb="tg" aria-label="Klavye kısa yolları"><i></i></button></div>'+
   '<div class="card"><h2>Sınav tarihi</h2><p>Geri sayım bu tarihe göre hesaplanır.</p><button class="dpb" id="sd" aria-haspopup="dialog"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span></span></button></div>'+
   '<div class="card"><h2>Yedek</h2><p>İlerlemeni metin olarak kopyala, gerekirse buradan geri yükle.</p><div class="row"><button class="btn pr" id="bk">Yedeği kopyala</button></div><textarea id="bt" placeholder="Yedek metnini buraya yapıştır"></textarea><div class="row"><button class="btn" id="br">Geri yükle</button></div><div class="msg" id="bm"></div></div>'+
-  '<div class="card"><h2>Tüm verileri sıfırla</h2><p>Konular, istatistikler, sınav tarihi, takvim ve çizimler, ders düzeni, klavye kısa yolları ve ayarlar silinir. Uygulama ilk açıldığı hâle döner. Geri alınamaz.</p><div class="row"><button class="btn dg" id="rs">Sıfırla</button></div><div class="msg" id="rm"></div></div></div>';
+  '<div class="card"><h2>Soruda basılı tutma (deneme)</h2><p>Bir soruya basılı tutunca ne olsun? İkisini deneyip birini seç.</p><div class="lpm" id="lpm"><button type="button" data-m="pop">Bastığım yerde panel</button><button type="button" data-m="bar">Seçim + alt çubuk</button></div></div>'+
+  '<div class="card"><h2>Tüm verileri sıfırla</h2><p>Konular, istatistikler, sınav tarihi, takvim ve çizimler, ders düzeni, klavye kısa yolları ve ayarlar silinir. Uygulama ilk açıldığı hâle döner. Geri alınamaz.</p><div class="row"><button class="btn dg" id="rs" data-hold>Sıfırla</button></div><div class="msg" id="rm"></div></div></div>';
+  (function(){var m="bar";try{m=localStorage.getItem("dd-lpmode")||"bar"}catch(e){}
+    var bs=$$("#lpm button");function paint(){bs.forEach(function(b){b.classList.toggle("on",b.dataset.m===m)})}paint();
+    bs.forEach(function(b){b.onclick=function(){m=b.dataset.m;try{localStorage.setItem("dd-lpmode",m)}catch(e){}paint()}});
+  })();
   $("#sd").onclick=function(){openDP(this)};
   $("#ld").onclick=openSheet;
   $("#kbo").onclick=openKb;
@@ -1088,12 +1160,7 @@ function buildSettings(){
   };
   var rt;
   $("#rs").onclick=function(){
-    var b=this;
-    if(!b.classList.contains("arm")){
-      b.classList.add("arm");b.textContent="Emin misin? Tekrar dokun";
-      clearTimeout(rt);rt=setTimeout(function(){b.classList.remove("arm");b.textContent="Sıfırla"},3000);return;
-    }
-    clearTimeout(rt);b.classList.remove("arm");b.textContent="Sıfırla";
+    if(!ddHold.ok(this))return;
     $("#rm").textContent="Siliniyor…";wipeAll();
   };
 }
@@ -1103,7 +1170,7 @@ buildSubs();buildSettings();showSub(false);
 var PAL=[["#ff90e8","#b8189a"],["#ffb46e","#b85c00"],["#c6f36b","#4d7a00"],["#6ec6ff","#0a76b8"],["#b79cff","#6a3fd1"],["#7ee8c0","#0b7a57"],["#ffd84a","#b88700"],["#ff8a8a","#c0262d"],["#8fb4ff","#2a5bd0"],["#f5c6a5","#a5552a"],["#5fe0e6","#0b7c82"],["#ffb3c7","#b8305a"]],nf={g:"TYT",p:0};
 function refresh(){buildSubs();showSub(false);buildSettings()}
 function swatches(c){return PAL.map(function(p,k){return'<button class="swb'+(p[0]===c?" on":"")+'" data-p="'+k+'" style="--c:'+p[0]+';--ct:'+p[1]+'" aria-label="Renk '+(k+1)+'"></button>'}).join("")}
-function rowH(s,i){return'<div class="lw" data-id="'+s.id+'" style="--c:'+s.c+';--ct:'+s.ct+';--d:'+Math.min(i*45+100,500)+'ms"><div class="li"><div class="lr"><div class="lh"><button class="grip" aria-label="Sırala"><svg viewBox="0 0 24 24"><path d="M9 6h.01M15 6h.01M9 12h.01M15 12h.01M9 18h.01M15 18h.01"/></svg></button><button class="dot" aria-label="Rengi değiştir"></button><div class="ln"><b>'+esc(s.n)+'</b><small>'+s.t.length+' konu</small></div>'+(s.x?'<button class="dl">Sil</button>':"")+'</div><div class="sw"><div class="swi"><div class="swr">'+swatches(s.c)+'</div></div></div></div></div></div>'}
+function rowH(s,i){return'<div class="lw" data-id="'+s.id+'" style="--c:'+s.c+';--ct:'+s.ct+';--d:'+Math.min(i*45+100,500)+'ms"><div class="li"><div class="lr"><div class="lh"><button class="grip" aria-label="Sırala"><svg viewBox="0 0 24 24"><path d="M9 6h.01M15 6h.01M9 12h.01M15 12h.01M9 18h.01M15 18h.01"/></svg></button><button class="dot" aria-label="Rengi değiştir"></button><div class="ln"><b>'+esc(s.n)+'</b><small>'+s.t.length+' konu</small></div>'+(s.x?'<button class="dl" data-hold>Sil</button>':"")+'</div><div class="sw"><div class="swi"><div class="swr">'+swatches(s.c)+'</div></div></div></div></div></div>'}
 function buildSheet(){
   nf={g:"TYT",p:0};
   var h='<div class="sh-h"><div><h1>Dersler</h1><p>Tutamaçtan sürükleyerek sırala, renk noktasına dokunarak rengi değiştir.</p></div></div><button class="add" id="ab"><span>+</span>Yeni ders ekle</button>';
@@ -1146,7 +1213,7 @@ function shClick(e){
   }
   if(t.classList.contains("dot")){var op=w.classList.contains("open");$$(".lw.open").forEach(function(x){x.classList.remove("open")});if(!op)w.classList.add("open");return}
   if(t.classList.contains("dl")){
-    if(!t.classList.contains("arm")){t.classList.add("arm");t.textContent="Emin misin?";setTimeout(function(){t.classList.remove("arm");t.textContent="Sil"},3000);return}
+    if(!ddHold.ok(t))return;
     var i=+w.dataset.id;S.gone[i]=1;for(var q in S.done)if(q.indexOf(i+"_")===0)delete S.done[q];
     w.classList.add("out");norm();save();refresh();setTimeout(function(){w.remove()},500);
   }
@@ -1704,7 +1771,7 @@ $("#stadd").addEventListener("click",function(e){
   if(t.id==="sax")saClose();
   else if(t.id==="sak")saAdd();
   else if(t.id==="saz"){
-    if(!t.classList.contains("arm")){t.classList.add("arm");t.textContent="Emin misin? Tekrar dokun";clearTimeout(SA.rt);SA.rt=setTimeout(saDis,3000);return}
+    if(!ddHold.ok(t))return;
     saDis();if(S.study)delete S.study[SA.k];save();saClose();stRender();
   }
 });
@@ -2189,7 +2256,7 @@ $("#ksheet").addEventListener("click",function(e){
   if(t.dataset.kr){kbPut(t.dataset.kr,KDEF[t.dataset.kr]);kbSave();kbRender();return}
   if(t.id==="kbx"||t.id==="kbx2")closeKb();
   else if(t.id==="kbr"){
-    if(!t.classList.contains("arm")){t.classList.add("arm");t.textContent="Emin misin? Tekrar dokun";clearTimeout(kbAt);kbAt=setTimeout(kbDisarm,3000);return}
+    if(!ddHold.ok(t))return;
     kbDisarm();KB.map={};kbSave();kbRender();kbToast("Tüm kısa yollar varsayılana döndü.");
   }
 });
@@ -2655,7 +2722,6 @@ function selMode(on){
   selOn=!!on;if(!on)SEL={};
   var g=$("#qbody .qg");if(g)g.classList.toggle("sm",selOn);
   $("#qbar").classList.toggle("on",selOn);document.querySelector(".app").classList.toggle("qsel",selOn);
-  clearTimeout(selDelT);var d=$("#qbd");d.classList.remove("arm");d.querySelector("span").textContent="Sil";
   selUi();
 }
 function selToggle(id){
@@ -2670,6 +2736,27 @@ function selDelete(){
     selMode(false);render();toast(L.length===1?"Silindi":L.length+" soru silindi");
   },function(){toast("Silinemedi")});
 }
+/* Bastığın yerde açılan hızlı panel */
+var popOn=false,popId=null;
+function popClose(){popOn=false;popId=null;$("#qpop").classList.remove("on");var a=document.querySelectorAll(".qi.pk");for(var i=0;i<a.length;i++)a[i].classList.remove("pk")}
+function popOpen(card,x,y){
+  popClose();popOn=true;popId=card.dataset.id;card.classList.add("pk");
+  var P=$("#qpop"),W=window.innerWidth,H=window.innerHeight,w=P.offsetWidth,h=P.offsetHeight,m=12;
+  var l=x+20;if(l+w>W-m)l=x-20-w;l=Math.max(m,Math.min(l,W-w-m));
+  var tp=Math.max(m,Math.min(y-24,H-h-m));
+  P.style.left=l+"px";P.style.top=tp+"px";P.style.transformOrigin=(x-l)+"px "+(y-tp)+"px";
+  void P.offsetWidth;P.classList.add("on");
+}
+$("#qpop").onclick=function(e){
+  var b=e.target.closest("button");if(!b||!popOn)return;var a=b.getAttribute("data-a"),id=popId;
+  if(a==="x"&&!ddHold.ok(b))return;
+  popClose();
+  if(a==="o"){for(var i=0;i<ITEMS.length;i++)if(ITEMS[i].id===id){view(i);break}}
+  else if(a==="s"){SEL={};SEL[id]=1;selMode(true)}
+  else if(a==="x"){SEL={};SEL[id]=1;selDelete()}
+};
+document.addEventListener("pointerdown",function(e){if(popOn&&!e.target.closest("#qpop")){popClose();selSup=Date.now()}},true);
+$("#v-questions").addEventListener("scroll",function(){if(popOn)popClose()});
 (function(){
   var b=$("#qbody"),t=0,sx=0,sy=0,tg=null,LP=450;
   function cancel(){clearTimeout(t);t=0;tg=null}
@@ -2677,9 +2764,11 @@ function selDelete(){
     var q=e.target.closest(".qi");if(!q||e.button>0||selOn)return;
     sx=e.clientX;sy=e.clientY;tg=q;
     t=setTimeout(function(){
-      t=0;if(!tg)return;var id=tg.dataset.id;tg=null;selSup=1;
-      SEL={};SEL[id]=1;selMode(true);
+      t=0;if(!tg)return;var id=tg.dataset.id,card=tg;tg=null;selSup=1;
       try{navigator.vibrate&&navigator.vibrate(12)}catch(e){}
+      var m="bar";try{m=localStorage.getItem("dd-lpmode")||"bar"}catch(e){}
+      if(m==="pop"){popOpen(card,sx,sy);return}
+      SEL={};SEL[id]=1;selMode(true);
     },LP);
   });
   b.addEventListener("pointermove",function(e){if(t&&(Math.abs(e.clientX-sx)>10||Math.abs(e.clientY-sy)>10))cancel()});
@@ -2696,11 +2785,10 @@ $("#qba").onclick=function(){
   vis.forEach(function(it){SEL[it.id]=1});selUi();
 };
 $("#qbd").onclick=function(){
-  var d=$("#qbd");
-  if(!d.classList.contains("arm")){d.classList.add("arm");d.querySelector("span").textContent="Emin misin?";clearTimeout(selDelT);selDelT=setTimeout(function(){d.classList.remove("arm");d.querySelector("span").textContent="Sil"},3000);return}
+  if(!ddHold.ok(this))return;
   selDelete();
 };
-document.addEventListener("keydown",function(e){if(e.key==="Escape"&&selOn&&!$("#qv").classList.contains("on")){selMode(false)}});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&popOn){popClose();return}if(e.key==="Escape"&&selOn&&!$("#qv").classList.contains("on")){selMode(false)}});
 function sortLbl(){var b=$("#qsort");b.querySelector("span").textContent=SORT==="old"?"En eski":"En yeni";b.setAttribute("aria-label",SORT==="old"?"Sıralama: en eski önce":"Sıralama: en yeni önce")}
 sortLbl();
 $("#qsort").onclick=function(){SORT=SORT==="old"?"new":"old";try{localStorage.setItem("dd-qsort",SORT)}catch(e){}sortItems(ITEMS);cur=-1;sortLbl();render();$("#v-questions").scrollTop=0};
