@@ -1173,24 +1173,6 @@ textarea.qfi{height:140px;resize:none}
 
 /* ===== Test kipinde soru görüntüleyici ===== */
 .qv.tm .qvo,.qv.tm .qvok,.qv.tm .qvq{display:none!important}
-.qvtm,.qvta,.qvfin{display:none}
-.qv.tm .qvk{grid-template-columns:1fr auto}
-.qv.tm .qvtm{display:block;align-self:end;padding:0 6px 8px;color:#a3a3a3;font:700 16px/1 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums}
-.qv.tm .qvta{display:block;grid-column:1/-1}
-.qv.tm .qvs{bottom:calc(158px + env(safe-area-inset-bottom,0px))}
-.qv.tm.tx .qvs{bottom:calc(234px + env(safe-area-inset-bottom,0px))}
-@media (min-aspect-ratio:3/2){.qv.tm .qvs{bottom:calc(108px + env(safe-area-inset-bottom,0px))}.qv.tm.tx .qvs{bottom:calc(184px + env(safe-area-inset-bottom,0px))}}
-.qv.tm .qvzb{bottom:auto;top:calc(78px + env(safe-area-inset-top,0px))}
-.qv.tm .qvfin{display:inline-flex;align-items:center;justify-content:center;position:absolute;z-index:2;top:calc(18px + env(safe-area-inset-top,0px));right:22px;height:46px;padding:0 20px;border-radius:23px;background:#fff;color:#111;font:700 15px/1 Inter,system-ui,sans-serif;transition:transform .35s var(--sp)}
-.qv.tm .qvfin:active{transform:scale(.94)}
-.qvtl{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;max-width:420px;margin:0 auto}
-.qvtl button{height:54px;border-radius:18px;background:#2e2e2e;color:#fff;font:800 22px/1 Inter,system-ui,sans-serif;transition:transform .35s var(--sp),background .2s,color .2s}
-.qvtl button:active{transform:scale(.92)}
-.qvtl button.on{background:#fff;color:#111}
-.qvtx{display:block;width:100%;max-width:520px;height:72px;margin:0 auto;padding:12px 14px;border:0;outline:0;border-radius:18px;background:#2e2e2e;color:#fff;font:600 16px/1.35 Inter,system-ui,sans-serif;resize:none}
-.qvtx::placeholder{color:#8a8a8a}
-@media (max-width:600px){.qv.tm .qvfin{right:16px;height:42px}}
-
 
 /* ===== Paket kapağı: daha büyük ===== */
 .tzpk{display:flex;flex-direction:column;min-height:210px;padding:20px;border-radius:26px;cursor:pointer}
@@ -1396,17 +1378,15 @@ textarea.qfi{height:140px;resize:none}
     
     <button class="qvb qvo" id="qvo" type="button" aria-label="Menü" aria-haspopup="menu" aria-expanded="false"><svg viewBox="0 0 24 24"><circle cx="5.5" cy="12" r="1.7" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.7" fill="currentColor" stroke="none"/><circle cx="18.5" cy="12" r="1.7" fill="currentColor" stroke="none"/></svg></button>
     <button class="qvb qvok" id="qvok" type="button" aria-label="Çözüldü olarak işaretle" aria-pressed="false" title="Çözüldü"><svg viewBox="0 0 24 24"><path pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"/></svg></button>
-    <button class="qvfin" id="qvfin" type="button">Bitir</button>
     <button class="qvn l" id="qvp" type="button" aria-label="Önceki"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
     <div class="qvs"><img id="qvi" alt=""></div>
     <button class="qvn r" id="qvn" type="button" aria-label="Sonraki"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
     <div class="qvk" id="qvk">
       <span class="qvc" id="qvc"><b id="qvcn"></b><span id="qvct"></span></span>
-      <span class="qvtm" id="qvtm"></span><div class="qvq"><div class="qva" id="qva" hidden>
+      <div class="qvq"><div class="qva" id="qva" hidden>
         <button class="qvf" id="qvat" type="button"><svg viewBox="0 0 24 24"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.8"/></svg>Cevabı göster</button>
         <div class="qvr" id="qvr" hidden><button class="qvh" id="qvhd" type="button" aria-label="Cevabı gizle"><svg viewBox="0 0 24 24"><path d="M3 3l18 18M10.6 5.7A10 10 0 0112 5.5c6.4 0 10 6.5 10 6.5a17 17 0 01-3.2 3.9M6.4 7.4A16.6 16.6 0 002 12s3.6 6.5 10 6.5a9.8 9.8 0 004-.9M9.9 9.9a3 3 0 004.2 4.2"/></svg></button><div class="qvav" id="qvav"></div></div>
       </div></div>
-      <div class="qvta" id="qvta"></div>
     </div>
     <button class="qvzb" id="qvzb" type="button" aria-label="Yakınlaştırmayı sıfırla"><b id="qvzn"></b><span>·</span><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>Sığdır</button>
     <div class="qvmn" id="qvmn" role="menu">
@@ -3326,7 +3306,7 @@ function zoomAt(px,py,ns,anim){
 }
 (function(){
   var v=$("#qv"),P={},g=null,tap=null,wT=0;
-  function blocked(e){return sheetOn||dgOn||mnOn||(e.target.closest&&e.target.closest("button,.qva,#qvmn,#qvsh,#qvdg,.qvc,.qvt,.qvzb,.qvta,.qvtm"))}
+  function blocked(e){return sheetOn||dgOn||mnOn||(e.target.closest&&e.target.closest("button,.qva,#qvmn,#qvsh,#qvdg,.qvc,.qvt,.qvzb"))}
   function pts(){return Object.keys(P).map(function(i){return P[i]})}
   function begin(){
     var a=pts();
@@ -3377,7 +3357,7 @@ function zoomAt(px,py,ns,anim){
   function pdOk(){return ZS<=1.02&&!sheetOn&&!dgOn&&!mnOn&&!pdOff}
   function pdPut(dy){zEls();zq.style.transition="none";zq.style.translate="0 "+dy+"px";v.style.background="rgba(17,17,17,"+Math.max(.2,1-dy/380).toFixed(2)+")"}
   function pdBack(anim){zEls();if(anim){zq.style.transition="translate .32s cubic-bezier(.22,1,.36,1)";setTimeout(function(){zq.style.transition=""},340)}else zq.style.transition="";zq.style.translate="";v.style.background=""}
-  v.addEventListener("touchstart",function(e){pd=0;pdOff=!!(e.target.closest&&e.target.closest(".qva,.qvsh,.qvdg,.qvmn"));if(e.touches.length===1&&!sheetOn&&!dgOn&&!(e.target.closest&&e.target.closest(".qvta"))){x0=e.touches[0].clientX;y0=e.touches[0].clientY}else x0=null},{passive:true});
+  v.addEventListener("touchstart",function(e){pd=0;pdOff=!!(e.target.closest&&e.target.closest(".qva,.qvsh,.qvdg,.qvmn"));if(e.touches.length===1&&!sheetOn&&!dgOn){x0=e.touches[0].clientX;y0=e.touches[0].clientY}else x0=null},{passive:true});
   v.addEventListener("touchmove",function(e){
     if(x0===null||!pdOk())return;
     if(e.touches.length!==1){if(pd){pd=0;pdBack(true)}return}
@@ -3906,7 +3886,6 @@ function relapsed(){return R?Math.floor((R.acc+Date.now()-R.seg)/1000):0}
 function runShow(){
   $("#tzr").classList.add("on");paintRun();tmTick();
   clearInterval(RT);RT=setInterval(function(){tmTick()},1000);
-  tmOpen();
 }
 function ansOf(id){return String(R.ans[id]==null?"":R.ans[id])}
 function paintRun(){
@@ -3956,7 +3935,7 @@ function runFinish(force){
 }
 
 /* ---------- Test: soru havuzu görüntüleyicisiyle ---------- */
-function tmTick(){var t=fclk(relapsed());$("#tzrm").textContent=t;var e=$("#qvtm");if(e)e.textContent=t}
+function tmTick(){var t=fclk(relapsed());$("#tzrm").textContent=t}
 function tmOpen(){
   if(!R)return;
   Q.openIn(R.ids[R.idx],R.ids,{test:true,nav:tmNav,key:tmKey,close:function(){if(R)paintRun()}});
@@ -3964,15 +3943,7 @@ function tmOpen(){
 function tmNav(id){
   if(!R)return;var k=R.ids.indexOf(id);
   if(k>=0&&k!==R.idx){R.idx=k;runSave()}
-  paintRun();tmPanel(id);
-}
-function tmPanel(id){
-  if(!R)return;var it=imap()[id],p=$("#qvta");if(!p||!it)return;
-  var a=ansOf(id),mc=qtype(it)==="mc";
-  $("#qv").classList.toggle("tx",!mc);
-  if(mc)p.innerHTML='<div class="qvtl">'+LET.map(function(l){return'<button type="button" data-l="'+l+'" aria-pressed="'+(a===l)+'" class="'+(a===l?"on":"")+'">'+l+'</button>'}).join("")+'</div>';
-  else p.innerHTML='<textarea class="qvtx" id="qvtx" maxlength="2000" placeholder="Cevabını buraya yaz">'+esc(a)+'</textarea>';
-  tmTick();
+  paintRun();
 }
 function tmKey(e){
   if(!R||e.ctrlKey||e.metaKey||e.altKey)return false;
@@ -3980,7 +3951,7 @@ function tmKey(e){
   if(LET.indexOf(k)<0)return false;
   var id=R.ids[R.idx],it=imap()[id];
   if(!it||qtype(it)!=="mc")return false;
-  runAns(ansOf(id)===k?"":k);paintRunAns();tmPanel(id);return true;
+  runAns(ansOf(id)===k?"":k);paintRunAns();return true;
 }
 
 /* ---------- Sonuç ---------- */
@@ -4193,9 +4164,6 @@ $("#tzpg").onclick=function(e){var b=e.target.closest(".tzpi");if(!b)return;var 
 $("#tzpa").onclick=function(){peVis().forEach(function(c){PE.sel[c.dataset.id]=1;c.classList.add("sel")});peCount()};
 $("#tzpz").onclick=function(){PE.sel={};[].forEach.call($("#tzpg").children,function(c){c.classList.remove("sel")});peCount()};
 $("#tzri").onclick=function(){tmOpen()};
-$("#qvta").addEventListener("click",function(e){var b=e.target.closest("[data-l]");if(!b||!R)return;var id=R.ids[R.idx],l=b.dataset.l;runAns(ansOf(id)===l?"":l);paintRunAns();tmPanel(id)});
-$("#qvta").addEventListener("input",function(e){if(e.target.id==="qvtx"&&R){runAns(e.target.value);paintDots()}});
-$("#qvfin").onclick=function(){if(R)runFinish()};
 $("#tzra").addEventListener("click",function(e){var b=e.target.closest("[data-l]");if(!b||!R)return;var l=b.dataset.l,id=R.ids[R.idx];runAns(ansOf(id)===l?"":l);paintRunAns()});
 $("#tzra").addEventListener("input",function(e){if(e.target.id==="tzta"&&R){runAns(e.target.value);paintDots()}});
 function paintRunAns(){
