@@ -2312,11 +2312,8 @@ function showUi(){var v=$("#qv");v.classList.add("ui");clearTimeout(uiT);uiT=set
 function setFs(on){
   var v=$("#qv");fsOn=!!on;v.classList.toggle("fs",fsOn);v.classList.remove("ui");clearTimeout(uiT);
   $("#qvz").setAttribute("aria-label",fsOn?"Tam ekrandan çık":"Tam ekran");
-  if(fsOn){sheet(false);try{var r=v.requestFullscreen||v.webkitRequestFullscreen;if(r&&!document.fullscreenElement&&!document.webkitFullscreenElement){var q=r.call(v);if(q&&q.catch)q.catch(function(){})}}catch(e){}}
-  else{try{if(document.fullscreenElement&&document.exitFullscreen)document.exitFullscreen();else if(document.webkitFullscreenElement&&document.webkitExitFullscreen)document.webkitExitFullscreen()}catch(e){}}
+  if(fsOn)sheet(false);
 }
-function onFsChange(){if(fsOn&&!document.fullscreenElement&&!document.webkitFullscreenElement)setFs(false)}
-document.addEventListener("fullscreenchange",onFsChange);document.addEventListener("webkitfullscreenchange",onFsChange);
 function vurl(it){return VU[it.id]||(VU[it.id]=URL.createObjectURL(it.blob))}
 function warm(j){var t=ITEMS[j];if(!t)return;var x=new Image();x.src=vurl(t);if(x.decode)x.decode().catch(function(){})}
 function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
