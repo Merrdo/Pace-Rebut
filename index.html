@@ -35,6 +35,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 main{position:relative;overflow:hidden;height:100dvh}
 .view{position:absolute;inset:0;opacity:0;visibility:hidden;transform:scale(.985);transition:opacity .5s var(--ease),transform .6s var(--ease),visibility 0s .5s}
 .view.on{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+.view.warm:not(.on){visibility:visible;opacity:.01;transform:none;transition:none;pointer-events:none}
 
 /* Konular */
 #v-topics{display:grid;grid-template-columns:360px 1fr}
@@ -2402,14 +2403,21 @@ function qkFill(){
 function qk(on){qkOn=!!on;if(qkOn)qkFill();$("#qk").classList.toggle("on",qkOn)}
 
 /* Sayfa gizliyken küçük resimleri arka planda yükleyip çöz: ilk girişte kasma olmasın */
-var thT=0;
+var thT=0,ppDone=false;
+/* Sayfa ilk kez açılmadan önce bir an görünmez biçimde çizdir: ilk girişteki ilk boyama yükü baştan ödensin */
+function prePaint(){
+  if(ppDone)return;ppDone=true;
+  var v=$("#v-questions");if(!v||v.classList.contains("on"))return;
+  v.classList.add("warm");
+  requestAnimationFrame(function(){requestAnimationFrame(function(){setTimeout(function(){v.classList.remove("warm")},450)})});
+}
 function thWarm(g){
   clearTimeout(thT);var im=[].slice.call(g.querySelectorAll("img")),k=0;
   function step(){
     if(!g.isConnected)return;
     var part=im.slice(k,k+3);k+=3;
     Promise.all(part.map(function(x){return x.decode?x.decode().catch(function(){}):0})).then(function(){
-      if(k<im.length)thT=setTimeout(step,40)
+      if(k<im.length)thT=setTimeout(step,40);else prePaint();
     });
   }
   thT=setTimeout(step,300);
