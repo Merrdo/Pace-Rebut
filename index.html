@@ -1254,7 +1254,7 @@ textarea.qfi{height:140px;resize:none}
 .tzw{padding-bottom:calc(130px + env(safe-area-inset-bottom,0px))}
 .tzrail{--rs:46px;position:fixed;z-index:5;top:0;bottom:0;left:max(14px,calc(50% - 430px - 80px));display:flex;align-items:center;pointer-events:none;opacity:0;visibility:hidden;transform:translateX(-16px);transition:opacity .35s var(--ease),transform .6s var(--ease),visibility 0s .35s}
 .tzrail.on{opacity:1;visibility:visible;transform:none;transition-delay:0s}
-.tzrp{pointer-events:auto;display:flex;flex-direction:column;gap:8px;padding:6px;border-radius:30px;background:rgba(255,255,255,.92);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:0 10px 32px rgba(0,0,0,.1)}
+.tzrpn{pointer-events:auto;display:flex;flex-direction:column;gap:8px;padding:6px;border-radius:30px;background:rgba(255,255,255,.92);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:0 10px 32px rgba(0,0,0,.1)}
 .rg{position:relative;display:flex;flex-direction:column}
 .rind{position:absolute;left:0;right:0;top:0;height:var(--rs);border-radius:999px;background:var(--fg);opacity:0;pointer-events:none;transition:transform .55s var(--sp),height .3s var(--ease),opacity .2s}
 .rw{position:relative;width:var(--rs);height:var(--rs)}
@@ -1297,7 +1297,7 @@ textarea.qfi{height:140px;resize:none}
 @media (max-width:560px){.tzuc span{display:none}.tzuc{padding:0 8px 0 12px}}
 
 /* Alt şerit: her zaman ekranın altında sabit */
-.tzbar{position:fixed;left:0;right:0;margin:0 auto;width:min(860px,calc(100% - 32px));bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:4;gap:10px;padding:9px 9px 9px 26px}
+.tzbar{position:fixed;left:0;right:0;margin:0 auto;width:min(812px,calc(100% - 32px));bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:4;gap:10px;padding:9px 9px 9px 26px}
 .tzbar .tzb{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:54px;padding:0 22px;font-size:16px}
 .tzbar .tzb.pr{padding:0 28px}
 .tzbar .tzb svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
@@ -1417,7 +1417,7 @@ textarea.qfi{height:140px;resize:none}
     <div class="tzg" id="tzt"><button type="button" data-t="gen">Test oluştur</button><button type="button" data-t="pk">Paketler</button><button type="button" data-t="hi">Geçmiş</button></div>
     <div id="tzb"></div>
   </div>
-    <aside class="tzrail" id="tzrail" aria-label="Soru sayısı paneli"><div class="tzrp">
+    <aside class="tzrail" id="tzrail" aria-label="Soru sayısı paneli"><div class="tzrpn">
       <div class="rg" id="rgm"><i class="rind"></i>
         <div class="rw" data-rm="0"><button class="rb" type="button"><svg viewBox="0 0 24 24"><path d="M17.5 5.5h-10l5.2 6.5-5.2 6.5h10"/></svg></button><span class="rl"></span></div>
         <div class="rw" data-rm="1"><button class="rb" type="button"><svg viewBox="0 0 24 24"><path d="M4 7h9M19 7h1M4 17h1M11 17h9"/><circle cx="16" cy="7" r="2.2"/><circle cx="8" cy="17" r="2.2"/></svg></button><span class="rl"></span></div>
