@@ -602,9 +602,20 @@ textarea.qfi{height:140px;resize:none}
 .qun.on i{animation:unbar 5s linear forwards}
 @keyframes unbar{from{transform:scaleX(1)}to{transform:scaleX(0)}}
 /* Sorular: görüntüleyici */
+@media (min-aspect-ratio:3/2){.qv .qvs{top:calc(66px + env(safe-area-inset-top,0px));bottom:22px}}
+.qv{touch-action:none}
+.qv.zt .qvs{transition:transform .32s var(--ease),top .35s var(--ease),bottom .35s var(--ease),left .35s var(--ease),right .35s var(--ease)}
+.qv.zm{cursor:grab}.qv.zm.zg{cursor:grabbing}
+.qvzb{position:absolute;z-index:2;left:50%;bottom:calc(26px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px;border-radius:20px;background:rgba(17,17,17,.72);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);color:#fff;font:700 14px/1 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;opacity:0;visibility:hidden;transition:opacity .25s,transform .4s var(--sp),visibility 0s .25s}
+.qvzb.on{opacity:1;visibility:visible;transform:translate(-50%,0);transition-delay:0s}
+.qvzb:active{transform:translate(-50%,0) scale(.94)}
+.qvzb svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round}
+.qvzb span{opacity:.6;font-weight:600}
+.qv.zm .qvb,.qv.zm .qvn,.qv.zm .qva:not(.on){background:rgba(17,17,17,.62)}
+.qv.zm .qvc{padding:9px 14px;border-radius:18px;background:rgba(17,17,17,.62);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);color:rgba(255,255,255,.75)}
 .qv{position:fixed;inset:0;z-index:11;background:#111;opacity:0;visibility:hidden;transition:opacity .3s ease,visibility 0s .3s}
 .qv.on{opacity:1;visibility:visible;transition-delay:0s}
-.qvs{position:absolute;top:calc(80px + env(safe-area-inset-top,0px));bottom:148px;left:92px;right:92px;display:flex;align-items:center;justify-content:center;transition:top .35s var(--ease),bottom .35s var(--ease),left .35s var(--ease),right .35s var(--ease)}
+.qvs{position:absolute;top:calc(80px + env(safe-area-inset-top,0px));bottom:148px;left:92px;right:92px;transform:translate(var(--zx,0px),var(--zy,0px)) scale(var(--zs,1));display:flex;align-items:center;justify-content:center;transition:top .35s var(--ease),bottom .35s var(--ease),left .35s var(--ease),right .35s var(--ease)}
 .qvs img{max-width:100%;max-height:100%;object-fit:contain;border-radius:14px;will-change:opacity,transform;-webkit-user-drag:none;pointer-events:none}
 .qvb,.qvn{position:absolute;display:grid;place-items:center;border-radius:50%;background:rgba(255,255,255,.13);color:#fff;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);transition:transform .35s var(--sp),opacity .25s}
 .qvb:active,.qvn:active{transform:scale(.92)}
@@ -629,7 +640,7 @@ textarea.qfi{height:140px;resize:none}
 /* Sorular: alt satır (sol: sayaç, orta: detaylar, sağ: kare cevap kutusu) */
 .qvk{position:absolute;left:22px;right:22px;bottom:calc(22px + env(safe-area-inset-bottom,0px));display:grid;grid-template-columns:1fr auto;align-items:end;gap:10px;pointer-events:none;transition:opacity .25s,visibility 0s}
 .qvk>*{pointer-events:auto}
-.qvc{justify-self:start;align-self:end;display:flex;align-items:baseline;gap:5px;padding:0 6px 8px;color:rgba(255,255,255,.45);font:600 15px/1 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums}
+.qvc{justify-self:start;align-self:end;display:flex;align-items:baseline;gap:5px;padding:0 6px 8px;color:rgba(255,255,255,.62);font:600 16px/1 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums}
 .qvc b{color:#fff;font-weight:700}
 .qvmn{position:absolute;z-index:5;top:calc(74px + env(safe-area-inset-top,0px));right:22px;width:216px;padding:6px;border-radius:26px;background:#fff;color:#111;box-shadow:0 22px 54px -14px rgba(0,0,0,.85);transform-origin:100% 0;transform:scale(.8) translateY(-10px);opacity:0;visibility:hidden;transition:transform .45s var(--sp),opacity .2s ease,visibility 0s .45s}
 .qvmn.on{transform:none;opacity:1;visibility:visible;transition-delay:0s}
@@ -958,6 +969,7 @@ textarea.qfi{height:140px;resize:none}
         <div class="qvr" id="qvr" hidden><button class="qvh" id="qvhd" type="button" aria-label="Cevabı gizle"><svg viewBox="0 0 24 24"><path d="M3 3l18 18M10.6 5.7A10 10 0 0112 5.5c6.4 0 10 6.5 10 6.5a17 17 0 01-3.2 3.9M6.4 7.4A16.6 16.6 0 002 12s3.6 6.5 10 6.5a9.8 9.8 0 004-.9M9.9 9.9a3 3 0 004.2 4.2"/></svg></button><div class="qvav" id="qvav"></div></div>
       </div></div>
     </div>
+    <button class="qvzb" id="qvzb" type="button" aria-label="Yakınlaştırmayı sıfırla"><b id="qvzn"></b><span>·</span><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>Sığdır</button>
     <div class="qvmn" id="qvmn" role="menu">
       <button type="button" role="menuitem" data-a="d"><svg viewBox="0 0 24 24"><path d="M5 7h14M5 12h14M5 17h9"/></svg>Detaylar</button>
       <hr>
@@ -2595,7 +2607,7 @@ var vTok=0,VU={},sheetOn=false,fsOn=false,uiT=0,ansOn=false;
 function showUi(){var v=$("#qv");v.classList.add("ui");clearTimeout(uiT);uiT=setTimeout(function(){if(ansOn||mnOn||sheetOn||dgOn)showUi();else v.classList.remove("ui")},3000)}
 var cnT=0;function flashCn(){var v=$("#qv");if(!fsOn)return;v.classList.add("qvfc");clearTimeout(cnT);cnT=setTimeout(function(){v.classList.remove("qvfc")},1600)}
 function setFs(on){
-  var v=$("#qv");fsOn=!!on;v.classList.toggle("fs",fsOn);v.classList.remove("ui");clearTimeout(uiT);
+  zoomReset(false);var v=$("#qv");fsOn=!!on;v.classList.toggle("fs",fsOn);v.classList.remove("ui");clearTimeout(uiT);
   $("#qvz").setAttribute("aria-label",fsOn?"Tam ekrandan çık":"Tam ekran");
   if(fsOn)sheet(false);
 }
@@ -2637,7 +2649,7 @@ function fill(it){
 /* dir: 1 ileri, -1 geri, 0 solma; belirtilmezse ilk açılış */
 function view(i,dir){
   if(i<0||i>=ITEMS.length)return;
-  cur=i;sheet(false);menu(false);
+  cur=i;sheet(false);menu(false);zoomReset(false);
   var it=ITEMS[i],im=$("#qvi"),v=$("#qv"),opened=v.classList.contains("on"),u=vurl(it),tok=++vTok;
   var L=VL(),pos=L.indexOf(i);if(pos<0){L=[i];pos=0}
   $("#qvcn").textContent=pos+1;$("#qvct").textContent="/ "+L.length;$("#qvc").style.setProperty("--p",(pos+1)/L.length);flashCn();
@@ -2663,7 +2675,7 @@ function view(i,dir){
   },function(){});
 }
 function closeV(){
-  if(fsOn)setFs(false);
+  if(fsOn)setFs(false);zoomReset(false);
   $("#qv").classList.remove("on");cur=-1;sheet(false);dlg(false);menu(false);vTok++;
   setTimeout(function(){if(cur<0){Object.keys(VU).forEach(function(k){URL.revokeObjectURL(VU[k])});VU={}}},400);
 }
@@ -2702,13 +2714,87 @@ document.addEventListener("keydown",function(e){
   else if((e.key===" "||e.key==="ArrowDown")&&!sheetOn)ansSet(!ansOn,true);
   else if(e.key==="ArrowUp"&&!sheetOn)sheet(true);
   else if((e.code==="KeyF"||e.key==="f"||e.key==="F")&&!e.ctrlKey&&!e.metaKey&&!e.altKey&&!sheetOn&&!/^(INPUT|TEXTAREA|SELECT)$/.test((e.target&&e.target.tagName)||"")&&!(e.target&&e.target.isContentEditable)){setFs(!fsOn);if(fsOn)showUi()}
+  else if((e.key==="+"||e.key==="="||e.key==="-"||e.key==="_"||e.key==="0")&&!e.ctrlKey&&!e.metaKey&&!e.altKey&&!sheetOn){
+    var q=$(".qvs"),cx=q.offsetLeft+q.offsetWidth/2,cy=q.offsetTop+q.offsetHeight/2;
+    if(e.key==="0")zoomReset(true);else zoomAt(cx+ZX,cy+ZY,e.key==="+"||e.key==="="?ZS*1.4:ZS/1.4,true);
+  }
   else return;
   e.preventDefault();e.stopImmediatePropagation();
 },true);
+/* Yakınlaştırma: iki parmak, çift dokunma/tık, tekerlek (ya da Ctrl+tekerlek), +/-/0 tuşları; yakınken sürükleyerek gez */
+var ZS=1,ZX=0,ZY=0,ZMAX=5,ztT=0;
+function zApply(anim){
+  var v=$("#qv"),q=$(".qvs");
+  if(anim){v.classList.add("zt");clearTimeout(ztT);ztT=setTimeout(function(){v.classList.remove("zt")},340)}
+  q.style.setProperty("--zs",ZS);q.style.setProperty("--zx",ZX+"px");q.style.setProperty("--zy",ZY+"px");
+  var on=ZS>1.02;v.classList.toggle("zm",on);$("#qvzb").classList.toggle("on",on);
+  if(on)$("#qvzn").textContent=(Math.round(ZS*10)/10).toString().replace(".",",")+"×";
+}
+function zClamp(){
+  var v=$("#qv"),q=$(".qvs"),im=$("#qvi"),W=v.clientWidth,H=v.clientHeight,
+      cx=q.offsetLeft+q.offsetWidth/2,cy=q.offsetTop+q.offsetHeight/2,iw=im.offsetWidth*ZS,ih=im.offsetHeight*ZS;
+  var lo=W-cx-iw/2,hi=iw/2-cx;ZX=lo>hi?0:Math.max(lo,Math.min(hi,ZX));
+  lo=H-cy-ih/2;hi=ih/2-cy;ZY=lo>hi?0:Math.max(lo,Math.min(hi,ZY));
+}
+function zoomReset(anim){ZS=1;ZX=0;ZY=0;zApply(anim);$("#qv").classList.remove("zg")}
+function zoomAt(px,py,ns,anim){
+  var q=$(".qvs"),cx=q.offsetLeft+q.offsetWidth/2,cy=q.offsetTop+q.offsetHeight/2;
+  ns=Math.max(1,Math.min(ZMAX,ns));if(ns<1.03)ns=1;
+  ZX=px-cx-(px-cx-ZX)*(ns/ZS);ZY=py-cy-(py-cy-ZY)*(ns/ZS);ZS=ns;
+  if(ZS===1){ZX=0;ZY=0}else zClamp();
+  zApply(anim);
+}
+(function(){
+  var v=$("#qv"),P={},g=null,tap=null;
+  function blocked(e){return sheetOn||dgOn||mnOn||(e.target.closest&&e.target.closest("button,.qva,#qvmn,#qvsh,#qvdg,.qvc,.qvt,.qvzb"))}
+  function pts(){var k=Object.keys(P);return k.map(function(i){return P[i]})}
+  function begin(){
+    var a=pts();
+    if(a.length>=2){var d=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y)||1;g={m:1,d:d,s:ZS,x:ZX,y:ZY,mx:(a[0].x+a[1].x)/2,my:(a[0].y+a[1].y)/2}}
+    else if(a.length===1)g={m:0,sx:a[0].x,sy:a[0].y,x:ZX,y:ZY};
+    else g=null;
+  }
+  v.addEventListener("pointerdown",function(e){
+    if(!v.classList.contains("on")||blocked(e)||(e.button!==undefined&&e.button>0))return;
+    P[e.pointerId]={x:e.clientX,y:e.clientY,x0:e.clientX,y0:e.clientY,t:e.timeStamp};
+    try{v.setPointerCapture(e.pointerId)}catch(x){}
+    begin();if(ZS>1.02&&Object.keys(P).length===1)v.classList.add("zg");
+  });
+  v.addEventListener("pointermove",function(e){
+    var p=P[e.pointerId];if(!p||!g)return;p.x=e.clientX;p.y=e.clientY;
+    var q=$(".qvs"),cx=q.offsetLeft+q.offsetWidth/2,cy=q.offsetTop+q.offsetHeight/2;
+    if(g.m===1){
+      var a=pts();if(a.length<2)return;
+      var d=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y)||1,mx=(a[0].x+a[1].x)/2,my=(a[0].y+a[1].y)/2,ns=Math.max(1,Math.min(ZMAX,g.s*d/g.d)),r=ns/g.s;
+      ZS=ns;ZX=mx-cx-(g.mx-cx-g.x)*r;ZY=my-cy-(g.my-cy-g.y)*r;
+      if(ZS<1.03){ZS=1;ZX=0;ZY=0}else zClamp();zApply();
+    }else if(ZS>1.02){ZX=g.x+(p.x-g.sx);ZY=g.y+(p.y-g.sy);zClamp();zApply()}
+  });
+  function up(e){
+    var p=P[e.pointerId];if(!p)return;delete P[e.pointerId];
+    try{v.releasePointerCapture(e.pointerId)}catch(x){}
+    var n=Object.keys(P).length;
+    if(e.type==="pointerup"&&n===0&&Math.hypot(e.clientX-p.x0,e.clientY-p.y0)<12&&e.timeStamp-p.t<350){
+      if(tap&&e.timeStamp-tap.t<340&&Math.hypot(e.clientX-tap.x,e.clientY-tap.y)<32){tap=null;if(ZS>1.02)zoomReset(true);else zoomAt(e.clientX,e.clientY,2.6,true)}
+      else tap={t:e.timeStamp,x:e.clientX,y:e.clientY};
+    }
+    if(ZS>1&&ZS<1.03)zoomReset(true);
+    v.classList.remove("zg");begin();
+    if(n===1&&ZS>1.02)v.classList.add("zg");
+  }
+  v.addEventListener("pointerup",up);v.addEventListener("pointercancel",up);
+  v.addEventListener("wheel",function(e){
+    if(!v.classList.contains("on")||blocked(e)){return}
+    e.preventDefault();
+    var f=Math.exp(-e.deltaY*(e.ctrlKey?0.01:0.0016));
+    zoomAt(e.clientX,e.clientY,ZS*f,false);
+  },{passive:false});
+  $("#qvzb").onclick=function(){zoomReset(true)};
+})();
 /* Yatay kaydırma ile önceki/sonraki */
 (function(){var x0=null,y0=0,v=$("#qv");
   v.addEventListener("touchstart",function(e){if(e.touches.length===1&&!sheetOn&&!dgOn){x0=e.touches[0].clientX;y0=e.touches[0].clientY}else x0=null},{passive:true});
-  v.addEventListener("touchend",function(e){if(x0===null)return;var t=e.changedTouches[0],dx=t.clientX-x0,dy=t.clientY-y0;x0=null;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5)go(dx<0?1:-1);else if(dy<-80&&Math.abs(dy)>Math.abs(dx)*1.5)sheet(true)},{passive:true});
+  v.addEventListener("touchend",function(e){if(x0===null)return;if(ZS>1.02){x0=null;return}var t=e.changedTouches[0],dx=t.clientX-x0,dy=t.clientY-y0;x0=null;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5)go(dx<0?1:-1);else if(dy<-80&&Math.abs(dy)>Math.abs(dx)*1.5)sheet(true)},{passive:true});
   (function(){var y0=null,s=$("#qvsh");
     s.addEventListener("touchstart",function(e){y0=(s.scrollTop<=0&&e.touches.length===1)?e.touches[0].clientY:null},{passive:true});
     s.addEventListener("touchend",function(e){if(y0===null)return;var dy=e.changedTouches[0].clientY-y0;y0=null;if(dy>70)sheet(false)},{passive:true});
