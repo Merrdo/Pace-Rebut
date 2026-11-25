@@ -633,8 +633,8 @@ textarea.qfi{height:140px;resize:none}
 .qv.fs .qvz .i-c{display:block}.qv.fs .qvz .i-e{display:none}
 .qv.fs .qvs{top:0;bottom:0;left:0;right:0}
 .qv.fs .qvs img{border-radius:0}
-.qv.fs .qvc,.qv.fs .qvn,.qv.fs .qvq,.qv.fs .qvo,.qv.fs .qvz,.qv.fs .qvx{opacity:0;visibility:hidden;transition:opacity .25s,transform .35s var(--sp),visibility 0s .25s}
-.qv.fs.ui .qvx,.qv.fs.ui .qvo,.qv.fs.ui .qvz,.qv.fs.ui .qvc,.qv.fs.ui .qvq,.qv.fs.qvfc .qvc{opacity:1;visibility:visible;transition:opacity .25s,transform .35s var(--sp),visibility 0s}
+.qv.fs .qvc,.qv.fs .qvn,.qv.fs .qvq,.qv.fs .qvo,.qv.fs .qvok,.qv.fs .qvz,.qv.fs .qvx{opacity:0;visibility:hidden;transition:opacity .25s,transform .35s var(--sp),visibility 0s .25s}
+.qv.fs.ui .qvx,.qv.fs.ui .qvo,.qv.fs.ui .qvok,.qv.fs.ui .qvz,.qv.fs.ui .qvc,.qv.fs.ui .qvq,.qv.fs.qvfc .qvc{opacity:1;visibility:visible;transition:opacity .25s,transform .35s var(--sp),visibility 0s}
 .qv.fs .qvt{opacity:0;visibility:hidden;transform:translateX(76px);transition:transform .45s var(--ease),opacity .25s,visibility 0s .25s}
 .qv.fs.ui .qvt{opacity:1;visibility:visible;transition:transform .45s var(--ease),opacity .25s,visibility 0s}
 .qv.fs .qvc{padding:9px 14px;border-radius:18px;background:#2b2b2b;color:#cfcfcf}
@@ -830,9 +830,11 @@ textarea.qfi{height:140px;resize:none}
 .qcf{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);border:2px solid #fff;border-radius:6px;pointer-events:none}
 .qcb{flex:none;display:flex;align-items:center;gap:14px;padding:14px 20px 6px}
 .qcb input[type=range]{flex:1;min-width:80px;height:44px;margin:0;padding:0;border:0;max-width:none;background:none;-webkit-appearance:none;appearance:none}
-.qcb input[type=range]::-webkit-slider-runnable-track{height:8px;border-radius:4px;background:#111}
+.qcb input[type=range]{--f:0}
+.qcb input[type=range]::-webkit-slider-runnable-track{height:8px;border-radius:4px;background:linear-gradient(90deg,#111 calc(13px + (100% - 26px)*var(--f)),#d9d5cd calc(13px + (100% - 26px)*var(--f)))}
 .qcb input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;box-sizing:border-box;width:26px;height:26px;margin-top:-9px;border-radius:50%;background:#fff;border:4px solid #111}
-.qcb input[type=range]::-moz-range-track{height:8px;border-radius:4px;background:#111}
+.qcb input[type=range]::-moz-range-track{height:8px;border-radius:4px;background:#d9d5cd}
+.qcb input[type=range]::-moz-range-progress{height:8px;border-radius:4px;background:#111}
 .qcb input[type=range]::-moz-range-thumb{box-sizing:border-box;width:26px;height:26px;border-radius:50%;background:#fff;border:4px solid #111}
 .qnv{flex:none;display:flex;justify-content:space-between;align-items:center;padding:10px 20px calc(18px + env(safe-area-inset-bottom,0px))}
 .qnv .fl.pr{background:#111;color:#fff;transition:transform .4s var(--sp),opacity .3s}
@@ -844,6 +846,30 @@ textarea.qfi{height:140px;resize:none}
 .qd:active{transform:scale(.95)}
 .qd.on{background:var(--c);transform:scale(1.04)}
 .qd.on:before{background:#111}
+/* Ekleme sihirbazı: soru önizlemesi */
+.qpv{flex:none;display:none;align-items:center;gap:14px;width:calc(100% - 40px);max-width:600px;margin:2px auto 6px;padding:10px;border-radius:22px;background:var(--surf);box-shadow:0 6px 16px -10px rgba(17,17,17,.22)}
+.qpv.on{display:flex;animation:up .45s var(--ease)}
+.qpv img{flex:none;display:block;width:104px;aspect-ratio:4/3;object-fit:cover;border-radius:14px;background:var(--surf2);cursor:zoom-in}
+.qpv .qpt{min-width:0;flex:1}
+.qpv b{display:flex;align-items:center;gap:8px;font:800 16px/1.2 Inter,system-ui,sans-serif}
+.qpv b:before{content:"";flex:none;width:11px;height:11px;border-radius:50%;background:var(--c,#bdb8af)}
+.qpv .qpa{display:block;margin-top:5px;font:600 14px/1.3 Inter,system-ui,sans-serif;color:var(--dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.qpv.big{flex-direction:column;align-items:stretch}
+.qpv.big img{width:100%;cursor:zoom-out}
+/* Çözüldü */
+.qvb.qvok{top:calc(76px + env(safe-area-inset-top,0px));right:22px;transition:transform .35s var(--sp),opacity .25s,background .25s}
+.qvok:not(.on) svg{opacity:.55}
+.qvok.on{background:#1fb76a}
+.qvok.on svg path{stroke-dasharray:1;animation:qvck .5s var(--ease)}
+@keyframes qvck{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+.qi .qok{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;background:rgba(255,255,255,0);transition:background .35s var(--ease)}
+.qi.ok .qok{background:rgba(255,255,255,.3)}
+.qi .qok svg{position:absolute;left:50%;top:50%;height:80%;aspect-ratio:1;overflow:visible;fill:none;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 3px 8px rgba(0,0,0,.25));transform:translate(-50%,-50%) scale(.55);opacity:0;transition:transform .5s var(--sp),opacity .2s}
+.qi.ok .qok svg{transform:translate(-50%,-50%);opacity:1}
+.qok path{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .5s var(--ease) .08s}
+.qok .b{stroke:#fff;stroke-width:6.4}.qok .g{stroke:#1fb76a;stroke-width:3.6}
+.qi.ok .qok path{stroke-dashoffset:0}
+.qpop .ok{color:#17a05b}
 </style>
 </head>
 <body>
@@ -912,6 +938,7 @@ textarea.qfi{height:140px;resize:none}
       <div class="qcc"><div class="qsp" id="qsp"></div><div class="qcn" id="qcn"></div></div>
       <button class="fl" id="qcs2" type="button">Atla</button>
     </div>
+    <div class="qpv" id="qpv"><img id="qpvi" alt="Soru önizlemesi"><div class="qpt"><b id="qpvd"></b><span class="qpa" id="qpva"></span></div></div>
     <div class="qcp" id="qcp">
       <div class="qpn on">
         <div class="qcs" id="qcst"><canvas id="qcv"></canvas><i class="qdm"></i><i class="qdm"></i><i class="qdm"></i><i class="qdm"></i><div class="qcf" id="qcf"></div></div>
@@ -950,6 +977,7 @@ textarea.qfi{height:140px;resize:none}
   <div class="qun" id="qun" role="status"><span id="qunt"></span><button id="qunb" type="button">Geri al</button><i></i></div>
   <div class="qpop" id="qpop" role="menu" aria-label="Soru işlemleri">
     <button type="button" role="menuitem" data-a="o"><svg viewBox="0 0 24 24"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.8"/></svg>Aç</button>
+    <button type="button" role="menuitem" class="ok" data-a="v"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M8.5 12.3l2.4 2.4 4.6-5"/></svg><span>Çözüldü</span></button>
     <button type="button" role="menuitem" data-a="s"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg>Seç</button>
     <hr>
     <button type="button" role="menuitem" class="dg" data-a="x" data-hold><svg viewBox="0 0 24 24"><path d="M4 7h16M9.5 7V4.5h5V7M6.5 7l.8 12a1.5 1.5 0 001.5 1.4h6.4a1.5 1.5 0 001.5-1.4l.8-12"/></svg><span>Sil</span><small>basılı tut</small></button>
@@ -960,6 +988,7 @@ textarea.qfi{height:140px;resize:none}
     <span class="qvt" id="qvt"></span>
     <button class="qvb qvz" id="qvz" type="button" aria-label="Tam ekran"><svg class="i-e" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><svg class="i-c" viewBox="0 0 24 24"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg></button>
     <button class="qvb qvo" id="qvo" type="button" aria-label="Menü" aria-haspopup="menu" aria-expanded="false"><svg viewBox="0 0 24 24"><circle cx="5.5" cy="12" r="1.7" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.7" fill="currentColor" stroke="none"/><circle cx="18.5" cy="12" r="1.7" fill="currentColor" stroke="none"/></svg></button>
+    <button class="qvb qvok" id="qvok" type="button" aria-label="Çözüldü olarak işaretle" aria-pressed="false" title="Çözüldü"><svg viewBox="0 0 24 24"><path pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"/></svg></button>
     <button class="qvn l" id="qvp" type="button" aria-label="Önceki"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
     <div class="qvs"><img id="qvi" alt=""></div>
     <button class="qvn r" id="qvn" type="button" aria-label="Sonraki"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
@@ -2387,6 +2416,8 @@ function render(){
     bt.appendChild(im);
     if(it.ders){var dc=document.createElement("span");dc.className="qdc";dc.style.setProperty("--c",lcol(it));dc.textContent=it.g+" · "+it.ders;bt.appendChild(dc)}
     bt.insertAdjacentHTML("beforeend",'<span class="qck"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>');
+    bt.insertAdjacentHTML("beforeend",'<span class="qok" aria-hidden="true"><svg viewBox="0 0 24 24"><path class="b" pathLength="1" d="M4.5 12.8l5 5L19.5 7"/><path class="g" pathLength="1" d="M4.5 12.8l5 5L19.5 7"/></svg></span>');
+    if(it.solved)bt.classList.add("ok");
     bt.onclick=function(){if(selOn)selToggle(it.id);else view(i)};
     g.appendChild(bt);
   });
@@ -2430,7 +2461,7 @@ function cPaint(){
   cClamp();
   var s=C.min*C.z,cv=$("#qcv");
   cv.style.transform="translate("+(C.W/2-C.cx*s)+"px,"+(C.H/2-C.cy*s)+"px) scale("+s+")";
-  $("#qcz").value=C.z;
+  var z=$("#qcz");z.value=C.z;z.style.setProperty("--f",((C.z-1)/3).toFixed(4));
 }
 function cShow(src){
   C.src=src;var cv=$("#qcv");cv.width=src.width;cv.height=src.height;cv.getContext("2d").drawImage(src,0,0);
@@ -2446,6 +2477,11 @@ function cOut(){
   var o=cvOf(OW,OH),x=o.getContext("2d");x.imageSmoothingQuality="high";x.drawImage(C.src,sx,sy,sw,sh,0,0,OW,OH);
   var t=cvOf(TW,TH),y=t.getContext("2d");y.imageSmoothingQuality="high";y.drawImage(o,0,0,TW,TH);
   return Promise.all([new Promise(function(r){o.toBlob(r,"image/jpeg",.88)}),new Promise(function(r){t.toBlob(r,"image/jpeg",.8)})]);
+}
+function cPrev(){
+  var s=C.min*C.z,sx=C.cx-C.fw/(2*s),sy=C.cy-C.fh/(2*s),sw=C.fw/s,sh=C.fh/s;
+  var o=cvOf(480,360),x=o.getContext("2d");x.imageSmoothingQuality="high";x.drawImage(C.src,sx,sy,sw,sh,0,0,480,360);
+  $("#qpvi").src=o.toDataURL("image/jpeg",.82);
 }
 /* Aşamalar: 0 Kırp, 1 Sınav+Ders, 2 Cevap, 3 Detay (isteğe bağlı) */
 var STEPS=["Kırp","Ders","Cevap","Detay"],LET=["A","B","C","D","E"],Wz=null;
@@ -2467,6 +2503,13 @@ function canGo(n){for(var k=0;k<n;k++)if(!wzValid(k))return false;return true}
 function wzRefresh(){
   if(!Wz)return;
   var st=Wz.step;
+  var pv=$("#qpv");pv.classList.toggle("on",st>0);if(st===0)pv.classList.remove("big");
+  if(st>0){
+    var dl=Wz.ders?Wz.g+" · "+Wz.ders:(Wz.g?Wz.g+" · ders seçilmedi":"Sınav ve ders seçilmedi");
+    $("#qpvd").textContent=dl;Wz.ders?$("#qpvd").style.setProperty("--c",lcol({g:Wz.g,ders:Wz.ders})):$("#qpvd").style.removeProperty("--c");
+    var tx0=Wz.type==="mc"?(Wz.letter?"Cevap: "+Wz.letter:"Şık seçilmedi"):Wz.type==="open"?(Wz.text.trim()?"Cevap: "+Wz.text.replace(/\s+/g," ").trim():"Cevap yazılmadı"):"Cevap türü seçilmedi";
+    $("#qpva").textContent=tx0;
+  }else if(C&&C.src){cLayout();cPaint()}
   panes().forEach(function(p,i){
     p.classList.toggle("on",i===st);
     p.style.transform=i<st?"translateX(-40px)":i>st?"translateX(40px)":"none";
@@ -2501,6 +2544,7 @@ function renderDers(){
 }
 function wzGo(n){
   if(!Wz||n<0||n>=STEPS.length||n===Wz.step||!canGo(n))return;
+  if(Wz.step===0&&n>0&&C&&C.src)cPrev();
   Wz.step=n;Wz.reach=Math.max(Wz.reach,n);
   try{document.activeElement&&document.activeElement.blur()}catch(e){}
   wzRefresh();
@@ -2582,6 +2626,7 @@ function closeWz(){$("#qc").classList.remove("on");C=null;Wz=null}
   st.addEventListener("wheel",function(e){if(!C)return;e.preventDefault();C.z=Math.min(4,Math.max(1,C.z*Math.exp(-e.deltaY*.0025)));cPaint()},{passive:false});
   $("#qcz").addEventListener("input",function(){if(C){C.z=+this.value;cPaint()}});
   $("#qcr").onclick=function(){if(C)cRotate()};
+  $("#qpvi").onclick=function(){$("#qpv").classList.toggle("big")};
   window.addEventListener("resize",function(){if(C){cLayout();cPaint()}});
 })();
 
@@ -2623,6 +2668,21 @@ function setFs(on,quiet){
 function vurl(it){return VU[it.id]||(VU[it.id]=URL.createObjectURL(it.blob))}
 function warm(j){var t=ITEMS[j];if(!t)return;var x=new Image();x.src=vurl(t);if(x.decode)x.decode().catch(function(){})}
 function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
+function okUi(it){
+  var b=$("#qvok"),on=!!(it&&it.solved);b.classList.toggle("on",on);b.setAttribute("aria-pressed",on?"true":"false");
+  b.setAttribute("aria-label",on?"Çözüldü işaretini kaldır":"Çözüldü olarak işaretle");
+}
+function setSolved(id,val){
+  var it=null;for(var i=0;i<ITEMS.length;i++)if(ITEMS[i].id===id){it=ITEMS[i];break}
+  if(!it)return;val=!!val;
+  function paint(){
+    var c=document.querySelector('#qbody .qi[data-id="'+id+'"]');if(c)c.classList.toggle("ok",!!it.solved);
+    if(ITEMS[cur]===it)okUi(it);
+  }
+  it.solved=val;if(val)it.solvedTs=Date.now();else delete it.solvedTs;paint();
+  toast(val?"Çözüldü olarak işaretlendi":"Çözüldü işareti kaldırıldı");
+  tx("readwrite",function(st){st.put(it)}).then(null,function(){it.solved=!val;paint();toast("Kaydedilemedi")});
+}
 function ansSet(on,anim){
   var a=$("#qva"),it=ITEMS[cur];
   ansOn=!!on&&!!(it&&it.ans);
@@ -2641,6 +2701,7 @@ function card(icon,label,main,sub){
   c.appendChild(i);c.appendChild(t);return c;
 }
 function fill(it){
+  okUi(it);
   var t=$("#qvt");t.textContent=it.ders?it.g+" · "+it.ders:"";if(it.ders)t.style.setProperty("--c",lcol(it));
   var b=$("#qvbd");b.innerHTML="";
   var h=el("div","qvhd"),d=el("span","qvdt",it.ders?it.ders.charAt(0).toLocaleUpperCase("tr"):"•"),w=el("div");
@@ -2708,6 +2769,7 @@ $("#qv").addEventListener("click",function(e){
   if($("#qv").classList.contains("ui")){$("#qv").classList.remove("ui");clearTimeout(uiT)}else showUi();
 });
 $("#qvo").onclick=function(){menu(!mnOn)};
+$("#qvok").onclick=function(){var it=ITEMS[cur];if(it)setSolved(it.id,!it.solved)};
 $("#qvz").onclick=function(){setFs(!fsOn);if(fsOn)showUi()};
 $("#qvmn").onclick=function(e){var b=e.target.closest("button");if(!b)return;var a=b.getAttribute("data-a");menu(false);if(a==="d")sheet(true);else if(a==="x")dlg(true)};
 $("#qv").addEventListener("click",function(e){if(mnOn&&!e.target.closest("#qvmn,#qvo"))menu(false)});$("#qvgr").onclick=function(){sheet(false)};$("#qvat").onclick=function(){ansSet(true,true)};
@@ -2722,6 +2784,7 @@ document.addEventListener("keydown",function(e){
   else if(e.key==="ArrowRight"&&!sheetOn)go(1);
   else if((e.key===" "||e.key==="ArrowDown")&&!sheetOn)ansSet(!ansOn,true);
   else if(e.key==="ArrowUp"&&!sheetOn)sheet(true);
+  else if((e.code==="KeyI"||/^[iIİı]$/.test(e.key))&&!e.ctrlKey&&!e.metaKey&&!e.altKey){menu(false);sheet(!sheetOn)}
   else if((e.code==="KeyF"||e.key==="f"||e.key==="F")&&!e.ctrlKey&&!e.metaKey&&!e.altKey&&!sheetOn&&!/^(INPUT|TEXTAREA|SELECT)$/.test((e.target&&e.target.tagName)||"")&&!(e.target&&e.target.isContentEditable)){setFs(!fsOn);if(fsOn)showUi()}
   else if((e.key==="+"||e.key==="="||e.key==="-"||e.key==="_"||e.key==="0")&&!e.ctrlKey&&!e.metaKey&&!e.altKey&&!sheetOn){
     var G=zGeo();
@@ -2813,10 +2876,24 @@ function zoomAt(px,py,ns,anim){
   },{passive:false});
   $("#qvzb").onclick=function(){zoomReset(true)};
 })();
-/* Yatay kaydırma ile önceki/sonraki */
-(function(){var x0=null,y0=0,v=$("#qv");
-  v.addEventListener("touchstart",function(e){if(e.touches.length===1&&!sheetOn&&!dgOn){x0=e.touches[0].clientX;y0=e.touches[0].clientY}else x0=null},{passive:true});
-  v.addEventListener("touchend",function(e){if(x0===null)return;if(ZS>1.02){x0=null;return}var t=e.changedTouches[0],dx=t.clientX-x0,dy=t.clientY-y0;x0=null;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5)go(dx<0?1:-1);else if(dy<-80&&Math.abs(dy)>Math.abs(dx)*1.5)sheet(true)},{passive:true});
+/* Yatay kaydırma ile önceki/sonraki; aşağı çekince kapanır (tam ekranda ve yakınlaştırılmışken kapalı) */
+(function(){var x0=null,y0=0,v=$("#qv"),pd=0,pdOff=false;
+  function pdOk(){return !fsOn&&ZS<=1.02&&!sheetOn&&!dgOn&&!mnOn&&!pdOff}
+  function pdPut(dy){zEls();zq.style.transition="none";zq.style.translate="0 "+dy+"px";v.style.background="rgba(17,17,17,"+Math.max(.2,1-dy/380).toFixed(2)+")"}
+  function pdBack(anim){zEls();if(anim){zq.style.transition="translate .32s cubic-bezier(.22,1,.36,1)";setTimeout(function(){zq.style.transition=""},340)}else zq.style.transition="";zq.style.translate="";v.style.background=""}
+  v.addEventListener("touchstart",function(e){pd=0;pdOff=!!(e.target.closest&&e.target.closest(".qva,.qvsh,.qvdg,.qvmn"));if(e.touches.length===1&&!sheetOn&&!dgOn){x0=e.touches[0].clientX;y0=e.touches[0].clientY}else x0=null},{passive:true});
+  v.addEventListener("touchmove",function(e){
+    if(x0===null||!pdOk())return;
+    if(e.touches.length!==1){if(pd){pd=0;pdBack(true)}return}
+    var dy=e.touches[0].clientY-y0,dx=e.touches[0].clientX-x0;
+    if(!pd&&dy>14&&dy>Math.abs(dx)*1.3)pd=1;
+    if(pd)pdPut(Math.max(0,dy)*.85);
+  },{passive:true});
+  v.addEventListener("touchcancel",function(){if(pd){pd=0;pdBack(true)}x0=null},{passive:true});
+  v.addEventListener("touchend",function(e){
+    if(x0===null)return;
+    if(pd){var dy0=e.changedTouches[0].clientY-y0;pd=0;x0=null;if(dy0>110&&pdOk()){closeV();setTimeout(function(){pdBack(false)},420)}else pdBack(true);return}
+    if(ZS>1.02){x0=null;return}var t=e.changedTouches[0],dx=t.clientX-x0,dy=t.clientY-y0;x0=null;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5)go(dx<0?1:-1);else if(dy<-80&&Math.abs(dy)>Math.abs(dx)*1.5)sheet(true)},{passive:true});
   (function(){var y0=null,s=$("#qvsh");
     s.addEventListener("touchstart",function(e){y0=(s.scrollTop<=0&&e.touches.length===1)?e.touches[0].clientY:null},{passive:true});
     s.addEventListener("touchend",function(e){if(y0===null)return;var dy=e.changedTouches[0].clientY-y0;y0=null;if(dy>70)sheet(false)},{passive:true});
@@ -2874,6 +2951,8 @@ var popOn=false,popId=null;
 function popClose(){popOn=false;popId=null;$("#qpop").classList.remove("on");var a=document.querySelectorAll(".qi.pk");for(var i=0;i<a.length;i++)a[i].classList.remove("pk")}
 function popOpen(card,x,y){
   popClose();popOn=true;popId=card.dataset.id;card.classList.add("pk");
+  var pit=ITEMS.filter(function(x){return x.id===popId})[0];
+  $("#qpop [data-a=v] span").textContent=pit&&pit.solved?"Çözüldüyü kaldır":"Çözüldü";
   var P=$("#qpop"),W=window.innerWidth,H=window.innerHeight,w=P.offsetWidth,h=P.offsetHeight,m=12;
   var l=x+20;if(l+w>W-m)l=x-20-w;l=Math.max(m,Math.min(l,W-w-m));
   var tp=Math.max(m,Math.min(y-24,H-h-m));
@@ -2885,6 +2964,7 @@ $("#qpop").onclick=function(e){
   if(a==="x"&&!ddHold.ok(b))return;
   popClose();
   if(a==="o"){for(var i=0;i<ITEMS.length;i++)if(ITEMS[i].id===id){view(i);setFs(true);showUi();break}}
+  else if(a==="v"){var pi=ITEMS.filter(function(x){return x.id===id})[0];if(pi)setSolved(id,!pi.solved)}
   else if(a==="s"){SEL={};SEL[id]=1;selMode(true)}
   else if(a==="x"){SEL={};SEL[id]=1;selDelete()}
 };
