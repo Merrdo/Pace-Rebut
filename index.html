@@ -1057,6 +1057,75 @@ textarea.qfi{height:140px;resize:none}
 .tzlg.on{opacity:1;visibility:visible;transition-delay:0s}
 .tzlg img{max-width:100%;max-height:100%;object-fit:contain}
 @media (max-width:700px){.tzh h1{font-size:38px}.tzsc2{flex-direction:column;align-items:flex-start}.tzth{width:100px}.tzst b{font-size:21px}}
+
+/* ===== Hareket katmanı: Test ve Paket ===== */
+@keyframes tzRise{from{opacity:0;transform:translateY(14px)}}
+@keyframes tzPop{0%{transform:scale(.55)}55%{transform:scale(1.16)}100%{transform:scale(1)}}
+@keyframes tzGrow{from{opacity:0;max-height:0;padding-top:0;padding-bottom:0;transform:translateY(-6px)}to{opacity:1;max-height:70px}}
+@keyframes tzBar{from{transform:scaleX(0)}}
+@keyframes tzCol{from{transform:scaleY(0)}}
+@keyframes tzSlide{from{opacity:0;transform:translateX(22px) scale(.985)}}
+/* Ekran geçişleri */
+.tz,.tzp,.tzs,.tzr{transform:translateY(20px) scale(.985);transition:opacity .35s var(--ease),transform .6s var(--ease),visibility 0s .35s}
+.tz.on,.tzp.on,.tzs.on,.tzr.on{transform:none}
+/* İlk açılışta içerik sırayla yükselir */
+.fresh>.tzg,.fresh>.tzc,.fresh>.tzres,.fresh>.tzemp,.fresh>.tzst,.fresh>.tzchart,.fresh>.tzdh,.fresh>.tzchs,.fresh>.tzbar,.fresh .tzx,.fresh .tzpk,.fresh .tzhi{animation:tzRise .65s var(--ease) calc(var(--i,0)*45ms) backwards}
+/* Segment kontrolünde kayan hap */
+.tzg{position:relative}
+.tzg>button{position:relative;z-index:1}
+.tzpl{position:absolute;left:0;top:4px;bottom:4px;width:0;border-radius:999px;background:var(--fg);opacity:0;pointer-events:none;z-index:0;transition:transform .55s var(--sp),width .45s var(--ease),opacity .2s}
+.tzpl~button.on{background:transparent}
+/* Kategori seçimi */
+.tzo{transition:transform .4s var(--sp),box-shadow .3s,background .4s var(--ease)}
+.tzo.on{background:#fff;background:color-mix(in srgb,var(--c) 16%,var(--surf))}
+.tzo .ck svg{transition:opacity .15s}
+.tzo .ck svg path{stroke-dasharray:24;stroke-dashoffset:24;transition:stroke-dashoffset .4s var(--ease) .08s}
+.tzo.on .ck svg path{stroke-dashoffset:0}
+.tzo.on .ck{animation:tzPop .5s var(--sp)}
+.tzo.on .tzdot{animation:tzPop .55s var(--sp) .05s backwards}
+.tzo em{transition:color .3s}
+.tzgt{flex:none;display:inline-flex;align-items:center;height:24px;padding:0 10px;border-radius:12px;background:var(--c);color:#111;font:700 12px/1 Inter,system-ui,sans-serif;animation:tzPop .5s var(--sp)}
+.tzper{overflow:hidden;animation:tzGrow .5s var(--ease) backwards}
+.tzin{transition:box-shadow .25s,background .25s}
+.tzin:focus{outline:0;box-shadow:inset 0 0 0 2px var(--fg);background:var(--surf)}
+/* Kategori sayısı soru sayısını aşınca çıkan not */
+.tzfx{display:grid;grid-template-rows:0fr;opacity:0;margin-top:0;transition:grid-template-rows .5s var(--ease),opacity .35s,margin-top .5s var(--ease)}
+.tzfx.on{grid-template-rows:1fr;opacity:1;margin-top:12px}
+.tzfx>div{min-height:0;overflow:hidden}
+.tzfxi{display:flex;gap:10px;align-items:flex-start;padding:11px 14px;border-radius:14px;background:#fff1e2;background:color-mix(in srgb,#ffb46e 26%,var(--surf));font:600 13px/1.4 Inter,system-ui,sans-serif;color:#6b3f08}
+.tzfxi svg{flex:none;width:18px;height:18px;margin-top:1px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.tzfx.on .tzfxi svg{animation:tzPop .55s var(--sp) .15s backwards}
+/* Dokunma ve üzerine gelme */
+.tzpk,.tzhi,.tzit{transition:transform .45s var(--sp),box-shadow .3s}
+.tzbar .tzb,.tzb{transition:transform .4s var(--sp),opacity .2s,background .25s}
+@media (hover:hover){
+  .tzo:hover,.tzpk:hover,.tzhi:hover{transform:translateY(-2px);box-shadow:0 14px 26px -14px rgba(17,17,17,.28)}
+  .tzo.on:hover{box-shadow:0 14px 26px -14px rgba(17,17,17,.28),inset 0 0 0 3px var(--fg)}
+  .tzch:hover:not(.on),.tzlb:hover:not(.on){background:#dedad3}
+  .tzb:hover{transform:translateY(-1px)}
+}
+.tzo:active,.tzhi:active,.tzb:active,.tzch:active,.tzlb:active{transform:scale(.97)}
+/* Geçmiş ve sonuç çubukları */
+.tzbr i{transform-origin:left;animation:tzBar .9s var(--ease) .15s backwards;transition:width .5s var(--ease)}
+.tzchart i{transform-origin:bottom;animation:tzCol .8s var(--ease) backwards;transition:height .5s var(--ease)}
+.tzst div{animation:tzRise .6s var(--ease) backwards}.tzst div:nth-child(2){animation-delay:.06s}.tzst div:nth-child(3){animation-delay:.12s}
+.tzsc2{animation:tzRise .6s var(--ease) backwards}
+.tzit{animation:tzRise .55s var(--ease) backwards}
+.tzres{animation:tzRise .6s var(--ease) backwards}
+/* Test çözme */
+.tzri img.sw{animation:tzSlide .5s var(--ease)}
+.tzlb{transition:transform .4s var(--sp),background .25s,color .25s}
+.tzlb.on{animation:tzPop .42s var(--sp)}
+.tzrd button{transition:background .3s,color .3s,box-shadow .3s,transform .45s var(--sp)}
+.tzrd button.cur{transform:scale(1.1)}
+.tzta{transition:box-shadow .25s}
+.tzdr{animation:tzRise .45s var(--ease) backwards}
+/* Diyalog */
+.tzd.on .tzdc h3,.tzd.on .tzdc p,.tzd.on .tzdc .tzni,.tzd.on .tzdb{animation:tzRise .5s var(--ease) backwards}
+.tzd.on .tzdc p{animation-delay:.04s}.tzd.on .tzdc .tzni{animation-delay:.07s}.tzd.on .tzdb{animation-delay:.1s}
+.tzd.on .tzdl button{animation:tzRise .5s var(--ease) .06s backwards}
+.tzd.on .tzdl button:nth-child(2){animation-delay:90ms}.tzd.on .tzdl button:nth-child(3){animation-delay:135ms}.tzd.on .tzdl button:nth-child(4){animation-delay:180ms}.tzd.on .tzdl button:nth-child(5){animation-delay:225ms}.tzd.on .tzdl button:nth-child(6){animation-delay:270ms}.tzit:nth-of-type(1){animation-delay:40ms}.tzit:nth-of-type(2){animation-delay:80ms}.tzit:nth-of-type(3){animation-delay:120ms}.tzit:nth-of-type(4){animation-delay:160ms}.tzit:nth-of-type(5){animation-delay:200ms}.tzit:nth-of-type(6){animation-delay:240ms}.tzit:nth-of-type(7){animation-delay:280ms}.tzit:nth-of-type(8){animation-delay:320ms}.tzit:nth-of-type(9){animation-delay:360ms}.tzit:nth-of-type(10){animation-delay:400ms}.tzchart div:nth-child(1) i{animation-delay:35ms}.tzchart div:nth-child(2) i{animation-delay:70ms}.tzchart div:nth-child(3) i{animation-delay:105ms}.tzchart div:nth-child(4) i{animation-delay:140ms}.tzchart div:nth-child(5) i{animation-delay:175ms}.tzchart div:nth-child(6) i{animation-delay:210ms}.tzchart div:nth-child(7) i{animation-delay:245ms}.tzchart div:nth-child(8) i{animation-delay:280ms}.tzchart div:nth-child(9) i{animation-delay:315ms}.tzchart div:nth-child(10) i{animation-delay:350ms}.tzchart div:nth-child(11) i{animation-delay:385ms}.tzchart div:nth-child(12) i{animation-delay:420ms}
+.tzlg img{transform:scale(.94);transition:transform .5s var(--ease)}.tzlg.on img{transform:none}
 </style>
 </head>
 <body>
@@ -3383,20 +3452,71 @@ function dist(pools,total){
 }
 function gInfo(){
   var cs=cats(G.mode,G.uns),sc=cs.filter(function(c){return G.sel[c.k]}),pools=sc.map(pool),per=G.per&&sc.length>1,counts,avail=pools.reduce(function(a,p){return a+p.length},0);
+  /* Seçili (ve sorusu olan) kategori sayısı istenen sayıdan büyükse, her kategoriye en az 1 soru düşsün diye toplam otomatik yükselir */
+  var need=pools.filter(function(p){return p.length>0}).length,n=G.all?avail:Math.max(G.n,need),bump=!per&&!G.all&&need>1&&G.n<need;
   if(per)counts=sc.map(function(c,i){var v=G.pn[c.k];if(v==null)v=Math.min(10,pools[i].length);return Math.max(0,Math.min(pools[i].length,v))});
-  else counts=dist(pools,G.all?avail:G.n);
-  return{cs:cs,sc:sc,pools:pools,per:per,counts:counts,avail:avail,total:counts.reduce(function(a,b){return a+b},0)};
+  else counts=dist(pools,n);
+  return{cs:cs,sc:sc,pools:pools,per:per,counts:counts,avail:avail,need:need,n:n,bump:bump,total:counts.reduce(function(a,b){return a+b},0)};
 }
 function gTitle(sc){var n=sc.map(function(c){return c.lab});return n.length<=2?n.join(" + "):n.slice(0,2).join(" + ")+" +"+(n.length-2)}
 function gPick(gi){var ids=[];gi.pools.forEach(function(p,i){ids=ids.concat(shuf(p).slice(0,gi.counts[i]).map(function(it){return it.id}))});return shuf(ids)}
 
+
+/* ---------- Hareket yardımcıları ---------- */
+var REDUCE=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches,RPI=-1;
+function roll(el,to,suf){var from=el._v==null?to:el._v;el._v=to;cancelAnimationFrame(el._r);if(from===to||REDUCE){el.textContent=to+suf;return}
+  var t0=performance.now(),d=420;(function f(t){var p=Math.min(1,(t-t0)/d),e=1-Math.pow(1-p,3);el.textContent=Math.round(from+(to-from)*e)+suf;if(p<1)el._r=requestAnimationFrame(f)})(t0)}
+/* Küçük DOM eşitleyici: elemanlar yerinde kalır, bu yüzden sınıf değişimleri CSS geçişleriyle akıcı oynar */
+function syncAttrs(x,y){
+  if(x.classList.contains("tzpl"))return;
+  [].slice.call(x.attributes).forEach(function(a){if(!y.hasAttribute(a.name))x.removeAttribute(a.name)});
+  [].slice.call(y.attributes).forEach(function(a){if(x.getAttribute(a.name)!==a.value)x.setAttribute(a.name,a.value)});
+}
+function morph(a,b){
+  var ac=a.childNodes,bc=b.childNodes,i;
+  for(i=0;i<bc.length;i++){
+    var x=ac[i],y=bc[i];
+    if(!x){a.appendChild(y.cloneNode(true));continue}
+    if(x.nodeType!==y.nodeType||x.nodeName!==y.nodeName){a.replaceChild(y.cloneNode(true),x);continue}
+    if(y.nodeType===3){if(x.nodeValue!==y.nodeValue)x.nodeValue=y.nodeValue;continue}
+    if(y.nodeType!==1)continue;
+    if(x.id==="tzsb"||x.id==="tzss"||x.classList.contains("tzpl"))continue;
+    syncAttrs(x,y);
+    if(x.nodeName==="INPUT"||x.nodeName==="TEXTAREA"){if(document.activeElement!==x)x.value=y.getAttribute("value")||"";continue}
+    morph(x,y);
+  }
+  while(a.childNodes.length>bc.length)a.removeChild(a.lastChild);
+}
+function fresh(b){
+  [].forEach.call(b.querySelectorAll(".tzg,.tzc,.tzx,.tzpk,.tzhi,.tzres,.tzemp,.tzst,.tzchart,.tzdh,.tzbar,.tzchs"),function(e,i){e.style.setProperty("--i",Math.min(i,12))});
+  b.classList.remove("fresh");void b.offsetWidth;b.classList.add("fresh");
+  clearTimeout(fresh.t);fresh.t=setTimeout(function(){b.classList.remove("fresh")},1500);
+}
+/* Segment kontrolünde kayan seçim hapı */
+function pills(){
+  [].forEach.call(document.querySelectorAll("#tz .tzg"),function(g){
+    var p=g.querySelector(".tzpl"),on=g.querySelector("button.on");if(!p)return;
+    if(!on){p.style.opacity=0;return}
+    var first=!p._p;p._p=1;if(first)p.style.transition="none";
+    p.style.width=on.offsetWidth+"px";p.style.transform="translateX("+on.offsetLeft+"px)";p.style.opacity=1;
+    if(first){void p.offsetWidth;p.style.transition=""}
+  });
+}
+window.addEventListener("resize",pills);
+$("#tzt").insertAdjacentHTML("afterbegin",'<i class="tzpl"></i>');
+
 /* ---------- Ana sayfa (hub) ---------- */
-var HUB={tab:"gen",hf:"all"};
-function hubOpen(tab){if(tab)HUB.tab=tab;$("#tz").classList.add("on");hubRender()}
+var HUB={tab:"gen",hf:"all",k:null,fxt:""};
+function hubOpen(tab){if(tab)HUB.tab=tab;HUB.k=null;$("#tz").classList.add("on");hubRender()}
 function hubClose(){$("#tz").classList.remove("on")}
 function hubRender(){
   [].forEach.call(document.querySelectorAll("#tzt button"),function(b){b.classList.toggle("on",b.dataset.t===HUB.tab)});
-  var b=$("#tzb");if(HUB.tab==="gen")rGen(b);else if(HUB.tab==="pk")rPk(b);else rHi(b);
+  var b=$("#tzb"),t=document.createElement("div");
+  if(HUB.tab==="gen")rGen(t);else if(HUB.tab==="pk")rPk(t);else rHi(t);
+  [].forEach.call(t.querySelectorAll(".tzg"),function(g){g.insertAdjacentHTML("afterbegin",'<i class="tzpl"></i>')});
+  var k=HUB.tab+"|"+G.mode+"|"+HUB.hf;
+  if(HUB.k===k&&b.firstChild)morph(b,t);else{b.innerHTML=t.innerHTML;fresh(b)}
+  HUB.k=k;gSum();pills();
 }
 function hubOn(){return $("#tz").classList.contains("on")}
 function refreshHub(){if(hubOn())hubRender()}
@@ -3414,7 +3534,7 @@ function rGen(b){
   h+='<div class="tzl">';
   gi.cs.forEach(function(c){
     var p=pool(c),on=!!G.sel[c.k],dis=!p.length,sol=c.all.length-c.uns.length,sub=G.uns?"toplam "+c.all.length:(sol?sol+" çözüldü · "+c.uns.length+" çözülmedi":"");
-    h+='<div class="tzx"><button type="button" class="tzo'+(on?" on":"")+(dis?" dis":"")+'" data-k="'+esc(c.k)+'" style="--c:'+(c.col||"#cfcbc4")+'"><span class="ck">'+TICK+'</span><span class="tzdot"></span><span class="tt"><b>'+esc(c.lab)+'</b>'+(sub?'<small>'+sub+'</small>':'')+'</span><em>'+p.length+'<i>soru</i></em></button>';
+    h+='<div class="tzx"><button type="button" class="tzo'+(on?" on":"")+(dis?" dis":"")+'" data-k="'+esc(c.k)+'" style="--c:'+(c.col||"#cfcbc4")+'"><span class="ck">'+TICK+'</span><span class="tzdot"></span><span class="tt"><b>'+esc(c.lab)+'</b>'+(sub?'<small>'+sub+'</small>':'')+'</span>'+(on&&!gi.per&&gi.sc.length>1?'<span class="tzgt">Testte '+gi.counts[gi.sc.indexOf(c)]+'</span>':'')+'<em>'+p.length+'<i>soru</i></em></button>';
     if(on&&gi.per){var i=gi.sc.indexOf(c),v=gi.counts[i];h+='<div class="tzper"><span>Kaç soru:</span><input class="tzin" type="number" inputmode="numeric" min="1" max="'+p.length+'" value="'+v+'" data-pk="'+esc(c.k)+'"><button type="button" class="tzch" data-pa="'+esc(c.k)+'">Tümü</button></div>'}
     h+='</div>';
   });
@@ -3422,7 +3542,9 @@ function rGen(b){
   h+='<div class="tzc col"><h2>Soru sayısı</h2>';
   if(gi.sc.length>1)h+='<div class="tzg"><button type="button" data-pm="0" class="'+(!gi.per?"on":"")+'">Toplam sayı</button><button type="button" data-pm="1" class="'+(gi.per?"on":"")+'">Her biri için ayrı</button></div>';
   if(!gi.per){
-    h+='<div class="tzchs">'+[10,20,30,40].map(function(n){return'<button type="button" class="tzch'+(!G.all&&G.n===n?" on":"")+'" data-n="'+n+'">'+n+'</button>'}).join("")+'<button type="button" class="tzch'+(G.all?" on":"")+'" data-n="all">Tümü</button><input class="tzin" id="tzni" type="number" inputmode="numeric" min="1" value="'+(G.all?Math.max(gi.avail,1):G.n)+'"></div>';
+    h+='<div class="tzchs">'+[10,20,30,40].map(function(n){return'<button type="button" class="tzch'+(!G.all&&G.n===n?" on":"")+'" data-n="'+n+'">'+n+'</button>'}).join("")+'<button type="button" class="tzch'+(G.all?" on":"")+'" data-n="all">Tümü</button><input class="tzin" id="tzni" type="number" inputmode="numeric" min="1" value="'+(G.all?Math.max(gi.avail,1):gi.n)+'"></div>';
+    var fxt=gi.bump?(gi.need+' kategori seçtin. Hepsinden soru gelsin diye toplam '+gi.n+' soruya yükseltildi.'):(HUB.fxt||'');if(gi.bump)HUB.fxt=fxt;
+    h+='<div class="tzfx'+(gi.bump?' on':'')+'" role="status"><div><div class="tzfxi"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.6v.01"/></svg><span>'+esc(fxt)+'</span></div></div></div>';
     h+='<div class="tzhint">'+(gi.sc.length>1?gi.sc.length+' seçeneğe eşit dağıtılır, sorular rastgele seçilir.':'Sorular seçtiğin gruptan rastgele gelir.')+'</div>';
   }else h+='<div class="tzhint">Her seçenek için kaç soru geleceğini yukarıdaki kutulardan belirle. Sorular rastgele seçilir.</div>';
   h+='</div>';
@@ -3431,10 +3553,10 @@ function rGen(b){
 }
 function gSum(){
   var gi=gInfo(),sb=$("#tzsb");if(!sb)return;
-  sb.textContent=gi.total+" soru";
+  roll(sb,gi.total," soru");
   $("#tzss").textContent=gi.sc.length?gTitle(gi.sc):"Yukarıdan seçim yap";
   $("#tzgo").disabled=$("#tzsv").disabled=!gi.total;
-  if(!gi.per){var ni=$("#tzni");[].forEach.call(document.querySelectorAll("[data-n]"),function(c){var v=c.dataset.n;c.classList.toggle("on",v==="all"?G.all:(!G.all&&G.n===+v))});if(ni&&document.activeElement!==ni)ni.value=G.all?Math.max(gi.avail,1):G.n}
+  if(!gi.per){var ni=$("#tzni");[].forEach.call(document.querySelectorAll("[data-n]"),function(c){var v=c.dataset.n;c.classList.toggle("on",v==="all"?G.all:(!G.all&&G.n===+v))});if(ni&&document.activeElement!==ni)ni.value=G.all?Math.max(gi.avail,1):gi.n}
 }
 function gStart(save){
   var gi=gInfo();if(!gi.total)return;
@@ -3573,6 +3695,7 @@ function paintRun(){
   var done=R.ids.filter(function(i){return ansOf(i).trim()}).length;$("#tzrpi").style.width=(done/n*100)+"%";
   var im=$("#tzrimg"),box=$("#tzri");box.classList.remove("z");box.scrollTop=box.scrollLeft=0;
   if(it){im.src=RU[id]||(RU[id]=URL.createObjectURL(it.blob))}
+  if(RPI!==R.idx){RPI=R.idx;im.classList.remove("sw");void im.offsetWidth;im.classList.add("sw")}
   var a=ansOf(id),h="";
   if(it&&it.ders)h+='<div class="tzdr" style="--c:'+Q.lcol(it)+'">'+esc(dlab(it))+'</div>';
   if(it&&qtype(it)==="mc"){
@@ -3716,7 +3839,7 @@ $("#tzb").addEventListener("click",function(e){
   if(t.closest("#tzu")){G.uns=!G.uns;hubRender();return}
   if(b=t.closest("[data-pm]")){G.per=b.dataset.pm==="1";hubRender();return}
   if(b=t.closest("[data-pa]")){var k=b.dataset.pa,cc=gInfo().cs.filter(function(c){return c.k===k})[0];if(cc){G.pn[k]=pool(cc).length;hubRender()}return}
-  if(b=t.closest("[data-n]")){if(b.dataset.n==="all")G.all=true;else{G.all=false;G.n=+b.dataset.n}gSum();return}
+  if(b=t.closest("[data-n]")){if(b.dataset.n==="all")G.all=true;else{G.all=false;G.n=+b.dataset.n}hubRender();return}
   if(b=t.closest(".tzo")){if(b.classList.contains("dis"))return;var k2=b.dataset.k;if(G.sel[k2])delete G.sel[k2];else G.sel[k2]=1;hubRender();return}
   if(t.closest("#tzgo")){gStart(false);return}
   if(t.closest("#tzsv")){gStart(true);return}
@@ -3725,9 +3848,10 @@ $("#tzb").addEventListener("click",function(e){
 });
 $("#tzb").addEventListener("input",function(e){
   var t=e.target;
-  if(t.id==="tzni"){var v=parseInt(t.value,10);if(v>0){G.all=false;G.n=v;gSum()}}
+  if(t.id==="tzni"){var v=parseInt(t.value,10);if(v>0){G.all=false;G.n=v;hubRender()}}
   else if(t.dataset&&t.dataset.pk!=null){var v2=parseInt(t.value,10);if(v2>0){G.pn[t.dataset.pk]=v2;gSum()}}
 });
+$("#tzb").addEventListener("focusout",function(e){if(e.target.id==="tzni")setTimeout(hubRender,0)});
 $("#tzb").addEventListener("change",function(e){if(e.target.dataset&&e.target.dataset.pk!=null)hubRender()});
 $("#tzpx").onclick=peClose;$("#tzpk").onclick=peSave;
 $("#tzpf").onclick=function(e){var b=e.target.closest("[data-f]");if(!b)return;PE.f=b.dataset.f;[].forEach.call($("#tzpf").children,function(c){c.classList.toggle("on",c===b)});peFilter()};
