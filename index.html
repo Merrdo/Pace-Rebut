@@ -414,35 +414,6 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .cvp{position:absolute;inset:0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .4s var(--ease),transform .7s var(--ease),visibility 0s .4s}
 .cvp[data-s=l]{transform:translateX(-32px)}.cvp[data-s=r]{transform:translateX(32px)}
 .cvp[data-s=c]{opacity:1;visibility:visible;pointer-events:auto;transform:none;transition-delay:0s}
-/* Yıllık takvim */
-.yr{position:absolute;inset:0;display:flex;flex-direction:column;gap:16px}
-.yh{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 4px;flex:none}
-.yt{display:flex;align-items:center;gap:12px}
-.yt b{font-family:Inter,"SF Pro Display",system-ui,sans-serif;font-weight:500;font-size:48px;letter-spacing:-2.5px;line-height:1;font-variant-numeric:tabular-nums;min-width:2.3ch;text-align:center}
-.yt .btn{padding:8px 16px;font-size:15px;background:var(--surf);animation:yup .45s var(--ease) both}
-.yl{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px 18px;font-family:Inter,system-ui,sans-serif;font-size:12.5px;font-weight:600;color:var(--dim)}
-.yl span{display:inline-flex;align-items:center;gap:7px}
-.yl i{width:10px;height:10px;border-radius:4px;background:var(--fg)}
-.yl .g i{background:#2fbf71}.yl .v i{background:#9b6cff}.yl .e i{width:6px;height:6px;border-radius:50%;background:var(--ct)}
-.yg{flex:1;min-height:0;overflow:auto;display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:minmax(196px,1fr);gap:14px;padding:2px 2px 6px;overscroll-behavior:contain}
-.ym{display:flex;flex-direction:column;min-height:0;background:var(--surf);border-radius:24px;padding:16px 16px 12px;box-shadow:0 1px 0 rgba(17,17,17,.04),0 8px 20px -12px rgba(17,17,17,.16);animation:yup .65s var(--ease) both;animation-delay:calc(var(--d)*38ms)}
-@keyframes yup{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-.ym h3{display:flex;align-items:center;gap:8px;font-size:19px;font-weight:700;line-height:1;margin-bottom:10px}
-.ym h3.cur:after{content:"";width:8px;height:8px;border-radius:50%;background:var(--c);box-shadow:0 0 0 3px color-mix(in srgb,var(--c) 30%,transparent)}
-.yw,.yd{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
-.yw span{text-align:center;padding-bottom:5px;font-family:Inter,system-ui,sans-serif;font-size:10px;font-weight:600;letter-spacing:.04em;color:var(--dim)}
-.yd{flex:1;min-height:0;grid-template-rows:repeat(6,minmax(0,1fr))}
-.yd span{position:relative;display:grid;place-items:center;border-radius:9px;font-family:Inter,system-ui,sans-serif;font-size:12.5px;font-weight:500;font-variant-numeric:tabular-nums}
-.yd .we{color:var(--dim)}
-.yd .h{background:color-mix(in srgb,#2fbf71 18%,transparent);color:#1d8a50;font-weight:700}
-.yd .h.w{background:color-mix(in srgb,#9b6cff 16%,transparent);color:#6a3fd1}
-.yd .e:after{content:"";position:absolute;bottom:3px;width:4px;height:4px;border-radius:50%;background:var(--ct)}
-.yd .t{background:var(--fg);color:var(--bg);font-weight:700;border-radius:50%;box-shadow:0 4px 10px -3px rgba(17,17,17,.4)}
-.yd .t.e:after{background:var(--c)}
-@media (max-width:1000px){.yg{grid-template-columns:repeat(3,1fr)}.yt b{font-size:40px}}
-@media (max-width:700px){.yg{grid-template-columns:repeat(2,1fr)}.yl{display:none}.yt b{font-size:34px}}
-@media (prefers-reduced-motion:reduce){.ym,.yt .btn{animation:none}}
-
 
 /* Tarih paneli */
 .dpb{display:flex;align-items:center;gap:10px;margin-top:14px;padding:11px 16px;border-radius:14px;background:var(--surf2);font:500 16px Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;transition:transform .5s var(--sp),background .3s var(--ease)}
@@ -1642,34 +1613,6 @@ $("#cset").addEventListener("click",function(e){
   else if(b.dataset.ly||b.dataset.lt){if(b.dataset.ly)cl.y+=+b.dataset.ly;else cl.t=b.dataset.lt;updL()}
 });
 paintK();
-/* Yıllık takvim: "Yıl" paneli */
-var YV=TD.getFullYear();
-function ymHtml(m,i){
-  var now=new Date(),ty=now.getFullYear()===YV,f=wdx(YV,m,1),n=new Date(YV,m+1,0).getDate(),c="";
-  for(var k=0;k<f;k++)c+="<span></span>";
-  for(var d=1;d<=n;d++){
-    var x=[],H=hs(YV,m,d),ws=wdx(YV,m,d)>4,ev=its(YV,m,d).length>0,tt=ty&&now.getMonth()===m&&now.getDate()===d;
-    if(ws)x.push("we");
-    if(H.length){x.push("h");if(H.every(function(q){return q.g==="w"}))x.push("w")}
-    if(ev)x.push("e");
-    if(tt)x.push("t");
-    c+='<span'+(x.length?' class="'+x.join(" ")+'"':"")+(H.length?' title="'+esc(H.map(function(q){return q.n}).join(", "))+'"':"")+(tt?' aria-current="date"':"")+'>'+d+'</span>';
-  }
-  return'<div class="ym" style="--d:'+i+'"><h3'+(ty&&now.getMonth()===m?' class="cur"':"")+'>'+MN[m]+'</h3><div class="yw">'+WS.map(function(s){return"<span>"+s.charAt(0)+"</span>"}).join("")+'</div><div class="yd">'+c+'</div></div>';
-}
-function paintY(){
-  var p=$("#cvb .cvp:nth-child(4)");if(!p)return;
-  var cy=new Date().getFullYear(),g="";
-  for(var m=0;m<12;m++)g+=ymHtml(m,m);
-  p.innerHTML='<div class="yr"><div class="yh"><div class="yt"><button class="kb" data-y="-1" aria-label="Önceki yıl"><svg viewBox="0 0 24 24">'+IC.p+'</svg></button><b>'+YV+'</b><button class="kb" data-y="1" aria-label="Sonraki yıl"><svg viewBox="0 0 24 24">'+IC.n+'</svg></button>'+(YV!==cy?'<button class="btn" data-y="0">Bu yıl</button>':"")+'</div><div class="yl"><span><i></i>Bugün</span><span class="g"><i></i>Tatil ve özel gün</span>'+(CS.set.w?'<span class="v"><i></i>Uluslararası</span>':"")+'<span class="e"><i></i>Etkinlik</span></div></div><div class="yg">'+g+'</div></div>';
-}
-$("#cvb").addEventListener("click",function(e){
-  var b=e.target.closest("[data-y]");if(!b)return;
-  YV=b.dataset.y==="0"?new Date().getFullYear():YV+ +b.dataset.y;paintY();
-});
-$("#cal").addEventListener("click",function(e){var b=e.target.closest("[data-cv]");if(b&&b.dataset.cv==="3")paintY()});
-document.addEventListener("visibilitychange",function(){if(!document.hidden)paintY()});
-paintY();
 function dkDay(){var e=$("#dkd"),d=String(new Date().getDate());if(e&&e.textContent!==d)e.textContent=d}
 dkDay();setInterval(dkDay,30000);document.addEventListener("visibilitychange",dkDay);
 
