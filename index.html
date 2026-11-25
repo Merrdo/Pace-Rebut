@@ -1166,6 +1166,72 @@ textarea.qfi{height:140px;resize:none}
 .tzpk.sm .ac{opacity:.45}
 .tzbar .tzb.dgb{background:#ff5a4d;color:#111}
 .tzbar{animation:tzRise .5s var(--ease) backwards}
+
+/* ===== Paket kapağı: daha büyük ===== */
+.tzpk{display:flex;flex-direction:column;min-height:210px;padding:20px;border-radius:26px;cursor:pointer}
+.tzpk .tzpt2{align-items:flex-start}
+.tzpk h3{font-size:22px;white-space:normal;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;line-clamp:3;overflow:hidden;word-break:break-word}
+.tzpk:active{transform:scale(.975)}
+.tzpk.pk:active{transform:scale(.97)}
+@media (max-width:640px){.tzpk{min-height:180px}}
+/* ===== Paket sayfası ===== */
+.tzpv,.tzm{position:fixed;inset:0;background:var(--bg);overflow:auto;overscroll-behavior:contain;opacity:0;visibility:hidden;transform:translateY(20px) scale(.985);transition:opacity .35s var(--ease),transform .6s var(--ease),visibility 0s .35s}
+.tzpv.on,.tzm.on{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+.tzpv{z-index:11}
+.tzm{z-index:12;display:flex;flex-direction:column}
+.tzpva{display:flex;gap:8px;margin-bottom:4px}
+.tzpva .tzb{height:50px;font-size:16px}.tzpva .tzb.pr{flex:1}
+.tzpv .tzh,.tzpv .tzpva,.tzpv .tzdh{animation:tzRise .6s var(--ease) backwards}
+.tzpv .tzh .qb{flex:none;white-space:nowrap}
+.tzpv .tzpva{animation-delay:.05s}.tzpv .tzdh{animation-delay:.1s}
+.tzpvg .tzpi{animation:tzRise .55s var(--ease) calc(min(var(--i,0),14)*35ms + .12s) backwards}
+.tzpi .nb{position:absolute;right:6px;bottom:6px;min-width:24px;height:22px;padding:0 8px;display:inline-flex;align-items:center;justify-content:center;border-radius:11px;background:rgba(17,17,17,.82);color:#fff;font:700 11px Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums}
+@media (hover:hover){.tzqi:hover{transform:scale(1.025)}}
+.tzqi:active{transform:scale(.96)}
+/* ===== Başlatmadan önce: sıralama seçimi ===== */
+.tzmt{padding:calc(16px + env(safe-area-inset-top,0px)) 20px 0;display:flex}
+.tzmt .qb{animation:tzRise .5s var(--ease) backwards}
+.tzmb{flex:1;display:flex;flex-direction:column;justify-content:center;width:100%;max-width:640px;margin:0 auto;padding:10px 24px calc(48px + env(safe-area-inset-bottom,0px))}
+.tzmh{text-align:center;margin-bottom:28px;animation:tzRise .6s var(--ease) backwards}
+.tzmh small{display:block;margin-bottom:10px;font:800 13px Inter,system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.tzmh h1{font-size:40px;font-weight:800;letter-spacing:-1px;line-height:1.05;word-break:break-word}
+.tzmh p{margin-top:8px;font:500 15px Inter,system-ui,sans-serif;color:var(--dim)}
+.tzmg{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.tzmo{display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;gap:36px;min-height:220px;padding:20px;border-radius:28px;background:var(--surf);color:var(--fg);text-align:left;box-shadow:0 6px 16px -10px rgba(17,17,17,.14);animation:tzRise .65s var(--ease) .08s backwards;transition:transform .5s var(--sp),background .35s var(--ease),color .35s var(--ease),opacity .35s,box-shadow .3s}
+.tzmo+.tzmo{animation-delay:.16s}
+.tzmo .ic{display:grid;place-items:center;width:58px;height:58px;border-radius:50%;background:var(--surf2);transition:background .35s var(--ease),transform .6s var(--sp)}
+.tzmo .ic svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.tzmo b{display:block;font-size:25px;font-weight:800;letter-spacing:-.4px;line-height:1.1}
+.tzmo small{display:block;margin-top:6px;font:500 13px/1.35 Inter,system-ui,sans-serif;color:var(--dim);transition:color .35s,opacity .35s}
+@media (hover:hover){.tzmo:hover{transform:translateY(-3px);box-shadow:0 18px 30px -16px rgba(17,17,17,.3)}.tzmo:hover .ic{transform:rotate(-8deg) scale(1.08)}}
+.tzmo:active{transform:scale(.97)}
+.tzmg.pick .tzmo{opacity:.35;transform:scale(.95);pointer-events:none}
+.tzmg.pick .tzmo.on{opacity:1;transform:scale(1.03);background:var(--fg);color:var(--bg);box-shadow:0 20px 34px -16px rgba(17,17,17,.5)}
+.tzmo.on .ic{background:rgba(255,255,255,.16);animation:tzPop .55s var(--sp)}
+.tzmo.on small{color:inherit;opacity:.7}
+@keyframes tzShuf{0%{transform:none}30%{transform:scale(1.2) rotate(-14deg)}65%{transform:scale(1.2) rotate(14deg)}100%{transform:none}}
+.tzmo.sh.on .ic svg{animation:tzShuf .6s var(--ease)}
+@media (max-width:420px){.tzmo{min-height:200px;padding:16px;gap:28px}.tzmo b{font-size:22px}.tzmh h1{font-size:32px}}
+/* ===== Soru görüntüleyici (paket sayfası) ===== */
+@keyframes tzSlideL{from{opacity:0;transform:translateX(-22px) scale(.985)}}
+.tzv{position:fixed;inset:0;z-index:13;background:rgba(17,17,17,.94);opacity:0;visibility:hidden;transition:opacity .25s,visibility 0s .25s}
+.tzv.on{opacity:1;visibility:visible;transition-delay:0s}
+.tzvs{position:absolute;inset:0;overflow:auto;display:grid;place-items:center;cursor:zoom-in;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.tzvs img{display:block;max-width:100%;max-height:100%;object-fit:contain;-webkit-user-select:none;user-select:none;transition:width .45s var(--ease)}
+.tzvs img.r{animation:tzSlide .45s var(--ease)}.tzvs img.l{animation:tzSlideL .45s var(--ease)}
+.tzvs.z{place-items:start;cursor:zoom-out}
+.tzvs.z img{max-width:none;max-height:none;width:220%}
+.tzvt{position:absolute;left:0;right:0;top:0;z-index:2;display:flex;align-items:center;justify-content:space-between;padding:calc(14px + env(safe-area-inset-top,0px)) 16px 0;pointer-events:none}
+.tzvt>*{pointer-events:auto}
+.tzvc{height:40px;padding:0 16px;display:inline-flex;align-items:center;border-radius:20px;background:rgba(255,255,255,.14);color:#fff;font:700 15px Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.tzvb{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.14);color:#fff;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:transform .4s var(--sp),opacity .25s,background .25s}
+.tzvb svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.tzvb:active{transform:scale(.9)}
+.tzvb[disabled]{opacity:.25;pointer-events:none}
+.tzvn{position:absolute;top:50%;z-index:2;margin-top:-22px}
+.tzvn.pv{left:14px}.tzvn.nx{right:14px}
+.tzvh{position:absolute;left:0;right:0;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:2;text-align:center;pointer-events:none;font:600 13px Inter,system-ui,sans-serif;color:rgba(255,255,255,.55)}
+@media (hover:hover){.tzvb:hover{background:rgba(255,255,255,.26)}}
 </style>
 </head>
 <body>
@@ -1293,7 +1359,16 @@ textarea.qfi{height:140px;resize:none}
     <div class="tzrn"><button class="fl" id="tzrpv" type="button">Önceki</button><button class="fl pr" id="tzrnx" type="button">Sonraki</button></div>
   </div>
   <div class="tzs" id="tzs" role="dialog" aria-modal="true" aria-label="Sonuç"><div class="tzw" id="tzsw"></div></div>
+  <div class="tzs tzpv" id="tzpv" role="dialog" aria-modal="true" aria-label="Paket"><div class="tzw" id="tzpvw"></div></div>
   <div class="tzs" id="tzpd" role="dialog" aria-modal="true" aria-label="Paket istatistikleri"><div class="tzw" id="tzpdw"></div></div>
+  <div class="tzm" id="tzm" role="dialog" aria-modal="true" aria-label="Sıralama seç"></div>
+  <div class="tzv" id="tzv" role="dialog" aria-modal="true" aria-label="Soru">
+    <div class="tzvs" id="tzvs"><img id="tzvi" alt="Soru" draggable="false"></div>
+    <div class="tzvt"><span class="tzvc" id="tzvc"></span><button class="tzvb" id="tzvx" type="button" aria-label="Kapat"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+    <button class="tzvb tzvn pv" id="tzvp" type="button" aria-label="Önceki soru"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <button class="tzvb tzvn nx" id="tzvn" type="button" aria-label="Sonraki soru"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+    <div class="tzvh" id="tzvh">Büyütmek için dokun · Kaydırarak diğer soruya geç</div>
+  </div>
   <div class="tzlg" id="tzl"><img id="tzli" alt="Soru"></div>
   <div class="tzd" id="tzd"><div class="tzdc" id="tzdc" role="alertdialog" aria-modal="true"></div></div>
   <div class="qs" id="qs" role="status"></div>
@@ -3619,13 +3694,13 @@ function pkStat(p){var r=pkRecs(p.id),ps=r.map(rpct).filter(function(x){return x
 var PSL={on:false,ids:{},sup:0},TCK='<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
 function rPk(b){
   var im=imap(),h=resumeBanner(),sm=PSL.on,nsel=Object.keys(PSL.ids).length;
-  h+='<div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap"><button class="tzb pr" type="button" data-a="new" style="height:48px">+ Yeni paket</button><button class="tzch'+(SHUF?" on":"")+'" type="button" data-a="shuf" style="height:48px">Başlarken karıştır</button></div>';
+  h+='<div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap"><button class="tzb pr" type="button" data-a="new" style="height:48px">+ Yeni paket</button></div>';
   if(!PK.length){b.innerHTML=h+'<div class="tzemp"><b>Henüz paket yok</b><span>İstediğin soruları seçip paket yap, sonra istediğin zaman test olarak çöz. Sorular sayfasında soruları seçip de paket oluşturabilirsin.</span></div>';return}
   h+='<div class="tzhint tzphn">Düzenlemek, seçmek ve silmek için pakete basılı tut.</div><div class="tzpg">';
   PK.forEach(function(p){
     var ex=p.ids.filter(function(i){return im[i]}),on=!!PSL.ids[p.id];
     h+='<div class="tzpk'+(sm?" sm":"")+(on?" sel":"")+'" data-id="'+p.id+'"><div class="tzpt2"><span class="tzpc">'+TCK+'</span><h3>'+esc(p.name)+'</h3><div class="tzpn"><b>'+ex.length+'</b><i>soru</i></div></div>';
-    h+='<div class="ac"><button class="tzb pr" type="button" data-a="go"'+(ex.length&&!sm?"":" disabled")+'>Başlat</button><button class="tzb" type="button" data-a="st"'+(sm?" disabled":"")+'>İstatistik</button></div></div>';
+    h+='</div>';
   });
   h+='</div>';
   if(sm)h+='<div class="tzbar"><div><b>'+nsel+' seçili</b><small>Silmek için paketlere dokun</small></div><button type="button" class="tzb" data-a="selx">Vazgeç</button><button type="button" class="tzb dgb" data-a="seld"'+(nsel?"":" disabled")+'>Sil</button></div>';
@@ -3679,7 +3754,12 @@ document.addEventListener("keydown",function(e){if(e.key!=="Escape")return;if(tp
 function pkStart(id){
   var p=PK.filter(function(x){return x.id===id})[0];if(!p)return;
   var im=imap(),ids=p.ids.filter(function(i){return im[i]});if(!ids.length){Q.toast("Pakette soru kalmamış");return}
-  runStart({ids:SHUF?shuf(ids):ids,kind:"pack",name:p.name,packId:p.id});
+  pmOpen(p,ids);
+}
+function pkRun(id,sh){
+  var p=PK.filter(function(x){return x.id===id})[0];if(!p)return;
+  var im=imap(),ids=p.ids.filter(function(i){return im[i]});if(!ids.length){Q.toast("Pakette soru kalmamış");return}
+  runStart({ids:sh?shuf(ids):ids,kind:"pack",name:p.name,packId:p.id});
 }
 function pkDelete(id){
   var p=PK.filter(function(x){return x.id===id})[0];if(!p)return;
@@ -3760,7 +3840,7 @@ function runStart(o){
   function go(){
     var im=imap(),ids=o.ids.filter(function(i){return im[i]});if(!ids.length){Q.toast("Soru bulunamadı");return}
     R={id:uid(),ids:ids,ans:{},idx:0,acc:0,seg:Date.now(),kind:o.kind,name:o.name||"Test",packId:o.packId||null,src:o.src||""};
-    runSave();runShow();
+    runSave();runShow();pvClose();$("#tzpd").classList.remove("on");
   }
   if(RS||R)mdl({h:"Devam eden test var",p:"Yeni teste başlarsan o test silinir.",btns:[{t:"Vazgeç",v:"cancel"},{t:"Yenisini başlat",v:"ok",c:"pr"}]}).then(function(r){if(r.v==="ok"){if(R)runStop();RS=null;go()}});
   else go();
@@ -3928,6 +4008,98 @@ function pdOpen(id){
   $("#tzpdw").innerHTML=h;$("#tzpd").scrollTop=0;$("#tzpd").classList.add("on");
 }
 
+/* ---------- Paket sayfası ---------- */
+var PV={id:null,ids:[]},PVU=[],VW={i:0,u:null,sw:0},PM={id:null};
+var ICO_SH='<svg viewBox="0 0 24 24"><path d="M18 14l4 4-4 4"/><path d="M18 2l4 4-4 4"/><path d="M2 18h1.97a4 4 0 003.3-1.7l5.45-8.6a4 4 0 013.3-1.7H22"/><path d="M2 6h1.97a4 4 0 013.6 2.2"/><path d="M22 18h-6.04a4 4 0 01-3.3-1.8l-.36-.45"/></svg>';
+var ICO_OR='<svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6h.01M4 12h.01M4 18h.01"/></svg>';
+function revAll(a){a.forEach(function(u){URL.revokeObjectURL(u)})}
+function fdateY(ts){var d=new Date(ts);return d.getDate()+" "+MON[d.getMonth()]+" "+d.getFullYear()+" · "+p2(d.getHours())+":"+p2(d.getMinutes())}
+function pvOpen(id){
+  var p=PK.filter(function(x){return x.id===id})[0];if(!p)return;
+  var im=imap(),ids=p.ids.filter(function(i){return im[i]}),st=pkStat(p);
+  revAll(PVU);PVU=[];PV={id:id,ids:ids};
+  var h='<div class="tzh"><div><h1 style="font-size:38px">'+esc(p.name)+'</h1><p>'+ids.length+' soru'+(st.n?' · '+st.n+' tur':'')+'<br>Oluşturulma: '+(p.ts?fdateY(p.ts):"—")+'</p></div><button class="qb" id="tzpvx" type="button">Geri dön</button></div>';
+  h+='<div class="tzac tzpva"><button class="tzb pr" type="button" data-a="pvgo"'+(ids.length?"":" disabled")+'>Başlat</button><button class="tzb" type="button" data-a="pvst">İstatistik</button></div>';
+  h+='<div class="tzdh">Sorular</div>';
+  if(!ids.length)h+='<div class="tzemp"><b>Pakette soru kalmamış</b><span>Paketi basılı tutup düzenleyerek soru ekleyebilirsin.</span></div>';
+  else{
+    h+='<div class="tzpgd tzpvg">';
+    ids.forEach(function(i,k){
+      var it=im[i],u=URL.createObjectURL(it.thumb||it.blob);PVU.push(u);
+      h+='<button type="button" class="tzpi tzqi" data-i="'+k+'" style="--i:'+k+'" aria-label="Soru '+(k+1)+'"><img alt="Soru" decoding="async" draggable="false" src="'+u+'">'+(it.ders?'<span class="dc" style="--c:'+Q.lcol(it)+'">'+esc(it.g+" · "+it.ders)+'</span>':'')+(it.solved?'<span class="sv">Çözüldü</span>':'')+'<span class="nb">'+(k+1)+'</span></button>';
+    });
+    h+='</div>';
+  }
+  $("#tzpvw").innerHTML=h;$("#tzpv").scrollTop=0;$("#tzpv").classList.add("on");
+}
+function pvClose(){
+  $("#tzpv").classList.remove("on");var u=PVU;PVU=[];
+  if(u.length)setTimeout(function(){revAll(u)},700);
+}
+/* Soru görüntüleyici: dokun = büyüt/küçült, kaydır veya oklarla diğer soruya geç */
+function vwOpen(i){VW.i=i;vwPaint(0);$("#tzv").classList.add("on")}
+function vwClose(){
+  $("#tzv").classList.remove("on");
+  setTimeout(function(){if(!$("#tzv").classList.contains("on")&&VW.u){URL.revokeObjectURL(VW.u);VW.u=null;$("#tzvi").removeAttribute("src")}},400);
+}
+function vwPaint(dir){
+  var id=PV.ids[VW.i],it=imap()[id],im=$("#tzvi"),box=$("#tzvs"),n=PV.ids.length;
+  if(VW.u){URL.revokeObjectURL(VW.u);VW.u=null}
+  if(it){VW.u=URL.createObjectURL(it.blob);im.src=VW.u}
+  box.classList.remove("z");box.scrollTop=box.scrollLeft=0;
+  $("#tzvc").textContent=(VW.i+1)+" / "+n;
+  $("#tzvp").disabled=VW.i<=0;$("#tzvn").disabled=VW.i>=n-1;
+  im.classList.remove("l","r");
+  if(dir){void im.offsetWidth;im.classList.add(dir>0?"r":"l")}
+  var hh=$("#tzvh");hh.style.transition="opacity .6s";hh.style.opacity=dir?"0":"1";
+}
+function vwStep(d){var j=VW.i+d;if(j<0||j>=PV.ids.length)return;VW.i=j;vwPaint(d)}
+function vwZoom(){
+  var box=$("#tzvs");box.classList.toggle("z");
+  if(box.classList.contains("z"))requestAnimationFrame(function(){box.scrollLeft=(box.scrollWidth-box.clientWidth)/2;box.scrollTop=0});
+  else box.scrollTop=box.scrollLeft=0;
+}
+(function(){
+  var box=$("#tzvs"),sx=0,sy=0,one=false;
+  box.addEventListener("touchstart",function(e){one=e.touches.length===1;if(one){sx=e.touches[0].clientX;sy=e.touches[0].clientY}},{passive:true});
+  box.addEventListener("touchend",function(e){
+    if(!one||box.classList.contains("z")||!e.changedTouches.length)return;
+    var dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;
+    if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.4){VW.sw=Date.now();vwStep(dx<0?1:-1)}
+  },{passive:true});
+  box.addEventListener("click",function(){if(Date.now()-VW.sw<450)return;vwZoom()});
+  $("#tzvx").onclick=vwClose;
+  $("#tzvp").onclick=function(){vwStep(-1)};
+  $("#tzvn").onclick=function(){vwStep(1)};
+})();
+$("#tzpv").addEventListener("click",function(e){
+  var t=e.target,b;
+  if(t.closest("#tzpvx")){pvClose();return}
+  if(t.closest("[data-a=pvgo]")){pkStart(PV.id);return}
+  if(t.closest("[data-a=pvst]")){pdOpen(PV.id);return}
+  if(b=t.closest(".tzqi"))vwOpen(+b.dataset.i);
+});
+/* Başlatmadan önce tam ekran: Karıştır mı Orijinal mi */
+function pmOpen(p,ids){
+  PM={id:p.id};
+  var h='<div class="tzmt"><button class="qb" id="tzmx" type="button">Vazgeç</button></div><div class="tzmb"><div class="tzmh"><small>Sıralama</small><h1>'+esc(p.name)+'</h1><p>'+ids.length+' soru</p></div><div class="tzmg" id="tzmg">'
+   +'<button type="button" class="tzmo sh" data-o="s"><span class="ic">'+ICO_SH+'</span><span><b>Karıştır</b><small>Sorular rastgele sırayla gelir</small></span></button>'
+   +'<button type="button" class="tzmo" data-o="o"><span class="ic">'+ICO_OR+'</span><span><b>Orijinal</b><small>Eklenme sırasına göre gelir</small></span></button>'
+   +'</div></div>';
+  var m=$("#tzm");m.innerHTML=h;m.scrollTop=0;m.classList.add("on");
+}
+function pmClose(){$("#tzm").classList.remove("on")}
+$("#tzm").addEventListener("click",function(e){
+  if(e.target.closest("#tzmx")){pmClose();return}
+  var b=e.target.closest(".tzmo"),g=$("#tzmg");if(!b||g.classList.contains("pick"))return;
+  b.classList.add("on");g.classList.add("pick");
+  var sh=b.dataset.o==="s",id=PM.id;
+  setTimeout(function(){
+    if(!$("#tzm").classList.contains("on"))return;
+    pmClose();pkRun(id,sh);
+  },520);
+});
+
 /* ---------- Olaylar ---------- */
 $("#tzx").onclick=hubClose;
 $("#tzt").onclick=function(e){var b=e.target.closest("button");if(!b)return;HUB.tab=b.dataset.t;hubRender();$("#tz").scrollTop=0};
@@ -3943,12 +4115,12 @@ $("#tzb").addEventListener("click",function(e){
     if(a==="rgo")runResume();
     else if(a==="rdel")mdl({h:"Devam eden test silinsin mi?",p:"Verdiğin cevaplar kaybolur.",btns:[{t:"Vazgeç",v:"cancel"},{t:"Sil",v:"ok",c:"dg"}]}).then(function(r){if(r.v==="ok"){runDrop();hubRender()}});
     else if(a==="new")peOpen(null,[]);
-    else if(a==="shuf"){SHUF=SHUF?0:1;sv(K_SH,SHUF);b.classList.toggle("on",!!SHUF)}
     else{var c=b.closest(".tzpk");if(!c)return;var id=c.dataset.id;
       if(a==="go")pkStart(id);else if(a==="st")pdOpen(id);else if(a==="dl")pkDelete(id);
       else if(a==="ed"){var p=PK.filter(function(x){return x.id===id})[0];if(p)peOpen(p)}}
     return;
   }
+  if(b=t.closest(".tzpk")){pvOpen(b.dataset.id);return}
   if(b=t.closest("[data-m]")){G.mode=b.dataset.m;G.sel={};G.pn={};hubRender();return}
   if(t.closest("#tzu")){G.uns=!G.uns;hubRender();return}
   if(b=t.closest("[data-pm]")){G.per=b.dataset.pm==="1";hubRender();return}
@@ -4006,16 +4178,19 @@ $("#tzpd").addEventListener("click",function(e){
   var t=e.target,b;
   if(t.closest("#tzpdx")){$("#tzpd").classList.remove("on");refreshHub();return}
   if(b=t.closest(".tzhi,.tzdt")){rsOpen(b.dataset.id,false);return}
-  if(b=t.closest("[data-a=pgo]")){$("#tzpd").classList.remove("on");pkStart(b.dataset.id)}
+  if(b=t.closest("[data-a=pgo]")){pkStart(b.dataset.id)}
 });
 document.addEventListener("keydown",function(e){
-  var ids=["tzd","tzl","tzr","tzs","tzpd","tzp","tz"],top=null;
+  var ids=["tzd","tzv","tzl","tzm","tzr","tzs","tzpd","tzpv","tzp","tz"],top=null;
   for(var i=0;i<ids.length;i++)if($("#"+ids[i]).classList.contains("on")){top=ids[i];break}
   if(!top)return;
   var a=document.activeElement,inp=a&&/^(INPUT|TEXTAREA)$/.test(a.tagName);
   if(e.key==="Escape"){
     e.preventDefault();e.stopImmediatePropagation();
     if(top==="tzd"){var d=$("#tzd");if(d._cancel)d._cancel()}
+    else if(top==="tzv")vwClose();
+    else if(top==="tzm")pmClose();
+    else if(top==="tzpv")pvClose();
     else if(top==="tzl")$("#tzl").classList.remove("on");
     else if(top==="tzr")$("#tzrx").click();
     else if(top==="tzs")rsClose();
@@ -4023,6 +4198,10 @@ document.addEventListener("keydown",function(e){
     else if(top==="tzp")peClose();
     else hubClose();
     return;
+  }
+  if(top==="tzv"&&!inp){
+    if(e.key==="ArrowRight"){e.preventDefault();vwStep(1)}
+    else if(e.key==="ArrowLeft"){e.preventDefault();vwStep(-1)}
   }
   if(top==="tzr"&&!inp&&R){
     if(e.key==="ArrowRight"){e.preventDefault();$("#tzrnx").click()}
