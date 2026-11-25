@@ -705,7 +705,8 @@ textarea.qfi{height:140px;resize:none}
 .qnr[hidden]{display:none}
 .qnr b{font-size:20px;color:var(--fg)}
 .qnr span{font-size:15px;font-weight:500}
-@media (max-width:560px){#qsrc span{display:none}#qsrc{width:48px;padding:0;justify-content:center}}
+#qsort svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+@media (max-width:560px){#qsrc span,#qsort span{display:none}#qsrc,#qsort{width:48px;padding:0;justify-content:center}}
 .qk{position:fixed;inset:0;z-index:12;display:flex;align-items:flex-end;justify-content:center;opacity:0;visibility:hidden;transition:opacity .3s ease,visibility 0s .3s}
 .qk.on{opacity:1;visibility:visible;transition-delay:0s}
 .qkb{position:absolute;inset:0;background:rgba(17,17,17,.45)}
@@ -826,6 +827,7 @@ textarea.qfi{height:140px;resize:none}
       </div>
       <div class="qsr" id="qsr" hidden>
         <div class="qsb"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input class="qfi qsi" id="qsi" type="text" placeholder="Kaynak veya ders ara…" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" aria-label="Soru ara" maxlength="80"><button class="qsx" id="qsx" type="button" aria-label="Aramayı temizle" hidden><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17"/></svg></button></div>
+        <button class="qb" id="qsort" type="button"><svg viewBox="0 0 24 24"><path d="M8 5v14M4.5 15.5L8 19l3.5-3.5M16 19V5M12.5 8.5L16 5l3.5 3.5"/></svg><span></span></button>
         <button class="qb" id="qsrc" type="button" aria-label="Kaynaklarım"><svg viewBox="0 0 24 24"><path d="M5 4.5h10.5A2.5 2.5 0 0118 7v12.5H7.5A2.5 2.5 0 015 17V4.5zM5 17a2.5 2.5 0 012.5-2.5H18"/></svg><span>Kaynaklarım</span></button>
       </div>
       <div id="qbody"></div>
@@ -2194,7 +2196,9 @@ function tx(mode,fn){return new Promise(function(res,rej){
   var t=DB.transaction("q",mode),st=t.objectStore("q"),out=fn(st);
   t.oncomplete=function(){res(out&&out.result)};t.onerror=t.onabort=function(){rej(t.error)};
 })}
-function loadAll(){return tx("readonly",function(st){return st.getAll()}).then(function(a){ITEMS=(a||[]).sort(function(x,y){return y.ts-x.ts})})}
+var SORT="new";try{if(localStorage.getItem("dd-qsort")==="old")SORT="old"}catch(e){}
+function sortItems(a){return a.sort(function(x,y){return SORT==="old"?x.ts-y.ts:y.ts-x.ts})}
+function loadAll(){return tx("readonly",function(st){return st.getAll()}).then(function(a){ITEMS=sortItems(a||[])})}
 function toast(t){var e=$("#qs");e.textContent=t;e.classList.add("on");clearTimeout(toastT);toastT=setTimeout(function(){e.classList.remove("on")},2400)}
 function fmt(ts){var d=new Date(ts),m=["Oca","Şub","Mar","Nis","May","Haz","Tem","Ağu","Eyl","Eki","Kas","Ara"][d.getMonth()];return d.getDate()+" "+m+" "+("0"+d.getHours()).slice(-2)+":"+("0"+d.getMinutes()).slice(-2)}
 
@@ -2203,15 +2207,15 @@ var QT=[];
 function norm(t){return String(t==null?"":t).toLocaleLowerCase("tr").replace(/ı/g,"i").replace(/ş/g,"s").replace(/ğ/g,"g").replace(/ü/g,"u").replace(/ö/g,"o").replace(/ç/g,"c").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/\s+/g," ").trim()}
 function match(it){
   if(!QT.length)return true;
-  var h=it._h||(it._h=norm([it.g,it.ders,it.g+" "+it.ders,it.book,it.page?"sayfa "+it.page:"",it.note].join(" ")));
-  for(var k=0;k<QT.length;k++)if(h.indexOf(QT[k])<0)return false;
+  var h=it._h||(it._h=" "+norm([it.g,it.ders,it.g+" "+it.ders,it.book,it.page?"sayfa "+it.page:"",it.note].join(" ")).replace(/[^a-z0-9]+/g," "));
+  for(var k=0;k<QT.length;k++)if(h.indexOf(" "+QT[k])<0)return false;
   return true;
 }
 function VL(){var a=[];for(var i=0;i<ITEMS.length;i++)if(match(ITEMS[i]))a.push(i);return a}
 function go(d){var L=VL(),p=L.indexOf(cur);if(p<0)return;var j=L[p+d];if(j!=null)view(j,d)}
 function warmN(L,p){if(L[p+1]!=null)warm(L[p+1]);if(L[p-1]!=null)warm(L[p-1])}
 function applyFilter(){
-  var q=$("#qsi").value,n=0;QT=norm(q).split(" ").filter(Boolean);
+  var q=$("#qsi").value,n=0;QT=norm(q).replace(/[^a-z0-9]+/g," ").split(" ").filter(Boolean);
   $("#qsx").hidden=!q;$("#qsr").hidden=!ITEMS.length;
   var g=$("#qbody .qg");
   if(g){var k=g.children;for(var i=0;i<k.length&&i<ITEMS.length;i++){var m=match(ITEMS[i]);if(k[i].hidden===m)k[i].hidden=!m;if(m)n++}}
@@ -2264,10 +2268,9 @@ function render(){
     var bt=document.createElement("button");bt.type="button";bt.className="qi";bt.style.animationDelay=Math.min(i,12)*30+"ms";
     bt.setAttribute("aria-label","Soruyu aç");
     var im=document.createElement("img");im.src=u;im.alt="Soru";im.loading="lazy";im.decoding="async";im.draggable=false;
-    var sm=document.createElement("small");sm.textContent=fmt(it.ts);
     bt.appendChild(im);
     if(it.ders){var dc=document.createElement("span");dc.className="qdc";dc.style.setProperty("--c",lcol(it));dc.textContent=it.g+" · "+it.ders;bt.appendChild(dc)}
-    bt.appendChild(sm);bt.onclick=function(){view(i)};
+    bt.onclick=function(){view(i)};
     g.appendChild(bt);
   });
   b.innerHTML="";b.appendChild(g);
@@ -2611,6 +2614,9 @@ $("#qsi").addEventListener("input",applyFilter);
 $("#qsi").addEventListener("keydown",function(e){if(e.key==="Enter")this.blur();else if(e.key==="Escape"&&this.value){this.value="";applyFilter();e.stopPropagation()}});
 $("#qsx").addEventListener("pointerdown",function(e){e.preventDefault()});
 $("#qsx").onclick=function(){var q=$("#qsi");q.value="";applyFilter();q.focus()};
+function sortLbl(){var b=$("#qsort");b.querySelector("span").textContent=SORT==="old"?"En eski":"En yeni";b.setAttribute("aria-label",SORT==="old"?"Sıralama: en eski önce":"Sıralama: en yeni önce")}
+sortLbl();
+$("#qsort").onclick=function(){SORT=SORT==="old"?"new":"old";try{localStorage.setItem("dd-qsort",SORT)}catch(e){}sortItems(ITEMS);cur=-1;sortLbl();render();$("#v-questions").scrollTop=0};
 $("#qsrc").onclick=function(){qk(true)};$("#qkx").onclick=$("#qkb").onclick=function(){qk(false)};
 document.addEventListener("keydown",function(e){if(qkOn&&e.key==="Escape"){qk(false);e.preventDefault();e.stopImmediatePropagation()}},true);
 
