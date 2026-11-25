@@ -597,19 +597,19 @@ textarea.qfi{height:140px;resize:none}
 /* Sorular: görüntüleyici */
 .qv{position:fixed;inset:0;z-index:11;background:#111;opacity:0;visibility:hidden;transition:opacity .3s ease,visibility 0s .3s}
 .qv.on{opacity:1;visibility:visible;transition-delay:0s}
-.qvs{position:absolute;top:calc(80px + env(safe-area-inset-top,0px));bottom:56px;left:92px;right:92px;display:flex;align-items:center;justify-content:center;transition:top .35s var(--ease),bottom .35s var(--ease),left .35s var(--ease),right .35s var(--ease)}
+.qvs{position:absolute;top:calc(80px + env(safe-area-inset-top,0px));bottom:100px;left:92px;right:92px;display:flex;align-items:center;justify-content:center;transition:top .35s var(--ease),bottom .35s var(--ease),left .35s var(--ease),right .35s var(--ease)}
 .qvs img{max-width:100%;max-height:100%;object-fit:contain;border-radius:14px;will-change:opacity,transform;-webkit-user-drag:none;pointer-events:none}
 .qvb,.qvn{position:absolute;display:grid;place-items:center;border-radius:50%;background:#fff;color:#111;transition:transform .35s var(--sp),opacity .25s}
 .qvb:active,.qvn:active{transform:scale(.92)}
 .qvb{top:calc(18px + env(safe-area-inset-top,0px));width:46px;height:46px}
-.qvx{left:22px}.qvo{right:22px}.qvz{right:80px}
-.qvb,.qvn,.qvt,.qvc{z-index:2}.qvsc{z-index:3}.qvsh{z-index:4}
+.qvx{left:22px}.qvz{right:22px}
+.qvb,.qvn,.qvt,.qvc,.qvk{z-index:2}.qvsc{z-index:3}.qvsh{z-index:4}
 .qvn{top:50%;width:52px;height:52px;margin-top:-26px}
 .qvn.l{left:22px}.qvn.r{right:22px}.qvn[hidden]{display:none}
 .qvb svg,.qvn svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round}
 .qvt{position:absolute;top:calc(24px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);display:inline-flex;align-items:center;height:34px;padding:0 15px;border-radius:17px;background:var(--c,#fff);color:#111;font:700 14px/1 Inter,system-ui,sans-serif;white-space:nowrap}
 .qvt:empty{display:none}
-.qvc{position:absolute;bottom:calc(20px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);font:600 14px/1 Inter,system-ui,sans-serif;color:#9a9a9a}
+.qvc{position:absolute;top:calc(64px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);font:600 13px/1 Inter,system-ui,sans-serif;color:#9a9a9a;font-variant-numeric:tabular-nums}
 .qvsc{position:absolute;inset:0;background:#000;opacity:0;visibility:hidden;transition:opacity .3s ease,visibility 0s .3s}
 .qvsc.on{opacity:.6;visibility:visible;transition-delay:0s}
 .qvsh{position:absolute;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));width:min(560px,calc(100% - 32px));max-height:72%;overflow:auto;padding:22px 24px 18px;border-radius:26px;background:#fff;color:#111;transform:translate(-50%,36px);opacity:0;visibility:hidden;transition:transform .45s var(--ease),opacity .25s ease,visibility 0s .45s;-webkit-user-select:text;user-select:text}
@@ -628,9 +628,28 @@ textarea.qfi{height:140px;resize:none}
 .qv.fs .qvz .i-c{display:block}.qv.fs .qvz .i-e{display:none}
 .qv.fs .qvs{top:0;bottom:0;left:0;right:0}
 .qv.fs .qvs img{border-radius:0}
-.qv.fs .qvt,.qv.fs .qvc,.qv.fs .qvn,.qv.fs .qvo,.qv.fs .qvx,.qv.fs .qvz{opacity:0;visibility:hidden;transition:opacity .25s,transform .35s var(--sp),visibility 0s .25s}
+.qv.fs .qvt,.qv.fs .qvc,.qv.fs .qvn,.qv.fs .qvk,.qv.fs .qvx,.qv.fs .qvz{opacity:0;visibility:hidden;transition:opacity .25s,transform .35s var(--sp),visibility 0s .25s}
 .qv.fs.ui .qvx,.qv.fs.ui .qvz{opacity:1;visibility:visible;transition:opacity .25s,transform .35s var(--sp),visibility 0s}
 .qv.fs .qvz{right:22px}
+/* Sorular: alt çubuk (cevap tek dokunuşla, detaylar ayrı düğmede) */
+.qvk{position:absolute;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);display:flex;align-items:flex-end;justify-content:center;gap:10px;width:min(560px,calc(100% - 32px));pointer-events:none;transition:opacity .25s,visibility 0s}
+.qvk>*{pointer-events:auto}
+.qva{display:flex;align-items:center;min-width:0;border-radius:28px;background:#fff;color:#111;box-shadow:0 12px 32px -12px rgba(0,0,0,.7);overflow:hidden;transition:transform .35s var(--sp)}
+.qva[hidden]{display:none}
+.qva:active{transform:scale(.97)}
+.qva.tx.on{flex:1;flex-direction:column;align-items:stretch;border-radius:26px}
+.qvat{display:inline-flex;align-items:center;gap:10px;height:56px;padding:0 22px;color:inherit;font:700 16px/1 Inter,system-ui,sans-serif;white-space:nowrap;text-align:left}
+.qvat svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.qvat .i-h,.qva.on .qvat .i-o{display:none}.qva.on .qvat .i-h{display:block}
+.qva.on .qvat{padding-right:14px;color:#6b6762}
+.qva.tx.on .qvat{height:48px}
+.qvav[hidden],.qvav.l[hidden],.qvav.t[hidden]{display:none}
+.qvav.l{display:grid;place-items:center;flex:none;width:40px;height:40px;margin:0 8px 0 0;border-radius:50%;background:#111;color:#fff;font:800 21px/1 Inter,system-ui,sans-serif}
+.qvav.t{padding:0 22px 18px;max-height:30vh;overflow:auto;font:500 18px/1.45 Inter,system-ui,sans-serif;white-space:pre-wrap;-webkit-user-select:text;user-select:text;overscroll-behavior:contain}
+.qvm{display:inline-flex;align-items:center;gap:9px;flex:none;height:56px;padding:0 20px;border-radius:28px;background:#2b2b2b;color:#fff;box-shadow:0 12px 32px -12px rgba(0,0,0,.7);font:700 16px/1 Inter,system-ui,sans-serif;transition:transform .35s var(--sp),background .25s}
+.qvm:active{transform:scale(.95);background:#3a3a3a}
+.qvm svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+@media (max-width:420px){.qvm span{display:none}.qvm{width:56px;padding:0;justify-content:center}}
 /* Sorular: ekleme sihirbazı (opak, sade; yalnızca transform/opacity canlandırılır) */
 .qc{position:fixed;inset:0;z-index:13;display:flex;flex-direction:column;background:var(--bg);color:var(--fg);opacity:0;visibility:hidden;transition:opacity .3s ease,visibility 0s .3s}
 .qc.on{opacity:1;visibility:visible;transition-delay:0s}
@@ -773,11 +792,17 @@ textarea.qfi{height:140px;resize:none}
     <button class="qvb qvx" id="qvx" type="button" aria-label="Kapat"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
     <span class="qvt" id="qvt"></span>
     <button class="qvb qvz" id="qvz" type="button" aria-label="Tam ekran"><svg class="i-e" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><svg class="i-c" viewBox="0 0 24 24"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg></button>
-    <button class="qvb qvo" id="qvo" type="button" aria-label="Detaylar"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.8v.2"/></svg></button>
     <button class="qvn l" id="qvp" type="button" aria-label="Önceki"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
     <div class="qvs"><img id="qvi" alt=""></div>
     <button class="qvn r" id="qvn" type="button" aria-label="Sonraki"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
     <span class="qvc" id="qvc"></span>
+    <div class="qvk" id="qvk">
+      <div class="qva" id="qva" hidden>
+        <button class="qvat" id="qvat" type="button" aria-expanded="false"><svg class="i-o" viewBox="0 0 24 24"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.8"/></svg><svg class="i-h" viewBox="0 0 24 24"><path d="M3 3l18 18M10.6 5.7A10 10 0 0112 5.5c6.4 0 10 6.5 10 6.5a17 17 0 01-3.2 3.9M6.4 7.4A16.6 16.6 0 002 12s3.6 6.5 10 6.5a9.8 9.8 0 004-.9M9.9 9.9a3 3 0 004.2 4.2"/></svg><span id="qvatl">Cevabı göster</span></button>
+        <div class="qvav" id="qvav" hidden></div>
+      </div>
+      <button class="qvm" id="qvm" type="button"><svg viewBox="0 0 24 24"><path d="M5 7h14M5 12h14M5 17h9"/></svg><span>Detaylar</span></button>
+    </div>
     <div class="qvsc" id="qvsc"></div>
     <div class="qvsh" id="qvsh" role="region" aria-label="Soru detayı"><div id="qvbd"></div><button class="qvdl" id="qvd" type="button">Soruyu sil</button></div>
   </div>
@@ -2307,7 +2332,7 @@ function add(files){
 }
 
 /* Büyük görünüm */
-var vTok=0,VU={},sheetOn=false,fsOn=false,uiT=0;
+var vTok=0,VU={},sheetOn=false,fsOn=false,uiT=0,ansOn=false;
 function showUi(){var v=$("#qv");v.classList.add("ui");clearTimeout(uiT);uiT=setTimeout(function(){v.classList.remove("ui")},3000)}
 function setFs(on){
   var v=$("#qv");fsOn=!!on;v.classList.toggle("fs",fsOn);v.classList.remove("ui");clearTimeout(uiT);
@@ -2317,6 +2342,13 @@ function setFs(on){
 function vurl(it){return VU[it.id]||(VU[it.id]=URL.createObjectURL(it.blob))}
 function warm(j){var t=ITEMS[j];if(!t)return;var x=new Image();x.src=vurl(t);if(x.decode)x.decode().catch(function(){})}
 function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
+function ansSet(on,anim){
+  var a=$("#qva"),v=$("#qvav"),it=ITEMS[cur];
+  ansOn=!!on&&!!(it&&it.ans);
+  a.classList.toggle("on",ansOn);$("#qvat").setAttribute("aria-expanded",ansOn?"true":"false");
+  $("#qvatl").textContent=ansOn?"Cevap":"Cevabı göster";v.hidden=!ansOn;
+  if(ansOn&&anim&&!REDUCE&&v.animate)v.animate(v.classList.contains("l")?[{opacity:0,transform:"scale(.4)"},{opacity:1,transform:"none"}]:[{opacity:0,transform:"translateY(8px)"},{opacity:1,transform:"none"}],{duration:340,easing:"cubic-bezier(.2,.9,.3,1.25)"});
+}
 function sheet(on){sheetOn=!!on;$("#qvsh").classList.toggle("on",sheetOn);$("#qvsc").classList.toggle("on",sheetOn);if(!sheetOn)disarm()}
 function fill(it){
   var t=$("#qvt");t.textContent=it.ders?it.g+" · "+it.ders:"";if(it.ders)t.style.setProperty("--c",lcol(it));
@@ -2325,12 +2357,10 @@ function fill(it){
   if(it.ders){var g=el("span","qvg c",it.g+" · "+it.ders);g.style.setProperty("--c",lcol(it));r.appendChild(g);any=true}
   if(it.type==="mc")r.appendChild(el("span","qvg","Şıklı"));else if(it.type==="open")r.appendChild(el("span","qvg","Açık uçlu"));
   if(r.children.length)b.appendChild(r);
-  if(it.ans){
-    b.appendChild(el("div","l","Cevap"));
-    var rv=el("button","qvrv","Cevabı göster");rv.type="button";
-    rv.onclick=function(){var v=el("div",it.type==="mc"?"a":"v",it.ans);b.replaceChild(v,rv)};
-    b.appendChild(rv);any=true;
-  }
+  var a=$("#qva"),av=$("#qvav");
+  a.hidden=!it.ans;a.classList.toggle("tx",it.type!=="mc");
+  av.className="qvav "+(it.type==="mc"?"l":"t");av.textContent=it.ans||"";
+  ansOn=false;a.classList.remove("on");av.hidden=true;$("#qvatl").textContent="Cevabı göster";$("#qvat").setAttribute("aria-expanded","false");
   if(it.book||it.page){b.appendChild(el("div","l","Kaynak"));b.appendChild(el("div","v",(it.book||"Kitap")+(it.page?" · sayfa "+it.page:"")));any=true}
   if(it.note){b.appendChild(el("div","l","Açıklama"));b.appendChild(el("div","v",it.note));any=true}
   if(!any)b.appendChild(el("div","e","Bu soru için ek bilgi girilmemiş."));
@@ -2389,7 +2419,7 @@ $("#qv").addEventListener("click",function(e){
   if(!fsOn||e.target.closest("button"))return;
   if($("#qv").classList.contains("ui")){$("#qv").classList.remove("ui");clearTimeout(uiT)}else showUi();
 });
-$("#qvo").onclick=function(){sheet(!sheetOn)};$("#qvsc").onclick=function(){sheet(false)};
+$("#qvm").onclick=function(){sheet(!sheetOn)};$("#qvat").onclick=function(){ansSet(!ansOn,true)};$("#qvsc").onclick=function(){sheet(false)};
 $("#qvp").onclick=function(){view(cur-1,-1)};$("#qvn").onclick=function(){view(cur+1,1)};
 /* Açıkken tüm tuşlar burada kalır; uygulamanın diğer kısayolları araya girmez */
 document.addEventListener("keydown",function(e){
@@ -2397,6 +2427,8 @@ document.addEventListener("keydown",function(e){
   if(e.key==="Escape"){if(sheetOn)sheet(false);else if(fsOn)setFs(false);else closeV()}
   else if(e.key==="ArrowLeft"&&!sheetOn)view(cur-1,-1);
   else if(e.key==="ArrowRight"&&!sheetOn)view(cur+1,1);
+  else if((e.key===" "||e.key==="ArrowDown")&&!sheetOn&&!fsOn)ansSet(!ansOn,true);
+  else if(e.key==="ArrowUp"&&!sheetOn&&!fsOn)sheet(true);
   else return;
   e.preventDefault();e.stopImmediatePropagation();
 },true);
