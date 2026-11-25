@@ -553,7 +553,7 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .qa{display:flex;gap:10px;flex:none}
 .qb{display:inline-flex;align-items:center;gap:8px;height:48px;padding:0 20px;border-radius:999px;background:var(--surf);font-size:16px;font-weight:700;box-shadow:0 6px 16px -8px rgba(17,17,17,.14);transition:transform .5s var(--sp)}
 .qb:active{transform:scale(.95)}
-.qb.pr{background:var(--fg);color:var(--bg)}
+.qb.pr,.qb.on{background:var(--fg);color:var(--bg)}
 .qb svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .qg{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 @media (max-width:760px){.qg{grid-template-columns:repeat(2,1fr)}#v-questions{padding:28px 20px var(--dock-space)}}
@@ -771,7 +771,7 @@ textarea.qfi{height:140px;resize:none}
 .qnr b{font-size:20px;color:var(--fg)}
 .qnr span{font-size:15px;font-weight:500}
 #qsort svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
-@media (max-width:560px){#qsrc span,#qsort span{display:none}#qsrc,#qsort{width:48px;padding:0;justify-content:center}}
+@media (max-width:560px){#qsrc span,#qsort span,#qun2 span{display:none}#qsrc,#qsort,#qun2{width:48px;padding:0;justify-content:center}}
 .qk{position:fixed;inset:0;z-index:12;display:flex;align-items:flex-end;justify-content:center;opacity:0;visibility:hidden;transition:opacity .3s ease,visibility 0s .3s}
 .qk.on{opacity:1;visibility:visible;transition-delay:0s}
 .qkb{position:absolute;inset:0;background:rgba(17,17,17,.45)}
@@ -921,6 +921,7 @@ textarea.qfi{height:140px;resize:none}
       <div class="qsr" id="qsr" hidden>
         <div class="qsb"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input class="qfi qsi" id="qsi" type="text" placeholder="Kaynak veya ders ara…" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" aria-label="Soru ara" maxlength="80"><button class="qsx" id="qsx" type="button" aria-label="Aramayı temizle" hidden><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17"/></svg></button></div>
         <button class="qb" id="qsort" type="button"><svg viewBox="0 0 24 24"><path d="M8 5v14M4.5 15.5L8 19l3.5-3.5M16 19V5M12.5 8.5L16 5l3.5 3.5"/></svg><span></span></button>
+        <button class="qb" id="qun2" type="button" aria-pressed="false" aria-label="Yalnızca çözülmeyenleri göster"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M8.5 12.3l2.4 2.4 4.6-5"/></svg><span>Çözülmeyenler</span></button>
         <button class="qb" id="qsrc" type="button" aria-label="Kaynaklarım"><svg viewBox="0 0 24 24"><path d="M5 4.5h10.5A2.5 2.5 0 0118 7v12.5H7.5A2.5 2.5 0 015 17V4.5zM5 17a2.5 2.5 0 012.5-2.5H18"/></svg><span>Kaynaklarım</span></button>
       </div>
       <div id="qbody"></div>
@@ -983,6 +984,7 @@ textarea.qfi{height:140px;resize:none}
   <div class="qpop" id="qpop" role="menu" aria-label="Soru işlemleri">
     <button type="button" role="menuitem" data-a="o"><svg viewBox="0 0 24 24"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.8"/></svg>Aç</button>
     <button type="button" role="menuitem" class="ok" data-a="v"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M8.5 12.3l2.4 2.4 4.6-5"/></svg><span>Çözüldü</span></button>
+    <button type="button" role="menuitem" data-a="t"><svg viewBox="0 0 24 24"><path d="M12 3.5l8 4.2-8 4.2-8-4.2 8-4.2zM4 12l8 4.2 8-4.2M4 16.3l8 4.2 8-4.2"/></svg>Test Oluştur / Paketle</button>
     <button type="button" role="menuitem" data-a="s"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg>Seç</button>
     <hr>
     <button type="button" role="menuitem" class="dg" data-a="x" data-hold><svg viewBox="0 0 24 24"><path d="M4 7h16M9.5 7V4.5h5V7M6.5 7l.8 12a1.5 1.5 0 001.5 1.4h6.4a1.5 1.5 0 001.5-1.4l.8-12"/></svg><span>Sil</span><small>basılı tut</small></button>
@@ -2351,9 +2353,10 @@ function toast(t){var e=$("#qs");e.textContent=t;e.classList.add("on");clearTime
 function fmt(ts){var d=new Date(ts),m=["Oca","Şub","Mar","Nis","May","Haz","Tem","Ağu","Eyl","Eki","Kas","Ara"][d.getMonth()];return d.getDate()+" "+m+" "+("0"+d.getHours()).slice(-2)+":"+("0"+d.getMinutes()).slice(-2)}
 
 /* Arama: gizle/göster ile süzülür (yeniden çizim ve animasyon yok) */
-var QT=[];
+var QT=[],UNS=false;try{UNS=localStorage.getItem("dd-quns")==="1"}catch(e){}
 function norm(t){return String(t==null?"":t).toLocaleLowerCase("tr").replace(/ı/g,"i").replace(/ş/g,"s").replace(/ğ/g,"g").replace(/ü/g,"u").replace(/ö/g,"o").replace(/ç/g,"c").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/\s+/g," ").trim()}
 function match(it){
+  if(UNS&&it.solved)return false;
   if(!QT.length)return true;
   var h=it._h||(it._h=" "+norm([it.g,it.ders,it.g+" "+it.ders,it.book,it.page?"sayfa "+it.page:"",it.note].join(" ")).replace(/[^a-z0-9]+/g," "));
   for(var k=0;k<QT.length;k++)if(h.indexOf(" "+QT[k])<0)return false;
@@ -2367,9 +2370,12 @@ function applyFilter(){
   $("#qsx").hidden=!q;$("#qsr").hidden=!ITEMS.length;
   var g=$("#qbody .qg");
   if(g){var k=g.children;for(var i=0;i<k.length&&i<ITEMS.length;i++){var m=match(ITEMS[i]);if(k[i].hidden===m)k[i].hidden=!m;if(m)n++}}
-  var e=$("#qnr");if(e)e.hidden=!(ITEMS.length&&QT.length&&!n);
+  var e=$("#qnr");if(e){e.hidden=!(ITEMS.length&&(QT.length||UNS)&&!n);
+    var nb=e.querySelector("b"),ns=e.querySelector("span");
+    if(UNS&&!QT.length){nb.textContent="Çözülmeyen soru kalmadı";ns.textContent="Hepsini çözdün. Filtreyi kapatarak tüm soruları görebilirsin."}
+    else{nb.textContent="Eşleşen soru yok";ns.textContent="Başka bir kaynak veya ders adı dene."}}
   if(selOn&&typeof selUi==="function")selUi();
-  $("#qcnt").textContent=ITEMS.length?(QT.length?n+" / "+ITEMS.length:ITEMS.length):"";
+  $("#qcnt").textContent=ITEMS.length?(QT.length||UNS?n+" / "+ITEMS.length:ITEMS.length):"";
 }
 /* Kaynaklarım */
 var qkOn=false;
@@ -2730,6 +2736,7 @@ function setSolved(id,val){
     var c=document.querySelector('#qbody .qi[data-id="'+id+'"]');
     if(c){if(it.solved&&!c.querySelector(".qok")){c.insertAdjacentHTML("beforeend",OKH);void c.offsetWidth}c.classList.toggle("ok",!!it.solved)}
     if(ITEMS[cur]===it)okUi(it);
+    if(UNS&&!$("#qv").classList.contains("on"))applyFilter();
   }
   it.solved=val;if(val)it.solvedTs=Date.now();else delete it.solvedTs;paint();
   toast(val?"Çözüldü olarak işaretlendi":"Çözüldü işareti kaldırıldı");
@@ -2798,7 +2805,7 @@ function view(i,dir){
 }
 function closeV(){
   if(fsOn)setFs(false,true);zoomReset(false);
-  $("#qv").classList.remove("on");cur=-1;sheet(false);dlg(false);menu(false);vTok++;
+  $("#qv").classList.remove("on");cur=-1;if(UNS)applyFilter();sheet(false);dlg(false);menu(false);vTok++;
   setTimeout(function(){if(cur<0){Object.keys(VU).forEach(function(k){URL.revokeObjectURL(VU[k])});VU={}}},400);
 }
 function del(){
@@ -3017,6 +3024,7 @@ $("#qpop").onclick=function(e){
   popClose();
   if(a==="o"){for(var i=0;i<ITEMS.length;i++)if(ITEMS[i].id===id){view(i);setFs(true);showUi();break}}
   else if(a==="v"){var pi=ITEMS.filter(function(x){return x.id===id})[0];if(pi)setSolved(id,!pi.solved)}
+  else if(a==="t"){toast("Test Oluştur / Paketle yakında eklenecek")}
   else if(a==="s"){SEL={};SEL[id]=1;selMode(true)}
   else if(a==="x"){SEL={};SEL[id]=1;selDelete()}
 };
@@ -3054,6 +3062,9 @@ $("#qbd").onclick=function(){
   selDelete();
 };
 document.addEventListener("keydown",function(e){if(e.key==="Escape"&&popOn){popClose();return}if(e.key==="Escape"&&selOn&&!$("#qv").classList.contains("on")){selMode(false)}});
+function unsUi(){var b=$("#qun2");b.classList.toggle("on",UNS);b.setAttribute("aria-pressed",UNS?"true":"false")}
+unsUi();
+$("#qun2").onclick=function(){UNS=!UNS;try{localStorage.setItem("dd-quns",UNS?"1":"0")}catch(e){}unsUi();if(selOn)selMode(false);applyFilter();$("#v-questions").scrollTop=0};
 function sortLbl(){var b=$("#qsort");b.querySelector("span").textContent=SORT==="old"?"En eski":"En yeni";b.setAttribute("aria-label",SORT==="old"?"Sıralama: en eski önce":"Sıralama: en yeni önce")}
 sortLbl();
 $("#qsort").onclick=function(){
