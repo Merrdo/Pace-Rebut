@@ -1249,62 +1249,6 @@ textarea.qfi{height:140px;resize:none}
 @keyframes tzShuf{0%{transform:none}30%{transform:scale(1.2) rotate(-14deg)}65%{transform:scale(1.2) rotate(14deg)}100%{transform:none}}
 .tzmo.sh.on .ic svg{animation:tzShuf .6s var(--ease)}
 @media (max-width:420px){.tzmo{min-height:200px;padding:16px;gap:28px}.tzmo b{font-size:22px}.tzmh h1{font-size:32px}}
-
-/* ===== Test: sol dikey panel, alt şerit, çözülmemiş seçici ===== */
-.tzw{padding-bottom:calc(130px + env(safe-area-inset-bottom,0px))}
-.tzrail{--rs:46px;position:fixed;z-index:5;top:0;bottom:0;left:max(14px,calc(50% - 430px - 80px));display:flex;align-items:center;pointer-events:none;opacity:0;visibility:hidden;transform:translateX(-16px);transition:opacity .35s var(--ease),transform .6s var(--ease),visibility 0s .35s}
-.tzrail.on{opacity:1;visibility:visible;transform:none;transition-delay:0s}
-.tzrpn{pointer-events:auto;display:flex;flex-direction:column;gap:8px;padding:6px;border-radius:30px;background:rgba(255,255,255,.92);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:0 10px 32px rgba(0,0,0,.1)}
-.rg{position:relative;display:flex;flex-direction:column}
-.rind{position:absolute;left:0;right:0;top:0;height:var(--rs);border-radius:999px;background:var(--fg);opacity:0;pointer-events:none;transition:transform .55s var(--sp),height .3s var(--ease),opacity .2s}
-.rw{position:relative;width:var(--rs);height:var(--rs)}
-.rb{position:relative;z-index:1;width:100%;height:100%;border-radius:999px;display:grid;place-items:center;color:var(--fg);font:800 15px Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;transition:color .3s var(--ease),transform .45s var(--sp),opacity .25s}
-.rb b{font:800 15px Inter,system-ui,sans-serif}
-.rb:active{transform:scale(.9)}
-.rw.on .rb{color:var(--bg)}
-.rw.dis .rb{opacity:.32}
-.rb svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
-.rsep{height:1px;margin:0 9px;background:var(--surf2)}
-.rl{position:absolute;z-index:2;top:50%;left:calc(100% + 14px);display:flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:999px;background:var(--fg);color:var(--bg);font:700 13px Inter,system-ui,sans-serif;white-space:nowrap;opacity:0;visibility:hidden;pointer-events:none;transform:translate(-10px,-50%) scale(.94);transform-origin:left center;transition:opacity .2s,transform .45s var(--sp),visibility 0s .2s}
-.rl:before{content:"";position:absolute;left:-4px;top:50%;width:10px;height:10px;border-radius:2px;background:inherit;transform:translateY(-50%) rotate(45deg)}
-.rw.fly .rl,.rw.open .rl{opacity:1;visibility:visible;transform:translate(0,-50%);transition-delay:0s}
-@media (hover:hover){.rw:hover .rl:not(.rown){opacity:1;visibility:visible;transform:translate(0,-50%);transition-delay:.25s}}
-.rl.rown{height:44px;padding:0 6px;gap:4px}
-.rw.open .rl.rown{pointer-events:auto}
-.rown input{width:58px;height:32px;padding:0;border:0;border-radius:999px;background:rgba(255,255,255,.16);color:#fff;text-align:center;font:700 15px Inter,system-ui,sans-serif;-webkit-user-select:text;user-select:text;-moz-appearance:textfield;appearance:textfield}
-.rown input::-webkit-inner-spin-button,.rown input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
-.rown input:focus{outline:0;background:rgba(255,255,255,.28)}
-.rs{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.16);color:#fff;font:700 18px/1 Inter,system-ui,sans-serif;transition:transform .4s var(--sp)}
-.rs:active{transform:scale(.88)}
-.rown .rt{padding:0 8px 0 4px;font:600 12px Inter,system-ui,sans-serif;opacity:.7}
-@media (max-width:980px){.tz.gen .tzw{padding-left:88px}}
-@media (max-height:600px){.tzrail{--rs:40px}}
-
-/* Çözülmemiş seçici */
-.fresh>.tzuw{animation:tzRise .65s var(--ease) 60ms backwards}
-.tzuw{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 2px 14px}
-.tzut{min-width:0}
-.tzut b{display:block;font-size:17px;font-weight:700;line-height:1.15}
-.tzut small{display:block;margin-top:2px;font:500 13px Inter,system-ui,sans-serif;color:var(--dim)}
-.tzuc{flex:none;display:inline-flex;align-items:center;gap:8px;height:46px;padding:0 8px 0 14px;border-radius:999px;background:var(--surf);box-shadow:inset 0 0 0 2px var(--surf2);color:var(--fg);font:700 14px Inter,system-ui,sans-serif;white-space:nowrap;transition:background .3s,color .3s,box-shadow .3s,transform .45s var(--sp)}
-.tzuc:active{transform:scale(.96)}
-.tzuc svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
-.tzuc svg path{stroke-dasharray:24;stroke-dashoffset:24;transition:stroke-dashoffset .4s var(--ease) .05s}
-.tzuc.on svg path{stroke-dashoffset:0}
-.tzuc em{min-width:30px;height:30px;padding:0 9px;border-radius:999px;display:grid;place-items:center;background:var(--surf2);font:700 13px Inter,system-ui,sans-serif;font-style:normal;font-variant-numeric:tabular-nums;transition:background .3s,color .3s}
-.tzuc.on{background:var(--fg);color:var(--bg);box-shadow:none}
-.tzuc.on em{background:rgba(255,255,255,.18);color:#fff}
-@media (max-width:560px){.tzuc span{display:none}.tzuc{padding:0 8px 0 12px}}
-
-/* Alt şerit: her zaman ekranın altında sabit */
-.tzbar{position:fixed;left:0;right:0;margin:0 auto;width:min(812px,calc(100% - 32px));bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:4;gap:10px;padding:9px 9px 9px 26px}
-.tzbar .tzb{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:54px;padding:0 22px;font-size:16px}
-.tzbar .tzb.pr{padding:0 28px}
-.tzbar .tzb svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
-.tzbi b{font-size:26px;letter-spacing:-.5px;line-height:1}
-.tzds{display:flex;gap:2px;height:4px;margin-top:8px;max-width:180px;border-radius:4px;overflow:hidden;background:rgba(255,255,255,.14)}
-.tzds span{display:block;height:100%;min-width:3px;transition:flex .5s var(--ease)}
-@media (max-width:560px){#tzsv span{display:none}.tzbar .tzb{padding:0 18px}}
 </style>
 </head>
 <body>
@@ -1416,23 +1360,7 @@ textarea.qfi{height:140px;resize:none}
     <div class="tzh"><div><h1>Test</h1></div><button class="qb" id="tzx" type="button">Kapat</button></div>
     <div class="tzg" id="tzt"><button type="button" data-t="gen">Test oluştur</button><button type="button" data-t="pk">Paketler</button><button type="button" data-t="hi">Geçmiş</button></div>
     <div id="tzb"></div>
-  </div>
-    <aside class="tzrail" id="tzrail" aria-label="Soru sayısı paneli"><div class="tzrpn">
-      <div class="rg" id="rgm"><i class="rind"></i>
-        <div class="rw" data-rm="0"><button class="rb" type="button"><svg viewBox="0 0 24 24"><path d="M17.5 5.5h-10l5.2 6.5-5.2 6.5h10"/></svg></button><span class="rl"></span></div>
-        <div class="rw" data-rm="1"><button class="rb" type="button"><svg viewBox="0 0 24 24"><path d="M4 7h9M19 7h1M4 17h1M11 17h9"/><circle cx="16" cy="7" r="2.2"/><circle cx="8" cy="17" r="2.2"/></svg></button><span class="rl"></span></div>
-      </div>
-      <div class="rsep"></div>
-      <div class="rg" id="rgc"><i class="rind"></i>
-        <div class="rw" data-rn="10"><button class="rb" type="button"><b>10</b></button><span class="rl"></span></div>
-        <div class="rw" data-rn="20"><button class="rb" type="button"><b>20</b></button><span class="rl"></span></div>
-        <div class="rw" data-rn="30"><button class="rb" type="button"><b>30</b></button><span class="rl"></span></div>
-        <div class="rw" data-rn="40"><button class="rb" type="button"><b>40</b></button><span class="rl"></span></div>
-        <div class="rw" data-rn="all"><button class="rb" type="button"><svg viewBox="0 0 24 24"><path d="M12 12c-1.5-2-3-3-4.5-3a3 3 0 000 6c1.5 0 3-1 4.5-3zm0 0c1.5 2 3 3 4.5 3a3 3 0 000-6c-1.5 0-3 1-4.5 3z"/></svg></button><span class="rl"></span></div>
-        <div class="rw" data-rn="own"><button class="rb" type="button"></button><div class="rl rown"><button class="rs" type="button" data-rs="-1" aria-label="Azalt">−</button><input type="number" inputmode="numeric" min="1" aria-label="Soru sayısı"><button class="rs" type="button" data-rs="1" aria-label="Artır">+</button><span class="rt">soru</span></div></div>
-      </div>
-    </div></aside>
-  </div>
+  </div></div>
   <div class="tzp" id="tzp" role="dialog" aria-modal="true" aria-label="Paket düzenle">
     <div class="tzph"><button class="fl" id="tzpx" type="button">Vazgeç</button><input class="tzni" id="tzpn" type="text" maxlength="60" placeholder="Paket adı" autocomplete="off"><button class="fl pr" id="tzpk" type="button">Kaydet</button></div>
     <div class="tzpf" id="tzpf"></div>
@@ -3670,7 +3598,7 @@ function dist(pools,total){
   return res;
 }
 function gInfo(){
-  var cs=cats(G.mode,G.uns),sc=cs.filter(function(c){return G.sel[c.k]&&pool(c).length>0}),pools=sc.map(pool),per=G.per&&sc.length>1,counts,avail=pools.reduce(function(a,p){return a+p.length},0);
+  var cs=cats(G.mode,G.uns),sc=cs.filter(function(c){return G.sel[c.k]}),pools=sc.map(pool),per=G.per&&sc.length>1,counts,avail=pools.reduce(function(a,p){return a+p.length},0);
   /* Seçili (ve sorusu olan) kategori sayısı istenen sayıdan büyükse, her kategoriye en az 1 soru düşsün diye toplam otomatik yükselir */
   var need=pools.filter(function(p){return p.length>0}).length,n=G.all?avail:Math.max(G.n,need),bump=!per&&!G.all&&need>1&&G.n<need;
   if(per)counts=sc.map(function(c,i){var v=G.pn[c.k];if(v==null)v=Math.min(10,pools[i].length);return Math.max(0,Math.min(pools[i].length,v))});
@@ -3699,7 +3627,7 @@ function morph(a,b){
     if(x.nodeType!==y.nodeType||x.nodeName!==y.nodeName){a.replaceChild(y.cloneNode(true),x);continue}
     if(y.nodeType===3){if(x.nodeValue!==y.nodeValue)x.nodeValue=y.nodeValue;continue}
     if(y.nodeType!==1)continue;
-    if(x.id==="tzsb"||x.id==="tzss"||x.id==="tzds"||x.classList.contains("tzpl"))continue;
+    if(x.id==="tzsb"||x.id==="tzss"||x.classList.contains("tzpl"))continue;
     syncAttrs(x,y);
     if(x.nodeName==="INPUT"||x.nodeName==="TEXTAREA"){if(document.activeElement!==x)x.value=y.getAttribute("value")||"";continue}
     morph(x,y);
@@ -3726,7 +3654,7 @@ $("#tzt").insertAdjacentHTML("afterbegin",'<i class="tzpl"></i>');
 
 /* ---------- Ana sayfa (hub) ---------- */
 var HUB={tab:"gen",hf:"all",k:null,fxt:""};
-function hubOpen(tab){OWN=false;if(tab)HUB.tab=tab;HUB.k=null;PSL.on=false;PSL.ids={};tpClose();$("#tz").classList.add("on");hubRender()}
+function hubOpen(tab){if(tab)HUB.tab=tab;HUB.k=null;PSL.on=false;PSL.ids={};tpClose();$("#tz").classList.add("on");hubRender()}
 function hubClose(){$("#tz").classList.remove("on");tpClose();PSL.on=false;PSL.ids={}}
 function hubRender(){
   if(HUB.tab!=="pk"&&PSL.on){PSL.on=false;PSL.ids={}}
@@ -3750,112 +3678,34 @@ function rGen(b){
   var gi=gInfo(),h=resumeBanner();
   if(!items().length){b.innerHTML=h+'<div class="tzemp"><b>Henüz soru yok</b><span>Test oluşturmak için önce Sorular sayfasına soru ekle.</span></div>';return}
   h+='<div class="tzg">'+[["ders","Ders"],["kaynak","Kaynak"],["brans","Branş"]].map(function(m){return'<button type="button" data-m="'+m[0]+'" class="'+(G.mode===m[0]?"on":"")+'">'+m[1]+(m[0]==="brans"?" (TYT · AYT)":"")+'</button>'}).join("")+'</div>';
-  /* Havuz: tüm sorular / sadece çözülmemişler */
-  var tot=0,tu=0;gi.cs.forEach(function(c){tot+=c.all.length;tu+=c.uns.length});
-  h+='<div class="tzuw"><div class="tzut"><b>'+(G.uns?"Çözülmemiş sorular":"Tüm sorular")+'</b><small>'+(G.uns?(tot-tu)+" çözülmüş soru dışarıda":tot+" soru havuzda")+'</small></div><button class="tzuc'+(G.uns?" on":"")+'" type="button" id="tzu" aria-pressed="'+(G.uns?"true":"false")+'"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7 5.5-5.7"/></svg><span>Sadece çözülmemişler</span><em>'+tu+'</em></button></div>';
+  h+='<div class="tzc"><div><b>Sadece çözülmemiş sorular</b><small>Çözüldü işaretli sorular teste girmez</small></div><button class="tg'+(G.uns?" on":"")+'" type="button" id="tzu" aria-pressed="'+(G.uns?"true":"false")+'" aria-label="Sadece çözülmemiş"><i></i></button></div>';
   h+='<div class="tzl">';
   gi.cs.forEach(function(c){
-    var p=pool(c),dis=!p.length,on=!!G.sel[c.k]&&!dis,sol=c.all.length-c.uns.length,
-      sub=G.uns?(dis?(c.all.length?"Hepsi çözüldü ✓":"Soru yok"):(sol?"toplam "+c.all.length+" · "+sol+" çözüldü":"")):(sol?sol+" çözüldü · "+c.uns.length+" çözülmedi":"");
+    var p=pool(c),on=!!G.sel[c.k],dis=!p.length,sol=c.all.length-c.uns.length,sub=G.uns?"toplam "+c.all.length:(sol?sol+" çözüldü · "+c.uns.length+" çözülmedi":"");
     h+='<div class="tzx"><button type="button" class="tzo'+(on?" on":"")+(dis?" dis":"")+'" data-k="'+esc(c.k)+'" style="--c:'+(c.col||"#cfcbc4")+'"><span class="ck">'+TICK+'</span><span class="tzdot"></span><span class="tt"><b>'+esc(c.lab)+'</b>'+(sub?'<small>'+sub+'</small>':'')+'</span>'+(on&&!gi.per&&gi.sc.length>1?'<span class="tzgt">Testte '+gi.counts[gi.sc.indexOf(c)]+'</span>':'')+'<em>'+p.length+'<i>soru</i></em></button>';
     if(on&&gi.per){var i=gi.sc.indexOf(c),v=gi.counts[i];h+='<div class="tzper"><span>Kaç soru:</span><input class="tzin" type="number" inputmode="numeric" min="1" max="'+p.length+'" value="'+v+'" data-pk="'+esc(c.k)+'"><button type="button" class="tzch" data-pa="'+esc(c.k)+'">Tümü</button></div>'}
     h+='</div>';
   });
   h+='</div>';
+  h+='<div class="tzc col"><h2>Soru sayısı</h2>';
+  if(gi.sc.length>1)h+='<div class="tzg"><button type="button" data-pm="0" class="'+(!gi.per?"on":"")+'">Toplam sayı</button><button type="button" data-pm="1" class="'+(gi.per?"on":"")+'">Her biri için ayrı</button></div>';
   if(!gi.per){
-    var fxt="",fxOn=false;
-    if(gi.bump){fxt=gi.need+" kategori seçtin. Hepsinden soru gelsin diye toplam "+gi.n+" soruya yükseltildi.";fxOn=true}
-    else if(!G.all&&gi.avail>0&&G.n>gi.avail){fxt="Seçtiğin gruplarda "+gi.avail+" soru var, test o kadar olacak.";fxOn=true}
-    if(fxOn)HUB.fxt=fxt;else fxt=HUB.fxt||"";
-    h+='<div class="tzfx'+(fxOn?' on':'')+'" role="status"><div><div class="tzfxi"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.6v.01"/></svg><span>'+esc(fxt)+'</span></div></div></div>';
-  }
-  h+='<div class="tzhint">'+(!gi.sc.length?"Yukarıdan en az bir seçenek seç, soru sayısını soldaki panelden ayarla.":gi.per?"Her seçeneğin sayısını kutulardan gir. Soldaki panel hepsini birden ayarlar.":gi.sc.length>1?gi.sc.length+" seçeneğe eşit dağıtılır, sorular rastgele seçilir.":"Sorular seçtiğin gruptan rastgele gelir.")+'</div>';
-  h+='<div class="tzbar"><div class="tzbi"><b id="tzsb"></b><small id="tzss"></small><i class="tzds" id="tzds"></i></div><button type="button" class="tzb" id="tzsv" aria-label="Paket yap"><svg viewBox="0 0 24 24"><path d="M4 8l8-4 8 4-8 4-8-4zM4 8v8l8 4 8-4V8M12 12v8"/></svg><span>Paket yap</span></button><button type="button" class="tzb pr" id="tzgo"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5-11-6.5z"/></svg><span>Testi başlat</span></button></div>';
+    h+='<div class="tzchs">'+[10,20,30,40].map(function(n){return'<button type="button" class="tzch'+(!G.all&&G.n===n?" on":"")+'" data-n="'+n+'">'+n+'</button>'}).join("")+'<button type="button" class="tzch'+(G.all?" on":"")+'" data-n="all">Tümü</button><input class="tzin" id="tzni" type="number" inputmode="numeric" min="1" value="'+(G.all?Math.max(gi.avail,1):gi.n)+'"></div>';
+    var fxt=gi.bump?(gi.need+' kategori seçtin. Hepsinden soru gelsin diye toplam '+gi.n+' soruya yükseltildi.'):(HUB.fxt||'');if(gi.bump)HUB.fxt=fxt;
+    h+='<div class="tzfx'+(gi.bump?' on':'')+'" role="status"><div><div class="tzfxi"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.6v.01"/></svg><span>'+esc(fxt)+'</span></div></div></div>';
+    h+='<div class="tzhint">'+(gi.sc.length>1?gi.sc.length+' seçeneğe eşit dağıtılır, sorular rastgele seçilir.':'Sorular seçtiğin gruptan rastgele gelir.')+'</div>';
+  }else h+='<div class="tzhint">Her seçenek için kaç soru geleceğini yukarıdaki kutulardan belirle. Sorular rastgele seçilir.</div>';
+  h+='</div>';
+  h+='<div class="tzbar"><div><b id="tzsb"></b><small id="tzss"></small></div><button type="button" class="tzb" id="tzsv">Paket yap</button><button type="button" class="tzb pr" id="tzgo">Testi başlat</button></div>';
   b.innerHTML=h;gSum();
 }
 function gSum(){
-  var gi=gInfo();railUpdate(gi);
-  var sb=$("#tzsb");if(!sb)return;
+  var gi=gInfo(),sb=$("#tzsb");if(!sb)return;
   roll(sb,gi.total," soru");
-  $("#tzss").textContent=gi.sc.length?gTitle(gi.sc):"Bir seçenek seç";
+  $("#tzss").textContent=gi.sc.length?gTitle(gi.sc):"Yukarıdan seçim yap";
   $("#tzgo").disabled=$("#tzsv").disabled=!gi.total;
-  $("#tzds").innerHTML=gi.sc.map(function(c,i){return gi.counts[i]>0?'<span style="flex:'+gi.counts[i]+';background:'+(c.col||"#fff")+'"></span>':""}).join("");
+  if(!gi.per){var ni=$("#tzni");[].forEach.call(document.querySelectorAll("[data-n]"),function(c){var v=c.dataset.n;c.classList.toggle("on",v==="all"?G.all:(!G.all&&G.n===+v))});if(ni&&document.activeElement!==ni)ni.value=G.all?Math.max(gi.avail,1):gi.n}
 }
-
-/* ---------- Sol dikey panel ---------- */
-var RAIL=$("#tzrail"),OWN=false,RFT=0,OWNSVG='<svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16v4zM13.5 6.5l4 4"/></svg>';
-function rwSet(w,on,dis,txt){
-  w.classList.toggle("on",!!on);w.classList.toggle("dis",!!dis);
-  var l=w.querySelector(".rl"),bt=w.querySelector(".rb");
-  if(txt!=null){if(l.textContent!==txt)l.textContent=txt;bt.setAttribute("aria-label",txt)}
-  bt.setAttribute("aria-pressed",on?"true":"false");
-}
-function railPlace(){
-  [].forEach.call(RAIL.querySelectorAll(".rg"),function(g){
-    var on=g.querySelector(".rw.on"),ind=g.querySelector(".rind");
-    if(!on){ind.style.opacity=0;return}
-    var first=!ind._p;if(first)ind.style.transition="none";
-    ind.style.height=on.offsetHeight+"px";ind.style.transform="translateY("+on.offsetTop+"px)";ind.style.opacity=1;
-    if(first){ind._p=1;void ind.offsetWidth;ind.style.transition=""}
-  });
-}
-function railUpdate(gi){
-  var show=HUB.tab==="gen"&&items().length>0;
-  $("#tz").classList.toggle("gen",show);RAIL.classList.toggle("on",show);
-  if(!show){OWN=false;return}
-  gi=gi||gInfo();
-  var W=function(q){return RAIL.querySelector(q)},per=gi.per,multi=gi.sc.length>1,PRE=[10,20,30,40];
-  rwSet(W('[data-rm="0"]'),!per,false,"Toplam sayı");
-  rwSet(W('[data-rm="1"]'),per,!multi,multi?"Her biri için ayrı":"Her biri için ayrı · 2 seçenek gerekir");
-  PRE.forEach(function(n){
-    var on=per?(gi.sc.length>0&&gi.sc.every(function(c,i){return gi.counts[i]===Math.min(n,gi.pools[i].length)})):(!G.all&&G.n===n);
-    rwSet(W('[data-rn="'+n+'"]'),on,false,per?"Her biri "+n+" soru":n+" soru");
-  });
-  var allOn=per?(gi.sc.length>0&&gi.sc.every(function(c,i){return gi.counts[i]===gi.pools[i].length})):G.all;
-  rwSet(W('[data-rn="all"]'),allOn,false,"Tümü"+(gi.avail?" · "+gi.avail+" soru":""));
-  var ow=W('[data-rn="own"]'),cu=!per&&!G.all&&PRE.indexOf(G.n)<0,rb=ow.querySelector(".rb"),k=cu?"n"+G.n:"p";
-  rwSet(ow,cu,per,null);rb.setAttribute("aria-label","Kendi sayını gir");
-  ow.classList.toggle("open",OWN&&!per);
-  if(rb._k!==k){rb._k=k;rb.innerHTML=cu?"<b>"+G.n+"</b>":OWNSVG}
-  var inp=ow.querySelector("input");if(document.activeElement!==inp)inp.value=G.all?Math.max(gi.avail,1):gi.n;
-  railPlace();
-}
-function railFlash(w){
-  clearTimeout(RFT);[].forEach.call(RAIL.querySelectorAll(".rw.fly"),function(x){x.classList.remove("fly")});
-  w.classList.add("fly");RFT=setTimeout(function(){w.classList.remove("fly")},1600);
-}
-RAIL.addEventListener("click",function(e){
-  var st=e.target.closest(".rs");
-  if(st){var g0=gInfo(),v=(G.all?g0.avail:G.n)+(+st.dataset.rs);G.all=false;G.n=Math.max(1,v);hubRender();return}
-  if(e.target.closest(".rown"))return;
-  var w=e.target.closest(".rw");if(!w)return;
-  if(w.dataset.rm!=null){
-    if(w.classList.contains("dis")){Q.toast("Ayrı sayı için en az 2 seçenek seç");return}
-    OWN=false;G.per=w.dataset.rm==="1";hubRender();railFlash(w);return;
-  }
-  var n=w.dataset.rn,gi=gInfo();
-  if(n==="own"){
-    if(w.classList.contains("dis")){Q.toast("Her seçeneğin sayısını listedeki kutulardan gir");return}
-    OWN=!OWN;clearTimeout(RFT);[].forEach.call(RAIL.querySelectorAll(".rw.fly"),function(x){x.classList.remove("fly")});railUpdate();
-    if(OWN){var i=w.querySelector("input");setTimeout(function(){i.focus();i.select()},60)}
-    return;
-  }
-  OWN=false;
-  if(gi.per){gi.sc.forEach(function(c,i){var L=gi.pools[i].length;G.pn[c.k]=n==="all"?L:Math.min(+n,L)})}
-  else if(n==="all")G.all=true;else{G.all=false;G.n=+n}
-  hubRender();railFlash(w);
-});
-RAIL.addEventListener("input",function(e){
-  if(e.target.tagName!=="INPUT")return;
-  var v=parseInt(e.target.value,10);if(v>0){G.all=false;G.n=v;hubRender()}
-});
-RAIL.addEventListener("keydown",function(e){
-  if(e.target.tagName==="INPUT"&&e.key==="Enter"){e.preventDefault();e.target.blur();OWN=false;railUpdate()}
-});
-RAIL.addEventListener("focusout",function(e){if(e.target.tagName==="INPUT")setTimeout(function(){railUpdate()},0)});
-document.addEventListener("pointerdown",function(e){if(OWN&&!e.target.closest("#tzrail")){OWN=false;railUpdate()}},true);
-window.addEventListener("resize",function(){if(RAIL.classList.contains("on"))railPlace()});
-
 function gStart(save){
   var gi=gInfo();if(!gi.total)return;
   var ids=gPick(gi),title=gTitle(gi.sc);
@@ -4322,10 +4172,7 @@ $("#tzb").addEventListener("click",function(e){
   }
   if(b=t.closest(".tzpk")){pvOpen(b.dataset.id);return}
   if(b=t.closest("[data-m]")){G.mode=b.dataset.m;G.sel={};G.pn={};hubRender();return}
-  if(t.closest("#tzu")){
-    G.uns=!G.uns;
-    if(G.uns){var ne=cats(G.mode,true).filter(function(c){return G.sel[c.k]&&!c.uns.length}).length;if(ne)Q.toast(ne+" seçenekte çözülmemiş soru yok, dışarıda bırakıldı")}
-    hubRender();return}
+  if(t.closest("#tzu")){G.uns=!G.uns;hubRender();return}
   if(b=t.closest("[data-pm]")){G.per=b.dataset.pm==="1";hubRender();return}
   if(b=t.closest("[data-pa]")){var k=b.dataset.pa,cc=gInfo().cs.filter(function(c){return c.k===k})[0];if(cc){G.pn[k]=pool(cc).length;hubRender()}return}
   if(b=t.closest("[data-n]")){if(b.dataset.n==="all")G.all=true;else{G.all=false;G.n=+b.dataset.n}hubRender();return}
