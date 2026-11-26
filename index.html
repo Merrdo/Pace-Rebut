@@ -1424,10 +1424,28 @@ html,body,*{scrollbar-width:none!important;-ms-overflow-style:none!important;scr
 .tz,.tzs{right:-48px;padding-right:48px}
 .sheet{right:-48px;padding-right:72px}
 /* Sorular sekmesi: giriş/çıkışta sadece opacity geçişi. Büyük resim ızgarasında scale() katmanı yeniden rasterlatıp takılma yapıyordu */
-#v-questions{transform:none!important;transition:none}
-#v-questions.on{transition:opacity .2s var(--ease)}
+/* Sorular sayfası artık diğer sayfalarla aynı yumuşak .view geçişini kullanır (opacity + hafif scale) */
 /* Sayfa geçişi sırasında dock'un arka plan bulanıklığı kapatılır: altındaki hareketli büyük katmanı her karede yeniden bulandırmak (backdrop-filter) pahalı */
 .app.navx .dock{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(255,255,255,.97)}
+
+/* ===== Sorular sayfası ve içindeki tam ekran sayfalar: Test sayfasıyla aynı yumuşak geçiş (opacity + hafif yükselme/scale) ===== */
+.qv,.qc{transform:translateY(20px) scale(.985);transition:opacity .35s var(--ease),transform .6s var(--ease),visibility 0s .35s}
+.qv.on,.qc.on{transform:none;transition-delay:0s}
+/* Alt sayfa (kaynaklar): koyu perde yerinde kalır, sadece panel yumuşakça yükselir */
+.qk{transition:opacity .35s var(--ease),visibility 0s .35s}.qk.on{transition-delay:0s}
+.qk .qkp{transition:transform .6s var(--ease)}
+.qpn{transform:translateY(14px);transition:opacity .35s var(--ease),transform .55s var(--ease),visibility 0s .35s}
+.qc.on .qpn.on{transform:none;transition-delay:0s}
+.qpsc{transition:opacity .35s var(--ease),visibility 0s .35s}
+.qpsc.on{transition-delay:0s}
+
+/* Sorular sayfası kök neden düzeltmesi: sayfa visibility:hidden olunca tarayıcı çizim katmanını ve resim dokularını atıyor, her girişte tüm ekran (soru kartları + resimler) baştan rasterlanıyor. Bu maliyet soru sayısıyla artıyor, soru yokken sıfır. Katman gizliyken de canlı tutulur (görünmez ama atılmaz): geçişte yeniden çizim yok, sadece birleştirme. */
+#v-questions{will-change:opacity,transform}
+#v-questions:not(.on){visibility:visible;opacity:.004;pointer-events:none;transition:none}
+
+/* Kartlarda yuvarlak kırpma maskesi yerine resmin kendi köşe yuvarlaması: her kart için ayrı kırpma katmanı gerekmez */
+.qi{overflow:visible}
+.qi>img{border-radius:inherit}
 </style>
 </head>
 <body>
@@ -2776,6 +2794,7 @@ document.addEventListener("keydown",function(e){
 });
 
 /* Gezinme */
+(function(q){q.inert=true;q.setAttribute("aria-hidden","true")})($("#v-questions"));
 $$(".db").forEach(function(b,n){b.onclick=function(){
   if(b.dataset.v==="cal"&&b.classList.contains("on")){
     $("#cset").classList.remove("on");
@@ -2786,6 +2805,7 @@ $$(".db").forEach(function(b,n){b.onclick=function(){
   $("#dock").style.setProperty("--i",n);
   $$(".db").forEach(function(x){x.classList.toggle("on",x===b)});
   $$(".view").forEach(function(e){e.classList.toggle("on",e.id==="v-"+b.dataset.v)});
+  (function(q){q.inert=!q.classList.contains("on");q.setAttribute("aria-hidden",q.inert?"true":"false")})($("#v-questions"));
 }});
 
 /* Klavye kısayolları: atamalar KA listesinde, kullanıcının değişiklikleri KB.map'te (Ayarlar > Klavye kısa yolları) */
