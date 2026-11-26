@@ -35,7 +35,6 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 main{position:relative;overflow:hidden;height:100dvh}
 .view{position:absolute;inset:0;opacity:0;visibility:hidden;transform:scale(.985);transition:opacity .5s var(--ease),transform .6s var(--ease),visibility 0s .5s}
 .view.on{opacity:1;visibility:visible;transform:none;transition-delay:0s}
-.view.warm:not(.on){visibility:visible;opacity:.01;transform:none;transition:none;pointer-events:none}
 
 /* Konular */
 #v-topics{display:grid;grid-template-columns:360px 1fr}
@@ -731,6 +730,8 @@ textarea.qfi{height:140px;resize:none}
 .qg.sm .qi .qck{display:grid}
 .qg.sm .qi:not(.sel){transform:scale(.96)}
 .qi.sel{transform:scale(.94)}
+/* Kök neden düzeltmesi: yüzlerce kart (yuvarlak kırpma + gölge + katman) sayfa girişinde/çıkışında hepsi birden boyanıyor ve çözülüyordu. Ekran dışındaki kartlar artık hiç boyanmaz, resimleri çözülmez. */
+.qi{content-visibility:auto;contain-intrinsic-size:auto 220px}
 .qi.sel::after{box-shadow:inset 0 0 0 4px var(--fg);background:rgba(17,17,17,.12)}
 .qi.sel .qck{background:#111}
 .qi.sel .qck svg{opacity:1}
@@ -1411,10 +1412,11 @@ textarea.qfi{height:140px;resize:none}
 .tzfab.on:active{transform:scale(.88)}.tzfab.on:active svg{transform:rotate(90deg)}
 #tz #tzb.pkp{padding-bottom:100px}
 /* Sayfa içeriği yumuşak geçiş */
-#tz #tzb{transition:opacity .22s var(--ease),transform .22s var(--ease)}
-#tz #tzb.pgo{opacity:0;transform:translateX(calc(var(--dir,1)*-22px))}
-#tz #tzb.pgi{animation:pgIn .5s var(--ease) backwards}
-@keyframes pgIn{from{opacity:0;transform:translateX(calc(var(--dir,1)*26px))}}
+#tz #tzb{transition:opacity .2s ease-in,transform .2s ease-in}
+#tz #tzb.pgo,#tz #tzb.pgi{will-change:opacity,transform}
+#tz #tzb.pgo{opacity:0;transform:translate3d(calc(var(--dir,1)*-14px),0,0)}
+#tz #tzb.pgi{animation:pgIn .5s cubic-bezier(.22,1,.36,1) backwards}
+@keyframes pgIn{from{opacity:0;transform:translate3d(calc(var(--dir,1)*18px),0,0)}}
 /* Kaydırma çubukları: hiçbir sayfada görünmesin (kaydırma çalışmaya devam eder) */
 html,body,*{scrollbar-width:none!important;-ms-overflow-style:none!important;scrollbar-gutter:auto!important}
 *::-webkit-scrollbar,*::-webkit-scrollbar-thumb,*::-webkit-scrollbar-track,*::-webkit-scrollbar-button,*::-webkit-scrollbar-corner{display:none!important;width:0!important;height:0!important;background:transparent!important;-webkit-appearance:none!important}
@@ -1424,7 +1426,6 @@ html,body,*{scrollbar-width:none!important;-ms-overflow-style:none!important;scr
 /* Sorular sekmesi: giriş/çıkışta sadece opacity geçişi. Büyük resim ızgarasında scale() katmanı yeniden rasterlatıp takılma yapıyordu */
 #v-questions{transform:none!important;transition:opacity .3s var(--ease),visibility 0s .3s}
 #v-questions.on{transition-delay:0s}
-#v-questions.warm:not(.on){transition:none}
 </style>
 </head>
 <body>
@@ -1693,11 +1694,6 @@ try{var raw=localStorage.getItem("dd-state");if(raw)Object.assign(S,JSON.parse(r
 function save(){try{localStorage.setItem("dd-state",JSON.stringify(S))}catch(e){}}
 /* Klavye kisa yollari: [id, kapsam(g=her yer,t=sure,c=takvim,k=konular), grup, ad, aciklama, varsayilan] */
 var KA=[
-["nav0","g","Genel","Konular sayfası","Derslerin ve konuların listesini açar.","1"],
-["nav1","g","Genel","Süre sayfası","Kronometre, geri sayım ve pomodoro sayfasını açar.","2"],
-["nav2","g","Genel","Takvim sayfası","Takvimi açar.","3"],
-["nav3","g","Genel","Ayarlar sayfası","Ayarlar sayfasını açar.","4"],
-["nav4","g","Genel","Sorular sayfası","Soru fotoğraflarının galerisini açar.","5"],
 ["fs","g","Genel","Tam ekran","Her sayfada tam ekranı açar veya kapatır, alt çubuğu gizler.","f"],
 ["tToggle","t","Süre","Başlat / duraklat","Seçili kronometreyi, geri sayımı ya da pomodoro'yu başlatır veya duraklatır."," "],
 ["tReset","t","Süre","Sıfırla","Seçili sayacı başa alır.","r"],
@@ -1709,6 +1705,17 @@ var KA=[
 ["kPrev","k","Konular","Önceki ders","Konular sayfasında bir önceki dersi seçer.","ArrowLeft"],
 ["kNext","k","Konular","Sonraki ders","Konular sayfasında bir sonraki dersi seçer.","ArrowRight"]
 ],KDEF={},KB={on:1,map:{}};
+/* Nav kısayolları alt çubuktaki (.db) sıraya göre OTOMATİK üretilir: sayfa sırası değişir ya da yeni sayfa eklenirse atamalar kendiliğinden uyar. Kullanıcı özelleştirmeleri sayfa adına (nav:<data-v>) bağlıdır. */
+(function(){
+  var DESC={topics:"Derslerin ve konuların listesini açar.",timer:"Kronometre, geri sayım ve pomodoro sayfasını açar.",cal:"Takvimi açar.",questions:"Soru fotoğraflarının galerisini açar.",settings:"Ayarlar sayfasını açar."};
+  var nv=[];
+  Array.prototype.forEach.call(document.querySelectorAll(".db"),function(b,n){
+    var lb="";Array.prototype.forEach.call(b.childNodes,function(c){if(c.nodeType===3)lb+=c.textContent});lb=lb.trim()||b.dataset.v;
+    nv.push(["nav:"+b.dataset.v,"g","Genel",lb+" sayfası",DESC[b.dataset.v]||(lb+" sayfasını açar."),String(n+1)]);
+  });
+  KA.unshift.apply(KA,nv);
+  if(nv.length>9&&window.console)console.warn("Nav sayfası 9'dan fazla: 10. sayfadan sonrası için varsayılan tuş atanamaz.");
+})();
 KA.forEach(function(a){KDEF[a[0]]=a[5]});
 try{var kj=JSON.parse(localStorage.getItem("dd-kb"));if(kj){KB.on=kj.on===0?0:1;if(kj.map&&typeof kj.map==="object")KA.forEach(function(a){if(Object.prototype.hasOwnProperty.call(kj.map,a[0])){var v=kj.map[a[0]];if(v===null||(typeof v==="string"&&v.length&&v.length<20))KB.map[a[0]]=v}})}}catch(e){}
 function kbSave(){try{localStorage.setItem("dd-kb",JSON.stringify(KB))}catch(e){}}
@@ -2792,7 +2799,9 @@ function kbNorm(e){
 function kRun(id,e,c){
   var k;
   switch(id){
-    case"nav0":case"nav1":case"nav2":case"nav3":case"nav4":k=$('.db[data-v="'+["topics","timer","cal","settings","questions"][+id.slice(3)]+'"]');if(k&&!k.classList.contains("on"))k.click();return true;
+    default:
+      if(id.indexOf("nav:")===0){k=$('.db[data-v="'+id.slice(4)+'"]');if(k&&!k.classList.contains("on"))k.click();return true}
+      break;
     case"fs":kFs();return true;
     case"tToggle":if(!e.repeat)go();return true;
     case"tReset":reset();return true;
@@ -3001,26 +3010,6 @@ function qkFill(){
 }
 function qk(on){qkOn=!!on;if(qkOn)qkFill();$("#qk").classList.toggle("on",qkOn)}
 
-/* Sayfa gizliyken küçük resimleri arka planda yükleyip çöz: ilk girişte kasma olmasın */
-var thT=0,ppDone=false;
-/* Sayfa ilk kez açılmadan önce bir an görünmez biçimde çizdir: ilk girişteki ilk boyama yükü baştan ödensin */
-function prePaint(){
-  if(ppDone)return;ppDone=true;
-  var v=$("#v-questions");if(!v||v.classList.contains("on"))return;
-  v.classList.add("warm");
-  requestAnimationFrame(function(){requestAnimationFrame(function(){setTimeout(function(){v.classList.remove("warm")},450)})});
-}
-function thWarm(g){
-  clearTimeout(thT);var im=[].slice.call(g.querySelectorAll("img")),k=0;
-  function step(){
-    if(!g.isConnected)return;
-    var part=im.slice(k,k+3);k+=3;
-    Promise.all(part.map(function(x){return x.decode?x.decode().catch(function(){}):0})).then(function(){
-      if(k<im.length)thT=setTimeout(step,40);else prePaint();
-    });
-  }
-  thT=setTimeout(step,300);
-}
 function render(){
   selPrune();
   URLS.forEach(function(u){URL.revokeObjectURL(u)});URLS=[];
@@ -3045,7 +3034,6 @@ function render(){
     g.appendChild(bt);
   });
   b.innerHTML="";g.classList.toggle("sm",selOn);b.appendChild(g);
-  thWarm(g);
   var nr=el("div","qnr");nr.id="qnr";nr.hidden=true;nr.appendChild(el("b","","Eşleşen soru yok"));nr.appendChild(el("span","","Başka bir kaynak veya ders adı dene."));b.appendChild(nr);
   applyFilter();
 }
@@ -3819,6 +3807,7 @@ function morph(a,b){
   while(a.childNodes.length>bc.length)a.removeChild(a.lastChild);
 }
 function fresh(b){
+  if(HUB.quiet){b.classList.remove("fresh");return}
   [].forEach.call(b.querySelectorAll(".tzg,.tzc,.tzx,.tzpk,.tzhi,.tzres,.tzemp,.tzst,.tzchart,.tzdh,.tzbar,.tzchs"),function(e,i){e.style.setProperty("--i",Math.min(i,12))});
   b.classList.remove("fresh");void b.offsetWidth;b.classList.add("fresh");
   clearTimeout(fresh.t);fresh.t=setTimeout(function(){b.classList.remove("fresh")},1500);
@@ -3842,8 +3831,15 @@ var TZFAB=document.createElement("button");TZFAB.type="button";TZFAB.className="
 TZFAB.innerHTML='<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>';
 $("#tz").appendChild(TZFAB);
 TZFAB.onclick=function(){peOpen(null,[])};
-function hubOpen(tab){if(tab)HUB.tab=tab;HUB.k=null;PSL.on=false;PSL.ids={};tpClose();$("#tz").classList.add("on");hubRender()}
-function hubClose(){$("#tz").classList.remove("on");tpClose();PSL.on=false;PSL.ids={}}
+/* Açılışta önce sadece sınıf eklenir (opacity/transform geçişi compositor'da, ana iş parçacığından bağımsız çalışır); ağır içerik çizimi geçişin ilk karesinden SONRA yapılır. Böylece animasyon takılmaz. */
+var hubOT=0;
+function hubOpen(tab){
+  if(tab)HUB.tab=tab;HUB.k=null;PSL.on=false;PSL.ids={};tpClose();
+  var z=$("#tz");z.scrollTop=0;z.classList.add("on");
+  cancelAnimationFrame(hubOT);
+  hubOT=requestAnimationFrame(function(){hubOT=requestAnimationFrame(function(){if(hubOn())hubRender()})});
+}
+function hubClose(){cancelAnimationFrame(hubOT);$("#tz").classList.remove("on");tpClose();PSL.on=false;PSL.ids={}}
 function hubRender(){
   if(HUB.tab!=="pk"&&PSL.on){PSL.on=false;PSL.ids={}}
   [].forEach.call(document.querySelectorAll("#tzt button,#tzn button"),function(b){var o=b.dataset.t===HUB.tab;b.classList.toggle("on",o);if(b.closest("#tzn"))b.setAttribute("aria-selected",o)});
@@ -4432,12 +4428,13 @@ function hubGo(tab){
   hubBusy=1;body.style.setProperty("--dir",dir);
   HUB.tab=tab;
   [].forEach.call(document.querySelectorAll("#tzn button"),function(b){var o=b.dataset.t===tab;b.classList.toggle("on",o);b.setAttribute("aria-selected",o)});
+  /* Çıkış: içerik hafifçe kayarak solar. Giriş: içerik tek bir animasyonla (kart bazlı ikinci animasyon yok) yumuşakça gelir. */
   body.classList.remove("pgi");body.classList.add("pgo");
   setTimeout(function(){
-    hubRender();$("#tz").scrollTop=0;
+    HUB.quiet=1;hubRender();HUB.quiet=0;$("#tz").scrollTop=0;
     body.classList.remove("pgo");void body.offsetWidth;body.classList.add("pgi");
-    setTimeout(function(){body.classList.remove("pgi");hubBusy=0},520);
-  },220);
+    setTimeout(function(){body.classList.remove("pgi");hubBusy=0},560);
+  },200);
 }
 $("#tzn").addEventListener("click",function(e){var b=e.target.closest("button");if(b)hubGo(b.dataset.t)});
 $("#tzt").onclick=function(e){var b=e.target.closest("button");if(!b)return;HUB.tab=b.dataset.t;hubRender();$("#tz").scrollTop=0};
@@ -4582,6 +4579,12 @@ document.addEventListener("keydown",function(e){
     else if(top==="tzp")peClose();
     else hubClose();
     return;
+  }
+  if(top==="tz"&&!inp&&!e.ctrlKey&&!e.metaKey&&!e.altKey&&(e.key==="ArrowLeft"||e.key==="ArrowRight")){
+    e.preventDefault();
+    var hi=HUBORD.indexOf(HUB.tab),nx=HUBORD[hi+(e.key==="ArrowRight"?1:-1)];
+    if(nx)hubGo(nx);
+    e.stopImmediatePropagation();return;
   }
   if(top==="tzr"&&!inp&&R){
     if(e.key==="ArrowRight"){e.preventDefault();$("#tzrnx").click()}
