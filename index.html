@@ -1014,8 +1014,11 @@ textarea.qfi{height:140px;resize:none}
 .tzsv.on svg{box-shadow:inset 0 0 0 2px rgba(255,255,255,.55)}
 .tzsv.on .tk{stroke-dashoffset:0}
 .tzsv:disabled{opacity:.4;pointer-events:none}
-.tzsb{position:absolute;z-index:6;left:50%;bottom:calc(var(--nav-gap) + env(safe-area-inset-bottom,0px));transform:translate(-50%,160%);display:flex;align-items:center;gap:6px;max-width:calc(100vw - 24px);padding:6px;border-radius:999px;background:#111;color:#fff;box-shadow:0 14px 30px -10px rgba(17,17,17,.45);opacity:0;pointer-events:none;transition:transform .6s var(--ease),opacity .35s var(--ease)}
-.tzsb.on{transform:translate(-50%,0);opacity:1;pointer-events:auto}
+.tzsbw{flex:none;display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s var(--ease)}
+.tzsbw.on{grid-template-rows:1fr}
+.tzsbi{min-height:0;overflow:hidden;display:flex;justify-content:center;padding:0 12px}
+.tzsb{display:flex;align-items:center;gap:6px;max-width:100%;margin:6px 0 calc(var(--nav-gap) + env(safe-area-inset-bottom,0px));padding:6px;border-radius:999px;background:#111;color:#fff;box-shadow:0 8px 22px -10px rgba(17,17,17,.5);transform:translateY(140%);opacity:0;pointer-events:none;transition:transform .6s var(--ease),opacity .35s var(--ease)}
+.tzsbw.on .tzsb{transform:none;opacity:1;pointer-events:auto}
 .tzsb b{min-width:78px;padding:0 10px;text-align:center;font:700 15px/1 Inter,system-ui,sans-serif;white-space:nowrap;font-variant-numeric:tabular-nums}
 .tzsb b.bump{animation:tzBump .4s var(--sp)}
 @keyframes tzBump{40%{transform:scale(1.18)}}
@@ -1026,7 +1029,7 @@ textarea.qfi{height:140px;resize:none}
 .tzsbk{background:#fff;color:#111}
 @media (max-width:480px){.tzsbx span{display:none}.tzsbx{width:44px;padding:0!important}}
 .tzpt{padding:0 20px 10px}
-.tzpgw{flex:1;min-height:0;overflow:auto;padding:0 20px calc(120px + env(safe-area-inset-bottom,0px));overscroll-behavior:contain}
+.tzpgw{flex:1;min-height:0;overflow:auto;padding:0 20px calc(30px + env(safe-area-inset-bottom,0px));overscroll-behavior:contain}
 .tzpgd{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 @media (max-width:900px){.tzpgd{grid-template-columns:repeat(3,1fr)}}
 @media (max-width:560px){.tzpgd{grid-template-columns:repeat(2,1fr)}}
@@ -1495,13 +1498,13 @@ html,body,*{scrollbar-width:none!important;-ms-overflow-style:none!important;scr
     <div id="tzb"></div>
   </div></div>
   <div class="tzp" id="tzp" role="dialog" aria-modal="true" aria-label="Paket düzenle">
-    <div class="tzph"><input class="tzpti" id="tzpn" type="text" maxlength="60" placeholder="Paket adı" autocomplete="off" aria-label="Paket adı" enterkeyhint="done"><div class="tzpb"><button class="fl" id="tzpx" type="button">Vazgeç</button><button class="fl pr" id="tzpk" type="button">Kaydet</button></div></div>
+    <div class="tzph"><input class="tzpti" id="tzpn" type="text" maxlength="60" placeholder="Paket adı" autocomplete="off" aria-label="Paket adı" enterkeyhint="done"><div class="tzpb"><button class="fl" id="tzpx" type="button">Vazgeç</button></div></div>
     <div class="tzpfr"><button class="qb tzpfb" id="tzpfb" type="button" aria-expanded="false" aria-controls="tzpf"><svg viewBox="0 0 24 24"><path d="M4 7h9M19 7h1M4 17h1M11 17h9"/><circle cx="16" cy="7" r="2.5"/><circle cx="8" cy="17" r="2.5"/></svg><span id="tzpfl">Ders filtresi</span><i class="tzpfn" id="tzpfn" hidden></i><svg class="cv" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><button class="tzch" id="tzpu" type="button">Çözülmeyenler</button></div>
     <div class="tzpfw" id="tzpfw"><div class="tzpfi"><div class="tzpfs" id="tzpf"></div></div></div>
     <div class="tzpt"><div class="qsb"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input class="qfi qsi" id="tzps" type="text" placeholder="Kaynak veya ders ara…" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" aria-label="Soru ara" maxlength="80"><button class="qsx" id="tzpsx" type="button" aria-label="Aramayı temizle" hidden><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17"/></svg></button></div></div>
     <div class="tzpm"><span class="tzpcn" id="tzpc"></span><button class="tzsv" id="tzpa" type="button"><svg viewBox="0 0 24 24"><path class="tk" d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Görünenleri seç</span></button></div>
     <div class="tzpgw"><div class="tzpgd" id="tzpg"></div></div>
-    <div class="tzsb" id="tzpbar" role="toolbar" aria-label="Seçili sorular"><button class="tzsbx" id="tzpz" type="button" aria-label="Seçimi temizle"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17"/></svg><span>Temizle</span></button><b id="tzpbn">0 seçili</b><button class="tzsbk" id="tzpks" type="button"><svg viewBox="0 0 24 24"><path class="tk" d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Oluştur</span></button></div>
+    <div class="tzsbw" id="tzpbw"><div class="tzsbi"><div class="tzsb" id="tzpbar" role="toolbar" aria-label="Seçili sorular"><button class="tzsbx" id="tzpz" type="button" aria-label="Seçimi temizle"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17"/></svg><span>Temizle</span></button><b id="tzpbn">0 seçili</b><button class="tzsbk" id="tzpks" type="button"><svg viewBox="0 0 24 24"><path class="tk" d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Oluştur</span></button></div></div></div>
   </div>
   <div class="tzr" id="tzr" role="dialog" aria-modal="true" aria-label="Test">
     <div class="tzrt"><button class="fl" id="tzrx" type="button">Çık</button><div class="tzrc"><b id="tzrn">1</b><span id="tzrnt"></span></div><div class="tzrr"><span class="tzrm" id="tzrm">0:00</span><button class="fl" id="tzrz" type="button" aria-label="Tam ekran"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button><button class="fl pr" id="tzrf" type="button">Bitir</button></div></div>
@@ -1527,6 +1530,7 @@ html,body,*{scrollbar-width:none!important;-ms-overflow-style:none!important;scr
   <div class="tzd" id="tzd"><div class="tzdc" id="tzdc" role="alertdialog" aria-modal="true"></div></div>
   <div class="qs" id="qs" role="status"></div>
   <div class="qun" id="qun" role="status"><span id="qunt"></span><button id="qunb" type="button">Geri al</button><i></i></div>
+  <div class="qpop" id="tzqp" role="menu" aria-label="Soru işlemleri"><button type="button" role="menuitem" data-a="o"><svg viewBox="0 0 24 24"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.8"/></svg>Aç</button><button type="button" role="menuitem" data-a="s"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg>Seç</button></div>
   <div class="qpop" id="qpop" role="menu" aria-label="Soru işlemleri">
     <button type="button" role="menuitem" data-a="o"><svg viewBox="0 0 24 24"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.8"/></svg>Aç</button>
     <button type="button" role="menuitem" class="ok" data-a="v"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M8.5 12.3l2.4 2.4 4.6-5"/></svg><span>Çözüldü</span></button>
@@ -3980,11 +3984,12 @@ function peOpen(pack,preset){
     return'<section class="tzfc" data-g="'+esc(g)+'"><button type="button" class="tzfg" data-g="'+esc(g)+'"'+(tot?"":" disabled")+'><b>'+(g||"Diğer")+'</b><small>'+(GL[g]?GL[g]+" · ":"")+(tot?tot+" soru":"Soru yok")+'</small><span class="ck">'+TICK+'</span></button><div class="tzfd">'+ks.map(function(k){return'<button type="button" class="tzch" data-d="'+esc(k)+'" style="--c:'+ds[k].c+'">'+esc(ds[k].lab)+' <em>'+ds[k].n+'</em></button>'}).join("")+'</div></section>';
   }).join("");
   $("#tzpfw").classList.remove("open");$("#tzpfb").setAttribute("aria-expanded","false");
-  var g=$("#tzpg");g.innerHTML="";
+  var g=$("#tzpg");g.innerHTML="";g.className="qg";
   its.forEach(function(it){
     var u=URL.createObjectURL(it.thumb||it.blob);PE.urls.push(u);
-    var bt=document.createElement("button");bt.type="button";bt.className="tzpi"+(PE.sel[it.id]?" sel":"");bt.dataset.id=it.id;bt.dataset.f=(it.g||"")+"|"+(it.ders||"");bt.dataset.g=it.g||"";
-    bt.innerHTML='<img alt="Soru" decoding="async" draggable="false" src="'+u+'">'+(it.ders?'<span class="dc" style="--c:'+Q.lcol(it)+'">'+esc(it.g+" · "+it.ders)+'</span>':'')+'<span class="cx">'+TICK+'</span>'+(it.solved?'<span class="sv">Çözüldü</span>':'');
+    var bt=document.createElement("button");bt.type="button";bt.className="qi"+(PE.sel[it.id]?" sel":"")+(it.solved?" ok":"");bt.dataset.id=it.id;bt.dataset.f=(it.g||"")+"|"+(it.ders||"");bt.dataset.g=it.g||"";
+    bt.setAttribute("aria-label","Soruyu aç");
+    bt.innerHTML='<img alt="Soru" decoding="async" draggable="false" src="'+u+'">'+(it.ders?'<span class="qdc" style="--c:'+Q.lcol(it)+'">'+esc(it.g+" · "+it.ders)+'</span>':'')+'<span class="qck">'+TICK+'</span>'+(it.solved?'<span class="qok" aria-hidden="true"><svg viewBox="0 0 24 24"><path pathLength="1" d="M4.5 12.8l5 5L19.5 7"/></svg></span>':'');
     bt._h=" "+ordNorm([it.g,it.ders,it.book,it.page?"sayfa "+it.page:"",it.note].join(" "))+" ";
     g.appendChild(bt);
   });
@@ -4041,8 +4046,8 @@ function peCount(){
   $("#tzpc").textContent=v.length+" soru";
   var a=$("#tzpa");a.classList.toggle("on",all);a.disabled=!v.length;a.querySelector("span").textContent=all?"Görünenleri bırak":"Görünenleri seç";
   var bn=$("#tzpbn"),t=n+" seçili";if(bn.textContent!==t){bn.textContent=t;bn.classList.remove("bump");void bn.offsetWidth;bn.classList.add("bump")}
-  $("#tzpbar").classList.toggle("on",n>0);$("#tzpg").classList.toggle("sm",n>0);
-  var lb=PE.id?"Kaydet":"Oluştur";$("#tzpk").textContent=lb;$("#tzpks").querySelector("span").textContent=lb;
+  $("#tzpbw").classList.toggle("on",n>0||!!PE.id);$("#tzpg").classList.toggle("sm",n>0);
+  $("#tzpks").querySelector("span").textContent=PE.id?"Kaydet":"Oluştur";
 }
 function peSave(){
   var its=items(),ids=its.filter(function(it){return PE.sel[it.id]}).map(function(it){return it.id});
@@ -4433,13 +4438,51 @@ $("#tzb").addEventListener("input",function(e){
 });
 $("#tzb").addEventListener("focusout",function(e){if(e.target.id==="tzni")setTimeout(hubRender,0)});
 $("#tzb").addEventListener("change",function(e){if(e.target.dataset&&e.target.dataset.pk!=null)hubRender()});
-$("#tzpx").onclick=peClose;$("#tzpk").onclick=peSave;
+$("#tzpx").onclick=peClose;
 $("#tzpf").onclick=peFClick;
 $("#tzpfb").onclick=function(){var w=$("#tzpfw"),o=!w.classList.contains("open");w.classList.toggle("open",o);this.setAttribute("aria-expanded",o?"true":"false")};
 $("#tzps").addEventListener("input",function(){PE.q=this.value;$("#tzpsx").hidden=!this.value;peFilter()});
 $("#tzpsx").onclick=function(){var q=$("#tzps");q.value="";PE.q="";this.hidden=true;peFilter();q.focus()};
 $("#tzpu").onclick=function(){PE.uns=!PE.uns;this.classList.toggle("on",PE.uns);peFilter()};
-$("#tzpg").onclick=function(e){var b=e.target.closest(".tzpi");if(!b)return;var id=b.dataset.id;if(PE.sel[id])delete PE.sel[id];else PE.sel[id]=1;b.classList.toggle("sel",!!PE.sel[id]);peCount()};
+function peIds(){return peVis().map(function(c){return c.dataset.id})}
+function peOpenQ(id){var ids=peIds();if(ids.indexOf(id)<0)ids=[id];Q.openIn(id,ids)}
+var pePopId=null,pePopOn=false,peSup=0;
+function pePopClose(){pePopOn=false;pePopId=null;$("#tzqp").classList.remove("on");[].forEach.call(document.querySelectorAll("#tzpg .qi.pk"),function(c){c.classList.remove("pk")})}
+function pePopOpen(card,x,y){
+  pePopClose();pePopOn=true;pePopId=card.dataset.id;card.classList.add("pk");
+  var P=$("#tzqp"),W=window.innerWidth,H=window.innerHeight,w=P.offsetWidth,h=P.offsetHeight,m=12;
+  var l=x+20;if(l+w>W-m)l=x-20-w;l=Math.max(m,Math.min(l,W-w-m));
+  var tp=Math.max(m,Math.min(y-24,H-h-m));
+  P.style.left=l+"px";P.style.top=tp+"px";P.style.transformOrigin=(x-l)+"px "+(y-tp)+"px";
+  void P.offsetWidth;P.classList.add("on");
+}
+$("#tzqp").onclick=function(e){
+  var b=e.target.closest("button");if(!b||!pePopOn)return;var a=b.getAttribute("data-a"),id=pePopId;pePopClose();
+  if(a==="o")peOpenQ(id);
+  else if(a==="s"){var c=[].filter.call($("#tzpg").children,function(x){return x.dataset.id===id})[0];if(c){PE.sel[id]=1;c.classList.add("sel");peCount()}}
+};
+document.addEventListener("pointerdown",function(e){if(pePopOn&&!e.target.closest("#tzqp")){pePopClose();peSup=Date.now()}},true);
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&pePopOn)pePopClose()});
+$(".tzpgw").addEventListener("scroll",function(){if(pePopOn)pePopClose()});
+$("#tzpg").onclick=function(e){
+  var b=e.target.closest(".qi");if(!b)return;
+  if(peSup>1&&Date.now()-peSup<400)return;
+  var id=b.dataset.id;
+  if(Object.keys(PE.sel).length){if(PE.sel[id])delete PE.sel[id];else PE.sel[id]=1;b.classList.toggle("sel",!!PE.sel[id]);peCount()}
+  else peOpenQ(id);
+};
+(function(){
+  var g=$("#tzpg"),t=0,sx=0,sy=0,tg=null,LP=450;
+  function cancel(){clearTimeout(t);t=0;tg=null}
+  g.addEventListener("pointerdown",function(e){
+    var q=e.target.closest(".qi");if(!q||e.button>0||Object.keys(PE.sel).length)return;
+    sx=e.clientX;sy=e.clientY;tg=q;
+    t=setTimeout(function(){t=0;if(!tg)return;var card=tg;tg=null;peSup=1;try{navigator.vibrate&&navigator.vibrate(12)}catch(x){}pePopOpen(card,sx,sy)},LP);
+  });
+  g.addEventListener("pointermove",function(e){if(t&&(Math.abs(e.clientX-sx)>10||Math.abs(e.clientY-sy)>10))cancel()});
+  ["pointerup","pointercancel","pointerleave"].forEach(function(n){g.addEventListener(n,function(){if(n==="pointerup"&&peSup===1)peSup=Date.now();cancel()})});
+  g.addEventListener("contextmenu",function(e){if(e.target.closest(".qi"))e.preventDefault()});
+})();
 $("#tzpa").onclick=function(){var v=peVis(),all=v.length&&v.every(function(c){return PE.sel[c.dataset.id]});peSetMany(v,!all);peCount()};
 $("#tzpz").onclick=function(){peSetMany([].filter.call($("#tzpg").children,function(c){return PE.sel[c.dataset.id]}),false);PE.sel={};peCount()};
 $("#tzpks").onclick=peSave;
