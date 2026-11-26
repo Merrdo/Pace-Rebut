@@ -1445,6 +1445,14 @@ html,body,*{scrollbar-width:none!important;-ms-overflow-style:none!important;scr
 /* Kartlarda yuvarlak kırpma maskesi yerine resmin kendi köşe yuvarlaması: her kart için ayrı kırpma katmanı gerekmez */
 .qi{overflow:visible}
 .qi>img{border-radius:inherit}
+
+/* Yumuşak filtre geçişleri */
+.qgh{contain:none}
+.qnr:not([hidden]){animation:qsoft .45s cubic-bezier(.22,.8,.25,1) both}
+@keyframes qsoft{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.qsr:not([hidden]),.qsx:not([hidden]),.tzpfn:not([hidden]){animation:qsoftf .3s ease both}
+@keyframes qsoftf{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.qnr:not([hidden]),.qsr:not([hidden]),.qsx:not([hidden]),.tzpfn:not([hidden]){animation:none}}
 </style>
 </head>
 <body>
@@ -2989,11 +2997,41 @@ var VLO=null,TMO=null;
 function VL(){var a=[];if(VLO){var m={};ITEMS.forEach(function(it,i){m[it.id]=i});VLO.forEach(function(id){if(m[id]!=null)a.push(m[id])});return a}for(var i=0;i<ITEMS.length;i++)if(match(ITEMS[i]))a.push(i);return a}
 function go(d){var L=VL(),p=L.indexOf(cur);if(p<0)return;var j=L[p+d];if(j!=null)view(j,d)}
 function warmN(L,p){if(L[p+1]!=null)warm(L[p+1]);if(L[p-1]!=null)warm(L[p-1])}
+/* Yumuşak filtre: kalan kartlar yeni yerine kayar, gelenler belirir, giden kartlar solarak çıkar */
+function softGrid(g,fn){
+  if(!g){fn();return}
+  var rm=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(rm||!g.animate){fn();return}
+  var kids=[].filter.call(g.children,function(c){return!c.classList.contains("qgh")}),
+      gr=g.getBoundingClientRect(),vh=window.innerHeight||800,first=new Map();
+  if(getComputedStyle(g).position==="static")g.style.position="relative";
+  kids.forEach(function(c){if(!c.hidden)first.set(c,c.getBoundingClientRect())});
+  fn();
+  var ease="cubic-bezier(.22,.8,.25,1)",vis=function(r){return r.bottom>-120&&r.top<vh+120},ni=0;
+  kids.forEach(function(c){
+    var was=first.get(c);
+    if(was&&!c.hidden){
+      var r=c.getBoundingClientRect(),dx=was.left-r.left,dy=was.top-r.top;
+      if((Math.abs(dx)>1||Math.abs(dy)>1)&&(vis(r)||vis(was)))
+        c.animate([{transform:"translate("+dx+"px,"+dy+"px)"},{transform:"none"}],{duration:460,easing:ease});
+    }else if(!was&&!c.hidden){
+      var r2=c.getBoundingClientRect();
+      if(vis(r2))c.animate([{opacity:0,transform:"scale(.92)"},{opacity:1,transform:"none"}],{duration:420,delay:Math.min(ni++,8)*22,easing:ease,fill:"backwards"});
+    }else if(was&&c.hidden&&vis(was)){
+      var gh=c.cloneNode(true);gh.hidden=false;gh.classList.add("qgh");gh.removeAttribute("id");gh.setAttribute("aria-hidden","true");gh.tabIndex=-1;
+      gh.style.cssText="position:absolute;margin:0;pointer-events:none;z-index:0;left:"+(was.left-gr.left)+"px;top:"+(was.top-gr.top)+"px;width:"+was.width+"px;height:"+was.height+"px";
+      g.appendChild(gh);
+      var a=gh.animate([{opacity:1,transform:"none"},{opacity:0,transform:"scale(.92)"}],{duration:260,easing:"ease-out",fill:"forwards"});
+      a.onfinish=a.oncancel=function(){if(gh.parentNode)gh.parentNode.removeChild(gh)};
+    }
+  });
+}
 function applyFilter(){
   var q=$("#qsi").value,n=0;QT=norm(q).replace(/[^a-z0-9]+/g," ").split(" ").filter(Boolean);
   $("#qsx").hidden=!q;$("#qsr").hidden=!ITEMS.length;
   var g=$("#qbody .qg");
-  if(g){var k=g.children;for(var i=0;i<k.length&&i<ITEMS.length;i++){var m=match(ITEMS[i]);if(k[i].hidden===m)k[i].hidden=!m;if(m)n++}}
+  if(g){var k=g.children,fl=[];for(var i=0;i<k.length&&i<ITEMS.length;i++){var m=match(ITEMS[i]);fl.push(m);if(m)n++}
+    softGrid(g,function(){for(var j=0;j<fl.length;j++)if(k[j].hidden===fl[j])k[j].hidden=!fl[j]})}
   var e=$("#qnr");if(e){e.hidden=!(ITEMS.length&&(QT.length||UNS)&&!n);
     var nb=e.querySelector("b"),ns=e.querySelector("span");
     if(UNS&&!QT.length){nb.textContent="Çözülmeyen soru kalmadı";ns.textContent="Hepsini çözdün. Filtreyi kapatarak tüm soruları görebilirsin."}
@@ -4084,16 +4122,16 @@ function peFClick(e){
   peFUi();peFilter();
 }
 function peClose(){$("#tzp").classList.remove("on");PE.urls.forEach(function(u){URL.revokeObjectURL(u)});PE.urls=[];$("#tzpg").innerHTML=""}
-function peVis(){return[].filter.call($("#tzpg").children,function(c){return!c.hidden})}
+function peVis(){return[].filter.call($("#tzpg").children,function(c){return!c.hidden&&!c.classList.contains("qgh")})}
 function peFilter(){
   var qs=ordNorm(PE.q).split(" ").filter(Boolean);
-  [].forEach.call($("#tzpg").children,function(c){
-    var it=imap()[c.dataset.id],ok=true;
+  var pk=[].filter.call($("#tzpg").children,function(c){return!c.classList.contains("qgh")}),pm=imap(),pf=pk.map(function(c){
+    var it=pm[c.dataset.id],ok=true;
     if(peFOn()&&!PE.fg[c.dataset.g]&&!PE.fd[c.dataset.f])ok=false;
     if(ok&&PE.uns&&it&&it.solved)ok=false;
     if(ok)for(var i=0;i<qs.length;i++)if(c._h.indexOf(" "+qs[i])<0){ok=false;break}
-    c.hidden=!ok;
-  });
+    return ok});
+  softGrid($("#tzpg"),function(){pk.forEach(function(c,i){c.hidden=!pf[i]})});
   peCount();
 }
 function peSetMany(list,on){
@@ -4524,7 +4562,7 @@ function pePopOpen(card,x,y){
 $("#tzqp").onclick=function(e){
   var b=e.target.closest("button");if(!b||!pePopOn)return;var a=b.getAttribute("data-a"),id=pePopId;pePopClose();
   if(a==="o")peOpenQ(id);
-  else if(a==="s"){var c=[].filter.call($("#tzpg").children,function(x){return x.dataset.id===id})[0];if(c){PE.sel[id]=1;c.classList.add("sel");peCount()}}
+  else if(a==="s"){var c=[].filter.call($("#tzpg").children,function(x){return x.dataset.id===id&&!x.classList.contains("qgh")})[0];if(c){PE.sel[id]=1;c.classList.add("sel");peCount()}}
 };
 document.addEventListener("pointerdown",function(e){if(pePopOn&&!e.target.closest("#tzqp")){pePopClose();peSup=Date.now()}},true);
 document.addEventListener("keydown",function(e){if(e.key==="Escape"&&pePopOn)pePopClose()});
@@ -4549,7 +4587,7 @@ $("#tzpg").onclick=function(e){
   g.addEventListener("contextmenu",function(e){if(e.target.closest(".qi"))e.preventDefault()});
 })();
 $("#tzpa").onclick=function(){var v=peVis(),all=v.length&&v.every(function(c){return PE.sel[c.dataset.id]});peSetMany(v,!all);peCount()};
-$("#tzpz").onclick=function(){peSetMany([].filter.call($("#tzpg").children,function(c){return PE.sel[c.dataset.id]}),false);PE.sel={};peCount()};
+$("#tzpz").onclick=function(){peSetMany([].filter.call($("#tzpg").children,function(c){return PE.sel[c.dataset.id]&&!c.classList.contains("qgh")}),false);PE.sel={};peCount()};
 $("#tzpks").onclick=peSave;
 /* Boş bir yere dokununca ders filtresi paneli kapansın */
 document.addEventListener("pointerdown",function(e){var w=$("#tzfm");if(!w||!w.classList.contains("on"))return;if(e.target.closest("#tzfm"))return;peFToggle(false)},true);
