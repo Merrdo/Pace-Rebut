@@ -1266,6 +1266,20 @@ textarea.qfi{height:140px;resize:none}
 #tz .tzh-top{align-items:center;margin-bottom:0}
 #tz #tzt{display:none}
 #tz #tzb{flex:1;min-height:0}
+/* Sayfa geçiş başlığı: seçili koyu, diğerleri soluk */
+#tz .tzn{display:flex;align-items:baseline;gap:26px;min-width:0;white-space:nowrap}
+#tz .tzn button{position:relative;padding:2px 0;font:inherit;font-size:50px;font-weight:800;letter-spacing:-1px;line-height:1;color:var(--fg);opacity:.26;transition:opacity .5s var(--ease),transform .5s var(--sp)}
+#tz .tzn button.on{opacity:1}
+#tz .tzn button:not(.on):active{transform:scale(.95);opacity:.5}
+@media (hover:hover){#tz .tzn button:not(.on):hover{opacity:.5}}
+#tz .tzn button:after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:4px;border-radius:4px;background:var(--fg);transform:scaleX(0);transform-origin:left;transition:transform .55s var(--ease)}
+#tz .tzn button.on:after{transform:scaleX(.28)}
+@media (max-width:700px){#tz .tzn{gap:18px}#tz .tzn button{font-size:34px}}
+/* Sayfa içeriği yumuşak geçiş */
+#tz #tzb{transition:opacity .22s var(--ease),transform .22s var(--ease)}
+#tz #tzb.pgo{opacity:0;transform:translateX(calc(var(--dir,1)*-22px))}
+#tz #tzb.pgi{animation:pgIn .5s var(--ease) backwards}
+@keyframes pgIn{from{opacity:0;transform:translateX(calc(var(--dir,1)*26px))}}
 </style>
 </head>
 <body>
@@ -1374,7 +1388,7 @@ textarea.qfi{height:140px;resize:none}
     </div>
   </div>
   <div class="tz" id="tz" role="dialog" aria-modal="true" aria-label="Test ve paketler"><div class="tzw">
-    <div class="tzh tzh-top"><h1>Test</h1><button class="qb" id="tzx" type="button">Kapat</button></div>
+    <div class="tzh tzh-top"><h1 class="tzn" id="tzn" role="tablist" aria-label="Test sayfaları"><button type="button" role="tab" data-t="gen" class="on" aria-selected="true">Test</button><button type="button" role="tab" data-t="pk" aria-selected="false">Paketler</button><button type="button" role="tab" data-t="hi" aria-selected="false">Geçmiş</button></h1><button class="qb" id="tzx" type="button">Kapat</button></div>
     <div class="tzg" id="tzt" hidden><button type="button" data-t="gen">Test oluştur</button><button type="button" data-t="pk">Paketler</button><button type="button" data-t="hi">Geçmiş</button></div>
     <div id="tzb"></div>
   </div></div>
@@ -3683,7 +3697,7 @@ function hubOpen(tab){if(tab)HUB.tab=tab;HUB.k=null;PSL.on=false;PSL.ids={};tpCl
 function hubClose(){$("#tz").classList.remove("on");tpClose();PSL.on=false;PSL.ids={}}
 function hubRender(){
   if(HUB.tab!=="pk"&&PSL.on){PSL.on=false;PSL.ids={}}
-  [].forEach.call(document.querySelectorAll("#tzt button"),function(b){b.classList.toggle("on",b.dataset.t===HUB.tab)});
+  [].forEach.call(document.querySelectorAll("#tzt button,#tzn button"),function(b){var o=b.dataset.t===HUB.tab;b.classList.toggle("on",o);if(b.closest("#tzn"))b.setAttribute("aria-selected",o)});
   var b=$("#tzb"),t=document.createElement("div");
   /* Sayfa su an bos (yeniden tasarim): eski render'lar devre disi */
   if(false){if(HUB.tab==="gen")rGen(t);else if(HUB.tab==="pk")rPk(t);else rHi(t)}
@@ -4178,6 +4192,21 @@ $("#tzm").addEventListener("click",function(e){
 
 /* ---------- Olaylar ---------- */
 $("#tzx").onclick=hubClose;
+var HUBORD=["gen","pk","hi"],hubBusy=0;
+function hubGo(tab){
+  if(tab===HUB.tab||hubBusy)return;
+  var body=$("#tzb"),dir=HUBORD.indexOf(tab)>HUBORD.indexOf(HUB.tab)?1:-1;
+  hubBusy=1;body.style.setProperty("--dir",dir);
+  HUB.tab=tab;
+  [].forEach.call(document.querySelectorAll("#tzn button"),function(b){var o=b.dataset.t===tab;b.classList.toggle("on",o);b.setAttribute("aria-selected",o)});
+  body.classList.remove("pgi");body.classList.add("pgo");
+  setTimeout(function(){
+    hubRender();$("#tz").scrollTop=0;
+    body.classList.remove("pgo");void body.offsetWidth;body.classList.add("pgi");
+    setTimeout(function(){body.classList.remove("pgi");hubBusy=0},520);
+  },220);
+}
+$("#tzn").addEventListener("click",function(e){var b=e.target.closest("button");if(b)hubGo(b.dataset.t)});
 $("#tzt").onclick=function(e){var b=e.target.closest("button");if(!b)return;HUB.tab=b.dataset.t;hubRender();$("#tz").scrollTop=0};
 $("#tzb").addEventListener("click",function(e){
   var t=e.target,b;
