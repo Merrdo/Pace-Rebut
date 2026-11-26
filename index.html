@@ -1276,20 +1276,9 @@ textarea.qfi{height:140px;resize:none}
 #tz .tzn button.on:after{transform:scaleX(.28)}
 @media (max-width:700px){#tz .tzn{gap:18px}#tz .tzn button{font-size:34px}}
 /* Paket kartı: büyük ad, küçük düğmeler, kırmızı pin */
-#tz .tzpk{min-height:196px;padding:22px 22px 20px}
+#tz .tzpk{min-height:170px;padding:22px 22px 20px}
 #tz .tzpk[style]{background:#fff;background:color-mix(in srgb,var(--c) 13%,var(--surf))}
-#tz .tzpk.hv .tzpt2,#tz .tzpk.hv .tzpn{margin-right:150px}
 #tz .tzsec{margin:6px 2px 12px}#tz .tzpg+.tzsec{margin-top:26px}
-.tzcl{position:absolute;top:20px;right:24px;display:flex;align-items:center;pointer-events:none}
-.tzcl img{flex:none;width:62px;height:84px;object-fit:cover;object-position:50% 30%;background:var(--surf2);border-radius:11px;border:0;box-shadow:0 8px 14px -6px rgba(17,17,17,.4);transition:transform .5s var(--sp)}
-.tzcl img+img{margin-left:-38px}
-.tzcl img:nth-last-child(3){transform:rotate(-8deg) translateY(3px)}
-.tzcl img:nth-last-child(2){transform:rotate(-2deg) translateY(-1px)}
-.tzcl img:last-child{transform:rotate(5deg);z-index:2}
-.tzcl img:only-child{transform:rotate(4deg)}
-.tzcl img:nth-last-child(2):first-child{transform:rotate(-5deg) translateY(2px)}
-.tzpk:active .tzcl img:nth-last-child(3){transform:rotate(-12deg) translate(-4px,3px)}
-.tzpk:active .tzcl img:nth-last-child(2){transform:rotate(-5deg) translate(-2px,-1px)}
 #tz .tzpk h3{font-size:27px;line-height:1.08;letter-spacing:-.4px;-webkit-line-clamp:2;line-clamp:2}
 #tz .tzpk .tzpn{margin-top:6px}
 #tz .tzpk .tzpn b{font-size:15px;font-weight:700;color:var(--dim)}
@@ -3813,8 +3802,6 @@ function sum(rec){var o={c:0,w:0,b:0,u:0};rec.items.forEach(function(x){o[x.st]+
 function rpct(rec){var s=sum(rec),d=rec.items.length-s.u;return d>0?Math.round(s.c/d*100):null}
 function pkStat(p){var r=pkRecs(p.id),ps=r.map(rpct).filter(function(x){return x!=null});return{n:r.length,last:r[r.length-1],best:ps.length?Math.max.apply(null,ps):null,avg:ps.length?Math.round(ps.reduce(function(a,b){return a+b},0)/ps.length):null,recs:r}}
 var PSL={on:false,ids:{},sup:0},TCK='<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
-var PKTH={};
-function pkThumb(it){var bl=it&&(it.thumb||it.blob);if(!bl)return"";var c=PKTH[it.id];if(!c||c.b!==bl){if(c)URL.revokeObjectURL(c.u);c=PKTH[it.id]={b:bl,u:URL.createObjectURL(bl)}}return c.u}
 var PKCOLS=["#ff90e8","#ff8a7a","#ffb454","#ffd84a","#7ddc9b","#6ec6ff","#a998ff"];
 function pkDom(p,im){
   var cnt={},best=null,bn=0;
@@ -3824,9 +3811,7 @@ function pkDom(p,im){
 function pkCol(p,im){return p.col||pkDom(p,im)}
 function pkCard(p,im,sm){
   var ex=p.ids.filter(function(i){return im[i]}),on=!!PSL.ids[p.id],best=pkCol(p,im);
-  var pics=ex.slice(0,3).map(function(i){return pkThumb(im[i])}).filter(Boolean).reverse();
-  var h='<div class="tzpk'+(sm?" sm":"")+(on?" sel":"")+(pics.length?" hv":"")+'" data-id="'+p.id+'"'+(best?' style="--c:'+best+'"':'')+'>';
-  if(pics.length)h+='<div class="tzcl n'+pics.length+'" aria-hidden="true">'+pics.map(function(u){return'<img alt="" decoding="async" draggable="false" src="'+u+'">'}).join("")+'</div>';
+  var h='<div class="tzpk'+(sm?" sm":"")+(on?" sel":"")+'" data-id="'+p.id+'"'+(best?' style="--c:'+best+'"':'')+'>';
   h+='<div class="tzpt2"><span class="tzpc">'+TCK+'</span><h3>'+esc(p.name)+'</h3></div><div class="tzpn"><b>'+ex.length+'</b><i>soru</i></div>';
   h+='<div class="ac"><button class="tzb pr" type="button" data-a="go"'+(ex.length&&!sm?"":" disabled")+'>Başlat</button><button class="tzb" type="button" data-a="st"'+(sm?" disabled":"")+'>İstatistik</button></div></div>';
   return h;
