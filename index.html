@@ -4502,6 +4502,9 @@ $("#tzpx").onclick=peClose;
 $("#tzpf").onclick=peFClick;
 $("#tzpfb").onclick=function(){peFToggle()};
 $("#tzpn").addEventListener("input",peTitle);
+/* Enter / Tamam: isim girişini bitirir (imleç gider, klavye kapanır) */
+$("#tzpn").setAttribute("enterkeyhint","done");
+$("#tzpn").addEventListener("keydown",function(e){if(e.key==="Enter"||e.keyCode===13){if(e.isComposing)return;e.preventDefault();this.blur()}});
 $("#tzps").addEventListener("input",function(){PE.q=this.value;$("#tzpsx").hidden=!this.value;peFilter()});
 $("#tzpsx").onclick=function(){var q=$("#tzps");q.value="";PE.q="";this.hidden=true;peFilter();q.focus()};
 $("#tzpu").onclick=function(){PE.uns=!PE.uns;this.classList.toggle("on",PE.uns);this.setAttribute("aria-pressed",PE.uns?"true":"false");peFilter()};
