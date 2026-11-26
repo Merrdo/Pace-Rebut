@@ -723,7 +723,7 @@ textarea.qfi{height:140px;resize:none}
 .qsx svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round}
 .qi[hidden]{display:none}
 .qi{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;touch-action:manipulation}
-.qi::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 0 var(--fg);background:rgba(17,17,17,0);pointer-events:none;transition:box-shadow .25s var(--ease),background .25s var(--ease)}
+.qi::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 4px var(--fg);background:rgba(17,17,17,.12);opacity:0;pointer-events:none;transition:opacity .25s var(--ease)}
 .qi .qck{position:absolute;right:8px;top:8px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.92);box-shadow:inset 0 0 0 2px #111;display:none;place-items:center;transition:transform .35s var(--sp)}
 .qi .qck svg{width:16px;height:16px;fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;opacity:0}
 .qg.sm .qi .qck{display:grid}
@@ -731,7 +731,7 @@ textarea.qfi{height:140px;resize:none}
 .qi.sel{transform:scale(.94)}
 /* Kök neden düzeltmesi: yüzlerce kart (yuvarlak kırpma + gölge + katman) sayfa girişinde/çıkışında hepsi birden boyanıyor ve çözülüyordu. Ekran dışındaki kartlar artık hiç boyanmaz, resimleri çözülmez. */
 .qi{content-visibility:auto;contain-intrinsic-size:auto 220px}
-.qi.sel::after{box-shadow:inset 0 0 0 4px var(--fg);background:rgba(17,17,17,.12)}
+.qi.sel::after{opacity:1}
 .qi.sel .qck{background:#111}
 .qi.sel .qck svg{opacity:1}
 .qbar{position:fixed;left:50%;bottom:calc(var(--nav-gap) + env(safe-area-inset-bottom,0px));transform:translate(-50%,160%);z-index:6;display:flex;align-items:center;gap:8px;max-width:calc(100vw - 24px);padding:6px;border-radius:999px;background:#111;color:#fff;box-shadow:0 14px 30px -10px rgba(17,17,17,.45);opacity:0;pointer-events:none;transition:transform .6s var(--ease),opacity .35s var(--ease)}
@@ -760,7 +760,7 @@ textarea.qfi{height:140px;resize:none}
 .qi.pk{transform:scale(.95)}
 /* Ekran dışı kartlarda toplu seçimde geçiş çalışmasın (performans) */
 .qi.nt,.qi.nt::after,.qi.nt .qck,.qi.nt .qok,.qi.nt .qok svg{transition:none!important}
-.qi.pk::after{box-shadow:inset 0 0 0 4px var(--fg);background:rgba(17,17,17,.12)}
+.qi.pk::after{opacity:1}
 .lpm{display:flex;gap:8px;margin-top:12px}
 .lpm button{flex:1;height:46px;border-radius:14px;background:var(--surf2);font-weight:700;font-size:15px;transition:transform .35s var(--sp)}
 .lpm button:active{transform:scale(.96)}
