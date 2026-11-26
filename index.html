@@ -1319,6 +1319,10 @@ html,body,*{scrollbar-width:none!important;-ms-overflow-style:none!important;scr
 /* Sistem/overlay kaydırma çubuğu CSS ile kapanmıyorsa: kaydırıcının sağ kenarını 48px ekran dışına taşı, çubuk görünmez olsun */
 .tz,.tzs{right:-48px;padding-right:48px}
 .sheet{right:-48px;padding-right:72px}
+/* Sorular sekmesi: giriş/çıkışta sadece opacity geçişi. Büyük resim ızgarasında scale() katmanı yeniden rasterlatıp takılma yapıyordu */
+#v-questions{transform:none!important;transition:opacity .3s var(--ease),visibility 0s .3s}
+#v-questions.on{transition-delay:0s}
+#v-questions.warm:not(.on){transition:none}
 </style>
 </head>
 <body>
