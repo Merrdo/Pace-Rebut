@@ -965,42 +965,69 @@ textarea.qfi{height:140px;resize:none}
 .tzni{display:block;width:100%;height:44px;padding:0 16px;border:0;border-radius:999px;background:var(--surf);color:var(--fg);font:700 16px Inter,system-ui,sans-serif;box-shadow:inset 0 0 0 2px transparent;-webkit-user-select:text;user-select:text}
 .tzni:focus{outline:0;box-shadow:inset 0 0 0 2px var(--fg)}
 .tzp .fl.pr,.tzr .fl.pr{background:var(--fg);color:var(--bg)}
-/* Paket editörü: başlık, ders filtresi paneli, arama */
-.tzph{display:flex;align-items:flex-start;gap:14px;padding:calc(26px + env(safe-area-inset-top,0px)) 24px 14px}
-.tzpti{flex:1;min-width:0;display:block;height:auto;padding:2px 0;border:0;border-radius:0;background:transparent;box-shadow:none;color:var(--fg);caret-color:var(--fg);font:800 46px/1.1 "Baloo 2",ui-rounded,system-ui,sans-serif;letter-spacing:-1px;text-overflow:ellipsis;-webkit-user-select:text;user-select:text}
+/* Paket editörü: başlık satırı, arama + filtre satırı, ders paneli */
+.tzph{display:flex;align-items:flex-end;gap:14px;padding:calc(22px + env(safe-area-inset-top,0px)) 24px 10px}
+.tzptw{flex:1;min-width:0;display:flex;align-items:baseline;gap:12px}
+.tzpts{display:inline-grid;min-width:0;max-width:100%}
+.tzptm,.tzpti{grid-area:1/1;padding:2px 3px 2px 0;font:800 46px/1.1 "Baloo 2",ui-rounded,system-ui,sans-serif;letter-spacing:-1px}
+.tzptm{visibility:hidden;white-space:pre;overflow:hidden;pointer-events:none}
+.tzpti{display:block;width:0;min-width:100%;height:auto;border:0;border-radius:0;background:transparent;box-shadow:none;color:var(--fg);caret-color:var(--fg);text-overflow:ellipsis;-webkit-user-select:text;user-select:text}
 .tzpti::placeholder{color:rgba(17,17,17,.2);opacity:1}
 .tzpti:focus{outline:0}
-.tzpb{flex:none;display:flex;gap:8px;padding-top:6px}
-@media (max-width:560px){.tzpti{font-size:34px}.tzph{padding-left:20px;padding-right:20px}}
-.tzpfr{display:flex;align-items:center;gap:8px;padding:0 20px 10px}
-.tzpfb{position:relative;flex:none;height:44px;padding:0 16px;gap:8px;font-size:15px}
-.tzpfb .cv{width:18px;height:18px;transition:transform .45s var(--ease)}
-.tzpfb[aria-expanded="true"] .cv{transform:rotate(180deg)}
-.tzpfn{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 6px;border-radius:11px;background:var(--fg);color:var(--bg);font:700 12px/1 Inter,system-ui,sans-serif;font-style:normal}
-.tzpfb.on .tzpfn{background:var(--bg);color:var(--fg)}
+.tzpcn{flex:none;font:600 20px Inter,system-ui,sans-serif;font-style:normal;color:var(--dim);font-variant-numeric:tabular-nums;letter-spacing:0}
+.tzpb{flex:none;display:flex;align-items:center;gap:8px;padding-bottom:5px}
+@media (max-width:560px){.tzptm,.tzpti{font-size:32px}.tzph{padding-left:20px;padding-right:20px;flex-wrap:wrap}.tzpcn{font-size:16px}}
+.tzpfr{position:relative;display:flex;align-items:center;gap:10px;padding:2px 24px 12px}
+@media (max-width:560px){.tzpfr{padding-left:20px;padding-right:20px;flex-wrap:wrap}.tzpfr .qsb{flex:1 1 100%}}
+.tzpfr .qsb{flex:1 1 180px}
+.tzpfr .qfi.qsi{height:40px;padding:0 40px 0 40px;font-size:15px}
+.tzpfr .qsb>svg{left:14px;width:18px;height:18px;margin-top:-9px}
+.tzpfr .qsx{width:30px;height:30px;margin-top:-15px;right:5px}
+.tzpfr .tzsv{flex:none}
+@media (max-width:640px){.tzpfr .tzsv span{display:none}.tzpfr .tzsv{padding:0 10px}}
+/* Ders filtresi: Süre sayfasındaki menü gibi genişleyen panel */
+.tzfs{position:relative;z-index:7;flex:none;width:118px;height:40px}
+.tzfm{position:absolute;top:0;right:0;width:118px;display:flex;flex-direction:column;border-radius:22px;background:var(--surf);color:var(--fg);box-shadow:0 6px 16px -8px rgba(17,17,17,.14);overflow:hidden;transition:width .6s var(--ease),box-shadow .5s var(--ease),background .3s var(--ease),color .3s var(--ease)}
+.tzfm.on{width:var(--w1,440px);background:var(--surf);color:var(--fg);box-shadow:0 18px 44px rgba(0,0,0,.14)}
+.tzfm.act:not(.on){background:var(--fg);color:var(--bg)}
+.tzfb{flex:none;display:flex;align-items:center;gap:8px;width:100%;height:40px;padding:0 14px 0 12px;font:700 15px/1 Inter,system-ui,sans-serif;white-space:nowrap;text-align:left;transition:transform .5s var(--sp)}
+.tzfb:active{transform:scale(.97)}
+.tzfi{display:grid;place-items:center;width:20px;height:20px}
+.tzfi svg{grid-area:1/1;width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:opacity .3s var(--ease),transform .6s var(--sp)}
+.tzfi .i-x{opacity:0;transform:rotate(-90deg) scale(.5)}.tzfm.on .tzfi .i-x{opacity:1;transform:none}.tzfm.on .tzfi .i-o{opacity:0;transform:rotate(90deg) scale(.5)}
+.tzpfn{display:inline-grid;place-items:center;min-width:20px;height:20px;margin-left:auto;padding:0 6px;border-radius:10px;background:var(--fg);color:var(--bg);font:700 12px/1 Inter,system-ui,sans-serif;font-style:normal}
+.tzfm.act:not(.on) .tzpfn{background:var(--bg);color:var(--fg)}
 .tzpfn[hidden]{display:none}
-.tzpfr .tzch{height:44px}
-.tzpfw{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s var(--ease)}
-.tzpfw.open{grid-template-rows:1fr}
-.tzpfi{min-height:0;overflow:hidden;padding:0 20px}
-.tzpfs{max-height:min(48dvh,420px);overflow:auto;margin:0 0 10px;padding:16px;border-radius:24px;background:var(--surf);box-shadow:0 6px 16px -10px rgba(17,17,17,.14);display:grid;grid-template-columns:1fr 1fr;gap:20px;opacity:0;transform:translateY(-8px);transition:opacity .3s var(--ease),transform .5s var(--ease);overscroll-behavior:contain}
-.tzpfw.open .tzpfs{opacity:1;transform:none}
-@media (max-width:640px){.tzpfs{grid-template-columns:1fr;gap:16px}}
-.tzfg{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:10px 12px;border-radius:16px;background:var(--surf2);color:var(--fg);transition:background .25s,color .25s,transform .4s var(--sp)}
-.tzfg:active{transform:scale(.97)}
-.tzfg b{font:800 20px/1.1 "Baloo 2",system-ui,sans-serif}
-.tzfg small{flex:1;min-width:0;font:600 12px Inter,system-ui,sans-serif;color:var(--dim);transition:color .25s}
-.tzfg .ck{flex:none;display:grid;place-items:center;width:24px;height:24px;border-radius:50%;box-shadow:inset 0 0 0 2px #cfcbc4;transition:background .25s,box-shadow .25s}
-.tzfg .ck svg{width:14px;height:14px;fill:none;stroke:#fff;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;opacity:0}
-.tzfg.on{background:var(--fg);color:var(--bg)}.tzfg.on small{color:rgba(244,242,238,.65)}
-.tzfg.on .ck{background:#fff;box-shadow:none}.tzfg.on .ck svg{stroke:#111;opacity:1}
-.tzfg:disabled{opacity:.45;pointer-events:none}
-.tzfd{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
-.tzfd .tzch{display:inline-flex;align-items:center;gap:7px;height:36px;padding:0 13px;font-size:14px}
-.tzfd .tzch:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--c,#cfcbc4);flex:none}
-.tzfd .tzch em{font:600 12px Inter,system-ui,sans-serif;font-style:normal;opacity:.6}
-.tzfd .tzch.cov{background:var(--surf2);background:color-mix(in srgb,var(--c) 32%,var(--surf));color:var(--fg);box-shadow:inset 0 0 0 2px var(--fg)}
-.tzfd .tzch.on:before{box-shadow:0 0 0 2px rgba(255,255,255,.9)}
+.tzfw{display:grid;grid-template-rows:0fr;width:100%;visibility:hidden;transition:grid-template-rows .6s var(--ease),visibility 0s .6s}
+.tzfm.on .tzfw{grid-template-rows:1fr;visibility:visible;transition-delay:0s}
+.tzfl{min-height:0;overflow:hidden}
+.tzpfs{display:grid;grid-template-columns:1fr 1fr;gap:0 10px;max-height:min(56dvh,440px);overflow:auto;padding:2px 8px 10px;overscroll-behavior:contain}
+.tzpfs.one{grid-template-columns:1fr}
+.tzfg,.tzfd{display:flex;align-items:center;gap:10px;width:100%;text-align:left;white-space:nowrap;opacity:0;transform:translateY(-8px);transition:opacity .25s var(--ease),transform .4s var(--ease),background .3s var(--ease),color .3s var(--ease)}
+.tzfm.on .tzfg,.tzfm.on .tzfd{opacity:1;transform:none;transition:opacity .45s var(--ease) calc(var(--k,0)*28ms + 140ms),transform .6s var(--sp) calc(var(--k,0)*28ms + 140ms),background .3s var(--ease),color .3s var(--ease)}
+.tzfg{height:44px;margin-top:4px;padding:0 12px;border-radius:16px;color:var(--dim)}
+.tzfg b{font:800 19px/1 "Baloo 2",system-ui,sans-serif;color:inherit}
+.tzfg small{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;font:600 12px Inter,system-ui,sans-serif;color:var(--dim)}
+.tzfg .ck{flex:none;display:grid;place-items:center;width:22px;height:22px}
+.tzfg .ck svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:24;stroke-dashoffset:24;transition:stroke-dashoffset .4s var(--ease)}
+.tzfg.on{color:var(--fg)}.tzfg.on .ck svg{stroke-dashoffset:0}
+.tzfg:disabled{opacity:.4!important;pointer-events:none}
+.tzfd{height:40px;padding:0 12px 0 22px;border-radius:14px;font:700 16px/1 Inter,system-ui,sans-serif;color:var(--dim)}
+.tzfd i{flex:none;width:8px;height:8px;border-radius:50%;background:#d6d2cb;transition:background .3s,transform .5s var(--sp)}
+.tzfd span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.tzfd em{font:600 12px Inter,system-ui,sans-serif;font-style:normal;color:var(--dim);opacity:.7}
+.tzfd.on,.tzfd.cov{color:var(--ct,var(--fg))}
+.tzfd.on i,.tzfd.cov i{background:var(--c,var(--fg));transform:scale(1.35)}
+.tzfg:active,.tzfd:active{background:var(--surf2)}
+@media (hover:hover){.tzfg:hover,.tzfd:hover{background:var(--surf2)}}
+/* sorular: editörde tek satırda 4 kart */
+.tzpgw .qg{grid-template-columns:repeat(4,1fr);gap:12px}
+@media (max-width:900px){.tzpgw .qg{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:560px){.tzpgw .qg{grid-template-columns:repeat(2,1fr)}}
+.tzpgw .qi{border-radius:16px}
+.tzpgw .qi .qdc{height:22px;padding:0 9px;font-size:11px;left:6px;top:6px;border-radius:11px}
+.tzpgw .qi .qck{width:24px;height:24px;right:6px;top:6px}
+.tzpgw .qi .qck svg{width:14px;height:14px}
 /* Paket editörü: sayım satırı, Görünenleri seç, alt seçim paneli */
 .tzpm{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:2px 22px 12px}
 .tzpcn{font:700 14px Inter,system-ui,sans-serif;color:var(--dim);font-variant-numeric:tabular-nums}
@@ -1028,7 +1055,6 @@ textarea.qfi{height:140px;resize:none}
 .tzsbx{background:rgba(255,255,255,.14);color:#fff}
 .tzsbk{background:#fff;color:#111}
 @media (max-width:480px){.tzsbx span{display:none}.tzsbx{width:44px;padding:0!important}}
-.tzpt{padding:0 20px 10px}
 .tzpgw{flex:1;min-height:0;overflow:auto;padding:0 20px calc(30px + env(safe-area-inset-bottom,0px));overscroll-behavior:contain}
 .tzpgd{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 @media (max-width:900px){.tzpgd{grid-template-columns:repeat(3,1fr)}}
@@ -1498,11 +1524,8 @@ html,body,*{scrollbar-width:none!important;-ms-overflow-style:none!important;scr
     <div id="tzb"></div>
   </div></div>
   <div class="tzp" id="tzp" role="dialog" aria-modal="true" aria-label="Paket düzenle">
-    <div class="tzph"><input class="tzpti" id="tzpn" type="text" maxlength="60" placeholder="Paket adı" autocomplete="off" aria-label="Paket adı" enterkeyhint="done"><div class="tzpb"><button class="fl" id="tzpx" type="button">Vazgeç</button></div></div>
-    <div class="tzpfr"><button class="qb tzpfb" id="tzpfb" type="button" aria-expanded="false" aria-controls="tzpf"><svg viewBox="0 0 24 24"><path d="M4 7h9M19 7h1M4 17h1M11 17h9"/><circle cx="16" cy="7" r="2.5"/><circle cx="8" cy="17" r="2.5"/></svg><span id="tzpfl">Ders filtresi</span><i class="tzpfn" id="tzpfn" hidden></i><svg class="cv" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button><button class="tzch" id="tzpu" type="button">Çözülmeyenler</button></div>
-    <div class="tzpfw" id="tzpfw"><div class="tzpfi"><div class="tzpfs" id="tzpf"></div></div></div>
-    <div class="tzpt"><div class="qsb"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input class="qfi qsi" id="tzps" type="text" placeholder="Kaynak veya ders ara…" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" aria-label="Soru ara" maxlength="80"><button class="qsx" id="tzpsx" type="button" aria-label="Aramayı temizle" hidden><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17"/></svg></button></div></div>
-    <div class="tzpm"><span class="tzpcn" id="tzpc"></span><button class="tzsv" id="tzpa" type="button"><svg viewBox="0 0 24 24"><path class="tk" d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Görünenleri seç</span></button></div>
+    <div class="tzph"><div class="tzptw"><div class="tzpts"><span class="tzptm" id="tzptm" aria-hidden="true">Paket adı</span><input class="tzpti" id="tzpn" type="text" maxlength="60" placeholder="Paket adı" autocomplete="off" aria-label="Paket adı" enterkeyhint="done"></div><em class="tzpcn" id="tzpc"></em></div><div class="tzpb"><button class="tzch" id="tzpu" type="button">Çözülmeyenler</button><button class="fl" id="tzpx" type="button">Vazgeç</button></div></div>
+    <div class="tzpfr" id="tzpfr"><div class="qsb"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input class="qfi qsi" id="tzps" type="text" placeholder="Kaynak veya ders ara…" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" aria-label="Soru ara" maxlength="80"><button class="qsx" id="tzpsx" type="button" aria-label="Aramayı temizle" hidden><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17"/></svg></button></div><div class="tzfs" id="tzfs"><div class="tzfm" id="tzfm"><button class="tzfb" id="tzpfb" type="button" aria-expanded="false" aria-controls="tzpf"><span class="tzfi"><svg class="i-o" viewBox="0 0 24 24"><path d="M4 7h9M19 7h1M4 17h1M11 17h9"/><circle cx="16" cy="7" r="2.5"/><circle cx="8" cy="17" r="2.5"/></svg><svg class="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></span><span>Dersler</span><i class="tzpfn" id="tzpfn" hidden></i></button><div class="tzfw"><div class="tzfl"><div class="tzpfs" id="tzpf"></div></div></div></div></div><button class="tzsv" id="tzpa" type="button" aria-label="Görünenleri seç"><svg viewBox="0 0 24 24"><path class="tk" d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Görünenleri seç</span></button></div>
     <div class="tzpgw"><div class="tzpgd" id="tzpg"></div></div>
     <div class="tzsbw" id="tzpbw"><div class="tzsbi"><div class="tzsb" id="tzpbar" role="toolbar" aria-label="Seçili sorular"><button class="tzsbx" id="tzpz" type="button" aria-label="Seçimi temizle"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17"/></svg><span>Temizle</span></button><b id="tzpbn">0 seçili</b><button class="tzsbk" id="tzpks" type="button"><svg viewBox="0 0 24 24"><path class="tk" d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Oluştur</span></button></div></div></div>
   </div>
@@ -3973,17 +3996,18 @@ var PE={id:null,sel:{},fg:{},fd:{},q:"",uns:false,urls:[],keys:{}};
 function peOpen(pack,preset){
   PE={id:pack?pack.id:null,sel:{},fg:{},fd:{},q:"",uns:false,urls:[],keys:{}};
   (pack?pack.ids:(preset||[])).forEach(function(i){PE.sel[i]=1});
-  $("#tzpn").value=pack?pack.name:"";$("#tzps").value="";$("#tzpsx").hidden=true;
-  var its=items(),ds={};its.forEach(function(it){var k=(it.g||"")+"|"+(it.ders||"");if(!ds[k])ds[k]={k:k,g:it.g||"",lab:it.ders||"Ders seçilmemiş",n:0,c:it.ders?Q.lcol(it):"#cfcbc4"};ds[k].n++});
-  var GL={TYT:"Temel Yeterlilik",AYT:"Alan Yeterlilik"},gs=["TYT","AYT"];
+  $("#tzpn").value=pack?pack.name:"";peTitle();$("#tzps").value="";$("#tzpsx").hidden=true;
+  var its=items(),ds={},LS=[];try{LS=window.ddLessons?window.ddLessons():[]}catch(e){}
+  its.forEach(function(it){var k=(it.g||"")+"|"+(it.ders||"");if(!ds[k]){var r=LS.filter(function(l){return l.g===it.g&&l.n===it.ders})[0];ds[k]={k:k,g:it.g||"",lab:it.ders||"Ders seçilmemiş",n:0,c:it.ders?Q.lcol(it):"#cfcbc4",ct:r&&r.ct||""}}ds[k].n++});
+  var GL={TYT:"Temel Yeterlilik",AYT:"Alan Yeterlilik"},gs=["TYT","AYT"],kk=0;
   if(Object.keys(ds).some(function(k){return ds[k].g!=="TYT"&&ds[k].g!=="AYT"}))gs.push("");
   PE.keys=ds;
   $("#tzpf").innerHTML=gs.map(function(g){
     var ks=Object.keys(ds).filter(function(k){return g?ds[k].g===g:(ds[k].g!=="TYT"&&ds[k].g!=="AYT")}).sort(function(x,y){return ds[x].lab.localeCompare(ds[y].lab,"tr")});
     var tot=ks.reduce(function(a,k){return a+ds[k].n},0);
-    return'<section class="tzfc" data-g="'+esc(g)+'"><button type="button" class="tzfg" data-g="'+esc(g)+'"'+(tot?"":" disabled")+'><b>'+(g||"Diğer")+'</b><small>'+(GL[g]?GL[g]+" · ":"")+(tot?tot+" soru":"Soru yok")+'</small><span class="ck">'+TICK+'</span></button><div class="tzfd">'+ks.map(function(k){return'<button type="button" class="tzch" data-d="'+esc(k)+'" style="--c:'+ds[k].c+'">'+esc(ds[k].lab)+' <em>'+ds[k].n+'</em></button>'}).join("")+'</div></section>';
+    return'<section class="tzfc" data-g="'+esc(g)+'"><button type="button" class="tzfg" data-g="'+esc(g)+'" style="--k:'+Math.min(kk++,14)+'"'+(tot?"":" disabled")+'><b>'+(g||"Diğer")+'</b><small>'+(GL[g]?GL[g]+" · ":"")+(tot?tot+" soru":"Soru yok")+'</small><span class="ck">'+TICK+'</span></button>'+ks.map(function(k){return'<button type="button" class="tzfd" data-d="'+esc(k)+'" style="--c:'+ds[k].c+(ds[k].ct?";--ct:"+ds[k].ct:"")+';--k:'+Math.min(kk++,14)+'"><i></i><span>'+esc(ds[k].lab)+'</span><em>'+ds[k].n+'</em></button>'}).join("")+'</section>';
   }).join("");
-  $("#tzpfw").classList.remove("open");$("#tzpfb").setAttribute("aria-expanded","false");
+  peFToggle(false);
   var g=$("#tzpg");g.innerHTML="";g.className="qg";
   its.forEach(function(it){
     var u=URL.createObjectURL(it.thumb||it.blob);PE.urls.push(u);
@@ -4000,15 +4024,16 @@ function peFOn(){return Object.keys(PE.fg).length+Object.keys(PE.fd).length>0}
 function peFUi(){
   [].forEach.call($("#tzpf").querySelectorAll(".tzfg"),function(b){b.classList.toggle("on",!!PE.fg[b.dataset.g])});
   [].forEach.call($("#tzpf").querySelectorAll("[data-d]"),function(b){var k=b.dataset.d,g=PE.keys[k]?PE.keys[k].g:"";b.classList.toggle("on",!!PE.fd[k]);b.classList.toggle("cov",!!PE.fg[g])});
-  var gs=Object.keys(PE.fg),ds=Object.keys(PE.fd),parts=gs.concat(ds.map(function(k){return PE.keys[k].g?PE.keys[k].lab:PE.keys[k].lab}));
-  var n=parts.length,lab="Ders filtresi";
-  if(n===1&&ds.length===1)lab=(PE.keys[ds[0]].g?PE.keys[ds[0]].g+" · ":"")+PE.keys[ds[0]].lab;
-  else if(n===1)lab=gs[0]||"Diğer";
-  else if(n>1)lab=gs.length&&!ds.length?gs.map(function(g){return g||"Diğer"}).join(" + "):"Ders filtresi";
-  $("#tzpfl").textContent=lab;
-  var bn=$("#tzpfn");bn.hidden=!(n>1&&!(gs.length&&!ds.length));if(!bn.hidden)bn.textContent=n;
-  $("#tzpfb").classList.toggle("on",n>0);
+  var n=Object.keys(PE.fg).length+Object.keys(PE.fd).length,bn=$("#tzpfn");
+  bn.hidden=!n;if(n)bn.textContent=n;
+  $("#tzfm").classList.toggle("act",n>0);
 }
+function peFToggle(on){
+  var m=$("#tzfm"),sl=$("#tzfs");if(on===undefined)on=!m.classList.contains("on");
+  if(on){var w=Math.max(220,Math.min(460,Math.round(sl.getBoundingClientRect().right-12)));m.style.setProperty("--w1",w+"px");$("#tzpf").classList.toggle("one",w<400)}
+  m.classList.toggle("on",!!on);$("#tzpfb").setAttribute("aria-expanded",on?"true":"false");
+}
+function peTitle(){var i=$("#tzpn");$("#tzptm").textContent=i.value||i.placeholder}
 function peFClick(e){
   var cb=e.target.closest(".tzfg"),db=e.target.closest("[data-d]");
   if(cb){
@@ -4440,7 +4465,8 @@ $("#tzb").addEventListener("focusout",function(e){if(e.target.id==="tzni")setTim
 $("#tzb").addEventListener("change",function(e){if(e.target.dataset&&e.target.dataset.pk!=null)hubRender()});
 $("#tzpx").onclick=peClose;
 $("#tzpf").onclick=peFClick;
-$("#tzpfb").onclick=function(){var w=$("#tzpfw"),o=!w.classList.contains("open");w.classList.toggle("open",o);this.setAttribute("aria-expanded",o?"true":"false")};
+$("#tzpfb").onclick=function(){peFToggle()};
+$("#tzpn").addEventListener("input",peTitle);
 $("#tzps").addEventListener("input",function(){PE.q=this.value;$("#tzpsx").hidden=!this.value;peFilter()});
 $("#tzpsx").onclick=function(){var q=$("#tzps");q.value="";PE.q="";this.hidden=true;peFilter();q.focus()};
 $("#tzpu").onclick=function(){PE.uns=!PE.uns;this.classList.toggle("on",PE.uns);peFilter()};
@@ -4487,7 +4513,7 @@ $("#tzpa").onclick=function(){var v=peVis(),all=v.length&&v.every(function(c){re
 $("#tzpz").onclick=function(){peSetMany([].filter.call($("#tzpg").children,function(c){return PE.sel[c.dataset.id]}),false);PE.sel={};peCount()};
 $("#tzpks").onclick=peSave;
 /* Boş bir yere dokununca ders filtresi paneli kapansın */
-document.addEventListener("pointerdown",function(e){var w=$("#tzpfw");if(!w||!w.classList.contains("open"))return;if(e.target.closest("#tzpfw,#tzpfb"))return;w.classList.remove("open");$("#tzpfb").setAttribute("aria-expanded","false")},true);
+document.addEventListener("pointerdown",function(e){var w=$("#tzfm");if(!w||!w.classList.contains("on"))return;if(e.target.closest("#tzfm"))return;peFToggle(false)},true);
 $("#tzri").onclick=function(){tmOpen(false)};
 $("#tzrz").onclick=function(){tmOpen(true)};
 $("#tzra").addEventListener("click",function(e){var b=e.target.closest("[data-l]");if(!b||!R)return;var l=b.dataset.l,id=R.ids[R.idx];runAns(ansOf(id)===l?"":l);paintRunAns()});
