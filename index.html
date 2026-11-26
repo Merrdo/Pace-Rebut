@@ -749,7 +749,7 @@ textarea.qfi{height:140px;resize:none}
 .qbar .qbd.holding{color:#111!important}
 [data-hold].shake{animation:hshake .38s}
 @keyframes hshake{20%{transform:translateX(-5px)}45%{transform:translateX(5px)}70%{transform:translateX(-3px)}100%{transform:none}}
-.qpop{position:fixed;left:0;top:0;z-index:15;min-width:210px;padding:6px;border-radius:22px;background:rgba(255,255,255,.94);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:0 18px 40px -12px rgba(17,17,17,.4),0 0 0 1px rgba(17,17,17,.06);visibility:hidden;opacity:0;transform:scale(.7);transition:transform .45s var(--sp),opacity .2s,visibility 0s .45s;pointer-events:none}
+.qpop{position:fixed;left:0;top:0;z-index:15;min-width:210px;padding:6px;border-radius:22px;background:#fff;will-change:transform,opacity;box-shadow:0 18px 40px -12px rgba(17,17,17,.4),0 0 0 1px rgba(17,17,17,.06);visibility:hidden;opacity:0;transform:scale(.7);transition:transform .45s var(--sp),opacity .2s,visibility 0s .45s;pointer-events:none}
 .qpop.on{visibility:visible;opacity:1;transform:none;pointer-events:auto;transition:transform .45s var(--sp),opacity .2s}
 .qpop button{display:flex;align-items:center;gap:12px;width:100%;height:48px;padding:0 14px;border-radius:16px;font:700 16px/1 Inter,system-ui,sans-serif;color:var(--fg);text-align:left;transition:background .2s,transform .3s var(--sp)}
 .qpop button:active{background:var(--surf2);transform:scale(.97)}
@@ -758,6 +758,8 @@ textarea.qfi{height:140px;resize:none}
 .qpop .dg{color:#d12f35}
 .qpop hr{height:1px;margin:4px 8px;border:0;background:rgba(17,17,17,.1)}
 .qi.pk{transform:scale(.95)}
+/* Ekran dışı kartlarda toplu seçimde geçiş çalışmasın (performans) */
+.qi.nt,.qi.nt::after,.qi.nt .qck,.qi.nt .qok,.qi.nt .qok svg{transition:none!important}
 .qi.pk::after{box-shadow:inset 0 0 0 4px var(--fg);background:rgba(17,17,17,.12)}
 .lpm{display:flex;gap:8px;margin-top:12px}
 .lpm button{flex:1;height:46px;border-radius:14px;background:var(--surf2);font-weight:700;font-size:15px;transition:transform .35s var(--sp)}
@@ -987,7 +989,7 @@ textarea.qfi{height:140px;resize:none}
 @media (max-width:640px){.tzpfr .tzsv span{display:none}.tzpfr .tzsv{padding:0 10px}}
 /* Ders filtresi: Süre sayfasındaki menü gibi genişleyen panel */
 .tzfs{position:relative;z-index:7;flex:none;width:136px;height:40px}
-.tzfm{position:absolute;top:0;right:0;width:136px;display:flex;flex-direction:column;border-radius:22px;background:var(--surf);color:var(--fg);box-shadow:0 6px 16px -8px rgba(17,17,17,.14);overflow:hidden;transition:width .6s var(--ease),box-shadow .5s var(--ease),background .3s var(--ease),color .3s var(--ease)}
+.tzfm{position:absolute;top:0;right:0;width:136px;transform:translateZ(0);display:flex;flex-direction:column;border-radius:22px;background:var(--surf);color:var(--fg);box-shadow:0 6px 16px -8px rgba(17,17,17,.14);overflow:hidden;transition:width .6s var(--ease),box-shadow .5s var(--ease),background .3s var(--ease),color .3s var(--ease)}
 .tzfm.on{width:var(--w1,520px);background:var(--surf);color:var(--fg);box-shadow:0 18px 44px rgba(0,0,0,.14)}
 .tzfm.act:not(.on){box-shadow:0 6px 16px -8px rgba(17,17,17,.14),inset 0 0 0 2px var(--fg)}
 .tzfb{flex:none;display:flex;align-items:center;gap:8px;width:100%;height:40px;padding:0 14px 0 12px;font:700 15px/1 Inter,system-ui,sans-serif;white-space:nowrap;text-align:left;transition:transform .5s var(--sp)}
@@ -997,7 +999,7 @@ textarea.qfi{height:140px;resize:none}
 .tzfi .i-x{opacity:0;transform:rotate(-90deg) scale(.5)}.tzfm.on .tzfi .i-x{opacity:1;transform:none}.tzfm.on .tzfi .i-o{opacity:0;transform:rotate(90deg) scale(.5)}
 .tzpfn{display:inline-grid;place-items:center;min-width:20px;height:20px;margin-left:auto;padding:0 6px;border-radius:10px;background:var(--fg);color:var(--bg);font:700 12px/1 Inter,system-ui,sans-serif;font-style:normal}
 .tzpfn[hidden]{display:none}
-.tzfw{display:grid;grid-template-rows:0fr;width:100%;visibility:hidden;transition:grid-template-rows .6s var(--ease),visibility 0s .6s}
+.tzfw{display:grid;grid-template-rows:0fr;width:var(--w1,520px);flex:none;visibility:hidden;transition:grid-template-rows .6s var(--ease),visibility 0s .6s}
 .tzfm.on .tzfw{grid-template-rows:1fr;visibility:visible;transition-delay:0s}
 .tzfl{min-height:0;overflow:hidden}
 .tzpfs{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 10px;max-height:min(72dvh,560px);overflow-x:hidden;overflow-y:auto;padding:2px 8px 10px;overscroll-behavior:contain}
@@ -1405,7 +1407,7 @@ textarea.qfi{height:140px;resize:none}
 .tzcs.on{box-shadow:0 0 0 3px var(--fg),0 8px 16px -6px rgba(17,17,17,.4)}
 .tzcs.on svg{stroke-dashoffset:0}
 /* Yeni paket: sağ alt yüzen daire buton */
-.tzfab{position:fixed;z-index:3;right:calc(28px + env(safe-area-inset-right,0px));bottom:calc(28px + env(safe-area-inset-bottom,0px));width:68px;height:68px;border-radius:50%;display:grid;place-items:center;background:var(--fg);color:var(--bg);box-shadow:0 16px 34px -10px rgba(17,17,17,.5),0 4px 10px rgba(17,17,17,.14);opacity:0;transform:scale(.4) rotate(-90deg);pointer-events:none;transition:opacity .3s var(--ease),transform .6s var(--sp),box-shadow .3s}
+.tzfab{position:fixed;z-index:9;will-change:transform,opacity;right:calc(28px + env(safe-area-inset-right,0px));bottom:calc(28px + env(safe-area-inset-bottom,0px));width:68px;height:68px;border-radius:50%;display:grid;place-items:center;background:var(--fg);color:var(--bg);box-shadow:0 16px 34px -10px rgba(17,17,17,.5),0 4px 10px rgba(17,17,17,.14);opacity:0;transform:scale(.4) rotate(-90deg);pointer-events:none;transition:opacity .3s var(--ease),transform .6s var(--sp),box-shadow .3s}
 .tzfab.on{opacity:1;transform:none;pointer-events:auto}
 .tzfab svg{width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;transition:transform .55s var(--sp)}
 .tzfab.on:active{transform:scale(.88)}.tzfab.on:active svg{transform:rotate(90deg)}
@@ -3660,14 +3662,14 @@ function selDelete(){
 var popOn=false,popId=null;
 function popClose(){popOn=false;popId=null;$("#qpop").classList.remove("on");var a=document.querySelectorAll(".qi.pk");for(var i=0;i<a.length;i++)a[i].classList.remove("pk")}
 function popOpen(card,x,y){
-  popClose();popOn=true;popId=card.dataset.id;card.classList.add("pk");
-  var pit=ITEMS.filter(function(x){return x.id===popId})[0];
+  var cid=card.dataset.id,pit=ITEMS.filter(function(x){return x.id===cid})[0];
   $("#qpop [data-a=v] span").textContent=pit&&pit.solved?"Çözüldüyü kaldır":"Çözüldü";
   var P=$("#qpop"),W=window.innerWidth,H=window.innerHeight,w=P.offsetWidth,h=P.offsetHeight,m=12;
+  popClose();popOn=true;popId=cid;card.classList.add("pk");
   var l=x+20;if(l+w>W-m)l=x-20-w;l=Math.max(m,Math.min(l,W-w-m));
   var tp=Math.max(m,Math.min(y-24,H-h-m));
   P.style.left=l+"px";P.style.top=tp+"px";P.style.transformOrigin=(x-l)+"px "+(y-tp)+"px";
-  void P.offsetWidth;P.classList.add("on");
+  requestAnimationFrame(function(){if(popOn&&popId===cid)P.classList.add("on")});
 }
 $("#qpop").onclick=function(e){
   var b=e.target.closest("button");if(!b||!popOn)return;var a=b.getAttribute("data-a"),id=popId;
@@ -3892,7 +3894,7 @@ $("#tzt").insertAdjacentHTML("afterbegin",'<i class="tzpl"></i>');
 var HUB={tab:"gen",hf:"all",k:null,fxt:""};
 var TZFAB=document.createElement("button");TZFAB.type="button";TZFAB.className="tzfab";TZFAB.setAttribute("aria-label","Yeni paket");
 TZFAB.innerHTML='<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>';
-$("#tz").appendChild(TZFAB);
+$("#tz").parentNode.insertBefore(TZFAB,$("#tz").nextSibling);/* #tz geçiş sırasında transform'lu olduğundan içindeki fixed öğe geçiş bitince yer değiştiriyordu (sağdan sola sıçrama). Kardeş olarak ekleniyor. */
 TZFAB.onclick=function(){peOpen(null,[])};
 /* Açılışta önce sadece sınıf eklenir (opacity/transform geçişi compositor'da, ana iş parçacığından bağımsız çalışır); ağır içerik çizimi geçişin ilk karesinden SONRA yapılır. Böylece animasyon takılmaz. */
 var hubOT=0;
@@ -3902,7 +3904,7 @@ function hubOpen(tab){
   cancelAnimationFrame(hubOT);
   hubOT=requestAnimationFrame(function(){hubOT=requestAnimationFrame(function(){if(hubOn())hubRender()})});
 }
-function hubClose(){cancelAnimationFrame(hubOT);$("#tz").classList.remove("on");tpClose();PSL.on=false;PSL.ids={}}
+function hubClose(){cancelAnimationFrame(hubOT);TZFAB.classList.remove("on");$("#tz").classList.remove("on");tpClose();PSL.on=false;PSL.ids={}}
 function hubRender(){
   if(HUB.tab!=="pk"&&PSL.on){PSL.on=false;PSL.ids={}}
   [].forEach.call(document.querySelectorAll("#tzt button,#tzn button"),function(b){var o=b.dataset.t===HUB.tab;b.classList.toggle("on",o);if(b.closest("#tzn"))b.setAttribute("aria-selected",o)});
@@ -3913,7 +3915,7 @@ function hubRender(){
   var k=HUB.tab+"|"+G.mode+"|"+HUB.hf;
   if(HUB.k===k&&b.firstChild)morph(b,t);else{b.innerHTML=t.innerHTML;fresh(b)}
   HUB.k=k;gSum();pills();
-  TZFAB.classList.toggle("on",HUB.tab==="pk"&&!PSL.on);b.classList.toggle("pkp",HUB.tab==="pk");
+  TZFAB.classList.toggle("on",hubOn()&&HUB.tab==="pk"&&!PSL.on);b.classList.toggle("pkp",HUB.tab==="pk");
 }
 function hubOn(){return $("#tz").classList.contains("on")}
 function refreshHub(){if(hubOn())hubRender()}
@@ -4135,8 +4137,23 @@ function peFilter(){
   softGrid($("#tzpg"),function(){pk.forEach(function(c,i){c.hidden=!pf[i]})});
   peCount();
 }
+var peQf=false;
+/* Ekran dışındaki kartlara geçici .nt (geçişsiz) verir; yüzlerce kartın aynı anda geçiş başlatması takılma yapıyordu. Görünen kartları döndürür. */
+function peQuiet(){
+  var g=$("#tzpg"),vh=window.innerHeight||800,onS=new Set(),q=[];
+  var kids=[].filter.call(g.children,function(c){return!c.hidden&&!c.classList.contains("qgh")});
+  var rs=kids.map(function(c){return c.getBoundingClientRect()});
+  kids.forEach(function(c,i){var r=rs[i];if(r.bottom<-80||r.top>vh+80){q.push(c);c.classList.add("nt")}else onS.add(c)});
+  peQf=true;
+  requestAnimationFrame(function(){requestAnimationFrame(function(){peQf=false;q.forEach(function(c){c.classList.remove("nt")})})});
+  return onS;
+}
 function peSetMany(list,on){
-  list.forEach(function(c,i){c.style.transitionDelay=Math.min(i,10)*18+"ms";if(on){PE.sel[c.dataset.id]=1;c.classList.add("sel")}else{delete PE.sel[c.dataset.id];c.classList.remove("sel")}});
+  var onS=peQuiet(),n=0;
+  list.forEach(function(c){
+    if(onS.has(c))c.style.transitionDelay=Math.min(n++,10)*18+"ms";
+    if(on){PE.sel[c.dataset.id]=1;c.classList.add("sel")}else{delete PE.sel[c.dataset.id];c.classList.remove("sel")}
+  });
   setTimeout(function(){list.forEach(function(c){c.style.transitionDelay=""})},700);
 }
 function peCount(){
@@ -4144,7 +4161,7 @@ function peCount(){
   $("#tzpc").textContent=v.length+" soru";
   var a=$("#tzpa");a.classList.toggle("on",all);a.disabled=!v.length;a.setAttribute("aria-label",all?"Görünen soruların seçimini bırak":"Görünen soruların hepsini seç");
   var bn=$("#tzpbn"),t=n+" seçili";if(bn.textContent!==t){bn.textContent=t;bn.classList.remove("bump");void bn.offsetWidth;bn.classList.add("bump")}
-  $("#tzpbw").classList.toggle("on",n>0||!!PE.id);$("#tzpg").classList.toggle("sm",n>0);
+  $("#tzpbw").classList.toggle("on",n>0||!!PE.id);var pg=$("#tzpg");if(pg.classList.contains("sm")!==(n>0)&&!peQf)peQuiet();pg.classList.toggle("sm",n>0);
   $("#tzpks").querySelector("span").textContent=PE.id?"Kaydet":"Oluştur";
 }
 function peSave(){
@@ -4553,12 +4570,12 @@ function peOpenQ(id){var ids=peIds();if(ids.indexOf(id)<0)ids=[id];Q.openIn(id,i
 var pePopId=null,pePopOn=false,peSup=0;
 function pePopClose(){pePopOn=false;pePopId=null;$("#tzqp").classList.remove("on");[].forEach.call(document.querySelectorAll("#tzpg .qi.pk"),function(c){c.classList.remove("pk")})}
 function pePopOpen(card,x,y){
-  pePopClose();pePopOn=true;pePopId=card.dataset.id;card.classList.add("pk");
   var P=$("#tzqp"),W=window.innerWidth,H=window.innerHeight,w=P.offsetWidth,h=P.offsetHeight,m=12;
+  pePopClose();pePopOn=true;pePopId=card.dataset.id;card.classList.add("pk");
   var l=x+20;if(l+w>W-m)l=x-20-w;l=Math.max(m,Math.min(l,W-w-m));
   var tp=Math.max(m,Math.min(y-24,H-h-m));
   P.style.left=l+"px";P.style.top=tp+"px";P.style.transformOrigin=(x-l)+"px "+(y-tp)+"px";
-  void P.offsetWidth;P.classList.add("on");
+  var pid=pePopId;requestAnimationFrame(function(){if(pePopOn&&pePopId===pid)P.classList.add("on")});
 }
 $("#tzqp").onclick=function(e){
   var b=e.target.closest("button");if(!b||!pePopOn)return;var a=b.getAttribute("data-a"),id=pePopId;pePopClose();
