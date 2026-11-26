@@ -3026,6 +3026,7 @@ function softGrid(g,fn){
     }
   });
 }
+window.softGrid=softGrid;
 function applyFilter(){
   var q=$("#qsi").value,n=0;QT=norm(q).replace(/[^a-z0-9]+/g," ").split(" ").filter(Boolean);
   $("#qsx").hidden=!q;$("#qsr").hidden=!ITEMS.length;
