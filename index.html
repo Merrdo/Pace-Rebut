@@ -1455,6 +1455,17 @@ html,body,*{scrollbar-width:none!important;-ms-overflow-style:none!important;scr
 .qsr:not([hidden]),.qsx:not([hidden]),.tzpfn:not([hidden]){animation:qsoftf .3s ease both}
 @keyframes qsoftf{from{opacity:0}to{opacity:1}}
 @media (prefers-reduced-motion:reduce){.qnr:not([hidden]),.qsr:not([hidden]),.qsx:not([hidden]),.tzpfn:not([hidden]){animation:none}}
+
+/* ===== Soru görüntüleyici: yeni açılış/kapanış =====
+   Eski sorun: .qv katmanının tamamı opacity + scale(.985) ile animasyonlanıyordu; koyu zemin yarı saydam
+   kaldığı için kenarlardan krem sayfa görünüyordu. Şimdi: zemin ayrı bir sabit katman (::before, hiç ölçeklenmez),
+   resim tıklanan karttan büyür (paylaşılan öğe geçişi), kontroller ayrıca yumuşakça belirir. */
+.qv{background:transparent;opacity:1;transform:none;transition:visibility 0s .46s}
+.qv.on{transition-delay:0s}
+.qv::before{content:"";position:absolute;inset:0;background:#111;opacity:0;transition:opacity .42s var(--ease)}
+.qv.on::before{opacity:1}
+.qvghost{position:fixed;z-index:12;margin:0;overflow:hidden;pointer-events:none;background:#1b1b1b;box-shadow:0 24px 60px -18px rgba(0,0,0,.6);will-change:left,top,width,height,opacity}
+.qvghost img{display:block;width:100%;height:100%;object-fit:cover}
 </style>
 </head>
 <body>
@@ -3420,6 +3431,49 @@ function fill(it){
   var a=$("#qva");a.hidden=!it.ans;var an=String(it.ans||"").trim(),n=an.length;a.classList.toggle("tx",n>12||/\n/.test(an));a.style.setProperty("--fs",(n<=2?56:n===3?50:n===4?42:n===5?36:n===6?31:n===7?27:n===8?24:21)+"px");a.style.setProperty("--c",it.ders?lcol(it):"#e9e6e0");
   $("#qvav").textContent=it.ans||"";ansOn=false;a.classList.remove("on");$("#qvat").hidden=false;$("#qvr").hidden=true;
 }
+/* --- Açılış/kapanış efektleri --- */
+var qvGhost=null,qvAn=[],QVE="cubic-bezier(.22,1,.36,1)";
+function qvKill(){if(qvGhost){var g=qvGhost;qvGhost=null;if(g.parentNode)g.parentNode.removeChild(g)}}
+function qvCard(id){var c=document.querySelector('#qbody .qi[data-id="'+id+'"]');return c&&!c.hidden?c:null}
+function qvSeen(r){return r&&r.width>0&&r.height>0&&r.bottom>0&&r.top<innerHeight&&r.right>0&&r.left<innerWidth}
+function qvChrome(on){
+  qvAn.forEach(function(a){try{a.cancel()}catch(e){}});qvAn=[];
+  if(REDUCE||!document.body.animate)return;
+  var els=$("#qv").querySelectorAll(".qvb,.qvn,.qvt,.qvk");
+  [].forEach.call(els,function(e,k){
+    if(e.hidden)return;
+    qvAn.push(e.animate(on?[{opacity:0,translate:"0 10px"},{opacity:1,translate:"0 0"}]:[{opacity:1,translate:"0 0"},{opacity:0,translate:"0 6px"}],
+      {duration:on?400:180,delay:on?170+k*30:0,easing:QVE,fill:on?"backwards":"forwards"}));
+  });
+}
+function qvFly(src,r0,r1,rad0,rad1,dur,fadeEnd,done){
+  qvKill();
+  var g=document.createElement("div");g.className="qvghost";
+  var gi=new Image();gi.src=src;gi.alt="";g.appendChild(gi);
+  var st=g.style;st.left=r0.left+"px";st.top=r0.top+"px";st.width=r0.width+"px";st.height=r0.height+"px";st.borderRadius=rad0+"px";
+  document.body.appendChild(g);qvGhost=g;
+  var k=[{left:r0.left+"px",top:r0.top+"px",width:r0.width+"px",height:r0.height+"px",borderRadius:rad0+"px",opacity:1,offset:0}];
+  if(fadeEnd)k.push({left:r1.left+"px",top:r1.top+"px",width:r1.width+"px",height:r1.height+"px",borderRadius:rad1+"px",opacity:1,offset:.82});
+  k.push({left:r1.left+"px",top:r1.top+"px",width:r1.width+"px",height:r1.height+"px",borderRadius:rad1+"px",opacity:fadeEnd?0:1,offset:1});
+  var a=g.animate(k,{duration:dur,easing:QVE,fill:"forwards"});
+  a.onfinish=function(){if(done)done();requestAnimationFrame(function(){if(qvGhost===g)qvKill();else if(g.parentNode)g.parentNode.removeChild(g)})};
+  return g;
+}
+function qvOpenFx(it,im,u){
+  qvKill();im.getAnimations().forEach(function(a){a.cancel()});im.style.opacity="";
+  qvChrome(true);
+  var card=(!TMO&&!fsOn)?qvCard(it.id):null,r1=im.getBoundingClientRect();
+  if(card&&r1.width){
+    var r0=card.getBoundingClientRect();
+    if(qvSeen(r0)){
+      var rad=parseFloat(getComputedStyle(im).borderRadius)||0;
+      im.style.opacity="0";
+      qvFly(u,r0,r1,18,rad,560,false,function(){im.style.opacity=""});
+      return;
+    }
+  }
+  im.animate([{opacity:0,transform:"scale(.94)"},{opacity:1,transform:"none"}],{duration:480,easing:QVE});
+}
 /* dir: 1 ileri, -1 geri, 0 solma; belirtilmezse ilk açılış */
 function view(i,dir){
   if(i<0||i>=ITEMS.length)return;
@@ -3432,7 +3486,7 @@ function view(i,dir){
   var dec=function(){return im.decode?im.decode().catch(function(){}):Promise.resolve()};
   if(!opened||typeof dir!=="number"||REDUCE||!im.animate){
     im.src=u;fill(it);
-    Promise.race([dec(),new Promise(function(r){setTimeout(r,450)})]).then(function(){if(tok===vTok){v.classList.add("on");warmN(L,pos)}});
+    Promise.race([dec(),new Promise(function(r){setTimeout(r,450)})]).then(function(){if(tok===vTok){if(!v.classList.contains("on")&&!REDUCE&&im.animate)qvOpenFx(it,im,u);v.classList.add("on");warmN(L,pos)}});
     return;
   }
   var pre=new Image();pre.src=u;
@@ -3450,10 +3504,26 @@ function view(i,dir){
   },function(){});
 }
 function closeV(){
+  var qim=$("#qvi"),qit=ITEMS[cur],qwas=$("#qv").classList.contains("on"),qr0=null,qcard=null,qfx=qwas&&!REDUCE&&qim.animate;
+  if(qfx){zoomReset(false);qr0=qim.getBoundingClientRect();if(!TMO&&qit)qcard=qvCard(qit.id)}
   VLO=null;var tmo=TMO;TMO=null;if(tmo&&tmo.close)setTimeout(tmo.close,0);
   setTimeout(function(){if(!TMO)$("#qv").classList.remove("tm")},420);
   if(fsOn)setFs(false,true);zoomReset(false);
   $("#qv").classList.remove("on");cur=-1;if(UNS)applyFilter();sheet(false);dlg(false);menu(false);vTok++;
+  if(qfx){
+    qvChrome(false);qvKill();
+    var qdone=false;
+    if(qcard&&qr0&&qr0.width){
+      try{qcard.scrollIntoView({block:"nearest",behavior:"instant"})}catch(e){}
+      var qr1=qcard.getBoundingClientRect();
+      if(qvSeen(qr1)){
+        qdone=true;var qrad=parseFloat(getComputedStyle(qim).borderRadius)||0;
+        qim.style.opacity="0";
+        qvFly(qim.currentSrc||qim.src,qr0,qr1,qrad,18,460,true,function(){qim.style.opacity=""});
+      }
+    }
+    if(!qdone)qim.animate([{opacity:1,transform:"none"},{opacity:0,transform:"scale(.96)"}],{duration:280,easing:QVE,fill:"forwards"});
+  }
   setTimeout(function(){if(cur<0){Object.keys(VU).forEach(function(k){URL.revokeObjectURL(VU[k])});VU={}}},400);
 }
 function del(){
