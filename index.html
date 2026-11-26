@@ -1276,18 +1276,20 @@ textarea.qfi{height:140px;resize:none}
 #tz .tzn button.on:after{transform:scaleX(.28)}
 @media (max-width:700px){#tz .tzn{gap:18px}#tz .tzn button{font-size:34px}}
 /* Paket kartı: büyük ad, küçük düğmeler, kırmızı pin */
-#tz .tzpk{min-height:196px;padding:22px 22px 20px}
+#tz .tzpk{min-height:212px;padding:22px 22px 20px}
 #tz .tzpk[style]{background:#fff;background:color-mix(in srgb,var(--c) 13%,var(--surf))}
-#tz .tzpk.hv .tzpt2,#tz .tzpk.hv .tzpn{margin-right:164px}
+#tz .tzpk.hv .tzpt2,#tz .tzpk.hv .tzpn{margin-right:210px}
 #tz .tzsec{margin:6px 2px 12px}#tz .tzpg+.tzsec{margin-top:26px}
-.tzcl{position:absolute;top:18px;right:20px;width:150px;height:104px;pointer-events:none}
-.tzcl img{position:absolute;top:0;width:70px;height:94px;object-fit:cover;object-position:top;border-radius:12px;border:3px solid #fff;background:var(--surf2);box-shadow:0 10px 18px -8px rgba(17,17,17,.5);transition:transform .55s var(--sp)}
-.tzcl img:nth-child(1){left:0;transform:rotate(-9deg);z-index:1}
-.tzcl img:nth-child(2){left:38px;top:7px;transform:rotate(3deg);z-index:2}
-.tzcl img:nth-child(3){left:78px;top:0;transform:rotate(11deg);z-index:3}
-.tzcl.n1 img{left:40px;top:4px;transform:rotate(5deg)}
-.tzcl.n2 img:nth-child(1){left:22px}.tzcl.n2 img:nth-child(2){left:62px}
-.tzpk:active .tzcl img:nth-child(1){transform:rotate(-14deg) translateX(-4px)}.tzpk:active .tzcl img:nth-child(3){transform:rotate(16deg) translateX(4px)}
+.tzcl{position:absolute;top:18px;right:22px;display:flex;align-items:center;pointer-events:none}
+.tzcl img{flex:none;height:112px;width:auto;max-width:132px;min-width:70px;object-fit:contain;background:#fff;border-radius:12px;border:3px solid #fff;box-shadow:0 10px 20px -8px rgba(17,17,17,.45);transition:transform .55s var(--sp)}
+.tzcl img+img{margin-left:-52px}
+.tzcl img:nth-last-child(3){transform:rotate(-9deg) translateY(4px);filter:saturate(.9)}
+.tzcl img:nth-last-child(2){transform:rotate(-3deg) translateY(-2px)}
+.tzcl img:last-child{transform:rotate(4deg);z-index:2}
+.tzcl img:only-child{transform:rotate(3deg)}
+.tzcl img:nth-last-child(2):first-child{transform:rotate(-6deg) translateY(3px)}
+.tzpk:active .tzcl img:nth-last-child(3){transform:rotate(-14deg) translate(-6px,4px)}
+.tzpk:active .tzcl img:nth-last-child(2){transform:rotate(-6deg) translate(-3px,-2px)}
 #tz .tzpk h3{font-size:27px;line-height:1.08;letter-spacing:-.4px;-webkit-line-clamp:2;line-clamp:2}
 #tz .tzpk .tzpn{margin-top:6px}
 #tz .tzpk .tzpn b{font-size:15px;font-weight:700;color:var(--dim)}
@@ -1296,6 +1298,21 @@ textarea.qfi{height:140px;resize:none}
 #tz .tzpk .ac .tzb{flex:none;width:auto;height:46px;padding:0 24px;font-size:16px}
 #tz .tzpk .ac .tzb.pr{padding:0 30px}
 #tz .tzpk .ac .tzb.pr{flex:none}
+/* Paket rengi: daire buton, aşağı doğru açılan ayrı renkler */
+.tzpv .tzpva{position:relative;z-index:5}
+.tzcw{position:relative;flex:none;margin-left:auto}
+.tzcb{display:block;width:50px;height:50px;border-radius:50%;background:var(--c,#d9d5cd);border:4px solid #fff;box-shadow:0 6px 16px -6px rgba(17,17,17,.4),0 0 0 1px rgba(17,17,17,.06);transition:transform .5s var(--sp),background .4s var(--ease)}
+.tzcb:active{transform:scale(.88)}
+.tzcw.open .tzcb{transform:scale(1.06)}
+.tzcp{position:absolute;top:calc(100% + 12px);left:50%;margin-left:-22px;display:flex;flex-direction:column;align-items:center;gap:10px;z-index:6;pointer-events:none}
+.tzcw.open .tzcp{pointer-events:auto}
+.tzcs{position:relative;width:44px;height:44px;border-radius:50%;background:var(--c);border:4px solid #fff;box-shadow:0 8px 16px -6px rgba(17,17,17,.4),0 0 0 1px rgba(17,17,17,.06);display:grid;place-items:center;opacity:0;visibility:hidden;transform:translateY(-22px) scale(.4);transition:opacity .25s var(--ease) var(--dc,0ms),transform .45s var(--ease) var(--dc,0ms),visibility 0s .45s}
+.tzcw.open .tzcs{opacity:1;visibility:visible;transform:none;transition:opacity .35s var(--ease) var(--do,0ms),transform .65s var(--sp) var(--do,0ms),visibility 0s}
+.tzcs:active{scale:.9}
+.tzcs.au{background:conic-gradient(#ff90e8,#ffd84a,#7ddc9b,#6ec6ff,#a998ff,#ff90e8)}
+.tzcs svg{width:18px;height:18px;fill:none;stroke:#111;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:24;stroke-dashoffset:24;transition:stroke-dashoffset .4s var(--ease) .1s}
+.tzcs.on{box-shadow:0 0 0 3px var(--fg),0 8px 16px -6px rgba(17,17,17,.4)}
+.tzcs.on svg{stroke-dashoffset:0}
 /* Yeni paket: sağ alt yüzen daire buton */
 .tzfab{position:fixed;z-index:3;right:calc(28px + env(safe-area-inset-right,0px));bottom:calc(28px + env(safe-area-inset-bottom,0px));width:68px;height:68px;border-radius:50%;display:grid;place-items:center;background:var(--fg);color:var(--bg);box-shadow:0 16px 34px -10px rgba(17,17,17,.5),0 4px 10px rgba(17,17,17,.14);opacity:0;transform:scale(.4) rotate(-90deg);pointer-events:none;transition:opacity .3s var(--ease),transform .6s var(--sp),box-shadow .3s}
 .tzfab.on{opacity:1;transform:none;pointer-events:auto}
@@ -3798,10 +3815,16 @@ function pkStat(p){var r=pkRecs(p.id),ps=r.map(rpct).filter(function(x){return x
 var PSL={on:false,ids:{},sup:0},TCK='<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
 var PKTH={};
 function pkThumb(it){var bl=it&&(it.thumb||it.blob);if(!bl)return"";var c=PKTH[it.id];if(!c||c.b!==bl){if(c)URL.revokeObjectURL(c.u);c=PKTH[it.id]={b:bl,u:URL.createObjectURL(bl)}}return c.u}
+var PKCOLS=["#ff90e8","#ff8a7a","#ffb454","#ffd84a","#7ddc9b","#6ec6ff","#a998ff"];
+function pkDom(p,im){
+  var cnt={},best=null,bn=0;
+  p.ids.forEach(function(i){var it=im[i];if(it&&it.ders){var c=Q.lcol(it);cnt[c]=(cnt[c]||0)+1;if(cnt[c]>bn){bn=cnt[c];best=c}}});
+  return best;
+}
+function pkCol(p,im){return p.col||pkDom(p,im)}
 function pkCard(p,im,sm){
-  var ex=p.ids.filter(function(i){return im[i]}),on=!!PSL.ids[p.id],cnt={},best=null,bn=0;
-  ex.forEach(function(i){var it=im[i];if(it.ders){var c=Q.lcol(it);cnt[c]=(cnt[c]||0)+1;if(cnt[c]>bn){bn=cnt[c];best=c}}});
-  var pics=ex.slice(0,3).map(function(i){return pkThumb(im[i])}).filter(Boolean);
+  var ex=p.ids.filter(function(i){return im[i]}),on=!!PSL.ids[p.id],best=pkCol(p,im);
+  var pics=ex.slice(0,3).map(function(i){return pkThumb(im[i])}).filter(Boolean).reverse();
   var h='<div class="tzpk'+(sm?" sm":"")+(on?" sel":"")+(pics.length?" hv":"")+'" data-id="'+p.id+'"'+(best?' style="--c:'+best+'"':'')+'>';
   if(pics.length)h+='<div class="tzcl n'+pics.length+'" aria-hidden="true">'+pics.map(function(u){return'<img alt="" decoding="async" draggable="false" src="'+u+'">'}).join("")+'</div>';
   h+='<div class="tzpt2"><span class="tzpc">'+TCK+'</span><h3>'+esc(p.name)+'</h3></div><div class="tzpn"><b>'+ex.length+'</b><i>soru</i></div>';
@@ -4185,12 +4208,22 @@ var ICO_SH='<svg viewBox="0 0 24 24"><path d="M18 14l4 4-4 4"/><path d="M18 2l4 
 var ICO_OR='<svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6h.01M4 12h.01M4 18h.01"/></svg>';
 function revAll(a){a.forEach(function(u){URL.revokeObjectURL(u)})}
 function fdateY(ts){var d=new Date(ts);return d.getDate()+" "+MON[d.getMonth()]+" "+d.getFullYear()+" · "+p2(d.getHours())+":"+p2(d.getMinutes())}
+function pvColHtml(p,im){
+  var cur=pkCol(p,im),opts=[null].concat(PKCOLS),n=opts.length;
+  var h='<div class="tzcw" id="tzcw"><button type="button" class="tzcb" id="tzcb" aria-label="Paket rengi" aria-expanded="false" style="--c:'+(cur||"#d9d5cd")+'"></button><div class="tzcp" id="tzcp" role="listbox" aria-label="Renk seç">';
+  opts.forEach(function(c,k){
+    var on=(p.col||null)===c;
+    h+='<button type="button" role="option" class="tzcs'+(c?"":" au")+(on?" on":"")+'" data-pc="'+(c||"")+'" aria-label="'+(c?"Renk "+(k):"Otomatik renk")+'" aria-selected="'+on+'" style="'+(c?"--c:"+c+";":"")+'--do:'+(k*45+40)+'ms;--dc:'+((n-1-k)*30)+'ms"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button>';
+  });
+  return h+'</div></div>';
+}
+function pvColSet(open){var w=$("#tzcw");if(!w)return;w.classList.toggle("open",!!open);$("#tzcb").setAttribute("aria-expanded",!!open)}
 function pvOpen(id){
   var p=PK.filter(function(x){return x.id===id})[0];if(!p)return;
   var im=imap(),ids=p.ids.filter(function(i){return im[i]}),st=pkStat(p);
   revAll(PVU);PVU=[];PV={id:id,ids:ids};
   var h='<div class="tzh"><div><h1 style="font-size:38px">'+esc(p.name)+'</h1><p>'+ids.length+' soru'+(st.n?' · '+st.n+' tur':'')+'<br>Oluşturulma: '+(p.ts?fdateY(p.ts):"—")+'</p></div><button class="qb" id="tzpvx" type="button">Geri dön</button></div>';
-  h+='<div class="tzac tzpva"><button class="tzb pr" type="button" data-a="pvgo"'+(ids.length?"":" disabled")+'>Başlat</button><button class="tzb" type="button" data-a="pvst">İstatistik</button></div>';
+  h+='<div class="tzac tzpva"><button class="tzb pr" type="button" data-a="pvgo"'+(ids.length?"":" disabled")+'>Başlat</button><button class="tzb" type="button" data-a="pvst">İstatistik</button>'+pvColHtml(p,im)+'</div>';
   h+='<div class="tzdh">Sorular</div>';
   if(!ids.length)h+='<div class="tzemp"><b>Pakette soru kalmamış</b><span>Paketi basılı tutup düzenleyerek soru ekleyebilirsin.</span></div>';
   else{
@@ -4203,12 +4236,20 @@ function pvOpen(id){
   }
   $("#tzpvw").innerHTML=h;$("#tzpv").scrollTop=0;$("#tzpv").classList.add("on");
 }
-function pvClose(){
+function pvClose(){pvColSet(false);
   $("#tzpv").classList.remove("on");var u=PVU;PVU=[];
   if(u.length)setTimeout(function(){revAll(u)},700);
 }
 $("#tzpv").addEventListener("click",function(e){
   var t=e.target,b;
+  if(t.closest("#tzcb")){pvColSet(!$("#tzcw").classList.contains("open"));return}
+  if(b=t.closest("[data-pc]")){
+    var pp=PK.filter(function(x){return x.id===PV.id})[0];
+    if(pp){pp.col=b.dataset.pc||null;sv(K_PK,PK);
+      [].forEach.call(document.querySelectorAll("#tzcp .tzcs"),function(x){var o=x===b;x.classList.toggle("on",o);x.setAttribute("aria-selected",o)});
+      $("#tzcb").style.setProperty("--c",pkCol(pp,imap())||"#d9d5cd");refreshHub()}
+    setTimeout(function(){pvColSet(false)},160);return}
+  if(!t.closest("#tzcw"))pvColSet(false);
   if(t.closest("#tzpvx")){pvClose();return}
   if(t.closest("[data-a=pvgo]")){pkStart(PV.id);return}
   if(t.closest("[data-a=pvst]")){pdOpen(PV.id);return}
