@@ -613,13 +613,8 @@ textarea.qfi{height:140px;resize:none}
 .qvzb span{color:#9a9a9a;font-weight:600}
 .qv.zm .qvc{padding:9px 14px;border-radius:18px;background:#2b2b2b;color:#cfcfcf}
 .qv.zm .qvs img{border-radius:0}
-.qv{position:fixed;inset:0;z-index:11;visibility:hidden;transition:visibility 0s .52s}
-.qv.on{visibility:visible;transition-delay:0s}
-/* Arka plan ayrı katman: kabuk solmaz, böylece açık renkli soru görseli yarı saydam zeminde "beyaz kenar" gibi görünmez */
-.qv::before{content:"";position:absolute;inset:0;background:#111;opacity:0;transition:opacity .38s var(--ease)}
-.qv.on::before{opacity:1}
-.qv.tm::before{transition-duration:.3s}
-@media (prefers-reduced-motion:reduce){.qv{transition-delay:0s!important}.qv::before{transition-duration:.01s!important}}
+.qv{position:fixed;inset:0;z-index:11;background:#111;opacity:0;visibility:hidden;transition:opacity .3s ease,visibility 0s .3s}
+.qv.on{opacity:1;visibility:visible;transition-delay:0s}
 .qvs{position:absolute;top:calc(80px + env(safe-area-inset-top,0px));bottom:148px;left:92px;right:92px;display:flex;align-items:center;justify-content:center}
 .qvs img{max-width:100%;max-height:100%;object-fit:contain;border-radius:14px;-webkit-user-drag:none;pointer-events:none}
 .qvb,.qvn{position:absolute;display:grid;place-items:center;border-radius:50%;background:#2e2e2e;color:#fff;transition:transform .35s var(--sp),opacity .25s}
@@ -1460,6 +1455,18 @@ html,body,*{scrollbar-width:none!important;-ms-overflow-style:none!important;scr
 .qsr:not([hidden]),.qsx:not([hidden]),.tzpfn:not([hidden]){animation:qsoftf .3s ease both}
 @keyframes qsoftf{from{opacity:0}to{opacity:1}}
 @media (prefers-reduced-motion:reduce){.qnr:not([hidden]),.qsr:not([hidden]),.qsx:not([hidden]),.tzpfn:not([hidden]){animation:none}}
+
+/* ===== Soru görüntüleyici: yeni açılış/kapanış =====
+   Eski sorun: .qv katmanının tamamı opacity + scale(.985) ile animasyonlanıyordu; koyu zemin yarı saydam
+   kaldığı için kenarlardan krem sayfa görünüyordu. Şimdi: zemin ayrı bir sabit katman (::before, hiç ölçeklenmez),
+   resim tıklanan karttan büyür (paylaşılan öğe geçişi), kontroller ayrıca yumuşakça belirir. */
+.qv{background:transparent;opacity:1;transform:none;transition:visibility 0s .46s}
+.qv.on{transition-delay:0s}
+.qv::before{content:"";position:absolute;inset:0;background:#111;opacity:0;transition:opacity .42s var(--ease)}
+.qv.on::before{opacity:1}
+.qv:not(.on){pointer-events:none}
+.qvghost{position:fixed;z-index:12;margin:0;overflow:hidden;pointer-events:none;background:#1b1b1b;box-shadow:0 24px 60px -18px rgba(0,0,0,.6);will-change:left,top,width,height,opacity}
+.qvghost img{display:block;width:100%;height:100%;object-fit:cover}
 </style>
 </head>
 <body>
@@ -3000,7 +3007,7 @@ function match(it){
   for(var k=0;k<QT.length;k++)if(h.indexOf(" "+QT[k])<0)return false;
   return true;
 }
-var VLO=null,TMO=null,VFROM=null;
+var VLO=null,TMO=null;
 function VL(){var a=[];if(VLO){var m={};ITEMS.forEach(function(it,i){m[it.id]=i});VLO.forEach(function(id){if(m[id]!=null)a.push(m[id])});return a}for(var i=0;i<ITEMS.length;i++)if(match(ITEMS[i]))a.push(i);return a}
 function go(d){var L=VL(),p=L.indexOf(cur);if(p<0)return;var j=L[p+d];if(j!=null)view(j,d)}
 function warmN(L,p){if(L[p+1]!=null)warm(L[p+1]);if(L[p-1]!=null)warm(L[p-1])}
@@ -3098,7 +3105,7 @@ function render(){
     if(it.ders){var dc=document.createElement("span");dc.className="qdc";dc.style.setProperty("--c",lcol(it));dc.textContent=it.g+" · "+it.ders;bt.appendChild(dc)}
     bt.insertAdjacentHTML("beforeend",'<span class="qck"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>');
     if(it.solved){bt.insertAdjacentHTML("beforeend",OKH);bt.classList.add("ok")}
-    bt.onclick=function(){if(selOn)selToggle(it.id);else{VFROM=bt;view(i)}};
+    bt.onclick=function(){if(selOn)selToggle(it.id);else view(i)};
     g.appendChild(bt);
   });
   b.innerHTML="";g.classList.toggle("sm",selOn);b.appendChild(g);
@@ -3425,65 +3432,79 @@ function fill(it){
   var a=$("#qva");a.hidden=!it.ans;var an=String(it.ans||"").trim(),n=an.length;a.classList.toggle("tx",n>12||/\n/.test(an));a.style.setProperty("--fs",(n<=2?56:n===3?50:n===4?42:n===5?36:n===6?31:n===7?27:n===8?24:21)+"px");a.style.setProperty("--c",it.ders?lcol(it):"#e9e6e0");
   $("#qvav").textContent=it.ans||"";ansOn=false;a.classList.remove("on");$("#qvat").hidden=false;$("#qvr").hidden=true;
 }
-/* ---- Görüntüleyici geçişi (FLIP): açılışta resim kartından büyür, kapanışta karta geri süzülür.
-   Kabuk solmaz; arka plan ::before ile, düğmeler WAAPI ile, resim transform+clip-path ile hareket eder.
-   Kaynak kart yoksa/görünmüyorsa (test çözümü gibi) yumuşak ölçek+solma kullanılır. */
-var VSRC=null,VSRCIDS=null,VCA=[],VEASE="cubic-bezier(.22,1,.36,1)";
-function vChrome(v){return [].slice.call(v.querySelectorAll(".qvb,.qvn,.qvt,.qvk"))}
-function vChromeStop(){VCA.forEach(function(a){try{a.cancel()}catch(e){}});VCA=[]}
-function vChromeIn(v){vChromeStop();vChrome(v).forEach(function(e){VCA.push(e.animate([{opacity:0},{opacity:1}],{duration:380,delay:170,easing:"ease-out",fill:"backwards"}))})}
-function vChromeOut(v){vChromeStop();vChrome(v).forEach(function(e){VCA.push(e.animate([{opacity:1},{opacity:0}],{duration:190,easing:"ease-out",fill:"forwards"}))})}
-function vRectOk(r){if(!r||r.width<24||r.height<24)return false;var iw=Math.min(r.right,innerWidth)-Math.max(r.left,0),ih=Math.min(r.bottom,innerHeight)-Math.max(r.top,0);return iw>r.width*.5&&ih>r.height*.5}
-function vRad(e,d){return parseFloat(getComputedStyle(e).borderTopLeftRadius)||d}
-/* r1 konumundaki resmi rt kutusunda gösteren transform + clip-path (cover: kartın kırpmasını taklit eder) */
-function vPose(r1,rt,cover,rr){
-  var s=cover?Math.max(rt.width/r1.width,rt.height/r1.height):Math.min(rt.width/r1.width,rt.height/r1.height);
-  var dx=(rt.left+rt.width/2)-(r1.left+r1.width/2),dy=(rt.top+rt.height/2)-(r1.top+r1.height/2);
-  var ix=cover?Math.max(0,(r1.width-rt.width/s)/2):0,iy=cover?Math.max(0,(r1.height-rt.height/s)/2):0;
-  return{transform:"translate("+dx+"px,"+dy+"px) scale("+s+")",clipPath:"inset("+iy+"px "+ix+"px round "+(rr/s)+"px)"};
+/* --- Açılış/kapanış efektleri --- */
+var qvGhost=null,qvAn=[],qvT=0,QVE="cubic-bezier(.22,1,.36,1)";
+/* Hayalet katmanı kaldırır ve resmi HER ZAMAN görünür bırakır (takılı kalan opacity:0 sorununa karşı) */
+function qvKill(){
+  clearTimeout(qvT);
+  if(qvGhost){var g=qvGhost;qvGhost=null;try{g.getAnimations().forEach(function(a){a.onfinish=a.oncancel=null;a.cancel()})}catch(e){}if(g.parentNode)g.parentNode.removeChild(g)}
+  var im=$("#qvi");if(im)im.style.opacity="";
 }
-function vFindSrc(id){
-  var e=VSRC;if(!e||!e.isConnected||!e.dataset)return null;var s=String(id);
-  if(e.dataset.id!=null){
-    if(e.dataset.id===s)return e;
-    return e.parentNode?([].filter.call(e.parentNode.children,function(x){return x.dataset&&x.dataset.id===s&&!x.classList.contains("qgh")})[0]||null):null;
+/* Resim üstünde yarım kalmış tüm animasyonları (fill:forwards ile takılanlar dahil) iptal eder */
+function qvReset(){
+  qvKill();
+  var im=$("#qvi");if(im&&im.getAnimations)im.getAnimations().forEach(function(a){try{a.cancel()}catch(e){}});
+}
+function qvCard(id){var c=document.querySelector('#qbody .qi[data-id="'+id+'"]');return c&&!c.hidden?c:null}
+function qvSeen(r){return r&&r.width>0&&r.height>0&&r.bottom>0&&r.top<innerHeight&&r.right>0&&r.left<innerWidth}
+function qvChrome(on){
+  qvAn.forEach(function(a){try{a.cancel()}catch(e){}});qvAn=[];
+  if(on===null||REDUCE||!document.body.animate)return;
+  var els=$("#qv").querySelectorAll(".qvb,.qvn,.qvt,.qvk");
+  [].forEach.call(els,function(e,k){
+    if(e.hidden)return;
+    qvAn.push(e.animate(on?[{opacity:0,translate:"0 10px"},{opacity:1,translate:"0 0"}]:[{opacity:1,translate:"0 0"},{opacity:0,translate:"0 6px"}],
+      {duration:on?400:180,delay:on?170+k*30:0,easing:QVE,fill:on?"backwards":"forwards"}));
+  });
+}
+/* Paylaşılan öğe geçişi. Resim hazır değilse false döner (çağıran düz solma kullanır).
+   Her koşulda: bitişte, iptalde veya zaman aşımında gerçek resim geri görünür olur. */
+function qvFly(src,r0,r1,rad0,rad1,dur,fadeEnd){
+  qvKill();
+  var im=$("#qvi"),gi=new Image();gi.src=src;gi.alt="";
+  if(!gi.complete||!gi.naturalWidth)return false;
+  var g=document.createElement("div");g.className="qvghost";g.appendChild(gi);
+  var st=g.style;st.left=r0.left+"px";st.top=r0.top+"px";st.width=r0.width+"px";st.height=r0.height+"px";st.borderRadius=rad0+"px";
+  document.body.appendChild(g);qvGhost=g;im.style.opacity="0";
+  var k=[{left:r0.left+"px",top:r0.top+"px",width:r0.width+"px",height:r0.height+"px",borderRadius:rad0+"px",opacity:1,offset:0}];
+  if(fadeEnd)k.push({left:r1.left+"px",top:r1.top+"px",width:r1.width+"px",height:r1.height+"px",borderRadius:rad1+"px",opacity:1,offset:.82});
+  k.push({left:r1.left+"px",top:r1.top+"px",width:r1.width+"px",height:r1.height+"px",borderRadius:rad1+"px",opacity:fadeEnd?0:1,offset:1});
+  var a=g.animate(k,{duration:dur,easing:QVE,fill:"forwards"});
+  function fin(){
+    if(qvGhost!==g)return;
+    im.style.opacity="";                      /* gerçek resim önce görünür olur */
+    clearTimeout(qvT);qvT=setTimeout(function(){if(qvGhost===g)qvKill()},fadeEnd?0:100); /* hayalet birkaç kare sonra kalkar: boş kare yok */
   }
-  if(e.dataset.i!=null&&VSRCIDS&&e.parentNode){var k=VSRCIDS.indexOf(id);if(k>=0)return e.parentNode.querySelector('[data-i="'+k+'"]')}
-  return null;
+  a.onfinish=fin;a.oncancel=function(){if(qvGhost===g)qvKill()};
+  clearTimeout(qvT);qvT=setTimeout(fin,dur+250); /* animasyon hiç bitmese de takılı kalmaz */
+  return true;
 }
-function vOpenAnim(v,im,src){
-  vChromeIn(v);im.getAnimations().forEach(function(a){a.cancel()});
-  var r1=im.getBoundingClientRect();if(!r1.width||!r1.height)return;
-  var rr=vRad(im,0),rest={transform:"translate(0px,0px) scale(1)",clipPath:"inset(0px 0px round "+rr+"px)"};
-  var rs=src&&src.isConnected?src.getBoundingClientRect():null;
-  if(rs&&vRectOk(rs)){im.animate([vPose(r1,rs,true,vRad(src,18)),rest],{duration:580,easing:VEASE})}
-  else im.animate([{opacity:0,transform:"translate(0px,18px) scale(.94)",clipPath:rest.clipPath},{opacity:1,transform:rest.transform,clipPath:rest.clipPath}],{duration:480,easing:VEASE});
-}
-function vCloseAnim(v,im,r0,rd0,src){
-  vChromeOut(v);im.getAnimations().forEach(function(a){a.cancel()});
-  var r1=im.getBoundingClientRect();if(!r1.width||!r1.height)return;
-  var a=vPose(r1,r0,false,rd0),rs=src&&src.isConnected?src.getBoundingClientRect():null,b;
-  if(rs&&vRectOk(rs))b=vPose(r1,rs,true,vRad(src,18));
-  else{a.opacity=1;b={opacity:0,transform:"translate(0px,18px) scale(.94)",clipPath:"inset(0px 0px round "+vRad(im,0)+"px)"}}
-  im.animate([a,b],{duration:470,easing:"cubic-bezier(.32,.72,0,1)",fill:"forwards"});
+function qvOpenFx(it,im,u){
+  qvReset();qvChrome(true);
+  var card=(!TMO&&!fsOn)?qvCard(it.id):null,r1=im.getBoundingClientRect();
+  if(card&&r1.width){
+    var r0=card.getBoundingClientRect();
+    if(qvSeen(r0)){
+      var rad=parseFloat(getComputedStyle(im).borderRadius)||0;
+      if(qvFly(u,r0,r1,18,rad,560,false))return;
+    }
+  }
+  im.animate([{opacity:0,transform:"scale(.94)"},{opacity:1,transform:"none"}],{duration:480,easing:QVE});
 }
 /* dir: 1 ileri, -1 geri, 0 solma; belirtilmezse ilk açılış */
 function view(i,dir){
   if(i<0||i>=ITEMS.length)return;
   cur=i;sheet(false);menu(false);zoomReset(false);
   if(TMO&&TMO.nav&&ITEMS[i])TMO.nav(ITEMS[i].id);
-  var it=ITEMS[i],im=$("#qvi"),v=$("#qv"),opened=v.classList.contains("on"),u=vurl(it),tok=++vTok,src=VFROM;VFROM=null;
+  var it=ITEMS[i],im=$("#qvi"),v=$("#qv"),opened=v.classList.contains("on"),u=vurl(it),tok=++vTok;
   var L=VL(),pos=L.indexOf(i);if(pos<0){L=[i];pos=0}
+  qvReset();if(!opened)qvChrome(null);
   $("#qvcn").textContent=pos+1;$("#qvct").textContent="/ "+L.length;$("#qvc").style.setProperty("--p",(pos+1)/L.length);flashCn();
   $("#qvp").hidden=pos<=0;$("#qvn").hidden=pos>=L.length-1;
   var dec=function(){return im.decode?im.decode().catch(function(){}):Promise.resolve()};
   if(!opened||typeof dir!=="number"||REDUCE||!im.animate){
-    if(!opened)im.getAnimations().forEach(function(a){a.cancel()});
     im.src=u;fill(it);
-    Promise.race([dec(),new Promise(function(r){setTimeout(r,450)})]).then(function(){if(tok===vTok){
-      var first=!v.classList.contains("on");v.classList.add("on");
-      if(first&&!REDUCE&&im.animate){VSRC=src;VSRCIDS=VLO?VLO.slice():null;vOpenAnim(v,im,src)}
-      warmN(L,pos)}});
+    Promise.race([dec(),new Promise(function(r){setTimeout(r,450)})]).then(function(){if(tok===vTok){qvReset();if(!v.classList.contains("on")){if(!REDUCE&&im.animate)qvOpenFx(it,im,u)}else if(!REDUCE&&im.animate)im.animate([{opacity:0},{opacity:1}],{duration:220,easing:QVE});v.classList.add("on");warmN(L,pos)}});
     return;
   }
   var pre=new Image();pre.src=u;
@@ -3501,14 +3522,26 @@ function view(i,dir){
   },function(){});
 }
 function closeV(){
-  var v0=$("#qv"),im0=$("#qvi"),r0=null,rd0=0,src0=null;
-  if(v0.classList.contains("on")&&!REDUCE&&im0.animate&&im0.naturalWidth){r0=im0.getBoundingClientRect();rd0=vRad(im0,0);src0=(cur>=0&&ITEMS[cur])?vFindSrc(ITEMS[cur].id):null}
+  var qim=$("#qvi"),qit=ITEMS[cur],qwas=$("#qv").classList.contains("on"),qr0=null,qcard=null,qfx=qwas&&!REDUCE&&qim.animate;
+  if(qfx){zoomReset(false);qvReset();qr0=qim.getBoundingClientRect();if(!TMO&&qit)qcard=qvCard(qit.id)}
   VLO=null;var tmo=TMO;TMO=null;if(tmo&&tmo.close)setTimeout(tmo.close,0);
-  setTimeout(function(){if(!TMO)$("#qv").classList.remove("tm")},620);
+  setTimeout(function(){if(!TMO)$("#qv").classList.remove("tm")},420);
   if(fsOn)setFs(false,true);zoomReset(false);
   $("#qv").classList.remove("on");cur=-1;if(UNS)applyFilter();sheet(false);dlg(false);menu(false);vTok++;
-  if(r0&&r0.width)vCloseAnim(v0,im0,r0,rd0,src0);
-  setTimeout(function(){if(cur<0){Object.keys(VU).forEach(function(k){URL.revokeObjectURL(VU[k])});VU={}}},750);
+  if(qfx){
+    qvChrome(false);
+    var qdone=false;
+    if(qcard&&qr0&&qr0.width){
+      try{qcard.scrollIntoView({block:"nearest",behavior:"instant"})}catch(e){}
+      var qr1=qcard.getBoundingClientRect();
+      if(qvSeen(qr1)){
+        var qrad=parseFloat(getComputedStyle(qim).borderRadius)||0;
+        qdone=qvFly(qim.currentSrc||qim.src,qr0,qr1,qrad,18,460,true);
+      }
+    }
+    if(!qdone)qim.animate([{opacity:1,transform:"none"},{opacity:0,transform:"scale(.96)"}],{duration:280,easing:QVE,fill:"forwards"});
+  }
+  setTimeout(function(){if(cur<0){Object.keys(VU).forEach(function(k){URL.revokeObjectURL(VU[k])});VU={}}},400);
 }
 function del(){
   var it=ITEMS[cur];if(!it)return;var keep=cur;dlg(false);
@@ -3729,7 +3762,7 @@ $("#qpop").onclick=function(e){
   var b=e.target.closest("button");if(!b||!popOn)return;var a=b.getAttribute("data-a"),id=popId;
   if(a==="x"&&!ddHold.ok(b))return;
   popClose();
-  if(a==="o"){for(var i=0;i<ITEMS.length;i++)if(ITEMS[i].id===id){VFROM=[].filter.call(document.querySelectorAll("#qbody .qi"),function(x){return x.dataset.id===String(id)})[0]||null;view(i);setFs(true);showUi();break}}
+  if(a==="o"){for(var i=0;i<ITEMS.length;i++)if(ITEMS[i].id===id){view(i);setFs(true);showUi();break}}
   else if(a==="v"){var pi=ITEMS.filter(function(x){return x.id===id})[0];if(pi)setSolved(id,!pi.solved)}
   else if(a==="t"){if(window.ddTz)ddTz.fromSel([id])}
   else if(a==="s"){SEL={};SEL[id]=1;selMode(true)}
@@ -3795,8 +3828,8 @@ $("#qsrc").onclick=function(){qk(true)};$("#qkx").onclick=$("#qkb").onclick=func
 document.addEventListener("keydown",function(e){if(qkOn&&e.key==="Escape"){qk(false);e.preventDefault();e.stopImmediatePropagation()}},true);
 
 /* Test ve Paket modülü için köprü */
-window.ddQ={openIn:function(id,ids,o,from){var i=-1;for(var k=0;k<ITEMS.length;k++)if(ITEMS[k].id===id){i=k;break}if(i<0)return;
-  VLO=ids.slice();TMO=o&&o.test?o:null;VFROM=from||null;$("#qv").classList.toggle("tm",!!TMO);
+window.ddQ={openIn:function(id,ids,o){var i=-1;for(var k=0;k<ITEMS.length;k++)if(ITEMS[k].id===id){i=k;break}if(i<0)return;
+  VLO=ids.slice();TMO=o&&o.test?o:null;$("#qv").classList.toggle("tm",!!TMO);
   if(TMO&&TMO.fs&&!fsOn)setFs(true,true);
   view(i);if(TMO&&TMO.fs)showUi()},
 closeView:function(){if($("#qv").classList.contains("on"))closeV()},
@@ -4530,7 +4563,7 @@ $("#tzpv").addEventListener("click",function(e){
   if(t.closest("#tzpvx")){pvClose();return}
   if(t.closest("[data-a=pvgo]")){pkStart(PV.id);return}
   if(t.closest("[data-a=pvst]")){pdOpen(PV.id);return}
-  if(b=t.closest(".tzqi"))Q.openIn(PV.ids[+b.dataset.i],PV.ids,null,b);
+  if(b=t.closest(".tzqi"))Q.openIn(PV.ids[+b.dataset.i],PV.ids);
 });
 /* Başlatmadan önce tam ekran: Karıştır mı Orijinal mi */
 function pmOpen(p,ids){
@@ -4620,7 +4653,7 @@ $("#tzps").addEventListener("input",function(){PE.q=this.value;$("#tzpsx").hidde
 $("#tzpsx").onclick=function(){var q=$("#tzps");q.value="";PE.q="";this.hidden=true;peFilter();q.focus()};
 $("#tzpu").onclick=function(){PE.uns=!PE.uns;this.classList.toggle("on",PE.uns);this.setAttribute("aria-pressed",PE.uns?"true":"false");peFilter()};
 function peIds(){return peVis().map(function(c){return c.dataset.id})}
-function peOpenQ(id,card){var ids=peIds();if(ids.indexOf(id)<0)ids=[id];if(!card)card=[].filter.call($("#tzpg").children,function(x){return x.dataset.id===String(id)&&!x.classList.contains("qgh")})[0]||null;Q.openIn(id,ids,null,card)}
+function peOpenQ(id){var ids=peIds();if(ids.indexOf(id)<0)ids=[id];Q.openIn(id,ids)}
 var pePopId=null,pePopOn=false,peSup=0;
 function pePopClose(){pePopOn=false;pePopId=null;$("#tzqp").classList.remove("on");[].forEach.call(document.querySelectorAll("#tzpg .qi.pk"),function(c){c.classList.remove("pk")})}
 function pePopOpen(card,x,y){
@@ -4644,7 +4677,7 @@ $("#tzpg").onclick=function(e){
   if(peSup>1&&Date.now()-peSup<400)return;
   var id=b.dataset.id;
   if(Object.keys(PE.sel).length){if(PE.sel[id])delete PE.sel[id];else PE.sel[id]=1;b.classList.toggle("sel",!!PE.sel[id]);peCount()}
-  else peOpenQ(id,b);
+  else peOpenQ(id);
 };
 (function(){
   var g=$("#tzpg"),t=0,sx=0,sy=0,tg=null,LP=450;
