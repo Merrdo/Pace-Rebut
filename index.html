@@ -1273,9 +1273,7 @@ textarea.qfi{height:140px;resize:none}
 .tzhl{min-width:0}
 .tzcr{display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 14px 0 20px;border-radius:999px;background:var(--surf);box-shadow:0 6px 16px -8px rgba(17,17,17,.18),inset 0 0 0 1.5px var(--surf2);font:800 20px Inter,system-ui,sans-serif;letter-spacing:-.3px;transition:transform .45s var(--sp)}
 .tzcr:active{transform:scale(.96)}
-.tzcr-a{color:var(--dim);font-weight:700}
 .tzcr svg{fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
-.tzcr-s{width:16px;height:16px;color:var(--dim)}
 .tzcr-d{flex:none;box-sizing:content-box;width:16px;height:16px;padding:5px;border-radius:50%;background:var(--fg);color:var(--bg);transition:transform .4s var(--sp)}
 .tzcr[aria-expanded=true] .tzcr-d{transform:rotate(180deg)}
 .tzcr.pulse{animation:tzPulse 1.6s var(--ease) .6s 2}
@@ -1295,28 +1293,28 @@ textarea.qfi{height:140px;resize:none}
 .tzmn small{display:block;margin-top:2px;font:500 13px Inter,system-ui,sans-serif;color:var(--dim)}
 .tzmn .mdv{display:block;height:1px;background:var(--surf2);margin:6px 10px}
 .tzmn .mh{padding:10px 12px}.tzmn .mh b{font-size:14px;color:var(--dim)}
-.tzhq{margin:30px 0 16px;font:600 17px Inter,system-ui,sans-serif;color:var(--dim)}
-.tzcards{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:18px;min-height:240px}
-.tzcd{position:relative;display:flex;flex-direction:column;justify-content:space-between;gap:22px;text-align:left;padding:26px;border-radius:32px;background:var(--surf);box-shadow:0 10px 24px -14px rgba(17,17,17,.2);overflow:hidden;transition:transform .45s var(--sp),box-shadow .3s}
-.tzcd:active{transform:scale(.975)}
-.tzcd .ci{display:grid;place-items:center;width:60px;height:60px;border-radius:20px;background:var(--surf2)}
-.tzcd svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
-.tzcd .ch{display:block;font-size:30px;font-weight:800;letter-spacing:-.7px;line-height:1.05}
-.tzcd .cm span{display:block;margin-top:8px;font:500 15px/1.4 Inter,system-ui,sans-serif;color:var(--dim)}
-.tzcd .cf{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.tzcd .cn{padding:8px 14px;border-radius:999px;background:var(--surf2);font:700 14px Inter,system-ui,sans-serif}
-.tzcd .ca{display:grid;place-items:center;flex:none;width:50px;height:50px;border-radius:50%;background:var(--fg);color:var(--bg);transition:transform .45s var(--sp)}
-.tzcd .ca svg{width:22px;height:22px;stroke-width:2.4}
-.tzcd.pri{background:var(--fg);color:var(--bg)}
-.tzcd.pri .ci,.tzcd.pri .cn{background:rgba(255,255,255,.14)}
-.tzcd.pri .cm span{color:rgba(255,255,255,.65)}
-.tzcd.pri .ca{background:var(--bg);color:var(--fg)}
-@media(hover:hover){.tzcd:hover{transform:translateY(-3px);box-shadow:0 18px 32px -16px rgba(17,17,17,.3)}.tzcd:hover .ca{transform:translateX(5px)}}
 .tzsl{animation:tzSl .5s var(--ease)}
 @keyframes tzSl{from{opacity:0;transform:translateX(var(--dx,0px))}to{opacity:1;transform:none}}
-.tzsl .tzcd{animation:tzRise .65s var(--ease) calc(var(--i,0)*70ms) backwards}
-@media(max-width:900px){.tzcards{grid-template-columns:1fr}.tzcd{min-height:170px}.tzcd .ch{font-size:26px}.tzcr{font-size:18px}}
-@media(prefers-reduced-motion:reduce){.tzsl,.tzsl .tzcd,.tzcr.pulse,.tzmn:not([hidden]){animation:none}}
+@media(prefers-reduced-motion:reduce){.tzsl,.tzsl .tzsel-r,.tzcr.pulse,.tzmn:not([hidden]){animation:none}}
+
+/* Test: secim ekrani (diyalog tarzi) */
+.tzsel{flex:1;display:grid;place-items:center;padding:12px 0 6vh}
+.tzsel-c{width:min(540px,100%);padding:26px;border-radius:30px;background:var(--surf);box-shadow:0 24px 60px -24px rgba(17,17,17,.28)}
+.tzsel-c h2{font-size:26px;font-weight:800;letter-spacing:-.4px;line-height:1.15}
+.tzsel-c p{margin-top:6px;font:500 15px Inter,system-ui,sans-serif;color:var(--dim)}
+.tzsel-l{display:grid;gap:10px;margin-top:20px}
+.tzsel-r{display:flex;align-items:center;gap:14px;width:100%;padding:14px 16px;border-radius:20px;background:var(--surf2);text-align:left;transition:transform .4s var(--sp),background .25s}
+.tzsel-r:active{transform:scale(.98)}
+@media(hover:hover){.tzsel-r:hover{transform:translateY(-2px)}}
+.tzsel-i{flex:none;display:grid;place-items:center;width:46px;height:46px;border-radius:14px;background:var(--surf)}
+.tzsel-i svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+.tzsel-t{flex:1;min-width:0}
+.tzsel-t b{display:block;font-size:18px;font-weight:700;line-height:1.2}
+.tzsel-t small{display:block;margin-top:3px;font:500 14px/1.35 Inter,system-ui,sans-serif;color:var(--dim)}
+.tzsel-n{flex:none;padding:6px 12px;border-radius:999px;background:var(--surf);font:700 14px/1 Inter,system-ui,sans-serif;letter-spacing:0;white-space:nowrap;font-variant-numeric:tabular-nums}
+.tzsel-a{flex:none;width:20px;height:20px;fill:none;stroke:var(--dim);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.tzsl .tzsel-r{animation:tzRise .6s var(--ease) calc(var(--i,0)*70ms) backwards}
+@media(max-width:560px){.tzsel-n{display:none}}
 </style>
 </head>
 <body>
@@ -1425,7 +1423,7 @@ textarea.qfi{height:140px;resize:none}
     </div>
   </div>
   <div class="tz" id="tz" role="dialog" aria-modal="true" aria-label="Test ve paketler"><div class="tzw">
-    <div class="tzh tzh-top"><div class="tzhl" id="tzhl"><h1>Test</h1></div><button class="qb" id="tzx" type="button">Kapat</button></div>
+    <div class="tzh tzh-top"><div class="tzhl" id="tzhl"></div><button class="qb" id="tzx" type="button">Kapat</button></div>
     <div class="tzmn" id="tzmn" role="menu" aria-label="Test bölümleri" hidden></div>
     <div class="tzg" id="tzt" hidden><button type="button" data-t="gen">Test oluştur</button><button type="button" data-t="pk">Paketler</button><button type="button" data-t="hi">Geçmiş</button></div>
     <div id="tzb"></div>
@@ -3737,22 +3735,22 @@ var SIC={gen:'<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>',pk:'<
 var SEC={gen:{t:"Yeni test",d:"Ders, kaynak veya branşa göre test hazırla"},pk:{t:"Paketlerim",d:"Kaydettiğin soru paketleri"},hi:{t:"Geçmişim",d:"Çözdüğün testler ve sonuçları"}};
 var SORD={home:0,gen:1,pk:2,hi:3},ARW='<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 function secInfo(k){
-  if(k==="gen"){var n=items().length;return n?n+" soru hazır":"Henüz soru yok"}
-  if(k==="pk")return PK.length?PK.length+" paket":"Henüz paket yok";
-  return HI.length?HI.length+" çözülmüş test":"Henüz test çözülmedi";
+  if(k==="gen")return items().length+" soru";
+  if(k==="pk")return PK.length+" paket";
+  return HI.length+" test";
 }
 function hubHead(){
   var h=$("#tzhl");
-  if(HUB.tab==="home"){h.innerHTML="<h1>Test</h1>";menuClose();return}
+  if(HUB.tab==="home"){h.innerHTML="";menuClose();return}
   var seen=false;try{seen=localStorage.getItem("dd-tz-hint")==="1"}catch(e){}
-  h.innerHTML='<button type="button" class="tzcr'+(seen?"":" pulse")+'" id="tzcr" aria-haspopup="menu" aria-expanded="false" aria-label="Bölüm değiştir"><span class="tzcr-a">Test</span><svg class="tzcr-s" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg><span>'+SEC[HUB.tab].t+'</span><svg class="tzcr-d" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>';
+  h.innerHTML='<button type="button" class="tzcr'+(seen?"":" pulse")+'" id="tzcr" aria-haspopup="menu" aria-expanded="false" aria-label="Bölüm değiştir"><span>'+SEC[HUB.tab].t+'</span><svg class="tzcr-d" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>';
   if(!seen)try{localStorage.setItem("dd-tz-hint","1")}catch(e){}
   menuClose();
 }
 function hubBody(){
   var b=$("#tzb");
-  b.innerHTML=HUB.tab==="home"?'<div class="tzhq">Ne yapmak istersin?</div><div class="tzcards">'+["gen","pk","hi"].map(function(k,i){
-    return'<button type="button" class="tzcd'+(i===0?" pri":"")+'" data-go="'+k+'" style="--i:'+i+'"><span class="ci">'+SIC[k]+'</span><span class="cm"><b class="ch">'+SEC[k].t+'</b><span>'+SEC[k].d+'</span></span><span class="cf"><span class="cn">'+esc(secInfo(k))+'</span><span class="ca">'+ARW+'</span></span></button>'}).join("")+'</div>':"";
+  b.innerHTML=HUB.tab==="home"?'<div class="tzsel"><div class="tzsel-c"><h2>Ne yapmak istersin?</h2><p>Bir bölüm seç.</p><div class="tzsel-l">'+["gen","pk","hi"].map(function(k,i){
+    return'<button type="button" class="tzsel-r" data-go="'+k+'" style="--i:'+i+'"><span class="tzsel-i">'+SIC[k]+'</span><span class="tzsel-t"><b>'+SEC[k].t+'</b><small>'+SEC[k].d+'</small></span><span class="tzsel-n">'+esc(secInfo(k))+'</span><svg class="tzsel-a" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>'}).join("")+'</div></div></div>':"";
   b.style.setProperty("--dx",(HUB.dir*40)+"px");b.classList.remove("tzsl");void b.offsetWidth;b.classList.add("tzsl");
 }
 function menuOpen(){
