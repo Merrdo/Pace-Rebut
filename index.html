@@ -3467,7 +3467,7 @@ function qvOpenFx(it,im,u){
     var r0=card.getBoundingClientRect();
     if(qvSeen(r0)){
       var rad=parseFloat(getComputedStyle(im).borderRadius)||0;
-      im.style.opacity="0";setTimeout(function(){im.style.opacity=""},1200);
+      im.style.opacity="0";
       qvFly(u,r0,r1,18,rad,560,false,function(){im.style.opacity=""});
       return;
     }
@@ -3486,7 +3486,7 @@ function view(i,dir){
   var dec=function(){return im.decode?im.decode().catch(function(){}):Promise.resolve()};
   if(!opened||typeof dir!=="number"||REDUCE||!im.animate){
     im.src=u;fill(it);
-    Promise.race([dec(),new Promise(function(r){setTimeout(r,450)})]).then(function(){if(tok===vTok){if(!v.classList.contains("on")&&!REDUCE&&im.animate){try{qvOpenFx(it,im,u)}catch(e){qvKill();im.style.opacity=""}}v.classList.add("on");warmN(L,pos)}});
+    Promise.race([dec(),new Promise(function(r){setTimeout(r,450)})]).then(function(){if(tok===vTok){if(!v.classList.contains("on")&&!REDUCE&&im.animate)qvOpenFx(it,im,u);v.classList.add("on");warmN(L,pos)}});
     return;
   }
   var pre=new Image();pre.src=u;
@@ -3510,7 +3510,7 @@ function closeV(){
   setTimeout(function(){if(!TMO)$("#qv").classList.remove("tm")},420);
   if(fsOn)setFs(false,true);zoomReset(false);
   $("#qv").classList.remove("on");cur=-1;if(UNS)applyFilter();sheet(false);dlg(false);menu(false);vTok++;
-  if(qfx)try{
+  if(qfx){
     qvChrome(false);qvKill();
     var qdone=false;
     if(qcard&&qr0&&qr0.width){
@@ -3523,7 +3523,7 @@ function closeV(){
       }
     }
     if(!qdone)qim.animate([{opacity:1,transform:"none"},{opacity:0,transform:"scale(.96)"}],{duration:280,easing:QVE,fill:"forwards"});
-  }catch(e){qvKill();qim.style.opacity=""}
+  }
   setTimeout(function(){if(cur<0){Object.keys(VU).forEach(function(k){URL.revokeObjectURL(VU[k])});VU={}}},400);
 }
 function del(){
