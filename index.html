@@ -1412,11 +1412,11 @@ textarea.qfi{height:140px;resize:none}
 .tzfab.on:active{transform:scale(.88)}.tzfab.on:active svg{transform:rotate(90deg)}
 #tz #tzb.pkp{padding-bottom:100px}
 /* Sayfa içeriği yumuşak geçiş */
-#tz #tzb{transition:opacity .2s ease-in,transform .2s ease-in}
+#tz #tzb{transition:opacity .1s linear,transform .1s linear}
 #tz #tzb.pgo,#tz #tzb.pgi{will-change:opacity,transform}
-#tz #tzb.pgo{opacity:0;transform:translate3d(calc(var(--dir,1)*-14px),0,0)}
-#tz #tzb.pgi{animation:pgIn .5s cubic-bezier(.22,1,.36,1) backwards}
-@keyframes pgIn{from{opacity:0;transform:translate3d(calc(var(--dir,1)*18px),0,0)}}
+#tz #tzb.pgo{opacity:0;transform:translate3d(calc(var(--dir,1)*-10px),0,0)}
+#tz #tzb.pgi{animation:pgIn .3s cubic-bezier(.22,1,.36,1) backwards}
+@keyframes pgIn{from{opacity:0;transform:translate3d(calc(var(--dir,1)*14px),0,0)}}
 /* Kaydırma çubukları: hiçbir sayfada görünmesin (kaydırma çalışmaya devam eder) */
 html,body,*{scrollbar-width:none!important;-ms-overflow-style:none!important;scrollbar-gutter:auto!important}
 *::-webkit-scrollbar,*::-webkit-scrollbar-thumb,*::-webkit-scrollbar-track,*::-webkit-scrollbar-button,*::-webkit-scrollbar-corner{display:none!important;width:0!important;height:0!important;background:transparent!important;-webkit-appearance:none!important}
@@ -1424,8 +1424,10 @@ html,body,*{scrollbar-width:none!important;-ms-overflow-style:none!important;scr
 .tz,.tzs{right:-48px;padding-right:48px}
 .sheet{right:-48px;padding-right:72px}
 /* Sorular sekmesi: giriş/çıkışta sadece opacity geçişi. Büyük resim ızgarasında scale() katmanı yeniden rasterlatıp takılma yapıyordu */
-#v-questions{transform:none!important;transition:opacity .3s var(--ease),visibility 0s .3s}
-#v-questions.on{transition-delay:0s}
+#v-questions{transform:none!important;transition:none}
+#v-questions.on{transition:opacity .2s var(--ease)}
+/* Sayfa geçişi sırasında dock'un arka plan bulanıklığı kapatılır: altındaki hareketli büyük katmanı her karede yeniden bulandırmak (backdrop-filter) pahalı */
+.app.navx .dock{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(255,255,255,.97)}
 </style>
 </head>
 <body>
@@ -2780,6 +2782,7 @@ $$(".db").forEach(function(b,n){b.onclick=function(){
     return;
   }
   if(b.dataset.v==="timer")ctlPoke();
+  var ap=$(".app");ap.classList.add("navx");clearTimeout(ap._nx);ap._nx=setTimeout(function(){ap.classList.remove("navx")},700);
   $("#dock").style.setProperty("--i",n);
   $$(".db").forEach(function(x){x.classList.toggle("on",x===b)});
   $$(".view").forEach(function(e){e.classList.toggle("on",e.id==="v-"+b.dataset.v)});
@@ -4433,8 +4436,9 @@ function hubGo(tab){
   setTimeout(function(){
     HUB.quiet=1;hubRender();HUB.quiet=0;$("#tz").scrollTop=0;
     body.classList.remove("pgo");void body.offsetWidth;body.classList.add("pgi");
-    setTimeout(function(){body.classList.remove("pgi");hubBusy=0},560);
-  },200);
+    setTimeout(function(){body.classList.remove("pgi")},320);
+    hubBusy=0;
+  },100);
 }
 $("#tzn").addEventListener("click",function(e){var b=e.target.closest("button");if(b)hubGo(b.dataset.t)});
 $("#tzt").onclick=function(e){var b=e.target.closest("button");if(!b)return;HUB.tab=b.dataset.t;hubRender();$("#tz").scrollTop=0};
