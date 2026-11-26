@@ -3699,8 +3699,8 @@ function hubRender(){
   if(HUB.tab!=="pk"&&PSL.on){PSL.on=false;PSL.ids={}}
   [].forEach.call(document.querySelectorAll("#tzt button,#tzn button"),function(b){var o=b.dataset.t===HUB.tab;b.classList.toggle("on",o);if(b.closest("#tzn"))b.setAttribute("aria-selected",o)});
   var b=$("#tzb"),t=document.createElement("div");
-  /* Sayfa su an bos (yeniden tasarim): eski render'lar devre disi */
-  if(false){if(HUB.tab==="gen")rGen(t);else if(HUB.tab==="pk")rPk(t);else rHi(t)}
+  /* Paketler sayfasi aktif; Test ve Gecmis sayfalari simdilik bos */
+  if(HUB.tab==="pk")rPk(t);
   [].forEach.call(t.querySelectorAll(".tzg"),function(g){g.insertAdjacentHTML("afterbegin",'<i class="tzpl"></i>')});
   var k=HUB.tab+"|"+G.mode+"|"+HUB.hf;
   if(HUB.k===k&&b.firstChild)morph(b,t);else{b.innerHTML=t.innerHTML;fresh(b)}
