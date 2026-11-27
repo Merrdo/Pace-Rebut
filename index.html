@@ -1455,7 +1455,7 @@ html,body,*{scrollbar-width:none!important;-ms-overflow-style:none!important;scr
 /* Soru görüntüleyici: üstte çıkış, ortada kırpılan sahne (yakınlaştırılan soru butonların üstüne binmez), altta ölçek çubuğu */
 .qv{position:fixed;inset:0;z-index:14;background:var(--bg);color:var(--fg);opacity:0;visibility:hidden;touch-action:none;overflow:hidden;transition:opacity .25s var(--ease),visibility 0s .25s}
 .qv.on{opacity:1;visibility:visible;transition-delay:0s}
-.qvs{position:absolute;left:0;right:0;top:0;bottom:0;padding:calc(72px + env(safe-area-inset-top,0px)) 16px calc(62px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;justify-content:center;overflow:hidden;touch-action:none;cursor:grab}
+.qvs{position:absolute;left:0;right:0;top:0;bottom:0;padding:calc(72px + env(safe-area-inset-top,0px)) 16px calc(76px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;justify-content:center;overflow:hidden;touch-action:none;cursor:grab}
 .qvs:active{cursor:grabbing}
 .qv img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;border-radius:18px;background:#fff;box-shadow:0 1px 0 rgba(17,17,17,.04),0 14px 36px -12px rgba(17,17,17,.22);scale:.94;transform-origin:50% 50%;transition:scale .5s var(--ease);-webkit-user-drag:none;user-select:none;pointer-events:none}
 .qv.on img{scale:1}
@@ -1466,7 +1466,7 @@ html,body,*{scrollbar-width:none!important;-ms-overflow-style:none!important;scr
 .qvmt{min-width:0;display:flex;flex-direction:column;gap:4px}
 .qvmt small{display:block;font:800 10px/1 Inter,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
 .qvmt b{display:block;font:700 15px/1.1 Inter,system-ui,sans-serif;letter-spacing:-.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.qvc{position:absolute;z-index:2;left:22px;bottom:calc(18px + env(safe-area-inset-bottom,0px));height:32px;display:grid;place-items:center;color:var(--fg);font:700 14px/1 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;letter-spacing:.2px;opacity:0;pointer-events:none;transition:opacity .3s var(--ease)}
+.qvc{position:absolute;z-index:2;left:22px;bottom:calc(18px + env(safe-area-inset-bottom,0px));height:48px;display:grid;place-items:center;color:var(--fg);font:700 16px/1 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;letter-spacing:.2px;opacity:0;pointer-events:none;transition:opacity .3s var(--ease)}
 .qv.on .qvc{opacity:1}
 .qvn{display:none}
 @media (hover:hover) and (pointer:fine){
@@ -1477,11 +1477,11 @@ html,body,*{scrollbar-width:none!important;-ms-overflow-style:none!important;scr
 .qvn:disabled{opacity:0!important;visibility:hidden!important;pointer-events:none}
 .qvn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
 }
-.qva{position:absolute;z-index:2;right:16px;bottom:calc(14px + env(safe-area-inset-bottom,0px));height:40px;display:flex;align-items:center;gap:9px;padding:0 6px;color:var(--fg);font:700 14px/1 Inter,system-ui,sans-serif;opacity:0;transition:opacity .3s var(--ease),transform .4s var(--sp)}
+.qva{position:absolute;z-index:2;right:16px;bottom:calc(18px + env(safe-area-inset-bottom,0px));height:48px;display:flex;align-items:center;gap:10px;padding:0 8px;color:var(--fg);font:700 16px/1 Inter,system-ui,sans-serif;opacity:0;transition:opacity .3s var(--ease),transform .4s var(--sp)}
 .qv.on .qva{opacity:1}
 .qva:active{transform:scale(.95)}
-.qva svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
-.qva .qvaa{display:none;box-sizing:border-box;min-width:36px;max-width:46vw;height:36px;padding:0 12px;place-items:center;border-radius:18px;background:var(--c,#e9e6e0);color:#111;font:800 17px/1 Inter,system-ui,sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.qva svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.qva .qvaa{display:none;box-sizing:border-box;min-width:44px;max-width:46vw;height:44px;padding:0 14px;place-items:center;border-radius:22px;background:var(--c,#e9e6e0);color:#111;font:800 20px/1 Inter,system-ui,sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .qva.open .qvaa{display:grid;animation:qvpop .45s var(--sp)}
 .qva.open svg{display:none}
 @keyframes qvpop{from{transform:scale(.6);opacity:0}to{transform:none;opacity:1}}
