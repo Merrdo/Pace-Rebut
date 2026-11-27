@@ -1456,13 +1456,6 @@ textarea.qfi{height:140px;resize:none}
 .gn-sumc{display:flex;flex-direction:column;height:100%;padding:24px 26px 24px;border-radius:32px;background:var(--surf);box-shadow:0 1px 0 rgba(17,17,17,.04),0 22px 44px -26px rgba(17,17,17,.3)}
 .gn-hd{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px}
 .gn-k{display:block;font:700 13px Inter,system-ui,sans-serif;color:var(--dim)}
-.gn-md{position:relative;display:flex;gap:2px;padding:3px;border-radius:999px;background:var(--surf2);--ind:var(--fg);--ic:var(--fg);--icon:var(--bg)}
-.gn-md i{position:absolute;left:3px;top:3px;width:38px;height:38px;border-radius:50%;background:var(--ind);transform:translateX(calc(var(--i,0)*40px));transition:transform .55s var(--sp)}
-.gn-md button{position:relative;z-index:1;display:grid;place-items:center;width:38px;height:38px;border-radius:50%;color:var(--ic);transition:color .35s var(--ease),transform .4s var(--sp),opacity .3s}
-.gn-md button.on{color:var(--icon)}
-.gn-md button:active{transform:scale(.88)}
-.gn-md button:disabled{opacity:.35;pointer-events:none}
-.gn-md svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round}
 .gn-big{display:flex;align-items:baseline;gap:8px;margin-top:14px;line-height:.9}
 .gn-big b{font:500 104px Inter,"SF Pro Display",system-ui,sans-serif;letter-spacing:-5px;font-variant-numeric:tabular-nums}
 .gn-big span{font:500 26px Inter,system-ui,sans-serif;color:var(--dim)}
@@ -1475,12 +1468,6 @@ textarea.qfi{height:140px;resize:none}
 .gn-lg li span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .gn-lg li b{font-weight:700;font-variant-numeric:tabular-nums}
 .gn-lg li.gn-em{color:var(--dim);font-weight:500}.gn-lg li.gn-em:before{display:none}
-.gn-lg .tzin{flex:none;width:72px;height:36px;font-size:15px}
-.gn-cnt{flex:none;margin-top:12px}
-.gn-sumc .tzin,.gn-sumc .tzch{background:var(--surf2);box-shadow:none}
-.gn-sumc .tzch.on{background:var(--fg);color:var(--bg)}
-.gn-sumc .tzin:focus{background:var(--surf);box-shadow:inset 0 0 0 2px var(--fg)}
-.gn-cnt .tzhint{margin-top:10px}
 .gn-ac{flex:none;display:flex;flex-direction:column;gap:10px;margin-top:20px}
 .gn-go,.gn-mk{display:inline-flex;align-items:center;justify-content:center;gap:10px;border-radius:999px;font:700 16px/1 Inter,system-ui,sans-serif;white-space:nowrap;transition:transform .45s var(--sp),opacity .3s,background .25s}
 .gn-go{height:58px;background:var(--fg);color:var(--bg);font-size:17px}
@@ -1503,24 +1490,17 @@ textarea.qfi{height:140px;resize:none}
   #tz .gn{display:block}
   .gn-sum{position:sticky;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:3;margin-top:22px}
   .gn-sumc{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px 12px;align-items:center;height:auto;padding:14px;border-radius:28px;background:#111;color:#fff;box-shadow:0 16px 34px -12px rgba(17,17,17,.5)}
-  .gn-hd{grid-column:2;grid-row:1;min-height:0}.gn-k,.gn-bar,.gn-cnt .tzhint{display:none}
+  .gn-hd{grid-column:2;grid-row:1;min-height:0}.gn-k,.gn-bar{display:none}
   .gn-sumt{grid-column:1;grid-row:1;padding-left:8px;min-width:0}
-  .gn-md{--ind:#fff;--ic:#fff;--icon:#111;background:rgba(255,255,255,.14)}
   .gn-big{margin:0;gap:6px}.gn-big b{font-size:32px;letter-spacing:-1px}.gn-big span{font-size:14px;color:rgba(255,255,255,.6)}
   .gn-ttl{margin:3px 0 0;font:500 12px/1.2 Inter,system-ui,sans-serif;color:rgba(255,255,255,.6);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .gn-lg{display:none;grid-column:1/-1;margin:0;max-height:150px;flex:none}.gn-sumc.per .gn-lg{display:flex}
+  .gn-lg{display:none}
   .gn-lg li.gn-em{display:none}
-  .gn-lg .tzin{background:rgba(255,255,255,.14);color:#fff}
-  .gn-cnt{grid-column:1/-1;margin:0}
-  .gn-sumc .tzch,.gn-sumc .tzin{background:rgba(255,255,255,.14);color:#fff}
-  .gn-sumc .tzch.on{background:#fff;color:#111}
-  .gn-sumc .tzin:focus{background:rgba(255,255,255,.22);box-shadow:inset 0 0 0 2px #fff}
-  .gn-sumc .tzfxi{background:rgba(255,180,110,.2);color:#ffd9b0}
   .gn-ac{grid-column:1/-1;flex-direction:row;margin:0;gap:8px}
   .gn-go{flex:1;height:48px;background:#fff;color:#111;font-size:15px}.gn-go svg{display:none}
   .gn-mk{height:48px;padding:0 18px;background:rgba(255,255,255,.14);color:#fff;font-size:14px}
 }
-@media (max-width:560px){#tz .tzw{padding-left:18px;padding-right:18px}#tz .tzn{gap:14px}#tz .tzn button{font-size:24px}#tz .tzn button:after{bottom:-5px;height:3px}#tz .tzh-top{gap:10px}#tz .tzhr .qb{height:38px;padding:0 14px;font-size:14px}#tz .tzhr .tzsv span{display:none}#tz .tzhr .tzsv{padding:0 11px}.gn-g{grid-template-columns:1fr}.gn-mt{gap:16px}.gn-mt button{font-size:21px}.gn-all{white-space:nowrap;padding:0 12px;height:32px}#tz .tzn{gap:12px}#tz .tzn button{font-size:21px}#tz .tzhr{gap:6px}#tz .tzhr .qb{padding:0 12px}.gn-sumc .tzch{height:36px;padding:0 12px;font-size:14px}.gn-sumc .tzchs{gap:6px}.gn-sumc .tzchs .tzin{width:60px;height:36px;padding:0 8px}}
+@media (max-width:560px){#tz .tzw{padding-left:18px;padding-right:18px}#tz .tzn{gap:14px}#tz .tzn button{font-size:24px}#tz .tzn button:after{bottom:-5px;height:3px}#tz .tzh-top{gap:10px}#tz .tzhr .qb{height:38px;padding:0 14px;font-size:14px}#tz .tzhr .tzsv span{display:none}#tz .tzhr .tzsv{padding:0 11px}.gn-g{grid-template-columns:1fr}.gn-mt{gap:16px}.gn-mt button{font-size:21px}.gn-all{white-space:nowrap;padding:0 12px;height:32px}#tz .tzn{gap:12px}#tz .tzn button{font-size:21px}#tz .tzhr{gap:6px}#tz .tzhr .qb{padding:0 12px}}
 @media (prefers-reduced-motion:reduce){.fresh .gn-a,.gn-lg li,.gn-bar i{animation:none}.gn *{transition-duration:.01ms!important}}
 /* Soru sayısı ayar butonu (özet kartında) */
 .gn-set{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px 0 12px;border-radius:999px;background:var(--surf2);color:var(--fg);font:700 13.5px/1 Inter,system-ui,sans-serif;white-space:nowrap;transition:transform .4s var(--sp),background .25s}
@@ -1547,7 +1527,7 @@ textarea.qfi{height:140px;resize:none}
 .zp-bt button:active{transform:scale(.88)}
 .zp-bt svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round}
 .zp.info .zp-i{background:var(--fg);color:var(--bg)}
-.zp-v{display:grid;flex:1;min-height:0;overflow:auto;padding:10px;margin:-10px;overscroll-behavior:contain}
+.zp-v{display:grid;flex:1;min-height:0;overflow:auto;padding:30px;margin:-30px;overscroll-behavior:contain}
 .zp-w{grid-area:1/1;display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:stretch;transition:opacity .4s var(--ease),transform .5s var(--ease),visibility 0s}
 .zp-n,.zp.info .zp-m{opacity:0;visibility:hidden;transition:opacity .3s var(--ease),transform .4s var(--ease),visibility 0s .3s}
 .zp-n{transform:translateY(12px)}
@@ -1571,6 +1551,23 @@ textarea.qfi{height:140px;resize:none}
 .zp-ck{flex:none;margin-left:auto;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--fg);transform:scale(0);transition:transform .5s var(--sp)}
 .zp-ck svg{width:15px;height:15px;fill:none;stroke:var(--bg);stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
 .zp-hf.on .zp-ck{transform:scale(1)}
+.zp-bd{flex:1;min-width:0;display:flex;flex-direction:column}
+.zp-bd .tzchs{margin-top:2px}
+.zp-rows{list-style:none;margin:0;padding:0;max-height:260px;overflow:auto;display:flex;flex-direction:column}
+.zp-rows li{display:flex;align-items:center;gap:10px;padding:6px 0;font:600 14px Inter,system-ui,sans-serif}
+.zp-rows li:before{content:"";flex:none;width:9px;height:9px;border-radius:50%;background:var(--c)}
+.zp-rows li span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.zp-rows .tzin{flex:none;width:72px;height:38px;font-size:15px}
+.zp-rows em{flex:none;min-width:46px;font:500 13px Inter,system-ui,sans-serif;font-style:normal;color:var(--dim);font-variant-numeric:tabular-nums}
+.zp-tot{margin-top:auto;padding-top:14px;font:600 14px Inter,system-ui,sans-serif;color:var(--dim)}
+.zp-tot b{color:var(--fg);font-variant-numeric:tabular-nums}
+.zp-lead{margin:0;font:600 15px/1.45 Inter,system-ui,sans-serif}
+.zp-pt{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+.zp-pt li{position:relative;padding-left:18px;font:500 14px/1.4 Inter,system-ui,sans-serif;color:#55524d}
+.zp-pt li:before{content:"";position:absolute;left:2px;top:.55em;width:6px;height:6px;border-radius:50%;background:var(--fg)}
+.zp-ex{margin-top:auto;padding:12px 14px;border-radius:16px;background:var(--surf2);font:600 14px/1.4 Inter,system-ui,sans-serif}
+.zp-ex small,.zp-us small{display:block;margin-bottom:2px;font:700 11px Inter,system-ui,sans-serif;letter-spacing:.4px;text-transform:uppercase;color:var(--dim)}
+.zp-us{font:500 14px/1.4 Inter,system-ui,sans-serif;color:#55524d}
 .zp-ph{flex:1;display:grid;place-items:center;text-align:center;padding:16px;border-radius:18px;border:2px dashed var(--surf2);color:var(--dim);font:500 13px/1.4 Inter,system-ui,sans-serif}
 .zp-ok{flex:none;height:54px;margin-top:16px;border-radius:999px;background:var(--fg);color:var(--bg);font:700 16px/1 Inter,system-ui,sans-serif;transition:transform .45s var(--sp)}
 .zp-ok:active{transform:scale(.97)}
@@ -4290,7 +4287,10 @@ function hubRender(){
   HUB.k=k;gSum();pills();var uh=$("#tzuh");uh.hidden=HUB.tab!=="gen";uh.classList.toggle("on",!!G.uns);uh.setAttribute("aria-pressed",G.uns?"true":"false");$("#tz").classList.toggle("gnp",HUB.tab==="gen");$("#tzwb").hidden=HUB.tab!=="hi";
   TZFAB.classList.toggle("on",hubOn()&&HUB.tab==="pk"&&!PSL.on);b.classList.toggle("pkp",HUB.tab==="pk");
 }
-/* ---------- Soru sayısı paneli ---------- */
+/* ---------- Soru sayısı paneli ----------
+   Sağdaki özet kartı sadece gösterir; tüm soru sayısı ayarı bu panelde yapılır.
+   Panel ortadan ikiye bölünür: Toplam | Her biri için ayrı. Seçili yarı belirgin, diğeri soluk ve hafif küçük.
+   (i) düğmesi paneli kapatmadan içeriği iki seçeneğin kısa açıklamasıyla değiştirir. */
 var SP_ICT='<svg viewBox="0 0 24 24"><path d="M18 5H7l6 7-6 7h11"/></svg>',
     SP_ICP='<svg viewBox="0 0 24 24"><path d="M4 7h9M19 7h1M4 17h1M11 17h9"/><circle cx="16" cy="7" r="2.5"/><circle cx="8" cy="17" r="2.5"/></svg>',
     SP_ICI='<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.6v.01"/></svg>',
@@ -4298,39 +4298,80 @@ var SP_ICT='<svg viewBox="0 0 24 24"><path d="M18 5H7l6 7-6 7h11"/></svg>',
 var SPEL=document.createElement("div"),SPI=false;
 SPEL.className="zp";SPEL.id="tzsp";SPEL.setAttribute("role","dialog");SPEL.setAttribute("aria-modal","true");SPEL.setAttribute("aria-label","Soru sayısı ayarları");
 (function(){
-  var H=[["Toplam","Tek sayı belirle, eşit dağıtılsın.",SP_ICT,"Toplam ayarları burada olacak."],["Her biri için ayrı","Her seçeneğe ayrı sayı ver.",SP_ICP,"Ayrı sayı ayarları burada olacak."]],
-      INFO=["Toplam seçeneğinin açıklaması burada olacak.","Her biri için ayrı seçeneğinin açıklaması burada olacak."];
+  var H=[["Toplam","Tek sayı belirle, eşit dağıtılsın.",SP_ICT],["Her biri için ayrı","Her seçeneğe ayrı sayı ver.",SP_ICP]],
+      INFO=[
+        {lead:"Tek bir sayı yazarsın, sorular seçtiğin seçeneklere eşit paylaştırılır.",
+         pts:["10, 20, 30, 40 hazır; istersen kendi sayını yaz.","Tümü: seçtiklerinin bütün soruları gelir.","Seçenek sayısı istediğin sayıdan fazlaysa toplam, her birinden en az 1 soru gelecek şekilde yükselir."],
+         ex:"20 soru, 4 seçenek: her birinden 5 soru.",us:"Hızlıca karışık bir test çözmek istediğinde."},
+        {lead:"Her seçenek için sayıyı sen belirlersin; toplam bu sayıların toplamı olur.",
+         pts:["Zayıf olduğun yere daha çok soru verebilirsin.","Bir seçenekte olandan fazlası yazılamaz.","En az 2 seçenek işaretli olmalı."],
+         ex:"Matematik 15 + Fizik 5: 20 soruluk test.",us:"Seçeneklere dengesiz pay vermek istediğinde."}];
   SPEL.innerHTML='<div class="zp-c">'
     +'<div class="zp-h"><h2 class="zp-t"><span class="a">Soru sayısı</span><span class="b">Nasıl çalışır?</span></h2>'
     +'<div class="zp-bt"><button type="button" class="zp-i" id="tzspi" aria-pressed="false" aria-label="Bilgi" title="Bilgi">'+SP_ICI+'</button><button type="button" id="tzspc" aria-label="Kapat" title="Kapat">'+SP_ICX+'</button></div></div>'
     +'<div class="zp-v">'
-      +'<div class="zp-w zp-m">'+H.map(function(h,i){return'<div class="zp-hf" data-h="'+i+'" role="radio" tabindex="0" aria-checked="false"><div class="zp-ht"><span class="zp-ic">'+h[2]+'</span><div class="zp-tx"><b>'+h[0]+'</b><small class="st">'+h[1]+'</small><small class="nt">En az 2 seçenek işaretle.</small></div><span class="zp-ck">'+TICK+'</span></div><div class="zp-ph">'+h[3]+'</div></div>'}).join("")+'</div>'
-      +'<div class="zp-w zp-n" inert aria-hidden="true">'+H.map(function(h,i){return'<div class="zp-if"><div class="zp-ht"><span class="zp-ic">'+h[2]+'</span><div class="zp-tx"><b>'+h[0]+'</b></div></div><div class="zp-ph">'+INFO[i]+'</div></div>'}).join("")+'</div>'
+      +'<div class="zp-w zp-m">'+H.map(function(h,i){return'<div class="zp-hf" data-h="'+i+'" role="radio" tabindex="0" aria-checked="false"><div class="zp-ht"><span class="zp-ic">'+h[2]+'</span><div class="zp-tx"><b>'+h[0]+'</b><small class="st">'+h[1]+'</small><small class="nt">En az 2 seçenek işaretle.</small></div><span class="zp-ck">'+TICK+'</span></div><div class="zp-bd"></div></div>'}).join("")+'</div>'
+      +'<div class="zp-w zp-n" inert aria-hidden="true">'+H.map(function(h,i){var o=INFO[i];return'<div class="zp-if"><div class="zp-ht"><span class="zp-ic">'+h[2]+'</span><div class="zp-tx"><b>'+h[0]+'</b></div></div><p class="zp-lead">'+o.lead+'</p><ul class="zp-pt">'+o.pts.map(function(x){return'<li>'+x+'</li>'}).join("")+'</ul><div class="zp-ex"><small>Örnek</small>'+o.ex+'</div><div class="zp-us"><small>Ne zaman?</small>'+o.us+'</div></div>'}).join("")+'</div>'
     +'</div>'
     +'<button type="button" class="zp-ok" id="tzspok">Tamam</button></div>';
 })();
 $("#tz").parentNode.insertBefore(SPEL,$("#tz").nextSibling);
+function spPn(c,p){var v=G.pn[c.k];if(v==null)v=Math.min(10,p.length);return Math.max(0,Math.min(p.length,v))}
+function spFx(gi){var t=gi.bump?(gi.need+' seçenek işaretledin. Hepsinden soru gelsin diye toplam '+gi.n+' soruya yükseltildi.'):(HUB.fxt||'');if(gi.bump)HUB.fxt=t;return t}
+function spTot(gi){return gi.sc.reduce(function(a,c,i){return a+spPn(c,gi.pools[i])},0)}
+/* Yarıların içeriğini kurar (panel açılırken ve yarı değişince) */
+function spBuild(){
+  var gi=gInfo(),multi=gi.sc.length>1,b0=SPEL.querySelector('[data-h="0"] .zp-bd'),b1=SPEL.querySelector('[data-h="1"] .zp-bd');
+  b0.innerHTML='<div class="tzchs">'+[10,20,30,40].map(function(n){return'<button type="button" class="tzch'+(!G.all&&G.n===n?" on":"")+'" data-zn="'+n+'">'+n+'</button>'}).join("")+'<button type="button" class="tzch'+(G.all?" on":"")+'" data-zn="all">Tümü</button><input class="tzin" id="zpni" type="number" inputmode="numeric" min="1" aria-label="Soru sayısı" value="'+(G.all?Math.max(gi.avail,1):gi.n)+'"></div>'
+    +'<div class="tzfx'+(gi.bump?' on':'')+'" role="status"><div><div class="tzfxi">'+SP_ICI+'<span>'+esc(spFx(gi))+'</span></div></div></div>'
+    +'<div class="tzhint">'+(multi?gi.sc.length+' seçeneğe eşit dağıtılır, sorular rastgele seçilir.':(gi.sc.length?'Sorular seçtiğin gruptan rastgele gelir.':'Önce soldan seçenek işaretle.'))+'</div>';
+  b1.innerHTML=multi
+    ?'<ul class="zp-rows">'+gi.sc.map(function(c,i){var p=gi.pools[i];return'<li style="--c:'+(c.col||"#cfcbc4")+'"><span>'+esc(c.lab)+'</span><input class="tzin" type="number" inputmode="numeric" min="1" max="'+p.length+'" value="'+spPn(c,p)+'" data-zk="'+esc(c.k)+'" aria-label="'+esc(c.lab)+' soru sayısı"><em>/ '+p.length+'</em></li>'}).join("")+'</ul><div class="zp-tot">Toplam <b id="zptot">'+spTot(gi)+'</b> soru</div>'
+    :'<div class="zp-ph">Seçenek başına soru sayısı burada girilir.</div>';
+}
+/* Yazarken kurmadan günceller: seçili çipler, uyarı notu, toplam, odakta olmayan alanların değeri */
+function spLive(){
+  var gi=gInfo(),a=document.activeElement;
+  [].forEach.call(SPEL.querySelectorAll("[data-zn]"),function(c){var v=c.dataset.zn;c.classList.toggle("on",v==="all"?G.all:(!G.all&&G.n===+v))});
+  var fx=SPEL.querySelector(".tzfx"),t=spFx(gi);if(fx){fx.classList.toggle("on",!!gi.bump);var sp=fx.querySelector("span");if(t&&sp.textContent!==t)sp.textContent=t}
+  var ni=$("#zpni");if(ni&&ni!==a)ni.value=G.all?Math.max(gi.avail,1):gi.n;
+  [].forEach.call(SPEL.querySelectorAll("[data-zk]"),function(i){if(i===a)return;var c=gi.cs.filter(function(x){return x.k===i.dataset.zk})[0];if(c)i.value=spPn(c,pool(c))});
+  var tt=$("#zptot");if(tt)tt.textContent=spTot(gi);
+}
 function spSync(){
   var gi=gInfo(),multi=gi.sc.length>1;
   [].forEach.call(SPEL.querySelectorAll(".zp-hf"),function(h){
     var on=+h.dataset.h===(gi.per?1:0),dis=h.dataset.h==="1"&&!multi;
     h.classList.toggle("on",on);h.classList.toggle("dis",dis);h.setAttribute("aria-checked",on?"true":"false");h.setAttribute("aria-disabled",dis?"true":"false");
+    h.querySelector(".zp-bd").inert=!on;
   });
 }
 function spInfo(v){
   SPI=v;SPEL.classList.toggle("info",v);$("#tzspi").setAttribute("aria-pressed",v?"true":"false");
   var m=SPEL.querySelector(".zp-m"),n=SPEL.querySelector(".zp-n");m.inert=v;n.inert=!v;m.setAttribute("aria-hidden",v?"true":"false");n.setAttribute("aria-hidden",v?"false":"true");
 }
-function spOpen(){spInfo(false);spSync();SPEL.classList.add("on");setTimeout(function(){var o=SPEL.querySelector(".zp-hf.on");if(o)o.focus()},50)}
+function spOpen(){spInfo(false);spBuild();spSync();SPEL.classList.add("on");setTimeout(function(){var o=SPEL.querySelector(".zp-hf.on");if(o)o.focus()},50)}
 function spClose(){if(!SPEL.classList.contains("on"))return;SPEL.classList.remove("on");var b=$("#tzset");if(b)b.focus()}
 SPEL.addEventListener("click",function(e){
-  var t=e.target;
+  var t=e.target,b;
   if(t===SPEL||t.closest("#tzspc")||t.closest("#tzspok")){spClose();return}
   if(t.closest("#tzspi")){spInfo(!SPI);return}
+  if(b=t.closest("[data-zn]")){if(b.dataset.zn==="all")G.all=true;else{G.all=false;G.n=+b.dataset.zn}hubRender();spLive();return}
   var h=t.closest(".zp-m .zp-hf");
-  if(h&&!h.classList.contains("on")&&!h.classList.contains("dis")){G.per=h.dataset.h==="1";hubRender();spSync()}
+  if(h&&!h.classList.contains("on")&&!h.classList.contains("dis")){
+    var per=h.dataset.h==="1";
+    /* Ayrı sayıya ilk geçişte mevcut dağılım başlangıç değeri olur */
+    if(per){var gi=gInfo();gi.sc.forEach(function(c,i){if(G.pn[c.k]==null)G.pn[c.k]=gi.counts[i]})}
+    G.per=per;hubRender();spBuild();spSync();
+  }
 });
-SPEL.addEventListener("keydown",function(e){var h=e.target.closest&&e.target.closest(".zp-m .zp-hf");if(h&&(e.key==="Enter"||e.key===" ")){e.preventDefault();h.click()}});
+SPEL.addEventListener("input",function(e){
+  var t=e.target;
+  if(t.id==="zpni"){var v=parseInt(t.value,10);if(v>0){G.all=false;G.n=v;hubRender();spLive()}}
+  else if(t.dataset&&t.dataset.zk!=null){var v2=parseInt(t.value,10);if(v2>0){G.pn[t.dataset.zk]=v2;hubRender();spLive()}}
+});
+SPEL.addEventListener("focusout",function(e){var t=e.target;if(t.id==="zpni"||(t.dataset&&t.dataset.zk!=null))setTimeout(spLive,0)});
+SPEL.addEventListener("keydown",function(e){var h=e.target;if(h.classList&&h.classList.contains("zp-hf")&&(e.key==="Enter"||e.key===" ")){e.preventDefault();h.click()}});
 document.addEventListener("keydown",function(e){if(e.key==="Escape"&&SPEL.classList.contains("on")){e.preventDefault();e.stopImmediatePropagation();spClose()}},true);
 function hubOn(){return $("#tz").classList.contains("on")}
 function refreshHub(){if(hubOn())hubRender()}
@@ -4359,15 +4400,8 @@ function rGen(b){
     +'<div class="gn-sumt"><div class="gn-big"><b id="tzsb"></b><span>soru</span></div><div class="gn-ttl" id="tzss"></div></div>'
     +'<div class="gn-bar" aria-hidden="true">'+gi.sc.map(function(c,i){return gi.counts[i]>0?'<i style="flex:'+gi.counts[i]+' 1 0;--c:'+(c.col||"#cfcbc4")+'"></i>':''}).join("")+'</div>'
     +'<ul class="gn-lg">'+(gi.sc.length?gi.sc.map(function(c,i){
-        return'<li style="--c:'+(c.col||"#cfcbc4")+'"><span>'+esc(c.lab)+'</span>'+(gi.per?'<input class="tzin" type="number" inputmode="numeric" min="1" max="'+pool(c).length+'" value="'+gi.counts[i]+'" data-pk="'+esc(c.k)+'" aria-label="'+esc(c.lab)+' soru sayısı">':'<b>'+gi.counts[i]+'</b>')+'</li>'}).join(""):'<li class="gn-em">Soldan bir ya da birkaç seçenek işaretle.</li>')+'</ul>';
-  h+='<div class="gn-cnt">';
-  if(!gi.per){
-    h+='<div class="tzchs">'+[10,20,30,40].map(function(n){return'<button type="button" class="tzch'+(!G.all&&G.n===n?" on":"")+'" data-n="'+n+'">'+n+'</button>'}).join("")+'<button type="button" class="tzch'+(G.all?" on":"")+'" data-n="all">Tümü</button><input class="tzin" id="tzni" type="number" inputmode="numeric" min="1" aria-label="Soru sayısı" value="'+(G.all?Math.max(gi.avail,1):gi.n)+'"></div>';
-    var fxt=gi.bump?(gi.need+' kategori seçtin. Hepsinden soru gelsin diye toplam '+gi.n+' soruya yükseltildi.'):(HUB.fxt||'');if(gi.bump)HUB.fxt=fxt;
-    h+='<div class="tzfx'+(gi.bump?' on':'')+'" role="status"><div><div class="tzfxi"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.6v.01"/></svg><span>'+esc(fxt)+'</span></div></div></div>';
-    h+='<div class="tzhint">'+(multi?gi.sc.length+' seçeneğe eşit dağıtılır, sorular rastgele seçilir.':'Sorular seçtiğin gruptan rastgele gelir.')+'</div>';
-  }else h+='<div class="tzhint">Her seçenek için soru sayısını yukarıdan belirle. Sorular rastgele seçilir.</div>';
-  h+='</div><div class="gn-ac"><button type="button" class="gn-go" id="tzgo"><span>Testi başlat</span>'+ARR+'</button><button type="button" class="gn-mk" id="tzmk">Paket yap</button></div></div></aside></div>';
+        return'<li style="--c:'+(c.col||"#cfcbc4")+'"><span>'+esc(c.lab)+'</span>'+'<b>'+gi.counts[i]+'</b>'+'</li>'}).join(""):'<li class="gn-em">Soldan bir ya da birkaç seçenek işaretle.</li>')+'</ul>';
+  h+='<div class="gn-ac"><button type="button" class="gn-go" id="tzgo"><span>Testi başlat</span>'+ARR+'</button><button type="button" class="gn-mk" id="tzmk">Paket yap</button></div></div></aside></div>';
   b.innerHTML=h;gSum();
 }
 function gSum(){
@@ -4375,7 +4409,6 @@ function gSum(){
   roll(sb,gi.total,"");
   $("#tzss").textContent=gi.sc.length?gTitle(gi.sc):"Seçim yok";
   $("#tzgo").disabled=$("#tzmk").disabled=!gi.total;
-  if(!gi.per){var ni=$("#tzni");[].forEach.call(document.querySelectorAll("[data-n]"),function(c){var v=c.dataset.n;c.classList.toggle("on",v==="all"?G.all:(!G.all&&G.n===+v))});if(ni&&document.activeElement!==ni)ni.value=G.all?Math.max(gi.avail,1):gi.n}
 }
 function gStart(save){
   var gi=gInfo();if(!gi.total)return;
@@ -5056,20 +5089,12 @@ $("#tzb").addEventListener("click",function(e){
   if(t.closest("#tzu")){G.uns=!G.uns;hubRender();return}
   if(t.closest("#tzset")){spOpen();return}
   if(b=t.closest("[data-pa]")){var k=b.dataset.pa,cc=gInfo().cs.filter(function(c){return c.k===k})[0];if(cc){G.pn[k]=pool(cc).length;hubRender()}return}
-  if(b=t.closest("[data-n]")){if(b.dataset.n==="all")G.all=true;else{G.all=false;G.n=+b.dataset.n}hubRender();return}
   if(b=t.closest("[data-ga]")){if(b.dataset.ga==="all")gInfo().cs.forEach(function(c){if(pool(c).length)G.sel[c.k]=1});else G.sel={};hubRender();return}
   if(b=t.closest(".tzo")){if(b.classList.contains("dis"))return;var k2=b.dataset.k;if(G.sel[k2])delete G.sel[k2];else G.sel[k2]=1;hubRender();return}
   if(t.closest("#tzgo")){gStart(false);return}
   if(t.closest("#tzmk")){gStart(true);return}
   if(b=t.closest(".tzhi")){rsOpen(b.dataset.id,false);return}
 });
-$("#tzb").addEventListener("input",function(e){
-  var t=e.target;
-  if(t.id==="tzni"){var v=parseInt(t.value,10);if(v>0){G.all=false;G.n=v;hubRender()}}
-  else if(t.dataset&&t.dataset.pk!=null){var v2=parseInt(t.value,10);if(v2>0){G.pn[t.dataset.pk]=v2;gSum()}}
-});
-$("#tzb").addEventListener("focusout",function(e){if(e.target.id==="tzni")setTimeout(hubRender,0)});
-$("#tzb").addEventListener("change",function(e){if(e.target.dataset&&e.target.dataset.pk!=null)hubRender()});
 $("#tzpx").onclick=peClose;
 $("#tzpf").onclick=peFClick;
 $("#tzpfb").onclick=function(){peFToggle()};
