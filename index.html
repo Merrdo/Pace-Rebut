@@ -1505,6 +1505,10 @@ html,body,*{scrollbar-width:none!important;-ms-overflow-style:none!important;scr
 .qvp small{display:block;margin-bottom:7px;font:800 10px/1 Inter,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
 .qvp p{margin:0;font:600 16px/1.45 Inter,system-ui,sans-serif;white-space:pre-wrap;word-break:break-word}
 .qvp .n p{font-weight:500}
+.qvp .e{color:var(--dim);font-weight:500}
+.qvdel{width:100%;height:48px;margin-top:18px;display:flex;align-items:center;justify-content:center;gap:8px;border-radius:16px;background:#fdecea;color:#d12f35;font:700 15px/1 Inter,system-ui,sans-serif}
+.qvdel:focus-visible{outline:2px solid #d12f35;outline-offset:2px}
+.qvdel svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .qv.zm .qvm,.qv.zm .qvn,.qv.zm .qvc,.qv.zm .qva,.qv.zm .qvk,.qv.zm .qvp{opacity:0;pointer-events:none}
 .qvx{position:absolute;z-index:2;top:calc(14px + env(safe-area-inset-top,0px));right:16px;width:48px;height:48px;display:grid;place-items:center;border-radius:50%;background:var(--fg);color:var(--bg);box-shadow:0 8px 24px rgba(0,0,0,.14);transition:transform .5s var(--sp)}
 .qvx:active{transform:scale(.92)}
@@ -1584,7 +1588,7 @@ html,body,*{scrollbar-width:none!important;-ms-overflow-style:none!important;scr
   <div class="mod" id="sset"><div class="mc card" id="smc" tabindex="-1" role="dialog" aria-modal="true" aria-label="Kronometre ayarları"><h2>Kronometre ayarları</h2><p>Kronometrenin nasıl görüneceğini seç.</p><div class="pm-l"><div class="pm-row"><div><b>Salise göster</b><small>Saniyenin yanında yüzde birlik kısım</small></div><button class="tg" data-sk="c" aria-label="Salise göster"><i></i></button></div><div class="pm-row"><div><b>Saat basamağı</b><small>Bir saati geçmeden de 00 olarak göster</small></div><button class="tg" data-sk="h" aria-label="Saat basamağı"><i></i></button></div></div><div class="row"><button class="btn" id="sdf">Varsayılan</button><button class="btn pr" id="sdn">Bitti</button></div></div></div>
   <div class="sheet" id="stsheet"><div class="fl-r"><button class="fl fk" id="stx">Kapat</button></div><div class="shw"><div class="sh-h"><div><h1>İstatistikler</h1><p>Kronometre, geri sayım ve Pomodoro odak turlarında geçen süre günlük olarak burada toplanır.</p></div></div><div id="stbody"></div></div><div class="mod" id="stadd"><div class="mc card" id="stamc" tabindex="-1" role="dialog" aria-modal="true" aria-label="Süre ekle"><h2 id="sah"></h2><p id="sas"></p><div class="pm-l"><div class="pm-row"><div><b>Eklenecek süre</b><small>5 dakikalık adımlarla</small></div><div class="pm-stp"><button data-sa="-1" aria-label="Süreyi azalt">−</button><output id="sao"></output><button data-sa="1" aria-label="Süreyi artır">+</button></div></div><div class="pm-row pm-cr"><div class="pm-pick" id="sap"></div></div></div><div class="row"><button class="btn dg" id="saz" data-hold>Günü sıfırla</button><button class="btn" id="sax">Vazgeç</button><button class="btn pr" id="sak">Ekle</button></div></div></div></div>
   <div class="mod" id="pset"><div class="mc card" id="pmc" tabindex="-1" role="dialog" aria-modal="true" aria-label="Pomodoro ayarları"><h2>Pomodoro ayarları</h2><p>Odak süreni, molalarını ve periyodunu ayarla.</p><div class="pm-l" id="pml"></div><p class="pm-n">Tur süresi değişirse o an süren tur sıfırlanır.</p><div class="row"><button class="btn" id="pdf">Varsayılan</button><button class="btn" id="pcn">Vazgeç</button><button class="btn pr" id="psv">Kaydet</button></div></div></div>
-  <div class="qv" id="qv" role="dialog" aria-modal="true" aria-label="Soru"><button class="qvx" id="qvx" type="button" aria-label="Kapat"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button><div class="qvm" id="qvm"><span class="qvmd" id="qvmd"></span><div class="qvmt" id="qvmt"><small id="qvmg"></small><b id="qvmn"></b></div><svg class="qvmx" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="qvp" id="qvp"></div><span class="qvc" id="qvmc"></span><button class="qva" id="qva" type="button" aria-label="Cevabı göster"><svg viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><span id="qvat">Cevabı gör</span><span class="qvaa" id="qvaa"></span></button><button class="qvk" id="qvk" type="button" aria-label="Çözüldü olarak işaretle" aria-pressed="false"><svg viewBox="0 0 24 24"><path pathLength="1" d="M5 12.8l4.6 4.7L19 7.5"/></svg></button><button class="qvn qvn-l" id="qvnl" type="button" aria-label="Önceki soru"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button><button class="qvn qvn-r" id="qvnr" type="button" aria-label="Sonraki soru"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button><div class="qvs" id="qvs"><img id="qvi" alt="Soru" draggable="false"></div><div class="qvb" id="qvb"><div class="qvz"><div class="qvl"><b id="qvt">1×</b><i><u id="qvf"></u></i></div><button class="qvr" id="qvr" type="button" aria-label="Sığdır"><svg viewBox="0 0 24 24"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg>Sığdır</button></div></div></div>
+  <div class="qv" id="qv" role="dialog" aria-modal="true" aria-label="Soru"><button class="qvx" id="qvx" type="button" aria-label="Kapat"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button><div class="qvm" id="qvm"><span class="qvmd" id="qvmd"></span><div class="qvmt" id="qvmt"><small id="qvmg"></small><b id="qvmn"></b></div><svg class="qvmx" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="qvp" id="qvp"><div id="qvpd"></div><button class="qvdel" id="qvdel" type="button" data-hold><svg viewBox="0 0 24 24"><path d="M4 7h16M9.5 7V4.5h5V7M6.5 7l.8 12a1.5 1.5 0 001.5 1.4h6.4a1.5 1.5 0 001.5-1.4l.8-12M10 11v5M14 11v5"/></svg><span>Soruyu sil</span></button></div><span class="qvc" id="qvmc"></span><button class="qva" id="qva" type="button" aria-label="Cevabı göster"><svg viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><span id="qvat">Cevabı gör</span><span class="qvaa" id="qvaa"></span></button><button class="qvk" id="qvk" type="button" aria-label="Çözüldü olarak işaretle" aria-pressed="false"><svg viewBox="0 0 24 24"><path pathLength="1" d="M5 12.8l4.6 4.7L19 7.5"/></svg></button><button class="qvn qvn-l" id="qvnl" type="button" aria-label="Önceki soru"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button><button class="qvn qvn-r" id="qvnr" type="button" aria-label="Sonraki soru"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button><div class="qvs" id="qvs"><img id="qvi" alt="Soru" draggable="false"></div><div class="qvb" id="qvb"><div class="qvz"><div class="qvl"><b id="qvt">1×</b><i><u id="qvf"></u></i></div><button class="qvr" id="qvr" type="button" aria-label="Sığdır"><svg viewBox="0 0 24 24"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg>Sığdır</button></div></div></div>
   <div class="qc" id="qc" role="dialog" aria-modal="true" aria-label="Soru ekle">
     <div class="qct">
       <button class="fl" id="qcx" type="button">Vazgeç</button>
@@ -1775,7 +1779,8 @@ var KA=[
 ["qDet","q","Sorular","Detay panelini aç","Kaynak, sayfa ve açıklama panelini açar.","ArrowDown"],
 ["qDetOff","q","Sorular","Detay panelini kapat","Açık olan detay panelini kapatır.","ArrowUp"],
 ["qDet2","q","Sorular","Detay panelini aç / kapat","Detay panelini açar, açıksa kapatır.","i"],
-["qClose","q","Sorular","Soruyu kapat","Açık soruyu kapatıp listeye döner.","x"]
+["qClose","q","Sorular","Soruyu kapat","Açık soruyu kapatıp listeye döner.","x"],
+["qDel","q","Sorular","Soruyu sil","Detay panelini açıp silme butonunu seçer. Silmek için Enter veya Boşluk tuşunu basılı tut.","Delete"]
 ],KDEF={},KB={on:1,map:{}};
 /* Nav kısayolları alt çubuktaki (.db) sıraya göre OTOMATİK üretilir: sayfa sırası değişir ya da yeni sayfa eklenirse atamalar kendiliğinden uyar. Kullanıcı özelleştirmeleri sayfa adına (nav:<data-v>) bağlıdır. */
 (function(){
@@ -3586,14 +3591,17 @@ function qvReset(){qvTok++;qvBusy=false;qvSw=null;var _i=$("#qvi");_i.style.tran
 function qvDet(on){
   var m=$("#qvm"),c=$("#qvp");if(on&&(!m.classList.contains("has")||qvZ.s>1.001))on=false;
   m.classList.toggle("open",!!on);c.classList.toggle("on",!!on);
+  if(!on){var d=$("#qvdel");if(d===document.activeElement)d.blur();qvDelHint(false)}
 }
+function qvDelHint(on){$("#qvdel span").textContent=on?"Silmek için Enter'ı basılı tut":"Soruyu sil"}
 function qvDetFill(it){
-  var c=$("#qvp");c.innerHTML="";
+  var c=$("#qvpd");c.innerHTML="";
   var bk=(it.book||"").trim(),pg=(it.page||"").toString().trim(),nt=(it.note||"").trim();
   function fld(cls,lab,val){var d=document.createElement("div");d.className=cls;var l=document.createElement("small");l.textContent=lab;var p=document.createElement("p");p.textContent=val;d.appendChild(l);d.appendChild(p);return d}
   if(bk||pg){var r=document.createElement("div");r.className="r";if(bk)r.appendChild(fld("f","Kaynak",bk));if(pg)r.appendChild(fld(bk?"f p":"f","Sayfa",pg));c.appendChild(r)}
   if(nt)c.appendChild(fld("n","Açıklama",nt));
-  $("#qvm").classList.toggle("has",!!(bk||pg||nt));qvDet(false);
+  if(!bk&&!pg&&!nt){var e=document.createElement("p");e.className="e";e.textContent="Detay girilmemiş";c.appendChild(e)}
+  $("#qvm").classList.add("has");qvDet(false);
 }
 function qvSolvedUi(it){var k=$("#qvk"),v=!!(it&&it.solved);k.classList.toggle("on",v);k.setAttribute("aria-pressed",v?"true":"false");k.setAttribute("aria-label",v?"Çözüldü işaretini kaldır":"Çözüldü olarak işaretle")}
 function qvAnsShow(on){
@@ -3633,6 +3641,10 @@ function qvGo(d){
   if(i<0||j<0||j>=qvL.length){if(qvZ.s<=1.001)qvBack();return}
   var it=ITEMS.filter(function(x){return x.id===qvL[j]})[0];
   if(!it){if(qvZ.s<=1.001)qvBack();return}
+  qvSlide(it,d);
+}
+/* it sorusuna kayarak geç (d: +1 sağdan, -1 soldan gelir) */
+function qvSlide(it,d){
   var im=$("#qvi"),W=window.innerWidth,tok=++qvTok;qvBusy=true;
   if(qvZ.s>1.001||qvZ.x||qvZ.y){cancelAnimationFrame(qvRaf);qvZ.s=1;qvZ.x=0;qvZ.y=0;qvApply(false)}
   im.style.transition="transform .2s cubic-bezier(.4,0,1,1),opacity .2s ease";
@@ -3656,6 +3668,20 @@ function qvClose(){
   setTimeout(function(){var im=$("#qvi");if(!v.classList.contains("on")){qvReset();if(im._u){URL.revokeObjectURL(im._u);im._u=null;im.removeAttribute("src")}}},300);
 }
 $("#qvx").onclick=qvClose;
+function qvDelete(){
+  var id=qvCur,it=ITEMS.filter(function(x){return x.id===id})[0];if(!it||qvBusy)return;
+  var i=qvL.indexOf(id),nid=i>=0?(i+1<qvL.length?qvL[i+1]:(i>0?qvL[i-1]:null)):null,d=(i>=0&&i+1<qvL.length)?1:-1;
+  tx("readwrite",function(st){st.delete(id)}).then(loadAll).then(function(){
+    render();trAdd([it]);
+    qvL=qvL.filter(function(x){return x!==id});
+    var ni=nid&&ITEMS.filter(function(x){return x.id===nid})[0];
+    qvDet(false);
+    if(!ni){qvClose();return}
+    qvSlide(ni,d);
+  },function(){toast("Silinemedi")});
+}
+$("#qvdel").addEventListener("blur",function(){qvDelHint(false)});
+$("#qvdel").onclick=function(){if(!ddHold.ok(this))return;qvDelete()};
 $("#qvm").onclick=function(){qvDet(!$("#qvp").classList.contains("on"))};
 $("#qvk").onclick=function(){
   var it=ITEMS.filter(function(x){return x.id===qvCur})[0];if(!it)return;
@@ -3759,6 +3785,7 @@ function qvKey(id,e){
     case"qDetOff":qvDet(false);break;
     case"qDet2":if(!e.repeat)qvDet(!$("#qvp").classList.contains("on"));break;
     case"qClose":qvClose();break;
+    case"qDel":if(qvZ.s>1.001)break;qvDet(true);qvDelHint(true);try{$("#qvdel").focus({preventScroll:true})}catch(_){}break;
   }
 }
 document.addEventListener("keydown",function(e){
@@ -3766,6 +3793,7 @@ document.addEventListener("keydown",function(e){
   if(e.key==="Escape"){e.preventDefault();e.stopImmediatePropagation();if($("#qvp").classList.contains("on"))qvDet(false);else qvClose();return}
   var a=document.activeElement;
   if(a&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName))return;
+  if((e.key==="Enter"||e.key===" ")&&a&&a.closest&&a.closest("[data-hold]"))return;
   if(!e.altKey&&!e.isComposing&&window.ddKey){
     var id=window.ddKey(e,"q");
     if(id){e.preventDefault();e.stopImmediatePropagation();if(a&&a.tagName==="BUTTON")a.blur();qvKey(id,e);return}
