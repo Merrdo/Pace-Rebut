@@ -1623,9 +1623,10 @@ button.rsq-th:active{transform:scale(.96)}
 .rsq.st-c .rsq-v.mine b{color:#157a43}.rsq.st-w .rsq-v.mine b{color:#c2271c}
 .rsq .tzov{margin-top:10px}
 .rsx{display:flex;justify-content:center;margin-top:32px}
-.rsdel{display:inline-flex;align-items:center;gap:9px;height:46px;padding:0 24px;border-radius:999px;background:rgba(209,47,53,.12);color:#d12f35;font:700 15px/1 Inter,system-ui,sans-serif;transition:transform .4s var(--sp)}
+.rssec{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.rsdel{display:inline-flex;align-items:center;gap:7px;height:36px;padding:0 14px;border-radius:999px;background:rgba(209,47,53,.12);color:#d12f35;font:700 13px/1 Inter,system-ui,sans-serif;transition:transform .4s var(--sp)}
 .rsdel:active{transform:scale(.95)}
-.rsdel svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.rsdel svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 @media (max-width:900px){.rsl{grid-template-columns:1fr}.rsp-t{flex-wrap:wrap;gap:18px 24px}.rsp-i{flex:1 1 220px}.rsp-s{flex-basis:100%}}
 @media (max-width:560px){.rsh h1{font-size:34px}.rsh .rsd8{font-size:15px}.rsa{grid-template-columns:1fr}.rsq{grid-template-columns:110px minmax(0,1fr);gap:12px;padding:14px}.rsp{padding:20px 20px 18px}.rsp .big{font-size:54px}}
 
@@ -4541,7 +4542,8 @@ function rsRender(top){
   var wrong=rec.items.filter(function(x){return(x.st==="w"||x.st==="b")&&im[x.id]}).length;
   h+='<div class="rsa" style="--i:1"><button class="tzb pr" type="button" data-a="rw"'+(wrong?"":" disabled")+'>Yanlış ve boşları tekrar çöz</button><button class="tzb" type="button" data-a="ra">Aynısını tekrar çöz</button></div>';
   /* Sorular */
-  h+='<div class="tzdh rssec" style="--i:2">Sorular<em>'+tot+'</em></div><div class="rsl">';
+  var delB=RSLIVE?'':'<button class="rsdel" type="button" data-a="rd"><svg viewBox="0 0 24 24"><path d="M4 7h16M9.5 7V4.5h5V7M6.5 7l.8 12a1.5 1.5 0 001.5 1.4h6.4a1.5 1.5 0 001.5-1.4l.8-12M10 11v5M14 11v5"/></svg>Kaydı sil</button>';
+  h+='<div class="tzdh rssec" style="--i:2"><span>Sorular<em>'+tot+'</em></span>'+delB+'</div><div class="rsl">';
   rec.items.forEach(function(x,i){
     var it=im[x.id],st=x.st,lbl=st==="c"?"Doğru":st==="w"?"Yanlış":st==="b"?"Boş":"Kontrol edilmedi";
     h+='<div class="rsq st-'+st+'" data-i="'+i+'" style="--i:'+Math.min(i+3,14)+'">';
@@ -4559,7 +4561,6 @@ function rsRender(top){
     h+='</div></div>';
   });
   h+='</div>';
-  if(!RSLIVE)h+='<div class="rsx"><button class="rsdel" type="button" data-a="rd"><svg viewBox="0 0 24 24"><path d="M4 7h16M9.5 7V4.5h5V7M6.5 7l.8 12a1.5 1.5 0 001.5 1.4h6.4a1.5 1.5 0 001.5-1.4l.8-12M10 11v5M14 11v5"/></svg>Kaydı sil</button></div>';
   var fabOn=RSLIVE&&(rec.tmp||rec.wt);
   if(fabOn)h+='<div style="height:96px"></div>';
   $("#tzsw").innerHTML=h;sc.scrollTop=top?0:y;
