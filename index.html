@@ -1522,6 +1522,67 @@ textarea.qfi{height:140px;resize:none}
 }
 @media (max-width:560px){#tz .tzw{padding-left:18px;padding-right:18px}#tz .tzn{gap:14px}#tz .tzn button{font-size:24px}#tz .tzn button:after{bottom:-5px;height:3px}#tz .tzh-top{gap:10px}#tz .tzhr .qb{height:38px;padding:0 14px;font-size:14px}#tz .tzhr .tzsv span{display:none}#tz .tzhr .tzsv{padding:0 11px}.gn-g{grid-template-columns:1fr}.gn-mt{gap:16px}.gn-mt button{font-size:21px}.gn-all{white-space:nowrap;padding:0 12px;height:32px}#tz .tzn{gap:12px}#tz .tzn button{font-size:21px}#tz .tzhr{gap:6px}#tz .tzhr .qb{padding:0 12px}.gn-sumc .tzch{height:36px;padding:0 12px;font-size:14px}.gn-sumc .tzchs{gap:6px}.gn-sumc .tzchs .tzin{width:60px;height:36px;padding:0 8px}}
 @media (prefers-reduced-motion:reduce){.fresh .gn-a,.gn-lg li,.gn-bar i{animation:none}.gn *{transition-duration:.01ms!important}}
+/* Soru sayısı ayar butonu (özet kartında) */
+.gn-set{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px 0 12px;border-radius:999px;background:var(--surf2);color:var(--fg);font:700 13.5px/1 Inter,system-ui,sans-serif;white-space:nowrap;transition:transform .4s var(--sp),background .25s}
+.gn-set svg{flex:none;width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round}
+.gn-set .s{display:none}
+.gn-set:active{transform:scale(.95)}
+@media (hover:hover){.gn-set:hover{background:#dedad3}}
+@media (max-width:900px){.gn-set{background:rgba(255,255,255,.14);color:#fff;height:38px}}
+@media (max-width:420px){.gn-set .l{display:none}.gn-set .s{display:inline}}
+
+/* Soru sayısı paneli */
+.zp{position:fixed;inset:0;z-index:12;display:grid;place-items:center;padding:20px;background:rgba(17,17,17,.4);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);opacity:0;visibility:hidden;transition:opacity .3s var(--ease),visibility 0s .3s}
+.zp.on{opacity:1;visibility:visible;transition-delay:0s}
+.zp-c{width:min(840px,100%);max-height:calc(100dvh - 40px);display:flex;flex-direction:column;padding:22px 22px 20px;border-radius:34px;background:var(--bg);box-shadow:0 40px 80px -30px rgba(17,17,17,.55);transform:translateY(22px) scale(.96);transition:transform .6s var(--sp)}
+.zp.on .zp-c{transform:none}
+.zp-h{flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 4px 16px}
+.zp-t{display:grid;font:800 26px/1.1 "Baloo 2",ui-rounded,system-ui,sans-serif;letter-spacing:-.4px}
+.zp-t span{grid-area:1/1;transition:opacity .35s var(--ease),transform .45s var(--ease)}
+.zp-t .b{opacity:0;transform:translateY(10px)}
+.zp.info .zp-t .a{opacity:0;transform:translateY(-10px)}
+.zp.info .zp-t .b{opacity:1;transform:none}
+.zp-bt{display:flex;gap:8px}
+.zp-bt button{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--surf2);color:var(--fg);transition:transform .4s var(--sp),background .25s,color .25s}
+.zp-bt button:active{transform:scale(.88)}
+.zp-bt svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round}
+.zp.info .zp-i{background:var(--fg);color:var(--bg)}
+.zp-v{display:grid;flex:1;min-height:0;overflow:auto;padding:10px;margin:-10px;overscroll-behavior:contain}
+.zp-w{grid-area:1/1;display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:stretch;transition:opacity .4s var(--ease),transform .5s var(--ease),visibility 0s}
+.zp-n,.zp.info .zp-m{opacity:0;visibility:hidden;transition:opacity .3s var(--ease),transform .4s var(--ease),visibility 0s .3s}
+.zp-n{transform:translateY(12px)}
+.zp.info .zp-m{transform:translateY(-12px)}
+.zp.info .zp-n{opacity:1;visibility:visible;transform:none;transition:opacity .4s var(--ease) .1s,transform .5s var(--ease) .1s,visibility 0s}
+.zp-hf,.zp-if{position:relative;display:flex;flex-direction:column;gap:14px;min-height:300px;padding:20px;border-radius:26px;background:var(--surf);text-align:left}
+.zp-hf{cursor:pointer;opacity:.5;transform:scale(.94);box-shadow:0 1px 0 rgba(17,17,17,.04);transition:opacity .45s var(--ease),transform .6s var(--sp),box-shadow .35s var(--ease)}
+.zp-hf.on{opacity:1;transform:none;cursor:default;box-shadow:inset 0 0 0 2px var(--fg),0 24px 44px -26px rgba(17,17,17,.4)}
+.zp-hf.dis{opacity:.32;cursor:not-allowed}
+@media (hover:hover){.zp-hf:not(.on):not(.dis):hover{opacity:.72}}
+.zp-hf:focus-visible{outline:2px solid var(--fg);outline-offset:3px}
+.zp-ht{display:flex;align-items:center;gap:12px}
+.zp-ic{flex:none;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--surf2);color:var(--fg);transition:background .35s var(--ease),color .35s var(--ease)}
+.zp-hf.on .zp-ic,.zp-if .zp-ic{background:var(--fg);color:var(--bg)}
+.zp-ic svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round}
+.zp-tx{min-width:0}
+.zp-tx b{display:block;font:800 20px/1.1 "Baloo 2",ui-rounded,system-ui,sans-serif;letter-spacing:-.2px}
+.zp-tx small{display:block;margin-top:3px;font:500 13px/1.3 Inter,system-ui,sans-serif;color:var(--dim)}
+.zp-tx .nt{display:none}
+.zp-hf.dis .zp-tx .st{display:none}.zp-hf.dis .zp-tx .nt{display:block}
+.zp-ck{flex:none;margin-left:auto;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--fg);transform:scale(0);transition:transform .5s var(--sp)}
+.zp-ck svg{width:15px;height:15px;fill:none;stroke:var(--bg);stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
+.zp-hf.on .zp-ck{transform:scale(1)}
+.zp-ph{flex:1;display:grid;place-items:center;text-align:center;padding:16px;border-radius:18px;border:2px dashed var(--surf2);color:var(--dim);font:500 13px/1.4 Inter,system-ui,sans-serif}
+.zp-ok{flex:none;height:54px;margin-top:16px;border-radius:999px;background:var(--fg);color:var(--bg);font:700 16px/1 Inter,system-ui,sans-serif;transition:transform .45s var(--sp)}
+.zp-ok:active{transform:scale(.97)}
+@media (max-width:640px){
+  .zp{padding:10px;align-items:end}
+  .zp-c{padding:18px 16px 16px;border-radius:30px}
+  .zp-w{grid-template-columns:1fr;gap:10px}
+  .zp-hf,.zp-if{min-height:0}
+  .zp-ph{min-height:90px}
+  .zp-t{font-size:23px}
+}
+@media (prefers-reduced-motion:reduce){.zp,.zp *{transition-duration:.01ms!important}}
 /* Kaydırma çubukları: hiçbir sayfada görünmesin (kaydırma çalışmaya devam eder) */
 html,body,*{scrollbar-width:none!important;-ms-overflow-style:none!important;scrollbar-gutter:auto!important}
 *::-webkit-scrollbar,*::-webkit-scrollbar-thumb,*::-webkit-scrollbar-track,*::-webkit-scrollbar-button,*::-webkit-scrollbar-corner{display:none!important;width:0!important;height:0!important;background:transparent!important;-webkit-appearance:none!important}
@@ -4217,7 +4278,7 @@ function hubOpen(tab){
   cancelAnimationFrame(hubOT);
   hubOT=requestAnimationFrame(function(){hubOT=requestAnimationFrame(function(){if(hubOn())hubRender()})});
 }
-function hubClose(){cancelAnimationFrame(hubOT);TZFAB.classList.remove("on");$("#tz").classList.remove("on");tpClose();PSL.on=false;PSL.ids={}}
+function hubClose(){spClose();cancelAnimationFrame(hubOT);TZFAB.classList.remove("on");$("#tz").classList.remove("on");tpClose();PSL.on=false;PSL.ids={}}
 function hubRender(){
   if(HUB.tab!=="pk"&&PSL.on){PSL.on=false;PSL.ids={}}
   [].forEach.call(document.querySelectorAll("#tzt button,#tzn button"),function(b){var o=b.dataset.t===HUB.tab;b.classList.toggle("on",o);if(b.closest("#tzn"))b.setAttribute("aria-selected",o)});
@@ -4229,6 +4290,48 @@ function hubRender(){
   HUB.k=k;gSum();pills();var uh=$("#tzuh");uh.hidden=HUB.tab!=="gen";uh.classList.toggle("on",!!G.uns);uh.setAttribute("aria-pressed",G.uns?"true":"false");$("#tz").classList.toggle("gnp",HUB.tab==="gen");$("#tzwb").hidden=HUB.tab!=="hi";
   TZFAB.classList.toggle("on",hubOn()&&HUB.tab==="pk"&&!PSL.on);b.classList.toggle("pkp",HUB.tab==="pk");
 }
+/* ---------- Soru sayısı paneli ---------- */
+var SP_ICT='<svg viewBox="0 0 24 24"><path d="M18 5H7l6 7-6 7h11"/></svg>',
+    SP_ICP='<svg viewBox="0 0 24 24"><path d="M4 7h9M19 7h1M4 17h1M11 17h9"/><circle cx="16" cy="7" r="2.5"/><circle cx="8" cy="17" r="2.5"/></svg>',
+    SP_ICI='<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.6v.01"/></svg>',
+    SP_ICX='<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+var SPEL=document.createElement("div"),SPI=false;
+SPEL.className="zp";SPEL.id="tzsp";SPEL.setAttribute("role","dialog");SPEL.setAttribute("aria-modal","true");SPEL.setAttribute("aria-label","Soru sayısı ayarları");
+(function(){
+  var H=[["Toplam","Tek sayı belirle, eşit dağıtılsın.",SP_ICT,"Toplam ayarları burada olacak."],["Her biri için ayrı","Her seçeneğe ayrı sayı ver.",SP_ICP,"Ayrı sayı ayarları burada olacak."]],
+      INFO=["Toplam seçeneğinin açıklaması burada olacak.","Her biri için ayrı seçeneğinin açıklaması burada olacak."];
+  SPEL.innerHTML='<div class="zp-c">'
+    +'<div class="zp-h"><h2 class="zp-t"><span class="a">Soru sayısı</span><span class="b">Nasıl çalışır?</span></h2>'
+    +'<div class="zp-bt"><button type="button" class="zp-i" id="tzspi" aria-pressed="false" aria-label="Bilgi" title="Bilgi">'+SP_ICI+'</button><button type="button" id="tzspc" aria-label="Kapat" title="Kapat">'+SP_ICX+'</button></div></div>'
+    +'<div class="zp-v">'
+      +'<div class="zp-w zp-m">'+H.map(function(h,i){return'<div class="zp-hf" data-h="'+i+'" role="radio" tabindex="0" aria-checked="false"><div class="zp-ht"><span class="zp-ic">'+h[2]+'</span><div class="zp-tx"><b>'+h[0]+'</b><small class="st">'+h[1]+'</small><small class="nt">En az 2 seçenek işaretle.</small></div><span class="zp-ck">'+TICK+'</span></div><div class="zp-ph">'+h[3]+'</div></div>'}).join("")+'</div>'
+      +'<div class="zp-w zp-n" inert aria-hidden="true">'+H.map(function(h,i){return'<div class="zp-if"><div class="zp-ht"><span class="zp-ic">'+h[2]+'</span><div class="zp-tx"><b>'+h[0]+'</b></div></div><div class="zp-ph">'+INFO[i]+'</div></div>'}).join("")+'</div>'
+    +'</div>'
+    +'<button type="button" class="zp-ok" id="tzspok">Tamam</button></div>';
+})();
+$("#tz").parentNode.insertBefore(SPEL,$("#tz").nextSibling);
+function spSync(){
+  var gi=gInfo(),multi=gi.sc.length>1;
+  [].forEach.call(SPEL.querySelectorAll(".zp-hf"),function(h){
+    var on=+h.dataset.h===(gi.per?1:0),dis=h.dataset.h==="1"&&!multi;
+    h.classList.toggle("on",on);h.classList.toggle("dis",dis);h.setAttribute("aria-checked",on?"true":"false");h.setAttribute("aria-disabled",dis?"true":"false");
+  });
+}
+function spInfo(v){
+  SPI=v;SPEL.classList.toggle("info",v);$("#tzspi").setAttribute("aria-pressed",v?"true":"false");
+  var m=SPEL.querySelector(".zp-m"),n=SPEL.querySelector(".zp-n");m.inert=v;n.inert=!v;m.setAttribute("aria-hidden",v?"true":"false");n.setAttribute("aria-hidden",v?"false":"true");
+}
+function spOpen(){spInfo(false);spSync();SPEL.classList.add("on");setTimeout(function(){var o=SPEL.querySelector(".zp-hf.on");if(o)o.focus()},50)}
+function spClose(){if(!SPEL.classList.contains("on"))return;SPEL.classList.remove("on");var b=$("#tzset");if(b)b.focus()}
+SPEL.addEventListener("click",function(e){
+  var t=e.target;
+  if(t===SPEL||t.closest("#tzspc")||t.closest("#tzspok")){spClose();return}
+  if(t.closest("#tzspi")){spInfo(!SPI);return}
+  var h=t.closest(".zp-m .zp-hf");
+  if(h&&!h.classList.contains("on")&&!h.classList.contains("dis")){G.per=h.dataset.h==="1";hubRender();spSync()}
+});
+SPEL.addEventListener("keydown",function(e){var h=e.target.closest&&e.target.closest(".zp-m .zp-hf");if(h&&(e.key==="Enter"||e.key===" ")){e.preventDefault();h.click()}});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&SPEL.classList.contains("on")){e.preventDefault();e.stopImmediatePropagation();spClose()}},true);
 function hubOn(){return $("#tz").classList.contains("on")}
 function refreshHub(){if(hubOn())hubRender()}
 
@@ -4251,12 +4354,8 @@ function rGen(b){
     h+='<div class="tzx"><button type="button" class="tzo'+(on?" on":"")+(dis?" dis":"")+'" data-k="'+esc(c.k)+'" style="--c:'+(c.col||"#cfcbc4")+'"><span class="gn-dot">'+TICK+'</span><span class="tt"><b>'+esc(c.lab)+'</b></span><em>'+p.length+'<i>soru</i></em></button></div>';
   });
   h+='</div></div>';
-  var ICT='<svg viewBox="0 0 24 24"><path d="M18 5H7l6 7-6 7h11"/></svg>',
-      ICP='<svg viewBox="0 0 24 24"><path d="M4 7h9M19 7h1M4 17h1M11 17h9"/><circle cx="16" cy="7" r="2.5"/><circle cx="8" cy="17" r="2.5"/></svg>';
   h+='<aside class="gn-sum gn-a"><div class="gn-sumc'+(gi.per?' per':'')+'">'
-    +'<div class="gn-hd"><small class="gn-k">Test özeti</small><div class="gn-md" style="--i:'+(gi.per?1:0)+'" role="group" aria-label="Soru dağılımı"><i></i>'
-      +'<button type="button" data-pm="0" class="'+(!gi.per?"on":"")+'" aria-label="Toplam sayı" title="Toplam sayı">'+ICT+'</button>'
-      +'<button type="button" data-pm="1" class="'+(gi.per?"on":"")+'" aria-label="Her biri için ayrı" title="Her biri için ayrı"'+(!multi&&!gi.per?' disabled':'')+'>'+ICP+'</button></div></div>'
+    +'<div class="gn-hd"><small class="gn-k">Test özeti</small><button type="button" class="gn-set" id="tzset" aria-haspopup="dialog">'+SP_ICP+'<span class="l">Soru sayısını ayarla</span><span class="s">Ayarla</span></button></div>'
     +'<div class="gn-sumt"><div class="gn-big"><b id="tzsb"></b><span>soru</span></div><div class="gn-ttl" id="tzss"></div></div>'
     +'<div class="gn-bar" aria-hidden="true">'+gi.sc.map(function(c,i){return gi.counts[i]>0?'<i style="flex:'+gi.counts[i]+' 1 0;--c:'+(c.col||"#cfcbc4")+'"></i>':''}).join("")+'</div>'
     +'<ul class="gn-lg">'+(gi.sc.length?gi.sc.map(function(c,i){
@@ -4955,7 +5054,7 @@ $("#tzb").addEventListener("click",function(e){
   if(b=t.closest(".tzpk")){pvOpen(b.dataset.id);return}
   if(b=t.closest("[data-m]")){G.mode=b.dataset.m;G.sel={};G.pn={};hubRender();return}
   if(t.closest("#tzu")){G.uns=!G.uns;hubRender();return}
-  if(b=t.closest("[data-pm]")){G.per=b.dataset.pm==="1";hubRender();return}
+  if(t.closest("#tzset")){spOpen();return}
   if(b=t.closest("[data-pa]")){var k=b.dataset.pa,cc=gInfo().cs.filter(function(c){return c.k===k})[0];if(cc){G.pn[k]=pool(cc).length;hubRender()}return}
   if(b=t.closest("[data-n]")){if(b.dataset.n==="all")G.all=true;else{G.all=false;G.n=+b.dataset.n}hubRender();return}
   if(b=t.closest("[data-ga]")){if(b.dataset.ga==="all")gInfo().cs.forEach(function(c){if(pool(c).length)G.sel[c.k]=1});else G.sel={};hubRender();return}
