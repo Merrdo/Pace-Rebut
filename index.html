@@ -1178,6 +1178,44 @@ textarea.qfi{height:140px;resize:none}
 @keyframes tzBar{from{transform:scaleX(0)}}
 @keyframes tzCol{from{transform:scaleY(0)}}
 @keyframes tzSlide{from{opacity:0;transform:translateX(22px) scale(.985)}}
+
+/* Geçmiş sayfası */
+.hhero{display:flex;align-items:flex-end;justify-content:space-between;gap:22px;padding:22px 24px;margin-bottom:16px;border-radius:28px;background:var(--fg);color:var(--bg);box-shadow:0 18px 34px -18px rgba(17,17,17,.5)}
+.hhero .hl{min-width:0}
+.hhero small{display:block;font:700 12px/1 Inter,system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;opacity:.6}
+.hhero .hl b{display:block;margin:10px 0 8px;font:800 58px/1 "Baloo 2",ui-rounded,system-ui,sans-serif;letter-spacing:-1.5px;font-variant-numeric:tabular-nums}
+.hhero .hl span{font:600 14px Inter,system-ui,sans-serif;opacity:.7}
+.hhero .hb{flex:1;min-width:0;max-width:340px}
+.hbi{display:flex;align-items:flex-end;gap:5px;height:74px}
+.hbi i{flex:1;min-width:0;height:var(--h);border-radius:6px 6px 3px 3px;background:var(--sc);transform-origin:bottom}
+.hhero .hb small{margin-top:10px;text-align:right}
+.fresh .hbi i{animation:tzCol .6s var(--ease) calc(var(--k,0)*35ms + .25s) backwards}
+.hfl{margin-bottom:4px}
+#tz .hsec{margin:22px 2px 12px}
+.hgr{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+.hcd{position:relative;display:flex;flex-direction:column;gap:6px;width:100%;min-width:0;text-align:left;padding:18px 20px 16px;border-radius:26px;background:var(--surf);box-shadow:0 6px 16px -10px rgba(17,17,17,.14);overflow:hidden;cursor:pointer;-webkit-user-select:none;user-select:none;transition:transform .45s var(--sp),box-shadow .3s}
+.hcd.tn{background:#fff;background:color-mix(in srgb,var(--c) 13%,var(--surf))}
+.hcd:active{transform:scale(.975)}
+@media (hover:hover){.hcd:hover{transform:translateY(-2px);box-shadow:0 14px 26px -14px rgba(17,17,17,.28)}}
+.hcd .hh{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.hcd .hh em{font:600 13px Inter,system-ui,sans-serif;font-style:normal;color:var(--dim);font-variant-numeric:tabular-nums}
+.hcd h3{margin-top:4px;font-size:22px;font-weight:800;line-height:1.1;letter-spacing:-.3px;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;overflow:hidden;word-break:break-word}
+.hcd .hf{display:flex;align-items:center;gap:18px;margin-top:10px}
+.hr{position:relative;flex:none;width:72px;height:72px}
+.hr svg{display:block;width:100%;height:100%;transform:rotate(-90deg)}
+.hr circle{fill:none;stroke-width:3.4;stroke-linecap:round}
+.hr .t{stroke:rgba(17,17,17,.09)}
+.hr .v{stroke:var(--sc);stroke-dasharray:1}
+.fresh .hr .v{animation:hrDraw .9s var(--ease) calc(var(--i,0)*45ms + .2s) backwards}
+@keyframes hrDraw{from{stroke-dashoffset:1}}
+.hr b{position:absolute;inset:0;display:grid;place-items:center;font:800 17px Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums}
+.hs{flex:1;min-width:0;display:grid;gap:6px;font:600 13px Inter,system-ui,sans-serif;color:#55524d}
+.hs span{display:flex;align-items:center;gap:8px;white-space:nowrap}
+.hs span:before{content:"";flex:none;width:8px;height:8px;border-radius:50%}
+.hs .c:before{background:#2fbf71}.hs .w:before{background:#ff5a4d}.hs .b:before{background:#cfcbc4}
+.hs b{font-weight:800;color:var(--fg);font-variant-numeric:tabular-nums}
+.hcd .hm{margin-top:8px;padding-top:10px;border-top:1.5px solid rgba(17,17,17,.07);font:600 13px Inter,system-ui,sans-serif;color:var(--dim)}
+@media (max-width:560px){.hhero{padding:18px 18px;gap:14px}.hhero .hl b{font-size:44px}.hgr{grid-template-columns:1fr}}
 /* Ekran geçişleri */
 .tz,.tzp,.tzs,.tzr{transform:translateY(20px) scale(.985);transition:opacity .35s var(--ease),transform .6s var(--ease),visibility 0s .35s}
 .tz.on,.tzp.on,.tzs.on,.tzr.on{transform:none}
@@ -1185,7 +1223,7 @@ textarea.qfi{height:140px;resize:none}
 .tzp.opn{will-change:transform,opacity}
 .tzpgw .qi.rise{animation:tzRise .55s var(--ease) calc(min(var(--i,0),14)*35ms + .12s) backwards}
 /* İlk açılışta içerik sırayla yükselir */
-.fresh>.tzg,.fresh>.tzc,.fresh>.tzres,.fresh>.tzemp,.fresh>.tzst,.fresh>.tzchart,.fresh>.tzdh,.fresh>.tzchs,.fresh>.tzbar,.fresh .tzx,.fresh .tzpk,.fresh .tzhi{animation:tzRise .65s var(--ease) calc(var(--i,0)*45ms) backwards}
+.fresh>.tzg,.fresh>.tzc,.fresh>.tzres,.fresh>.tzemp,.fresh>.tzst,.fresh>.tzchart,.fresh>.tzdh,.fresh>.tzchs,.fresh>.tzbar,.fresh .tzx,.fresh .tzpk,.fresh .tzhi,.fresh>.hhero,.fresh .hcd{animation:tzRise .65s var(--ease) calc(var(--i,0)*45ms) backwards}
 /* Segment kontrolünde kayan hap */
 .tzg{position:relative}
 .tzg>button{position:relative;z-index:1}
@@ -3987,7 +4025,7 @@ function morph(a,b){
 }
 function fresh(b){
   if(HUB.quiet){b.classList.remove("fresh");return}
-  [].forEach.call(b.querySelectorAll(".tzg,.tzc,.tzx,.tzpk,.tzhi,.tzres,.tzemp,.tzst,.tzchart,.tzdh,.tzbar,.tzchs"),function(e,i){e.style.setProperty("--i",Math.min(i,12))});
+  [].forEach.call(b.querySelectorAll(".tzg,.tzc,.tzx,.tzpk,.tzhi,.tzres,.tzemp,.tzst,.tzchart,.tzdh,.tzbar,.tzchs,.hhero,.hcd"),function(e,i){e.style.setProperty("--i",Math.min(i,12))});
   b.classList.remove("fresh");void b.offsetWidth;b.classList.add("fresh");
   clearTimeout(fresh.t);fresh.t=setTimeout(function(){b.classList.remove("fresh")},1500);
 }
@@ -4024,7 +4062,7 @@ function hubRender(){
   [].forEach.call(document.querySelectorAll("#tzt button,#tzn button"),function(b){var o=b.dataset.t===HUB.tab;b.classList.toggle("on",o);if(b.closest("#tzn"))b.setAttribute("aria-selected",o)});
   var b=$("#tzb"),t=document.createElement("div");
   /* Paketler sayfasi aktif; Test ve Gecmis sayfalari simdilik bos */
-  if(HUB.tab==="pk")rPk(t);
+  if(HUB.tab==="pk")rPk(t);else if(HUB.tab==="hi")rHi(t);
   [].forEach.call(t.querySelectorAll(".tzg"),function(g){g.insertAdjacentHTML("afterbegin",'<i class="tzpl"></i>')});
   var k=HUB.tab+"|"+G.mode+"|"+HUB.hf;
   if(HUB.k===k&&b.firstChild)morph(b,t);else{b.innerHTML=t.innerHTML;fresh(b)}
@@ -4453,20 +4491,40 @@ function rsAgain(wrongOnly){
 }
 
 /* ---------- Geçmiş ---------- */
+function hSc(p){return p==null?"#cfcbc4":p>=70?"#2fbf71":p>=40?"#ffb454":"#ff5a4d"}
+function hDay(ts){
+  var d=new Date(ts),n=new Date(),a=new Date(d.getFullYear(),d.getMonth(),d.getDate()),c=new Date(n.getFullYear(),n.getMonth(),n.getDate()),df=Math.round((c-a)/864e5);
+  if(df===0)return"Bugün";if(df===1)return"Dün";
+  return d.getDate()+" "+MON[d.getMonth()]+(d.getFullYear()!==n.getFullYear()?" "+d.getFullYear():"");
+}
 function rHi(b){
   var h=resumeBanner();
-  if(!HI.length){b.innerHTML=h+'<div class="tzemp"><b>Henüz çözülmüş test yok</b><span>Çözdüğün testler ve paketler sonuçlarıyla birlikte burada tarih sırasıyla listelenir.</span></div>';return}
-  var nq=0,ps=[];HI.forEach(function(r){nq+=r.items.length;var p=rpct(r);if(p!=null)ps.push(p)});
+  if(!HI.length){b.innerHTML=h+'<div class="tzemp"><b>Henüz çözülmüş test yok</b><span>Çözdüğün testler ve paketler sonuçlarıyla birlikte burada günlere ayrılarak listelenir.</span></div>';return}
+  var all=HI.slice().sort(function(a,c){return c.ts-a.ts}),nq=0,ps=[];
+  all.forEach(function(r){nq+=r.items.length;var p=rpct(r);if(p!=null)ps.push(p)});
   var avg=ps.length?Math.round(ps.reduce(function(a,c){return a+c},0)/ps.length):null;
-  h+='<div class="tzst"><div><b>'+HI.length+'</b><small>Çözülen test</small></div><div><b>'+nq+'</b><small>Çözülen soru</small></div><div><b>'+(avg==null?"—":"%"+avg)+'</b><small>Ortalama başarı</small></div></div>';
-  h+='<div class="tzchs" style="margin-bottom:14px">'+[["all","Hepsi"],["test","Testler"],["pack","Paketler"]].map(function(f){return'<button type="button" class="tzch'+(HUB.hf===f[0]?" on":"")+'" data-hf="'+f[0]+'">'+f[1]+'</button>'}).join("")+'</div>';
-  var an={},nn={};HI.slice().sort(function(a,b){return a.ts-b.ts}).forEach(function(r){if(r.packId){an[r.packId]=(an[r.packId]||0)+1;nn[r.id]=an[r.packId]}});
-  var L=HI.filter(function(r){return HUB.hf==="all"||(HUB.hf==="pack"?r.kind==="pack":r.kind!=="pack")});
-  if(!L.length)h+='<div class="tzemp"><b>Bu filtrede kayıt yok</b></div>';
+  /* Özet kartı: ortalama + son sonuçların çubukları */
+  var last=all.slice(0,14).reverse(),bars=last.map(function(r,k){var p=rpct(r);return'<i style="--h:'+(p==null?8:Math.max(8,p))+'%;--sc:'+hSc(p)+';--k:'+k+'" title="'+(p==null?"—":"%"+p)+'"></i>'}).join("");
+  h+='<div class="hhero"><div class="hl"><small>Ortalama başarı</small><b>'+(avg==null?"—":"%"+avg)+'</b><span>'+all.length+' test · '+nq+' soru</span></div><div class="hb"><div class="hbi">'+bars+'</div><small>Son '+last.length+' sonuç</small></div></div>';
+  h+='<div class="tzchs hfl">'+[["all","Hepsi"],["test","Testler"],["pack","Paketler"]].map(function(f){return'<button type="button" class="tzch'+(HUB.hf===f[0]?" on":"")+'" data-hf="'+f[0]+'">'+f[1]+'</button>'}).join("")+'</div>';
+  var an={},nn={},pm={},im=imap();
+  all.slice().reverse().forEach(function(r){if(r.packId){an[r.packId]=(an[r.packId]||0)+1;nn[r.id]=an[r.packId]}});
+  PK.forEach(function(p){pm[p.id]=p});
+  var L=all.filter(function(r){return HUB.hf==="all"||(HUB.hf==="pack"?r.kind==="pack":r.kind!=="pack")});
+  if(!L.length){h+='<div class="tzemp"><b>Bu filtrede kayıt yok</b></div>';b.innerHTML=h;return}
+  var cur=null,open=false;
   L.forEach(function(r){
-    var s=sum(r),p=rpct(r),t=r.items.length;
-    h+='<button type="button" class="tzhi" data-id="'+r.id+'"><div class="mid"><b><span class="tzk'+(r.kind==="pack"?" pk":"")+'">'+(r.kind==="pack"?"Paket":"Test")+'</span><span class="tzn">'+esc(r.name)+'</span></b><small>'+fdate(r.ts)+' · '+fdur(r.dur)+(r.packId&&nn[r.id]?' · '+nn[r.id]+'. tur':'')+'</small><div class="tzbr"><i class="bc" style="width:'+s.c/t*100+'%"></i><i class="bw" style="width:'+s.w/t*100+'%"></i><i class="bb" style="width:'+(s.b+s.u)/t*100+'%"></i></div></div><div class="sc"><b>'+(p==null?"—":"%"+p)+'</b><small>'+s.c+'/'+t+'</small></div></button>';
+    var day=hDay(r.ts);
+    if(day!==cur){if(open)h+='</div>';cur=day;open=true;h+='<div class="tzdh hsec">'+day+'</div><div class="hgr">'}
+    var s=sum(r),p=rpct(r),t=r.items.length||1,pk=r.packId&&pm[r.packId],col=pk?pkCol(pk,im):null,d=new Date(r.ts);
+    h+='<button type="button" class="hcd'+(col?" tn":"")+'" data-id="'+r.id+'" style="--sc:'+hSc(p)+(col?";--c:"+col:"")+'">'
+      +'<div class="hh"><span class="tzk'+(r.kind==="pack"?" pk":"")+'">'+(r.kind==="pack"?"Paket":"Test")+'</span><em>'+(r.packId&&nn[r.id]?nn[r.id]+'. tur · ':'')+p2(d.getHours())+':'+p2(d.getMinutes())+'</em></div>'
+      +'<h3>'+esc(r.name)+'</h3>'
+      +'<div class="hf"><div class="hr"><svg viewBox="0 0 36 36"><circle class="t" cx="18" cy="18" r="15.5"/><circle class="v" pathLength="1" cx="18" cy="18" r="15.5" style="stroke-dashoffset:'+(p==null?1:(1-p/100).toFixed(3))+'"/></svg><b>'+(p==null?"—":"%"+p)+'</b></div>'
+      +'<div class="hs"><span class="c"><b>'+s.c+'</b> doğru</span><span class="w"><b>'+s.w+'</b> yanlış</span><span class="b"><b>'+(s.b+s.u)+'</b> boş</span></div></div>'
+      +'<div class="hm">'+t+' soru · '+fdur(r.dur)+'</div></button>';
   });
+  if(open)h+='</div>';
   b.innerHTML=h;
 }
 /* Paket istatistiği: eğimli başarı grafiği */
@@ -4645,7 +4703,7 @@ $("#tzb").addEventListener("click",function(e){
   if(t.closest("#tzgo")){gStart(false);return}
   if(t.closest("#tzsv")){gStart(true);return}
   if(b=t.closest("[data-hf]")){HUB.hf=b.dataset.hf;hubRender();return}
-  if(b=t.closest(".tzhi")){rsOpen(b.dataset.id,false);return}
+  if(b=t.closest(".hcd,.tzhi")){rsOpen(b.dataset.id,false);return}
 });
 $("#tzb").addEventListener("input",function(e){
   var t=e.target;
