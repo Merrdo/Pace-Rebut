@@ -1555,6 +1555,22 @@ html,body,*{scrollbar-width:none!important;-ms-overflow-style:none!important;scr
 .qvz .qvr{display:flex;align-items:center;gap:5px;height:24px;padding:0;background:none;color:inherit;font:600 12px/1 Inter,system-ui,sans-serif;opacity:.85;transition:transform .4s var(--sp),opacity .25s var(--ease)}
 .qvz .qvr:active{transform:scale(.94);opacity:1}
 .qvz .qvr svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round}
+
+/* ===== Geçmiş kartları: Paketler gibi geniş, başarıya göre renkli ===== */
+#tz .hcd{position:relative;display:flex;flex-direction:column;align-items:stretch;gap:0;width:auto;min-height:170px;margin:0;padding:22px 22px 20px;border-radius:26px;text-align:left;cursor:pointer;background:#fff;background:color-mix(in srgb,var(--c) 13%,var(--surf));box-shadow:0 6px 16px -10px rgba(17,17,17,.14)}
+#tz .hcd:active{transform:scale(.975)}
+#tz .hcd .hcn{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;overflow:hidden;word-break:break-word;font:800 27px/1.08 Inter,system-ui,sans-serif;letter-spacing:-.4px;color:var(--fg)}
+#tz .hcd.ist .hcn{padding-right:76px}
+#tz .hcd .hct{position:absolute;top:18px;right:18px;display:inline-flex;align-items:center;height:30px;padding:0 14px;border-radius:15px;background:var(--fg);color:var(--bg);font:800 14px/1 Inter,system-ui,sans-serif;letter-spacing:.2px}
+#tz .hcd .hcm{display:block;margin-top:6px;font:600 15px/1.3 Inter,system-ui,sans-serif;color:#3b3935;font-variant-numeric:tabular-nums}
+#tz .hcd .hcbar{display:flex;gap:3px;height:8px;margin-top:auto;border-radius:8px;overflow:hidden;background:rgba(17,17,17,.08)}
+#tz .hcd .hcbar i{display:block;flex-basis:0;min-width:0;height:100%}
+#tz .hcd .hcbar .bc{background:#2fbf71}#tz .hcd .hcbar .bw{background:#ff5a4d}#tz .hcd .hcbar .bb{background:#cfcbc4}
+#tz .hcd .hcbar i[style*="flex-grow:0"]{display:none}
+#tz .hcd .hcf{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px}
+#tz .hcd .hlg{flex:1;min-width:0}
+#tz .hcd .hcp{flex:none;display:inline-flex;align-items:center;height:44px;padding:0 18px;border-radius:22px;background:var(--c);color:#111;font:800 24px/1 Inter,system-ui,sans-serif;letter-spacing:-.4px;font-variant-numeric:tabular-nums}
+@media (max-width:640px){#tz .hcd{min-height:160px}#tz .hcd .hcn{font-size:24px}}
 </style>
 </head>
 <body>
@@ -4473,7 +4489,7 @@ function rsAgain(wrongOnly){
 }
 
 /* ---------- Geçmiş ---------- */
-function hSc(p){return p==null?"#cfcbc4":p>=70?"#2fbf71":p>=40?"#ffb454":"#ff5a4d"}
+function hSc(p){return p==null?"#cfcbc4":p>=80?"#2fbf71":p>=50?"#ffd84a":"#ff5a4d"}
 function hDay(ts){
   var d=new Date(ts),n=new Date(),a=new Date(d.getFullYear(),d.getMonth(),d.getDate()),c=new Date(n.getFullYear(),n.getMonth(),n.getDate()),df=Math.round((c-a)/864e5);
   if(df===0)return"Bugün";if(df===1)return"Dün";
@@ -4504,6 +4520,30 @@ function rHi(b){
     +'<div class="hsc"><small>Ortalama başarı</small><b>'+(avg==null?"—":"%"+avg)+'</b><span class="hpb"><i style="width:'+(avg==null?0:avg)+'%;background:'+hSc(avg)+'"></i></span></div>'
     +'<div class="hsc g"><small>Grafik</small><div class="hbi">'+bars+'</div><span>Son '+last.length+' sonuç</span></div>'
     +'</div>';
+  /* Çözüm sırası: aynı test veya paketin kaçıncı çözümü olduğu */
+  var rn={},rt={};
+  gl.forEach(function(g){g.runs.forEach(function(r,i){rn[r.id]=i+1;rt[r.id]=g.runs.length})});
+  /* Tarihe göre: en yeni üstte, günlere ayrılmış */
+  var day=null,open=false;
+  all.forEach(function(r){
+    var dk=new Date(r.ts).toDateString();
+    if(dk!==day){
+      if(open)h+='</div>';
+      var dc=all.filter(function(x){return new Date(x.ts).toDateString()===dk}).length;
+      h+='<div class="tzdh hsec">'+hDay(r.ts)+'<em>'+dc+'</em></div><div class="tzpg hlist">';
+      day=dk;open=true;
+    }
+    var s=sum(r),pc=rpct(r),d=new Date(r.ts),isT=r.kind!=="pack",nb=s.b+s.u,col=hSc(pc);
+    h+='<button type="button" class="tzhi hcd'+(isT?' ist':'')+'" data-id="'+r.id+'" style="--c:'+col+'">'
+      +(isT?'<span class="hct">Test</span>':'')
+      +'<span class="hcn">'+esc(r.name)+'</span>'
+      +'<span class="hcm">'+p2(d.getHours())+':'+p2(d.getMinutes())+' · '+fdur(r.dur)+' · '+r.items.length+' soru'+(rt[r.id]>1?' · '+rn[r.id]+'. çözüm':'')+'</span>'
+      +'<span class="hcbar"><i class="bc" style="flex-grow:'+s.c+'"></i><i class="bw" style="flex-grow:'+s.w+'"></i><i class="bb" style="flex-grow:'+nb+'"></i></span>'
+      +'<span class="hcf"><span class="hlg"><em class="c">'+s.c+' doğru</em><em class="w">'+s.w+' yanlış</em><em class="b">'+nb+' boş</em></span>'
+      +'<span class="hcp">'+(pc==null?'—':'%'+pc)+'</span></span>'
+      +'</button>';
+  });
+  if(open)h+='</div>';
   b.innerHTML=h;
 }
 /* Paket istatistiği: eğimli başarı grafiği */
