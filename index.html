@@ -1284,37 +1284,6 @@ textarea.qfi{height:140px;resize:none}
 
 /* ===== Test kipinde soru görüntüleyici ===== */
 .qv.tm .qvo,.qv.tm .qvok,.qv.tm .qvq{display:none!important}
-.qv.tm.fs .qvx,.qv.tm.fs .qvz,.qv.tm.fs .qvc,.qv.tm.fs .qvt{display:none!important}
-.tmt,.tmb{position:fixed;left:0;right:0;z-index:12;background:rgba(20,20,20,.95);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);color:#fff;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .25s,transform .45s var(--ease),visibility 0s .25s}
-.tmt{top:0;padding:calc(12px + env(safe-area-inset-top,0px)) 16px 12px;border-radius:0 0 28px 28px;transform:translateY(-24px)}
-.tmb{bottom:0;padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px));border-radius:28px 28px 0 0;transform:translateY(24px)}
-#qv.on.tm.fs.ui~.tmt,#qv.on.tm.fs.ui~.tmb{opacity:1;visibility:visible;pointer-events:auto;transform:none;transition-delay:0s}
-.tmw{max-width:640px;margin:0 auto}
-.tmr{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.tmrr{display:flex;gap:8px}
-.tmbtn{height:44px;padding:0 20px;border-radius:22px;background:#2e2e2e;color:#fff;font:700 16px Inter,system-ui,sans-serif;white-space:nowrap;transition:transform .35s var(--sp),background .2s,opacity .2s}
-.tmbtn.pr{background:#fff;color:#111}
-.tmbtn:active{transform:scale(.94)}
-.tmbtn[disabled]{opacity:.35;pointer-events:none}
-.tmic{display:grid;place-items:center;width:44px;height:44px;padding:0;border-radius:50%;background:#2e2e2e;color:#fff;transition:transform .35s var(--sp)}
-.tmic:active{transform:scale(.92)}
-.tmic svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round}
-.tmc{flex:1;text-align:center;font:700 22px Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;color:#fff}
-.tmd{display:flex;gap:8px;overflow-x:auto;padding:12px 2px 2px;scrollbar-width:none;touch-action:pan-x;overscroll-behavior:contain}
-.tmd::-webkit-scrollbar{display:none}
-.tmd button{flex:none;min-width:40px;height:40px;padding:0 6px;border-radius:13px;background:#2e2e2e;color:#fff;font:700 15px Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;transition:background .3s,color .3s,box-shadow .3s,transform .45s var(--sp)}
-.tmd button.dn{box-shadow:inset 0 0 0 2px #fff}
-.tmd button.cur{background:#fff;color:#111;box-shadow:none;transform:scale(1.1)}
-.tmal{margin-bottom:10px;font:800 12px Inter,system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#b5b5b5}
-.tml{display:flex;gap:10px;justify-content:center}
-.tml button{flex:1;max-width:76px;height:58px;border-radius:19px;background:#2e2e2e;color:#fff;font:800 24px Inter,system-ui,sans-serif;transition:transform .4s var(--sp),background .2s,color .2s}
-.tml button.on{background:#fff;color:#111;animation:tzPop .42s var(--sp)}
-.tml button:active{transform:scale(.92)}
-.tmta{display:block;width:100%;height:96px;padding:12px 14px;border:0;border-radius:18px;background:#2e2e2e;color:#fff;font:500 16px Inter,system-ui,sans-serif;resize:none;-webkit-user-select:text;user-select:text}
-.tmta::placeholder{color:#9a9a9a}
-.tmta:focus{outline:0;box-shadow:inset 0 0 0 2px #fff}
-.tmn{display:flex;gap:10px;margin-top:14px}
-.tmn .tmbtn{flex:1;height:50px}
 #tzrz{width:44px;padding:0;display:grid;place-items:center}
 #tzrz svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 
@@ -1647,11 +1616,6 @@ html,body,*{scrollbar-width:none!important;-ms-overflow-style:none!important;scr
     <div class="qvsh" id="qvsh" role="region" aria-label="Soru detayı"><button class="qvgr" id="qvgr" type="button" aria-label="Kapat"></button><div id="qvbd"></div></div>
     <div class="qvdg" id="qvdg"><div class="qvdc" role="alertdialog" aria-modal="true" aria-labelledby="qvdh"><div class="qvdi"><svg viewBox="0 0 24 24"><path d="M4 7h16M9.5 7V4.5h5V7M6.5 7l.8 12a1.5 1.5 0 001.5 1.4h6.4a1.5 1.5 0 001.5-1.4l.8-12M10 11v6M14 11v6"/></svg></div><h3 id="qvdh">Bu soru silinsin mi?</h3><p>Fotoğraf ve cevabı kalıcı olarak silinir. Bu işlem geri alınamaz.</p><div class="qvdb"><button class="c" id="qvdn" type="button">Vazgeç</button><button class="d" id="qvdk" type="button">Sil</button></div></div></div>
   </div>
-  <div class="tmt" id="tmt"><div class="tmw">
-    <div class="tmr"><button class="tmbtn" id="tmx" type="button">Çık</button><span class="tmc" id="tmc">0:00</span><div class="tmrr"><button class="tmic" id="tms" type="button" aria-label="Tam ekrandan çık"><svg viewBox="0 0 24 24"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg></button><button class="tmbtn pr" id="tmf" type="button">Bitir</button></div></div>
-    <div class="tmd" id="tmd"></div>
-  </div></div>
-  <div class="tmb" id="tmb"><div class="tmw" id="tmbi"></div></div>
   <div class="dp" id="dp" aria-hidden="true">
     <div class="dp-bd" id="dpbd"></div>
     <div class="dp-card" id="dpc" role="dialog" aria-modal="true" aria-label="Sınav tarihini seç" tabindex="-1">
@@ -3365,7 +3329,7 @@ function add(files){
 
 /* Büyük görünüm */
 var vTok=0,VU={},sheetOn=false,fsOn=false,uiT=0,ansOn=false;
-function showUi(){var v=$("#qv");v.classList.add("ui");clearTimeout(uiT);if(TMO)return;uiT=setTimeout(function(){if(ansOn||mnOn||sheetOn||dgOn)showUi();else v.classList.remove("ui")},3000)}
+function showUi(){var v=$("#qv");v.classList.add("ui");clearTimeout(uiT);uiT=setTimeout(function(){if(ansOn||mnOn||sheetOn||dgOn)showUi();else v.classList.remove("ui")},3000)}
 var cnT=0;function flashCn(){var v=$("#qv");if(!fsOn)return;v.classList.add("qvfc");clearTimeout(cnT);cnT=setTimeout(function(){v.classList.remove("qvfc")},1600)}
 function setFs(on,quiet){
   zoomReset(false);var v=$("#qv"),im=$("#qvi"),r0=quiet?null:im.getBoundingClientRect();
@@ -4365,7 +4329,6 @@ function paintRun(){
   var d=R.ids.map(function(i,k){return'<button type="button" data-i="'+k+'" class="'+(ansOf(i).trim()?"dn ":"")+(k===R.idx?"cur":"")+'">'+(k+1)+'</button>'}).join("");
   var dd=$("#tzrd");dd.innerHTML=d;$("#tzrdc").textContent=done+"/"+n+" cevaplandı";var c=dd.querySelector(".cur");if(c&&c.scrollIntoView)c.scrollIntoView({inline:window.matchMedia("(min-aspect-ratio:5/4)").matches?"nearest":"center",block:"nearest"});
   $("#tzrpv").hidden=R.idx===0;$("#tzrnx").textContent=R.idx===n-1?"Bitir":"Sonraki";
-  if(Q.testOn())tmPaint();
 }
 function runGo(i){if(!R||i<0||i>=R.ids.length)return;R.idx=i;runSave();paintRun()}
 function runAns(v){var id=R.ids[R.idx];R.ans[id]=v;clearTimeout(RSV);RSV=setTimeout(runSave,400)}
@@ -4396,8 +4359,8 @@ function runFinish(force){
   else go();
 }
 
-/* ---------- Test: tam ekran (soru havuzu görüntüleyicisiyle) ---------- */
-function tmTick(){var t=fclk(relapsed());$("#tzrm").textContent=t;$("#tmc").textContent=t}
+/* ---------- Test: tam ekran (Sorular sayfasındaki görüntüleyiciyle aynı) ---------- */
+function tmTick(){$("#tzrm").textContent=fclk(relapsed())}
 function tmOpen(fs){
   if(!R)return;
   Q.openIn(R.ids[R.idx],R.ids,{test:true,fs:!!fs,nav:tmNav,key:tmKey,close:function(){if(R)paintRun()}});
@@ -4416,39 +4379,6 @@ function tmKey(e){
   if(!it||qtype(it)!=="mc")return false;
   runAns(ansOf(id)===k?"":k);paintRunAns();return true;
 }
-function tmPaint(){
-  if(!R)return;
-  var id=R.ids[R.idx],it=imap()[id],n=R.ids.length,a=ansOf(id);
-  var row=$("#tmd");
-  row.innerHTML=R.ids.map(function(i,k){return'<button type="button" data-i="'+k+'" class="'+(ansOf(i).trim()?"dn ":"")+(k===R.idx?"cur":"")+'">'+(k+1)+'</button>'}).join("");
-  var c=row.querySelector(".cur");if(c){var x=c.offsetLeft-(row.clientWidth-c.offsetWidth)/2;row.scrollLeft=Math.max(0,x)}
-  var h='<div class="tmal">Cevabın</div>';
-  if(it&&qtype(it)==="mc")h+='<div class="tml">'+LET.map(function(l){return'<button type="button" data-l="'+l+'" class="'+(a===l?"on":"")+'">'+l+'</button>'}).join("")+'</div>';
-  else h+='<textarea class="tmta" id="tmta" placeholder="Cevabını buraya yaz" maxlength="2000">'+esc(a)+'</textarea>';
-  h+='<div class="tmn"><button type="button" class="tmbtn" data-n="-1"'+(R.idx===0?" disabled":"")+'>Önceki</button><button type="button" class="tmbtn pr" data-n="1">'+(R.idx===n-1?"Bitir":"Sonraki")+'</button></div>';
-  $("#tmbi").innerHTML=h;tmTick();
-}
-function tmDots(){
-  if(!R||!Q.testOn())return;
-  var a=ansOf(R.ids[R.idx]);
-  [].forEach.call(document.querySelectorAll("#tmbi .tml button"),function(c){c.classList.toggle("on",c.dataset.l===a)});
-  [].forEach.call(document.querySelectorAll("#tmd button"),function(c,k){c.classList.toggle("dn",!!ansOf(R.ids[k]).trim())});
-}
-$("#tmt").addEventListener("click",function(e){
-  var b=e.target.closest("button");if(!b)return;
-  if(b.id==="tmx")$("#tzrx").click();
-  else if(b.id==="tmf")$("#tzrf").click();
-  else if(b.id==="tms")Q.closeView();
-  else if(b.dataset.i!=null&&R){var id=R.ids[+b.dataset.i];if(id!=null)Q.jump(id)}
-});
-$("#tmb").addEventListener("click",function(e){
-  if(!R)return;var b;
-  if(b=e.target.closest("[data-l]")){var id=R.ids[R.idx];runAns(ansOf(id)===b.dataset.l?"":b.dataset.l);paintRunAns();return}
-  if(b=e.target.closest("[data-n]")){
-    if(b.dataset.n==="1"){if(R.idx>=R.ids.length-1)runFinish();else Q.step(1)}else Q.step(-1);
-  }
-});
-$("#tmb").addEventListener("input",function(e){if(e.target.id==="tmta"&&R){runAns(e.target.value);paintDots()}});
 
 /* ---------- Sonuç ---------- */
 var RSU=[],RSID=null,RSLIVE=false;
@@ -4752,7 +4682,6 @@ function paintRunAns(){
 function paintDots(){
   var n=R.ids.length,done=R.ids.filter(function(i){return ansOf(i).trim()}).length;$("#tzrpi").style.width=(done/n*100)+"%";$("#tzrdc").textContent=done+"/"+n+" cevaplandı";
   [].forEach.call(document.querySelectorAll("#tzrd button"),function(c,k){c.classList.toggle("dn",!!ansOf(R.ids[k]).trim())});
-  tmDots();
 }
 $("#tzrd").onclick=function(e){var b=e.target.closest("[data-i]");if(b)runGo(+b.dataset.i)};
 $("#tzrpv").onclick=function(){runGo(R.idx-1)};
