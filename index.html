@@ -1466,6 +1466,9 @@ html,body,*{scrollbar-width:none!important;-ms-overflow-style:none!important;scr
 .qv.on::before{opacity:1}
 /* hayalet katman kaldırıldı: uçuş artık #qvi üzerinde transform + clip-path ile yapılıyor */
 #qvi{transform-origin:50% 50%}
+/* KAPANIŞ: görüntüleyici katmanı animasyon boyunca (0,46 sn) görünür kalıyor; düğmeler/yazılar resim uçtuktan sonra da ekranda duruyordu.
+   Kapanış başlar başlamaz resim dışındaki tüm öğeler hızlıca (yalnızca opacity, GPU'da) silinir. */
+.qv:not(.on)>*:not(.qvs){opacity:0!important;pointer-events:none!important;transition-property:opacity!important;transition-duration:.11s!important;transition-delay:0s!important;transition-timing-function:linear!important}
 </style>
 </head>
 <body>
