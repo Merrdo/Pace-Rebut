@@ -867,6 +867,12 @@ textarea.qfi{height:140px;resize:none}
 .qi.ok .qok svg{transform:translate(-50%,-50%);opacity:1}
 .qok path{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .5s var(--ease) .08s}
 .qi.ok .qok path{stroke-dashoffset:0}
+.tzpi .qok{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;border-radius:inherit;background:radial-gradient(circle at 50% 50%,rgba(20,20,20,.58),rgba(20,20,20,.36));opacity:0;transition:opacity .35s var(--ease)}
+.tzpi.ok .qok{opacity:1}
+.tzpi .qok svg{position:absolute;left:50%;top:50%;height:74%;aspect-ratio:1;overflow:visible;fill:none;stroke:#3be08a;stroke-width:3.6;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 3px 8px rgba(0,0,0,.35));transform:translate(-50%,-50%) scale(.55);opacity:0;transition:transform .5s var(--sp),opacity .2s}
+.tzpi.ok .qok svg{transform:translate(-50%,-50%);opacity:1}
+.tzpi .qok path{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .5s var(--ease) .08s}
+.tzpi.ok .qok path{stroke-dashoffset:0}
 .qpop .ok{color:#17a05b}
 /* ===== Test ve Paket ===== */
 .tz,.tzp,.tzs,.tzr{position:fixed;inset:0;background:var(--bg);overflow:auto;overscroll-behavior:contain;opacity:0;visibility:hidden;transition:opacity .35s var(--ease),visibility 0s .35s}
@@ -1176,6 +1182,8 @@ textarea.qfi{height:140px;resize:none}
 .tz,.tzp,.tzs,.tzr{transform:translateY(20px) scale(.985);transition:opacity .35s var(--ease),transform .6s var(--ease),visibility 0s .35s}
 .tz.on,.tzp.on,.tzs.on,.tzr.on{transform:none}
 .tzp{transform:translateY(24px)}
+.tzp.opn{will-change:transform,opacity}
+.tzpgd .qi.rise{animation:tzRise .5s var(--ease) calc(var(--i,0)*30ms) backwards}
 /* İlk açılışta içerik sırayla yükselir */
 .fresh>.tzg,.fresh>.tzc,.fresh>.tzres,.fresh>.tzemp,.fresh>.tzst,.fresh>.tzchart,.fresh>.tzdh,.fresh>.tzchs,.fresh>.tzbar,.fresh .tzx,.fresh .tzpk,.fresh .tzhi{animation:tzRise .65s var(--ease) calc(var(--i,0)*45ms) backwards}
 /* Segment kontrolünde kayan hap */
@@ -4180,28 +4188,37 @@ function peOpen(pack,preset){
   peFToggle(false);
   var g=$("#tzpg");g.innerHTML="";g.className="qg";
   $("#tzpu").classList.remove("on");$("#tzpu").setAttribute("aria-pressed","false");peFUi();
-  /* Önce sayfa açılsın; kartlar açılış animasyonundan sonra küçük gruplar hâlinde eklensin (takılma olmasın) */
-  var me=PE,pos=0,CH=24;
+  /* Önce sayfa açılsın (animasyon GPU'da çalışır); kartlar animasyon bittikten sonra kare başına küçük bir zaman bütçesiyle eklenir.
+     Böylece açılış sırasında ana iş parçacığı boş kalır, FPS düşmez. */
+  var me=PE,pos=0,pg=$("#tzp");
+  me.loading=true;
   $("#tzpc").textContent=its.length+" soru";
-  $("#tzp").classList.add("on");
+  pg.classList.add("opn");clearTimeout(pg._ot);pg._ot=setTimeout(function(){pg.classList.remove("opn")},900);
+  pg.classList.add("on");
+  peCount();
+  function filtered(){return peFOn()||PE.uns||!!PE.q}
+  function mk(it,k){
+    var u=URL.createObjectURL(it.thumb||it.blob);PE.urls.push(u);
+    var bt=document.createElement("button");bt.type="button";bt.className="qi"+(k<12?" rise":"")+(PE.sel[it.id]?" sel":"")+(it.solved?" ok":"");
+    if(k<12)bt.style.setProperty("--i",k);
+    bt.dataset.id=it.id;bt.dataset.f=(it.g||"")+"|"+(it.ders||"");bt.dataset.g=it.g||"";
+    bt.setAttribute("aria-label","Soruyu aç");
+    bt.innerHTML='<img alt="Soru" decoding="async" loading="lazy" draggable="false" src="'+u+'">'+(it.ders?'<span class="qdc" style="--c:'+Q.lcol(it)+'">'+esc(it.g+" · "+it.ders)+'</span>':'')+'<span class="qck">'+TICK+'</span>'+(it.solved?'<span class="qok" aria-hidden="true"><svg viewBox="0 0 24 24"><path pathLength="1" d="M4.5 12.8l5 5L19.5 7"/></svg></span>':'');
+    bt._h=" "+ordNorm([it.g,it.ders,it.book,it.page?"sayfa "+it.page:"",it.note].join(" "))+" ";
+    return bt;
+  }
   function chunk(){
     if(PE!==me||me.closed)return;
-    var fr=document.createDocumentFragment(),end=Math.min(pos+CH,its.length);
-    for(;pos<end;pos++){
-      var it=its[pos];
-      var u=URL.createObjectURL(it.thumb||it.blob);PE.urls.push(u);
-      var bt=document.createElement("button");bt.type="button";bt.className="qi"+(PE.sel[it.id]?" sel":"")+(it.solved?" ok":"");bt.dataset.id=it.id;bt.dataset.f=(it.g||"")+"|"+(it.ders||"");bt.dataset.g=it.g||"";
-      bt.setAttribute("aria-label","Soruyu aç");
-      bt.innerHTML='<img alt="Soru" decoding="async" loading="lazy" draggable="false" src="'+u+'">'+(it.ders?'<span class="qdc" style="--c:'+Q.lcol(it)+'">'+esc(it.g+" · "+it.ders)+'</span>':'')+'<span class="qck">'+TICK+'</span>'+(it.solved?'<span class="qok" aria-hidden="true"><svg viewBox="0 0 24 24"><path pathLength="1" d="M4.5 12.8l5 5L19.5 7"/></svg></span>':'');
-      bt._h=" "+ordNorm([it.g,it.ders,it.book,it.page?"sayfa "+it.page:"",it.note].join(" "))+" ";
-      fr.appendChild(bt);
-    }
+    var t0=performance.now(),fr=document.createDocumentFragment(),n=0;
+    /* kare başına ~6 ms: en az 4 kart, en çok 16 kart */
+    while(pos<its.length&&n<16&&(n<4||performance.now()-t0<6)){fr.appendChild(mk(its[pos],pos));pos++;n++}
     g.appendChild(fr);
-    peFilter(true);
-    if(pos<its.length)setTimeout(chunk,16);
+    if(filtered())peFilter(true);
+    if(pos<its.length)requestAnimationFrame(chunk);
+    else{me.loading=false;peCount()}
   }
-  /* ilk grup animasyon başladıktan hemen sonra, kalanlar sırayla */
-  requestAnimationFrame(function(){setTimeout(chunk,60)});
+  /* animasyonun büyük kısmı bittikten sonra başla */
+  setTimeout(function(){requestAnimationFrame(chunk)},320);
 }
 /* Ders filtresi: PE.fg = seçili kategoriler (TYT/AYT), PE.fd = tek tek seçili dersler */
 function peFOn(){return Object.keys(PE.fg).length+Object.keys(PE.fd).length>0}
@@ -4268,8 +4285,7 @@ function peSetMany(list,on){
 }
 function peCount(){
   var n=Object.keys(PE.sel).length,v=peVis(),all=v.length>0&&v.every(function(c){return PE.sel[c.dataset.id]});
-  $("#tzpc").textContent=v.length+" soru";
-  var a=$("#tzpa");a.classList.toggle("on",all);a.disabled=!v.length;a.setAttribute("aria-label",all?"Görünen soruların seçimini bırak":"Görünen soruların hepsini seç");
+  var a=$("#tzpa");if(!PE.loading){$("#tzpc").textContent=v.length+" soru";a.classList.toggle("on",all);a.disabled=!v.length}a.setAttribute("aria-label",all?"Görünen soruların seçimini bırak":"Görünen soruların hepsini seç");
   var bn=$("#tzpbn"),t=n+" seçili";if(bn.textContent!==t){bn.textContent=t;bn.classList.remove("bump");void bn.offsetWidth;bn.classList.add("bump")}
   $("#tzpbw").classList.toggle("on",n>0||!!PE.id);var pg=$("#tzpg");if(pg.classList.contains("sm")!==(n>0)&&!peQf)peQuiet();pg.classList.toggle("sm",n>0);
   $("#tzpks").querySelector("span").textContent=PE.id?"Kaydet":"Oluştur";
@@ -4512,7 +4528,7 @@ function pvOpen(id){
     h+='<div class="tzpgd tzpvg">';
     ids.forEach(function(i,k){
       var it=im[i],u=URL.createObjectURL(it.thumb||it.blob);PVU.push(u);
-      h+='<button type="button" class="tzpi tzqi" data-i="'+k+'" data-id="'+i+'" style="--i:'+k+'" aria-label="Soru '+(k+1)+'"><img alt="Soru" decoding="async" draggable="false" src="'+u+'">'+(it.ders?'<span class="dc" style="--c:'+Q.lcol(it)+'">'+esc(it.g+" · "+it.ders)+'</span>':'')+(it.solved?'<span class="sv">Çözüldü</span>':'')+'<span class="nb">'+(k+1)+'</span></button>';
+      h+='<button type="button" class="tzpi tzqi'+(it.solved?" ok":"")+'" data-i="'+k+'" data-id="'+i+'" style="--i:'+k+'" aria-label="Soru '+(k+1)+'"><img alt="Soru" decoding="async" draggable="false" src="'+u+'">'+(it.ders?'<span class="dc" style="--c:'+Q.lcol(it)+'">'+esc(it.g+" · "+it.ders)+'</span>':'')+(it.solved?'<span class="qok" aria-hidden="true"><svg viewBox="0 0 24 24"><path pathLength="1" d="M4.5 12.8l5 5L19.5 7"/></svg></span>':'')+'<span class="nb">'+(k+1)+'</span></button>';
     });
     h+='</div>';
   }
