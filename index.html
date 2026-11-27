@@ -3483,6 +3483,8 @@ function qvFlip(r0,r1,rad0,rad1){
 function qvChrome(on){qvAn.forEach(function(a){try{a.cancel()}catch(e){}});qvAn=[]}
 function qvOpenFx(it,im){
   qvHeal();qvChrome(true);
+  /* Test çözme: uçuş efekti yok, yalnızca kısa bir belirme */
+  if(TMO){im.animate([{opacity:0},{opacity:1}],{duration:220,easing:"ease-out"});return}
   var r1=im.getBoundingClientRect(),src=r1.width?qvSrc(it.id):null;
   /* Test: oranlar uyuşmuyorsa clip-path animasyonu (her karede yeniden boyama) yerine hafif solma/ölçek kullan */
   if(src&&TMO&&qvMis(src.r,r1))src=null;
@@ -3552,7 +3554,7 @@ function view(i,dir){
 }
 function closeV(){
   var qim=$("#qvi"),qit=ITEMS[cur],qv=$("#qv"),qwas=qv.classList.contains("on"),qfx=qwas&&!REDUCE&&!!qim.animate,qr0=null,qs=null;
-  if(qfx){zoomReset(false);qr0=qim.getBoundingClientRect();if(qit)qs=qvSrc(qit.id)}
+  if(qfx){zoomReset(false);qr0=qim.getBoundingClientRect();if(qit&&!TMO)qs=qvSrc(qit.id)}
   VLO=null;var tmo=TMO;TMO=null;if(tmo&&tmo.close)setTimeout(tmo.close,0);
   setTimeout(function(){if(!TMO)$("#qv").classList.remove("tm")},420);
   if(fsOn)setFs(false,true);zoomReset(false);
@@ -3575,7 +3577,8 @@ function closeV(){
     }
     if(!done){
       qvAnims(qim).forEach(function(a){try{a.cancel()}catch(e){}});
-      qim.animate([{opacity:1,transform:"none"},{opacity:0,transform:"scale(.96)"}],{duration:280,easing:QVE,fill:"forwards"});
+      if(tmo)qim.animate([{opacity:1},{opacity:0}],{duration:200,easing:"ease-out",fill:"forwards"});
+      else qim.animate([{opacity:1,transform:"none"},{opacity:0,transform:"scale(.96)"}],{duration:280,easing:QVE,fill:"forwards"});
     }
   }
   /* Görüntüleyici gizlendikten sonra resmi mutlaka doğal (görünür) hâline döndür: sonraki açılış hiçbir kalıntıyla başlamaz */
