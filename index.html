@@ -4376,7 +4376,7 @@ var RU={},RT=0,RSV=0;
 function runStart(o){
   function go(){
     var im=imap(),ids=o.ids.filter(function(i){return im[i]});if(!ids.length){Q.toast("Soru bulunamadı");return}
-    R={id:uid(),ids:ids,ans:{},idx:0,acc:0,seg:Date.now(),kind:o.kind,name:o.name||"Test",packId:o.packId||null,src:o.src||""};
+    R={id:uid(),ids:ids,ans:{},idx:0,acc:0,seg:Date.now(),kind:o.kind,name:o.name||"Test",packId:o.packId||null,src:o.src||"",tmp:o.tmp?1:0};
     runSave();runShow();pvClose();$("#tzpd").classList.remove("on");
   }
   if(RS||R)mdl({h:"Devam eden test var",p:"Yeni teste başlarsan o test silinir.",btns:[{t:"Vazgeç",v:"cancel"},{t:"Yenisini başlat",v:"ok",c:"pr"}]}).then(function(r){if(r.v==="ok"){if(R)runStop();RS=null;go()}});
@@ -4431,6 +4431,7 @@ function runFinish(force){
   function go(){
     runSave();var im=imap(),dur=Math.floor(R.acc/1000);
     var rec={id:uid(),ts:Date.now(),kind:R.kind,name:R.name,packId:R.packId,dur:dur,items:R.ids.map(function(i){var it=im[i],a=ansOf(i).trim();return{id:i,a:a,st:it?grade(it,a):"b"}})};
+    if(R.tmp){rec.tmp=1;TMPREC=rec;runStop();runDrop();rsOpen(rec.id,true);refreshHub();return}
     HI.unshift(rec);if(HI.length>400)HI.length=400;sv(K_HI,HI);
     runStop();runDrop();applyMarks(rec);rsOpen(rec.id,true);refreshHub();
   }
@@ -4445,7 +4446,8 @@ function tmTick(){$("#tzrm").textContent=fclk(relapsed())}
 var RSU=[],RSID=null,RSLIVE=false;
 function rsClose(){$("#tzs").classList.remove("on");RSU.forEach(function(u){URL.revokeObjectURL(u)});RSU=[];RSID=null;refreshHub()}
 function rsOpen(id,live){RSID=id;RSLIVE=!!live;rsRender(true);$("#tzs").classList.add("on")}
-function recOf(id){return HI.filter(function(r){return r.id===id})[0]}
+var TMPREC=null;
+function recOf(id){return HI.filter(function(r){return r.id===id})[0]||(TMPREC&&TMPREC.id===id?TMPREC:undefined)}
 function rsRender(top){
   var rec=recOf(RSID);if(!rec){$("#tzs").classList.remove("on");return}
   RSU.forEach(function(u){URL.revokeObjectURL(u)});RSU=[];
@@ -4475,7 +4477,7 @@ function rsRender(top){
 }
 function rsOverride(i,st){
   var rec=recOf(RSID);if(!rec)return;var x=rec.items[i];if(!x)return;
-  x.st=st;x.o=1;sv(K_HI,HI);applyMarks(rec,x.id);rsRender();Q.toast(st==="c"?"Doğru sayıldı, çözüldü işaretlendi":"Yanlış sayıldı, çözüldü işareti kaldırıldı");
+  x.st=st;x.o=1;if(!rec.tmp){sv(K_HI,HI);applyMarks(rec,x.id)}rsRender();Q.toast(st==="c"?"Doğru sayıldı, çözüldü işaretlendi":"Yanlış sayıldı, çözüldü işareti kaldırıldı");
 }
 function rsAgain(wrongOnly){
   var rec=recOf(RSID);if(!rec)return;var im=imap(),ids;
@@ -4483,7 +4485,7 @@ function rsAgain(wrongOnly){
   else if(rec.packId){var p=PK.filter(function(q){return q.id===rec.packId})[0];ids=(p?p.ids:rec.items.map(function(x){return x.id})).filter(function(i){return im[i]})}
   else ids=rec.items.map(function(x){return x.id}).filter(function(i){return im[i]});
   if(!ids.length){Q.toast("Soru bulunamadı");return}
-  var o={ids:wrongOnly?shuf(ids):ids,kind:wrongOnly?"test":rec.kind,name:wrongOnly?"Tekrar · "+rec.name:rec.name,packId:wrongOnly?null:rec.packId};
+  var o={ids:wrongOnly?shuf(ids):ids,kind:wrongOnly?"test":rec.kind,name:wrongOnly?"Tekrar · "+rec.name:rec.name,packId:wrongOnly?null:rec.packId,tmp:true};
   $("#tzs").classList.remove("on");RSU.forEach(function(u){URL.revokeObjectURL(u)});RSU=[];RSID=null;
   $("#tzpd").classList.remove("on");runStart(o);
 }
