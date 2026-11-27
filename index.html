@@ -1196,37 +1196,8 @@ textarea.qfi{height:140px;resize:none}
 .hbi i{display:block;flex:1;min-width:0;max-width:30px;height:var(--h);border-radius:6px 6px 3px 3px;background:var(--sc);transform-origin:bottom}
 .fresh .hbi i{animation:tzCol .6s var(--ease) calc(var(--k,0)*35ms + .25s) backwards}
 .fresh .hpb i{animation:tzBar .8s var(--ease) .3s backwards}
-.tzg.hfl{margin-bottom:0}
 #tz .hsec{margin:22px 2px 12px}
 @media (max-width:700px){.hst{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.hsc{padding:14px 14px 13px;border-radius:20px}.hsc small{font-size:13px}.hsc>b{font-size:32px;letter-spacing:-.8px}.hsc.g{grid-column:1/-1}.hsc>span{font-size:12px}.hlg{gap:2px 8px}.hlg em{font-size:12px}}
-/* Geçmiş listesi: sade satırlar */
-.hls{margin-bottom:6px;border-radius:24px;background:#fff;background:var(--surf);box-shadow:0 6px 16px -10px rgba(17,17,17,.14);overflow:hidden}
-.hgp+.hgp{border-top:1.5px solid var(--surf2)}
-.hrw{display:flex;align-items:center;gap:10px;padding-right:14px}
-.hro{flex:1;display:flex;align-items:center;gap:14px;min-width:0;text-align:left;padding:14px 4px 14px 16px;transition:background .2s}
-.hro:active{background:rgba(17,17,17,.04)}
-.hpc{flex:none;display:grid;place-items:center;width:50px;height:50px;border-radius:50%;background:#eee;background:color-mix(in srgb,var(--sc) 20%,#fff);font:800 14px Inter,system-ui,sans-serif;color:#111;font-variant-numeric:tabular-nums;letter-spacing:-.2px}
-.hmn{display:grid;gap:3px;min-width:0}
-.hmn b{font-size:17px;font-weight:800;line-height:1.2;letter-spacing:-.2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.hmn small{font:500 13px Inter,system-ui,sans-serif;color:var(--dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.htm{flex:none;font:600 13px Inter,system-ui,sans-serif;color:var(--dim);font-variant-numeric:tabular-nums}
-.hgt{flex:none;display:inline-flex;align-items:center;gap:4px;height:32px;padding:0 8px 0 12px;border-radius:16px;background:var(--surf2);font:700 13px Inter,system-ui,sans-serif;color:#3b3935;transition:transform .4s var(--sp),background .25s}
-.hgt:active{transform:scale(.95)}
-.hgt svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;transition:transform .45s var(--sp)}
-.hgt.on{background:var(--fg);color:var(--bg)}
-.hgt.on svg{transform:rotate(180deg)}
-.hch{display:grid;grid-template-rows:0fr;visibility:hidden;transition:grid-template-rows .45s var(--ease),visibility 0s .45s}
-.hch.on{grid-template-rows:1fr;visibility:visible;transition-delay:0s}
-.hch>div{min-height:0;overflow:hidden}
-.hcl{margin:0 14px 12px 40px;padding-left:14px;border-left:2px solid var(--surf2)}
-.hcr{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-width:0;text-align:left;padding:10px 6px 10px 0;border-radius:10px}
-.hcr:active{background:rgba(17,17,17,.04)}
-.hcm{display:grid;gap:2px;min-width:0}
-.hcm b{font-size:15px;font-weight:700}
-.hcm small{font:500 12.5px Inter,system-ui,sans-serif;color:var(--dim);font-variant-numeric:tabular-nums}
-.hcp{flex:none;font:800 16px Inter,system-ui,sans-serif;color:#111;font-variant-numeric:tabular-nums}
-.hcp:before{content:"";display:inline-block;width:8px;height:8px;margin-right:7px;border-radius:50%;background:var(--sc)}
-@media (max-width:560px){.hpc{width:44px;height:44px;font-size:13px}.hro{gap:12px;padding-left:14px}.hrw{gap:8px;padding-right:10px}.hmn b{font-size:16px}.hcl{margin-left:32px}}
 /* Ekran geçişleri */
 .tz,.tzp,.tzs,.tzr{transform:translateY(20px) scale(.985);transition:opacity .35s var(--ease),transform .6s var(--ease),visibility 0s .35s}
 .tz.on,.tzp.on,.tzs.on,.tzr.on{transform:none}
@@ -1234,7 +1205,7 @@ textarea.qfi{height:140px;resize:none}
 .tzp.opn{will-change:transform,opacity}
 .tzpgw .qi.rise{animation:tzRise .55s var(--ease) calc(min(var(--i,0),14)*35ms + .12s) backwards}
 /* İlk açılışta içerik sırayla yükselir */
-.fresh>.tzg,.fresh>.tzc,.fresh>.tzres,.fresh>.tzemp,.fresh>.tzst,.fresh>.tzchart,.fresh>.tzdh,.fresh>.tzchs,.fresh>.tzbar,.fresh .tzx,.fresh .tzpk,.fresh .tzhi,.fresh .hsc,.fresh .hls{animation:tzRise .65s var(--ease) calc(var(--i,0)*45ms) backwards}
+.fresh>.tzg,.fresh>.tzc,.fresh>.tzres,.fresh>.tzemp,.fresh>.tzst,.fresh>.tzchart,.fresh>.tzdh,.fresh>.tzchs,.fresh>.tzbar,.fresh .tzx,.fresh .tzpk,.fresh .tzhi,.fresh .hsc{animation:tzRise .65s var(--ease) calc(var(--i,0)*45ms) backwards}
 /* Segment kontrolünde kayan hap */
 .tzg{position:relative}
 .tzg>button{position:relative;z-index:1}
@@ -4036,7 +4007,7 @@ function morph(a,b){
 }
 function fresh(b){
   if(HUB.quiet){b.classList.remove("fresh");return}
-  [].forEach.call(b.querySelectorAll(".tzg,.tzc,.tzx,.tzpk,.tzhi,.tzres,.tzemp,.tzst,.tzchart,.tzdh,.tzbar,.tzchs,.hsc,.hls"),function(e,i){e.style.setProperty("--i",Math.min(i,12))});
+  [].forEach.call(b.querySelectorAll(".tzg,.tzc,.tzx,.tzpk,.tzhi,.tzres,.tzemp,.tzst,.tzchart,.tzdh,.tzbar,.tzchs,.hsc"),function(e,i){e.style.setProperty("--i",Math.min(i,12))});
   b.classList.remove("fresh");void b.offsetWidth;b.classList.add("fresh");
   clearTimeout(fresh.t);fresh.t=setTimeout(function(){b.classList.remove("fresh")},1500);
 }
@@ -4054,7 +4025,7 @@ window.addEventListener("resize",pills);
 $("#tzt").insertAdjacentHTML("afterbegin",'<i class="tzpl"></i>');
 
 /* ---------- Ana sayfa (hub) ---------- */
-var HUB={tab:"gen",hf:"all",k:null,fxt:"",go:{}};
+var HUB={tab:"gen",hf:"all",k:null,fxt:""};
 var TZFAB=document.createElement("button");TZFAB.type="button";TZFAB.className="tzfab";TZFAB.setAttribute("aria-label","Yeni paket");
 TZFAB.innerHTML='<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>';
 $("#tz").parentNode.insertBefore(TZFAB,$("#tz").nextSibling);/* #tz geçiş sırasında transform'lu olduğundan içindeki fixed öğe geçiş bitince yer değiştiriyordu (sağdan sola sıçrama). Kardeş olarak ekleniyor. */
@@ -4533,35 +4504,6 @@ function rHi(b){
     +'<div class="hsc"><small>Ortalama başarı</small><b>'+(avg==null?"—":"%"+avg)+'</b><span class="hpb"><i style="width:'+(avg==null?0:avg)+'%;background:'+hSc(avg)+'"></i></span></div>'
     +'<div class="hsc g"><small>Grafik</small><div class="hbi">'+bars+'</div><span>Son '+last.length+' sonuç</span></div>'
     +'</div>';
-  h+='<div class="tzg hfl">'+[["all","Hepsi"],["test","Testler"],["pack","Paketler"]].map(function(f){return'<button type="button" data-hf="'+f[0]+'" class="'+(HUB.hf===f[0]?"on":"")+'">'+f[1]+'</button>'}).join("")+'</div>';
-  var pm={},im=imap();
-  PK.forEach(function(p){pm[p.id]=p});
-  var L=gl.filter(function(g){var pk=g.runs[0].kind==="pack";return HUB.hf==="all"||(HUB.hf==="pack"?pk:!pk)}).sort(function(a,c){return c.lt-a.lt});
-  if(!L.length){h+='<div class="tzemp"><b>Bu filtrede kayıt yok</b></div>';b.innerHTML=h;return}
-  var dc={};L.forEach(function(g){var d=hDay(g.lt);dc[d]=(dc[d]||0)+1});
-  var cur=null,open=false;
-  L.forEach(function(g){
-    var day=hDay(g.lt),runs=g.runs,n=runs.length,r=runs[0],lr=runs[n-1];
-    if(day!==cur){if(open)h+='</div>';cur=day;open=true;h+='<div class="tzdh hsec">'+day+'<em>'+dc[day]+'</em></div><div class="hls">'}
-    var p=rpct(r),d=new Date(r.ts),dl=hDay(r.ts),tm=(dl!==day?dl+" · ":"")+p2(d.getHours())+':'+p2(d.getMinutes());
-    h+='<div class="hgp"><div class="hrw"><button type="button" class="hro" data-id="'+r.id+'" style="--sc:'+hSc(p)+'">'
-      +'<span class="hpc">'+(p==null?"—":"%"+p)+'</span>'
-      +'<span class="hmn"><b>'+esc(r.name)+'</b><small>'+(r.kind==="pack"?"Paket":"Test")+' · '+(r.items.length||1)+' soru · '+fdur(r.dur)+'</small></span></button>'
-      +'<span class="htm">'+tm+'</span>';
-    if(n>1){
-      var op=!!HUB.go[g.k];
-      h+='<button type="button" class="hgt'+(op?" on":"")+'" data-g="'+esc(g.k)+'" aria-expanded="'+op+'" aria-label="Tekrarları '+(op?"gizle":"göster")+'">'+(n-1)+' tekrar<svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>';
-    }
-    h+='</div>';
-    if(n>1){
-      h+='<div class="hch'+(op?" on":"")+'"><div class="hcl">'+runs.slice(1).map(function(x,i){
-        var xs=sum(x),xp=rpct(x),xd=new Date(x.ts);
-        return'<button type="button" class="hcr" data-id="'+x.id+'" style="--sc:'+hSc(xp)+'"><div class="hcm"><b>'+(i+2)+'. tur</b><small>'+hDay(x.ts)+' · '+p2(xd.getHours())+':'+p2(xd.getMinutes())+' · '+xs.c+' doğru, '+xs.w+' yanlış, '+(xs.b+xs.u)+' boş</small></div><div class="hcp">'+(xp==null?"—":"%"+xp)+'</div></button>';
-      }).join("")+'</div></div>';
-    }
-    h+='</div>';
-  });
-  if(open)h+='</div>';
   b.innerHTML=h;
 }
 /* Paket istatistiği: eğimli başarı grafiği */
@@ -4739,9 +4681,7 @@ $("#tzb").addEventListener("click",function(e){
   if(b=t.closest(".tzo")){if(b.classList.contains("dis"))return;var k2=b.dataset.k;if(G.sel[k2])delete G.sel[k2];else G.sel[k2]=1;hubRender();return}
   if(t.closest("#tzgo")){gStart(false);return}
   if(t.closest("#tzsv")){gStart(true);return}
-  if(b=t.closest("[data-hf]")){HUB.hf=b.dataset.hf;hubRender();return}
-  if(b=t.closest(".hgt")){var gk=b.dataset.g;HUB.go[gk]=!HUB.go[gk];hubRender();return}
-  if(b=t.closest(".hro,.hcr,.tzhi")){rsOpen(b.dataset.id,false);return}
+  if(b=t.closest(".tzhi")){rsOpen(b.dataset.id,false);return}
 });
 $("#tzb").addEventListener("input",function(e){
   var t=e.target;
