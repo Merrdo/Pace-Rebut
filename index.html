@@ -1457,7 +1457,12 @@ html,body,*{scrollbar-width:none!important;-ms-overflow-style:none!important;scr
 .qv{background:transparent;opacity:1;transform:none;transition:visibility 0s .46s}
 .qv.on{transition-delay:0s}
 .qv::before{content:"";position:absolute;inset:0;background:#111;opacity:0;transition:opacity .42s var(--ease)}
-.qv.on::before{opacity:1}
+.qv.on::before{opacity:var(--bd,1)}
+/* Aşağı çekerek kapatma: sürüklerken zemin parmakla birlikte açılır (geçişsiz), bırakınca yumuşakça solar */
+.qv.pdg::before{transition:none}
+/* Test: kapanış sade ve hızlı; koyu zemin resimle birlikte kaybolur */
+.qv.tm::before{transition-duration:.25s}
+.qv.tm:not(.on){transition-delay:.26s}
 /* hayalet katman kaldırıldı: uçuş artık #qvi üzerinde transform + clip-path ile yapılıyor */
 #qvi{transform-origin:50% 50%}
 /* KAPANIŞ: görüntüleyici katmanı animasyon boyunca (0,46 sn) görünür kalıyor; düğmeler/yazılar resim uçtuktan sonra da ekranda duruyordu.
@@ -3720,8 +3725,8 @@ function zoomAt(px,py,ns,anim){
 /* Yatay kaydırma ile önceki/sonraki; aşağı çekince kapanır (tam ekranda ve yakınlaştırılmışken kapalı) */
 (function(){var x0=null,y0=0,v=$("#qv"),pd=0,pdOff=false;
   function pdOk(){return !fsOn&&ZS<=1.02&&!sheetOn&&!dgOn&&!mnOn&&!pdOff}
-  function pdPut(dy){zEls();zq.style.transition="none";zq.style.translate="0 "+dy+"px";v.style.background="rgba(17,17,17,"+Math.max(.2,1-dy/380).toFixed(2)+")"}
-  function pdBack(anim){zEls();if(anim){zq.style.transition="translate .32s cubic-bezier(.22,1,.36,1)";setTimeout(function(){zq.style.transition=""},340)}else zq.style.transition="";zq.style.translate="";v.style.background=""}
+  function pdPut(dy){zEls();zq.style.transition="none";zq.style.translate="0 "+dy+"px";v.classList.add("pdg");v.style.setProperty("--bd",Math.max(.2,1-dy/380).toFixed(2))}
+  function pdBack(anim){zEls();if(anim){zq.style.transition="translate .32s cubic-bezier(.22,1,.36,1)";setTimeout(function(){zq.style.transition=""},340)}else zq.style.transition="";zq.style.translate="";v.classList.remove("pdg");v.style.removeProperty("--bd")}
   v.addEventListener("touchstart",function(e){pd=0;pdOff=!!(e.target.closest&&e.target.closest(".qva,.qvsh,.qvdg,.qvmn,.qvlt"));if(e.touches.length===1&&!sheetOn&&!dgOn){x0=e.touches[0].clientX;y0=e.touches[0].clientY}else x0=null},{passive:true});
   v.addEventListener("touchmove",function(e){
     if(x0===null||!pdOk())return;
@@ -3733,7 +3738,7 @@ function zoomAt(px,py,ns,anim){
   v.addEventListener("touchcancel",function(){if(pd){pd=0;pdBack(true)}x0=null},{passive:true});
   v.addEventListener("touchend",function(e){
     if(x0===null)return;
-    if(pd){var dy0=e.changedTouches[0].clientY-y0;pd=0;x0=null;if(dy0>110&&pdOk()){closeV();setTimeout(function(){pdBack(false)},420)}else pdBack(true);return}
+    if(pd){var dy0=e.changedTouches[0].clientY-y0;pd=0;x0=null;if(dy0>110&&pdOk()){v.classList.remove("pdg");closeV();setTimeout(function(){pdBack(false)},560)}else pdBack(true);return}
     if(ZS>1.02){x0=null;return}var t=e.changedTouches[0],dx=t.clientX-x0,dy=t.clientY-y0;x0=null;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5)go(dx<0?1:-1);else if(dy<-80&&Math.abs(dy)>Math.abs(dx)*1.5)sheet(true)},{passive:true});
   (function(){var y0=null,s=$("#qvsh");
     s.addEventListener("touchstart",function(e){y0=(s.scrollTop<=0&&e.touches.length===1)?e.touches[0].clientY:null},{passive:true});
