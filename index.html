@@ -1453,9 +1453,10 @@ html,body,*{scrollbar-width:none!important;-ms-overflow-style:none!important;scr
 
 
 /* Soru görüntüleyici: tıklanan soru tek başına, uygulama sayfa zemininde, ekrana sığacak şekilde büyük (oran korunur) */
-.qv{position:fixed;inset:0;z-index:14;display:flex;align-items:center;justify-content:center;padding:calc(76px + env(safe-area-inset-top,0px)) 16px calc(24px + env(safe-area-inset-bottom,0px));background:var(--bg);color:var(--fg);opacity:0;visibility:hidden;transform:translateY(20px) scale(.985);transition:opacity .35s var(--ease),transform .6s var(--ease),visibility 0s .35s}
-.qv.on{opacity:1;visibility:visible;transform:none;transition-delay:0s}
-.qv img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;border-radius:18px;background:#fff;box-shadow:0 1px 0 rgba(17,17,17,.04),0 14px 36px -12px rgba(17,17,17,.22);-webkit-user-drag:none;user-select:none}
+.qv{position:fixed;inset:0;z-index:14;display:flex;align-items:center;justify-content:center;padding:calc(76px + env(safe-area-inset-top,0px)) 16px calc(24px + env(safe-area-inset-bottom,0px));background:var(--bg);color:var(--fg);opacity:0;visibility:hidden;transition:opacity .25s var(--ease),visibility 0s .25s}
+.qv.on{opacity:1;visibility:visible;transition-delay:0s}
+.qv img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;border-radius:18px;background:#fff;box-shadow:0 1px 0 rgba(17,17,17,.04),0 14px 36px -12px rgba(17,17,17,.22);transform:scale(.94);transition:transform .5s var(--ease);-webkit-user-drag:none;user-select:none}
+.qv.on img{transform:none}
 .qvx{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));right:16px;width:48px;height:48px;display:grid;place-items:center;border-radius:50%;background:var(--fg);color:var(--bg);box-shadow:0 8px 24px rgba(0,0,0,.14);transition:transform .5s var(--sp)}
 .qvx:active{transform:scale(.92)}
 .qvx svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round}
