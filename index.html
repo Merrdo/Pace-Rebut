@@ -1428,20 +1428,22 @@ textarea.qfi{height:140px;resize:none}
 #tz #tzb.pgi{animation:pgIn .3s cubic-bezier(.22,1,.36,1) backwards}
 @keyframes pgIn{from{opacity:0;transform:translate3d(calc(var(--dir,1)*14px),0,0)}}
 /* ===== Test sekmesi: sade tam ekran tasarım ===== */
-#tz .gn{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:44px;align-items:start;width:100%;max-width:1320px;margin:0 auto}
-#tz .gn-main{min-width:0;display:flex;flex-direction:column;gap:38px;padding:6px 0 24px}
-.gn-lb{display:flex;align-items:center;gap:10px;margin:0 2px 14px;font:700 15px Inter,system-ui,sans-serif;color:var(--dim)}
-.gn-lb i{flex:none;display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--fg);color:var(--bg);font:700 12px/1 Inter,system-ui,sans-serif;font-style:normal}
-.gn-lb span{flex:1;min-width:0;color:var(--fg);font:800 21px/1.1 "Baloo 2",ui-rounded,system-ui,sans-serif;letter-spacing:-.2px}
-.gn-lb button{height:32px;padding:0 14px;border-radius:999px;background:var(--surf2);font:700 13px/1 Inter,system-ui,sans-serif;transition:transform .4s var(--sp),background .25s}
-.gn-lb button:active{transform:scale(.94)}
-.gn .tzg{max-width:460px;margin-bottom:12px}
-.gn-t{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 16px 14px 20px;border-radius:20px;background:var(--surf);box-shadow:0 1px 0 rgba(17,17,17,.04),0 6px 16px -10px rgba(17,17,17,.14)}
-.gn-t b{display:block;font-size:17px;font-weight:700;line-height:1.15}
-.gn-t small{display:block;margin-top:2px;font:500 13px Inter,system-ui,sans-serif;color:var(--dim)}
-.gn-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;align-items:start}
+#tzuh[hidden]{display:none}
+#tz .gn{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:36px;align-items:stretch;width:100%}
+#tz .gn-main{min-width:0}
+.gn-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 2px 20px}
+.gn-mt{display:flex;align-items:baseline;gap:26px}
+.gn-mt button{position:relative;padding:2px 0;font:800 26px/1 "Baloo 2",ui-rounded,system-ui,sans-serif;letter-spacing:-.4px;color:var(--fg);opacity:.28;transition:opacity .45s var(--ease),transform .45s var(--sp)}
+.gn-mt button.on{opacity:1}
+.gn-mt button:not(.on):active{transform:scale(.95)}
+@media (hover:hover){.gn-mt button:not(.on):hover{opacity:.55}}
+.gn-mt button:after{content:"";position:absolute;left:0;right:0;bottom:-7px;height:3px;border-radius:3px;background:var(--fg);transform:scaleX(0);transform-origin:left;transition:transform .55s var(--ease)}
+.gn-mt button.on:after{transform:scaleX(.32)}
+.gn-all{height:34px;padding:0 16px;border-radius:999px;background:var(--surf2);font:700 13px/1 Inter,system-ui,sans-serif;transition:transform .4s var(--sp),background .25s}
+.gn-all:active{transform:scale(.94)}
+.gn-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;align-items:start}
 .gn .tzx{margin:0}
-.gn .tzo{padding:16px 16px 16px 14px;border-radius:20px;box-shadow:0 1px 0 rgba(17,17,17,.04),0 6px 16px -10px rgba(17,17,17,.16)}
+.gn .tzo{padding:16px 18px 16px 14px;border-radius:20px;box-shadow:0 1px 0 rgba(17,17,17,.04),0 6px 16px -10px rgba(17,17,17,.16)}
 @media (hover:hover){.gn .tzo:not(.dis):hover{transform:translateY(-2px);box-shadow:0 1px 0 rgba(17,17,17,.04),0 14px 26px -14px rgba(17,17,17,.28)}}
 .gn .tzo:not(.dis):active{transform:scale(.97)}
 .gn .tzo.on{box-shadow:inset 0 0 0 2px var(--fg),0 12px 26px -16px rgba(17,17,17,.35);background:color-mix(in srgb,var(--c) 18%,var(--surf))}
@@ -1449,27 +1451,37 @@ textarea.qfi{height:140px;resize:none}
 .gn-dot svg{width:16px;height:16px;fill:none;stroke:#111;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:24;stroke-dashoffset:24;transition:stroke-dashoffset .4s var(--ease) .06s}
 .tzo.on .gn-dot{background:var(--c);transform:scale(1.08)}
 .tzo.on .gn-dot svg{stroke-dashoffset:0}
-.gn .tzper{padding:10px 6px 2px 8px}
-.gn .tzin,.gn .tzch{background:var(--surf);box-shadow:0 1px 0 rgba(17,17,17,.04),0 4px 12px -8px rgba(17,17,17,.2)}
-.gn .tzch.on{background:var(--fg);color:var(--bg)}
-.gn .tzchs{margin-top:2px}
 /* Özet paneli */
-.gn-sum{position:sticky;top:20px}
-.gn-sumc{padding:28px 28px 24px;border-radius:32px;background:var(--surf);box-shadow:0 1px 0 rgba(17,17,17,.04),0 22px 44px -26px rgba(17,17,17,.3)}
+.gn-sum{min-width:0}
+.gn-sumc{display:flex;flex-direction:column;height:100%;padding:24px 26px 24px;border-radius:32px;background:var(--surf);box-shadow:0 1px 0 rgba(17,17,17,.04),0 22px 44px -26px rgba(17,17,17,.3)}
+.gn-hd{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px}
 .gn-k{display:block;font:700 13px Inter,system-ui,sans-serif;color:var(--dim)}
-.gn-big{display:flex;align-items:baseline;gap:8px;margin-top:10px;line-height:.9}
+.gn-md{position:relative;display:flex;gap:2px;padding:3px;border-radius:999px;background:var(--surf2);--ind:var(--fg);--ic:var(--fg);--icon:var(--bg)}
+.gn-md i{position:absolute;left:3px;top:3px;width:38px;height:38px;border-radius:50%;background:var(--ind);transform:translateX(calc(var(--i,0)*40px));transition:transform .55s var(--sp)}
+.gn-md button{position:relative;z-index:1;display:grid;place-items:center;width:38px;height:38px;border-radius:50%;color:var(--ic);transition:color .35s var(--ease),transform .4s var(--sp),opacity .3s}
+.gn-md button.on{color:var(--icon)}
+.gn-md button:active{transform:scale(.88)}
+.gn-md button:disabled{opacity:.35;pointer-events:none}
+.gn-md svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round}
+.gn-big{display:flex;align-items:baseline;gap:8px;margin-top:14px;line-height:.9}
 .gn-big b{font:500 104px Inter,"SF Pro Display",system-ui,sans-serif;letter-spacing:-5px;font-variant-numeric:tabular-nums}
 .gn-big span{font:500 26px Inter,system-ui,sans-serif;color:var(--dim)}
 .gn-ttl{margin-top:12px;font:800 20px/1.2 "Baloo 2",ui-rounded,system-ui,sans-serif;overflow-wrap:anywhere}
-.gn-bar{display:flex;gap:3px;height:10px;margin-top:22px;border-radius:10px;overflow:hidden;background:var(--surf2)}
+.gn-bar{flex:none;display:flex;gap:3px;height:10px;margin-top:20px;border-radius:10px;overflow:hidden;background:var(--surf2)}
 .gn-bar i{display:block;min-width:0;height:100%;border-radius:4px;background:var(--c);transition:flex-grow .7s var(--ease);animation:tzBar .7s var(--ease) backwards;transform-origin:left}
-.gn-lg{list-style:none;margin-top:12px;display:flex;flex-direction:column;max-height:210px;overflow:auto}
+.gn-lg{list-style:none;flex:1;min-height:60px;margin-top:12px;display:flex;flex-direction:column;overflow:auto}
 .gn-lg li{display:flex;align-items:center;gap:10px;padding:7px 0;font:600 14px Inter,system-ui,sans-serif;animation:tzRise .45s var(--ease) backwards}
 .gn-lg li:before{content:"";flex:none;width:9px;height:9px;border-radius:50%;background:var(--c)}
 .gn-lg li span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .gn-lg li b{font-weight:700;font-variant-numeric:tabular-nums}
-.gn-lg li.gn-em{color:var(--dim);font-weight:500;padding-left:0}.gn-lg li.gn-em:before{display:none}
-.gn-ac{display:flex;flex-direction:column;gap:10px;margin-top:22px}
+.gn-lg li.gn-em{color:var(--dim);font-weight:500}.gn-lg li.gn-em:before{display:none}
+.gn-lg .tzin{flex:none;width:72px;height:36px;font-size:15px}
+.gn-cnt{flex:none;margin-top:12px}
+.gn-sumc .tzin,.gn-sumc .tzch{background:var(--surf2);box-shadow:none}
+.gn-sumc .tzch.on{background:var(--fg);color:var(--bg)}
+.gn-sumc .tzin:focus{background:var(--surf);box-shadow:inset 0 0 0 2px var(--fg)}
+.gn-cnt .tzhint{margin-top:10px}
+.gn-ac{flex:none;display:flex;flex-direction:column;gap:10px;margin-top:20px}
 .gn-go,.gn-mk{display:inline-flex;align-items:center;justify-content:center;gap:10px;border-radius:999px;font:700 16px/1 Inter,system-ui,sans-serif;white-space:nowrap;transition:transform .45s var(--sp),opacity .3s,background .25s}
 .gn-go{height:58px;background:var(--fg);color:var(--bg);font-size:17px}
 .gn-go svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;transition:transform .5s var(--sp)}
@@ -1478,22 +1490,37 @@ textarea.qfi{height:140px;resize:none}
 .gn-go:active,.gn-mk:active{transform:scale(.96)}
 .gn-go:disabled,.gn-mk:disabled{opacity:.4;pointer-events:none}
 .fresh .gn-a{animation:tzRise .7s var(--ease) calc(var(--i,0)*70ms) backwards}
-@media (max-width:1100px){#tz .gn{grid-template-columns:minmax(0,1fr) 330px;gap:30px}.gn-big b{font-size:88px}}
+@media (min-width:901px){
+  #tz.gnp{overflow:hidden}
+  #tz.gnp .tzw{height:100dvh;min-height:0}
+  #tz.gnp #tzb{display:flex;flex-direction:column;min-height:0}
+  #tz.gnp .gn{flex:1;min-height:0}
+  #tz.gnp .gn-main{overflow:auto;padding:8px 8px 30px;margin:-8px;overscroll-behavior:contain}
+  #tz.gnp .gn-sum{min-height:0}
+}
+@media (max-width:1100px){#tz .gn{grid-template-columns:minmax(0,1fr) 340px;gap:28px}.gn-big b{font-size:88px}}
 @media (max-width:900px){
   #tz .gn{display:block}
-  #tz .gn-main{gap:30px;padding-bottom:0}
-  .gn-sum{position:sticky;top:auto;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:3;margin-top:22px}
-  .gn-sumc{display:flex;align-items:center;gap:10px;padding:8px 8px 8px 22px;border-radius:999px;background:#111;color:#fff;box-shadow:0 16px 34px -12px rgba(17,17,17,.5)}
-  .gn-k,.gn-bar,.gn-lg{display:none}
-  .gn-sumt{flex:1;min-width:0}
-  .gn-big{margin:0;gap:6px}.gn-big b{font-size:30px;letter-spacing:-1px}.gn-big span{font-size:14px;color:rgba(255,255,255,.6)}
+  .gn-sum{position:sticky;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:3;margin-top:22px}
+  .gn-sumc{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px 12px;align-items:center;height:auto;padding:14px;border-radius:28px;background:#111;color:#fff;box-shadow:0 16px 34px -12px rgba(17,17,17,.5)}
+  .gn-hd{grid-column:2;grid-row:1;min-height:0}.gn-k,.gn-bar,.gn-cnt .tzhint{display:none}
+  .gn-sumt{grid-column:1;grid-row:1;padding-left:8px;min-width:0}
+  .gn-md{--ind:#fff;--ic:#fff;--icon:#111;background:rgba(255,255,255,.14)}
+  .gn-big{margin:0;gap:6px}.gn-big b{font-size:32px;letter-spacing:-1px}.gn-big span{font-size:14px;color:rgba(255,255,255,.6)}
   .gn-ttl{margin:3px 0 0;font:500 12px/1.2 Inter,system-ui,sans-serif;color:rgba(255,255,255,.6);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .gn-ac{flex-direction:row;margin:0;gap:6px;flex:none}
-  .gn-go{height:46px;padding:0 20px;background:#fff;color:#111;font-size:15px}.gn-go svg{display:none}
-  .gn-mk{height:46px;padding:0 16px;background:rgba(255,255,255,.14);color:#fff;font-size:14px}
+  .gn-lg{display:none;grid-column:1/-1;margin:0;max-height:150px;flex:none}.gn-sumc.per .gn-lg{display:flex}
+  .gn-lg li.gn-em{display:none}
+  .gn-lg .tzin{background:rgba(255,255,255,.14);color:#fff}
+  .gn-cnt{grid-column:1/-1;margin:0}
+  .gn-sumc .tzch,.gn-sumc .tzin{background:rgba(255,255,255,.14);color:#fff}
+  .gn-sumc .tzch.on{background:#fff;color:#111}
+  .gn-sumc .tzin:focus{background:rgba(255,255,255,.22);box-shadow:inset 0 0 0 2px #fff}
+  .gn-sumc .tzfxi{background:rgba(255,180,110,.2);color:#ffd9b0}
+  .gn-ac{grid-column:1/-1;flex-direction:row;margin:0;gap:8px}
+  .gn-go{flex:1;height:48px;background:#fff;color:#111;font-size:15px}.gn-go svg{display:none}
+  .gn-mk{height:48px;padding:0 18px;background:rgba(255,255,255,.14);color:#fff;font-size:14px}
 }
-.gn .tzgt{height:22px;margin-top:7px;padding:0 9px;font-size:11.5px}
-@media (max-width:560px){#tz .tzw{padding-left:18px;padding-right:18px}#tz .tzn{gap:14px}#tz .tzn button{font-size:24px}#tz .tzhr .qb{height:38px;padding:0 14px;font-size:14px}#tz .tzn button:after{bottom:-5px;height:3px}#tz .tzh-top{gap:10px}.gn-g{grid-template-columns:1fr}.gn-mk{padding:0 13px}.gn-go{padding:0 17px}.gn-lb span{font-size:19px}}
+@media (max-width:560px){#tz .tzw{padding-left:18px;padding-right:18px}#tz .tzn{gap:14px}#tz .tzn button{font-size:24px}#tz .tzn button:after{bottom:-5px;height:3px}#tz .tzh-top{gap:10px}#tz .tzhr .qb{height:38px;padding:0 14px;font-size:14px}#tz .tzhr .tzsv span{display:none}#tz .tzhr .tzsv{padding:0 11px}.gn-g{grid-template-columns:1fr}.gn-mt{gap:16px}.gn-mt button{font-size:21px}.gn-all{white-space:nowrap;padding:0 12px;height:32px}#tz .tzn{gap:12px}#tz .tzn button{font-size:21px}#tz .tzhr{gap:6px}#tz .tzhr .qb{padding:0 12px}.gn-sumc .tzch{height:36px;padding:0 12px;font-size:14px}.gn-sumc .tzchs{gap:6px}.gn-sumc .tzchs .tzin{width:60px;height:36px;padding:0 8px}}
 @media (prefers-reduced-motion:reduce){.fresh .gn-a,.gn-lg li,.gn-bar i{animation:none}.gn *{transition-duration:.01ms!important}}
 /* Kaydırma çubukları: hiçbir sayfada görünmesin (kaydırma çalışmaya devam eder) */
 html,body,*{scrollbar-width:none!important;-ms-overflow-style:none!important;scrollbar-gutter:auto!important}
@@ -1815,7 +1842,7 @@ button.rsq-th:active{transform:scale(.96)}
     </div>
   </div>
   <div class="tz" id="tz" role="dialog" aria-modal="true" aria-label="Test ve paketler"><div class="tzw">
-    <div class="tzh tzh-top"><h1 class="tzn" id="tzn" role="tablist" aria-label="Test sayfaları"><button type="button" role="tab" data-t="gen" class="on" aria-selected="true">Test</button><button type="button" role="tab" data-t="pk" aria-selected="false">Paketler</button><button type="button" role="tab" data-t="hi" aria-selected="false">Geçmiş</button></h1><div class="tzhr"><button class="qb" id="tzwb" type="button" hidden>Yanlış Testleri</button><button class="qb" id="tzx" type="button">Kapat</button></div></div>
+    <div class="tzh tzh-top"><h1 class="tzn" id="tzn" role="tablist" aria-label="Test sayfaları"><button type="button" role="tab" data-t="gen" class="on" aria-selected="true">Test</button><button type="button" role="tab" data-t="pk" aria-selected="false">Paketler</button><button type="button" role="tab" data-t="hi" aria-selected="false">Geçmiş</button></h1><div class="tzhr"><button class="tzsv tzun" id="tzuh" type="button" aria-pressed="false" hidden><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.2"/><path class="hd" d="M12 7.6V12l2.8 1.8"/></svg><span>Çözülmeyenler</span></button><button class="qb" id="tzwb" type="button" hidden>Yanlış Testleri</button><button class="qb" id="tzx" type="button">Kapat</button></div></div>
     <div class="tzg" id="tzt" hidden><button type="button" data-t="gen">Test oluştur</button><button type="button" data-t="pk">Paketler</button><button type="button" data-t="hi">Geçmiş</button></div>
     <div id="tzb"></div>
   </div></div>
@@ -4197,9 +4224,9 @@ function hubRender(){
   var b=$("#tzb"),t=document.createElement("div");
   if(HUB.tab==="gen")rGen(t);else if(HUB.tab==="pk")rPk(t);else if(HUB.tab==="hi")rHi(t);
   [].forEach.call(t.querySelectorAll(".tzg"),function(g){g.insertAdjacentHTML("afterbegin",'<i class="tzpl"></i>')});
-  var k=HUB.tab+"|"+G.mode;
+  var k=HUB.tab;
   if(HUB.k===k&&b.firstChild)morph(b,t);else{b.innerHTML=t.innerHTML;fresh(b)}
-  HUB.k=k;gSum();pills();$("#tzwb").hidden=HUB.tab!=="hi";
+  HUB.k=k;gSum();pills();var uh=$("#tzuh");uh.hidden=HUB.tab!=="gen";uh.classList.toggle("on",!!G.uns);uh.setAttribute("aria-pressed",G.uns?"true":"false");$("#tz").classList.toggle("gnp",HUB.tab==="gen");$("#tzwb").hidden=HUB.tab!=="hi";
   TZFAB.classList.toggle("on",hubOn()&&HUB.tab==="pk"&&!PSL.on);b.classList.toggle("pkp",HUB.tab==="pk");
 }
 function hubOn(){return $("#tz").classList.contains("on")}
@@ -4214,38 +4241,34 @@ function rGen(b){
   var gi=gInfo(),h=resumeBanner();
   if(!items().length){b.innerHTML=h+'<div class="tzemp"><b>Henüz soru yok</b><span>Test oluşturmak için önce Sorular sayfasına soru ekle.</span></div>';return}
   var ARR='<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
-      sel=gi.cs.filter(function(c){return G.sel[c.k]}).length,can=gi.cs.filter(function(c){return pool(c).length}).length,allOn=can>0&&sel>=can;
+      sel=gi.cs.filter(function(c){return G.sel[c.k]}).length,can=gi.cs.filter(function(c){return pool(c).length}).length,allOn=can>0&&sel>=can,multi=gi.sc.length>1;
   h+='<div class="gn"><div class="gn-main">';
-  /* 1 · Gruplama */
-  h+='<section class="gn-a"><div class="gn-lb"><i>1</i><span>Neye göre seçelim?</span></div>'
-    +'<div class="tzg">'+[["ders","Ders"],["kaynak","Kaynak"],["brans","Branş"]].map(function(m){return'<button type="button" data-m="'+m[0]+'" class="'+(G.mode===m[0]?"on":"")+'">'+m[1]+'</button>'}).join("")+'</div>'
-    +'<div class="gn-t"><div><b>Sadece çözülmemiş sorular</b><small>Çözüldü işaretliler teste girmez</small></div><button class="tg'+(G.uns?" on":"")+'" type="button" id="tzu" aria-pressed="'+(G.uns?"true":"false")+'" aria-label="Sadece çözülmemiş"><i></i></button></div></section>';
-  /* 2 · Kategoriler */
-  h+='<section class="gn-a"><div class="gn-lb"><i>2</i><span>'+(G.mode==="ders"?"Dersler":G.mode==="kaynak"?"Kaynaklar":"Branşlar")+'</span><button type="button" data-ga="'+(allOn?"none":"all")+'">'+(allOn?"Temizle":"Tümünü seç")+'</button></div><div class="gn-g">';
+  h+='<div class="gn-a gn-top"><div class="gn-mt" role="tablist" aria-label="Neye göre">'+[["ders","Ders"],["kaynak","Kaynak"],["brans","Branş"]].map(function(m){return'<button type="button" role="tab" data-m="'+m[0]+'" aria-selected="'+(G.mode===m[0])+'" class="'+(G.mode===m[0]?"on":"")+'">'+m[1]+'</button>'}).join("")+'</div>'
+    +'<button type="button" class="gn-all" data-ga="'+(allOn?"none":"all")+'">'+(allOn?"Temizle":"Tümünü seç")+'</button></div>';
+  h+='<div class="gn-g">';
   gi.cs.forEach(function(c){
-    var p=pool(c),on=!!G.sel[c.k],dis=!p.length,sol=c.all.length-c.uns.length,sub=G.uns?"toplam "+c.all.length:(sol?sol+" çözüldü · "+c.uns.length+" çözülmedi":"");
-    h+='<div class="tzx"><button type="button" class="tzo'+(on?" on":"")+(dis?" dis":"")+'" data-k="'+esc(c.k)+'" style="--c:'+(c.col||"#cfcbc4")+'"><span class="gn-dot">'+TICK+'</span><span class="tt"><b>'+esc(c.lab)+'</b>'+(sub?'<small>'+sub+'</small>':'')+(on&&!gi.per&&gi.sc.length>1?'<span class="tzgt">Testte '+gi.counts[gi.sc.indexOf(c)]+'</span>':'')+'</span><em>'+p.length+'<i>soru</i></em></button>';
-    if(on&&gi.per){var i=gi.sc.indexOf(c),v=gi.counts[i];h+='<div class="tzper"><span>Kaç soru:</span><input class="tzin" type="number" inputmode="numeric" min="1" max="'+p.length+'" value="'+v+'" data-pk="'+esc(c.k)+'"><button type="button" class="tzch" data-pa="'+esc(c.k)+'">Tümü</button></div>'}
-    h+='</div>';
+    var p=pool(c),on=!!G.sel[c.k],dis=!p.length;
+    h+='<div class="tzx"><button type="button" class="tzo'+(on?" on":"")+(dis?" dis":"")+'" data-k="'+esc(c.k)+'" style="--c:'+(c.col||"#cfcbc4")+'"><span class="gn-dot">'+TICK+'</span><span class="tt"><b>'+esc(c.lab)+'</b></span><em>'+p.length+'<i>soru</i></em></button></div>';
   });
-  h+='</div></section>';
-  /* 3 · Soru sayısı */
-  h+='<section class="gn-a"><div class="gn-lb"><i>3</i><span>Kaç soru?</span></div>';
-  if(gi.sc.length>1)h+='<div class="tzg"><button type="button" data-pm="0" class="'+(!gi.per?"on":"")+'">Toplam sayı</button><button type="button" data-pm="1" class="'+(gi.per?"on":"")+'">Her biri için ayrı</button></div>';
+  h+='</div></div>';
+  var ICT='<svg viewBox="0 0 24 24"><path d="M18 5H7l6 7-6 7h11"/></svg>',
+      ICP='<svg viewBox="0 0 24 24"><path d="M4 7h9M19 7h1M4 17h1M11 17h9"/><circle cx="16" cy="7" r="2.5"/><circle cx="8" cy="17" r="2.5"/></svg>';
+  h+='<aside class="gn-sum gn-a"><div class="gn-sumc'+(gi.per?' per':'')+'">'
+    +'<div class="gn-hd"><small class="gn-k">Test özeti</small><div class="gn-md" style="--i:'+(gi.per?1:0)+'" role="group" aria-label="Soru dağılımı"><i></i>'
+      +'<button type="button" data-pm="0" class="'+(!gi.per?"on":"")+'" aria-label="Toplam sayı" title="Toplam sayı">'+ICT+'</button>'
+      +'<button type="button" data-pm="1" class="'+(gi.per?"on":"")+'" aria-label="Her biri için ayrı" title="Her biri için ayrı"'+(!multi&&!gi.per?' disabled':'')+'>'+ICP+'</button></div></div>'
+    +'<div class="gn-sumt"><div class="gn-big"><b id="tzsb"></b><span>soru</span></div><div class="gn-ttl" id="tzss"></div></div>'
+    +'<div class="gn-bar" aria-hidden="true">'+gi.sc.map(function(c,i){return gi.counts[i]>0?'<i style="flex:'+gi.counts[i]+' 1 0;--c:'+(c.col||"#cfcbc4")+'"></i>':''}).join("")+'</div>'
+    +'<ul class="gn-lg">'+(gi.sc.length?gi.sc.map(function(c,i){
+        return'<li style="--c:'+(c.col||"#cfcbc4")+'"><span>'+esc(c.lab)+'</span>'+(gi.per?'<input class="tzin" type="number" inputmode="numeric" min="1" max="'+pool(c).length+'" value="'+gi.counts[i]+'" data-pk="'+esc(c.k)+'" aria-label="'+esc(c.lab)+' soru sayısı">':'<b>'+gi.counts[i]+'</b>')+'</li>'}).join(""):'<li class="gn-em">Soldan bir ya da birkaç seçenek işaretle.</li>')+'</ul>';
+  h+='<div class="gn-cnt">';
   if(!gi.per){
     h+='<div class="tzchs">'+[10,20,30,40].map(function(n){return'<button type="button" class="tzch'+(!G.all&&G.n===n?" on":"")+'" data-n="'+n+'">'+n+'</button>'}).join("")+'<button type="button" class="tzch'+(G.all?" on":"")+'" data-n="all">Tümü</button><input class="tzin" id="tzni" type="number" inputmode="numeric" min="1" aria-label="Soru sayısı" value="'+(G.all?Math.max(gi.avail,1):gi.n)+'"></div>';
     var fxt=gi.bump?(gi.need+' kategori seçtin. Hepsinden soru gelsin diye toplam '+gi.n+' soruya yükseltildi.'):(HUB.fxt||'');if(gi.bump)HUB.fxt=fxt;
     h+='<div class="tzfx'+(gi.bump?' on':'')+'" role="status"><div><div class="tzfxi"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.6v.01"/></svg><span>'+esc(fxt)+'</span></div></div></div>';
-    h+='<div class="tzhint">'+(gi.sc.length>1?gi.sc.length+' seçeneğe eşit dağıtılır, sorular rastgele seçilir.':'Sorular seçtiğin gruptan rastgele gelir.')+'</div>';
-  }else h+='<div class="tzhint">Her seçenek için kaç soru geleceğini yukarıdaki kutulardan belirle. Sorular rastgele seçilir.</div>';
-  h+='</section></div>';
-  /* Özet paneli */
-  h+='<aside class="gn-sum gn-a"><div class="gn-sumc"><small class="gn-k">Test özeti</small>'
-    +'<div class="gn-sumt"><div class="gn-big"><b id="tzsb"></b><span>soru</span></div><div class="gn-ttl" id="tzss"></div></div>'
-    +'<div class="gn-bar" aria-hidden="true">'+gi.sc.map(function(c,i){return gi.counts[i]>0?'<i style="flex:'+gi.counts[i]+' 1 0;--c:'+(c.col||"#cfcbc4")+'"></i>':''}).join("")+'</div>'
-    +'<ul class="gn-lg">'+(gi.sc.length?gi.sc.map(function(c,i){return'<li style="--c:'+(c.col||"#cfcbc4")+'"><span>'+esc(c.lab)+'</span><b>'+gi.counts[i]+'</b></li>'}).join(""):'<li class="gn-em">Soldan bir ya da birkaç seçenek işaretle.</li>')+'</ul>'
-    +'<div class="gn-ac"><button type="button" class="gn-go" id="tzgo"><span>Testi başlat</span>'+ARR+'</button><button type="button" class="gn-mk" id="tzmk">Paket yap</button></div></div></aside>';
-  h+='</div>';
+    h+='<div class="tzhint">'+(multi?gi.sc.length+' seçeneğe eşit dağıtılır, sorular rastgele seçilir.':'Sorular seçtiğin gruptan rastgele gelir.')+'</div>';
+  }else h+='<div class="tzhint">Her seçenek için soru sayısını yukarıdan belirle. Sorular rastgele seçilir.</div>';
+  h+='</div><div class="gn-ac"><button type="button" class="gn-go" id="tzgo"><span>Testi başlat</span>'+ARR+'</button><button type="button" class="gn-mk" id="tzmk">Paket yap</button></div></div></aside></div>';
   b.innerHTML=h;gSum();
 }
 function gSum(){
@@ -4891,6 +4914,7 @@ $("#tzm").addEventListener("click",function(e){
 
 /* ---------- Olaylar ---------- */
 $("#tzx").onclick=hubClose;
+$("#tzuh").onclick=function(){G.uns=!G.uns;hubRender()};
 $("#tzwb").onclick=function(){wtOpen()};
 var HUBORD=["gen","pk","hi"],hubBusy=0;
 function hubGo(tab){
