@@ -1183,7 +1183,7 @@ textarea.qfi{height:140px;resize:none}
 .tz.on,.tzp.on,.tzs.on,.tzr.on{transform:none}
 .tzp{transform:translateY(24px)}
 .tzp.opn{will-change:transform,opacity}
-.tzpgd .qi.rise{animation:tzRise .5s var(--ease) calc(var(--i,0)*30ms) backwards}
+.tzpgw .qi.rise{animation:tzRise .55s var(--ease) calc(min(var(--i,0),14)*35ms + .12s) backwards}
 /* İlk açılışta içerik sırayla yükselir */
 .fresh>.tzg,.fresh>.tzc,.fresh>.tzres,.fresh>.tzemp,.fresh>.tzst,.fresh>.tzchart,.fresh>.tzdh,.fresh>.tzchs,.fresh>.tzbar,.fresh .tzx,.fresh .tzpk,.fresh .tzhi{animation:tzRise .65s var(--ease) calc(var(--i,0)*45ms) backwards}
 /* Segment kontrolünde kayan hap */
@@ -1270,7 +1270,6 @@ textarea.qfi{height:140px;resize:none}
 .tzpn{flex:none;display:flex;align-items:baseline;gap:5px}
 .tzpn b{font-size:21px;font-weight:800;line-height:1.1;font-variant-numeric:tabular-nums}
 .tzpn i{font-style:normal;font:600 13px Inter,system-ui,sans-serif;color:var(--dim)}
-.tzhint.tzphn{margin:0 2px 12px}
 .tzpk .ac{display:grid;grid-template-columns:2fr 1fr;gap:8px;margin-top:18px}
 .tzpk .ac .tzb{width:100%;height:46px;padding:0 10px;font-size:15px}
 .tzpk.pk{transform:scale(.97);box-shadow:0 14px 28px -12px rgba(17,17,17,.35)}
@@ -4096,7 +4095,6 @@ function rPk(b){
   var im=imap(),h=resumeBanner(),sm=PSL.on,nsel=Object.keys(PSL.ids).length;
   if(!PK.length){b.innerHTML=h+'<div class="tzemp"><b>Henüz paket yok</b><span>İstediğin soruları seçip paket yap, sonra istediğin zaman test olarak çöz. Sorular sayfasında soruları seçip de paket oluşturabilirsin.</span></div>';return}
   var list=PK.slice().sort(function(a,b){return(b.pin||0)-(a.pin||0)}),pins=list.filter(function(p){return p.pin}),rest=list.filter(function(p){return!p.pin});
-  h+='<div class="tzhint tzphn">Düzenlemek, sabitlemek ve silmek için pakete basılı tut.</div>';
   if(pins.length){
     h+='<div class="tzdh tzsec">Sabitlenenler</div><div class="tzpg">'+pins.map(function(p){return pkCard(p,im,sm)}).join("")+'</div>';
     if(rest.length)h+='<div class="tzdh tzsec">Diğer paketler</div>';
@@ -4190,17 +4188,16 @@ function peOpen(pack,preset){
   $("#tzpu").classList.remove("on");$("#tzpu").setAttribute("aria-pressed","false");peFUi();
   /* Önce sayfa açılsın (animasyon GPU'da çalışır); kartlar animasyon bittikten sonra kare başına küçük bir zaman bütçesiyle eklenir.
      Böylece açılış sırasında ana iş parçacığı boş kalır, FPS düşmez. */
-  var me=PE,pos=0,pg=$("#tzp");
+  var me=PE,pos=0,pg=$("#tzp"),NF=20;
   me.loading=true;
   $("#tzpc").textContent=its.length+" soru";
   pg.classList.add("opn");clearTimeout(pg._ot);pg._ot=setTimeout(function(){pg.classList.remove("opn")},900);
-  pg.classList.add("on");
   peCount();
   function filtered(){return peFOn()||PE.uns||!!PE.q}
   function mk(it,k){
     var u=URL.createObjectURL(it.thumb||it.blob);PE.urls.push(u);
-    var bt=document.createElement("button");bt.type="button";bt.className="qi"+(k<12?" rise":"")+(PE.sel[it.id]?" sel":"")+(it.solved?" ok":"");
-    if(k<12)bt.style.setProperty("--i",k);
+    var bt=document.createElement("button");bt.type="button";bt.className="qi"+(k<NF?" rise":"")+(PE.sel[it.id]?" sel":"")+(it.solved?" ok":"");
+    if(k<NF)bt.style.setProperty("--i",k);
     bt.dataset.id=it.id;bt.dataset.f=(it.g||"")+"|"+(it.ders||"");bt.dataset.g=it.g||"";
     bt.setAttribute("aria-label","Soruyu aç");
     bt.innerHTML='<img alt="Soru" decoding="async" loading="lazy" draggable="false" src="'+u+'">'+(it.ders?'<span class="qdc" style="--c:'+Q.lcol(it)+'">'+esc(it.g+" · "+it.ders)+'</span>':'')+'<span class="qck">'+TICK+'</span>'+(it.solved?'<span class="qok" aria-hidden="true"><svg viewBox="0 0 24 24"><path pathLength="1" d="M4.5 12.8l5 5L19.5 7"/></svg></span>':'');
@@ -4217,8 +4214,11 @@ function peOpen(pack,preset){
     if(pos<its.length)requestAnimationFrame(chunk);
     else{me.loading=false;peCount()}
   }
-  /* animasyonun büyük kısmı bittikten sonra başla */
-  setTimeout(function(){requestAnimationFrame(chunk)},320);
+  /* Ekranı dolduran ilk kartlar sayfayla birlikte, paket sayfasındaki gibi sırayla yükselerek gelir; kalanlar animasyondan sonra eklenir */
+  (function(){var fr=document.createDocumentFragment();while(pos<its.length&&pos<NF){fr.appendChild(mk(its[pos],pos));pos++}g.appendChild(fr)})();
+  pg.classList.add("on");
+  if(pos>=its.length){me.loading=false;peCount()}
+  else setTimeout(function(){requestAnimationFrame(chunk)},520);
 }
 /* Ders filtresi: PE.fg = seçili kategoriler (TYT/AYT), PE.fd = tek tek seçili dersler */
 function peFOn(){return Object.keys(PE.fg).length+Object.keys(PE.fd).length>0}
