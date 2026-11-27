@@ -1455,7 +1455,7 @@ html,body,*{scrollbar-width:none!important;-ms-overflow-style:none!important;scr
 /* Soru görüntüleyici: üstte çıkış, ortada kırpılan sahne (yakınlaştırılan soru butonların üstüne binmez), altta ölçek çubuğu */
 .qv{position:fixed;inset:0;z-index:14;background:var(--bg);color:var(--fg);opacity:0;visibility:hidden;touch-action:none;overflow:hidden;transition:opacity .25s var(--ease),visibility 0s .25s}
 .qv.on{opacity:1;visibility:visible;transition-delay:0s}
-.qvs{position:absolute;left:0;right:0;top:calc(72px + env(safe-area-inset-top,0px));bottom:0;padding:6px 16px calc(16px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;justify-content:center;overflow:hidden;touch-action:none;cursor:grab}
+.qvs{position:absolute;left:0;right:0;top:0;bottom:0;padding:calc(72px + env(safe-area-inset-top,0px)) 16px calc(16px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;justify-content:center;overflow:hidden;touch-action:none;cursor:grab}
 .qvs:active{cursor:grabbing}
 .qv img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;border-radius:18px;background:#fff;box-shadow:0 1px 0 rgba(17,17,17,.04),0 14px 36px -12px rgba(17,17,17,.22);scale:.94;transform-origin:50% 50%;transition:scale .5s var(--ease);-webkit-user-drag:none;user-select:none;pointer-events:none}
 .qv.on img{scale:1}
@@ -1465,15 +1465,15 @@ html,body,*{scrollbar-width:none!important;-ms-overflow-style:none!important;scr
 .qvx svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round}
 .qvb{position:absolute;z-index:2;left:0;right:0;bottom:calc(18px + env(safe-area-inset-bottom,0px));display:flex;justify-content:center;pointer-events:none;opacity:0;visibility:hidden;transform:translateY(10px);transition:opacity .25s var(--ease),transform .4s var(--ease),visibility 0s .25s}
 .qvb.on{opacity:1;visibility:visible;transform:none;transition-delay:0s}
-.qvb.on.dim{opacity:.55}
-.qvz{pointer-events:auto;display:flex;align-items:center;gap:10px;padding:5px 5px 5px 18px;border-radius:999px;background:var(--fg);color:var(--bg);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.qvb.on.dim{opacity:0;visibility:hidden;transform:translateY(10px);transition:opacity .25s var(--ease),transform .4s var(--ease),visibility 0s .25s}
+.qvz{pointer-events:auto;display:flex;align-items:center;gap:12px;padding:8px 14px 8px 16px;border-radius:999px;background:var(--fg);color:var(--bg);box-shadow:0 8px 24px rgba(0,0,0,.2)}
 .qvz .qvl{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:5px}
 .qvz .qvl b{font:700 15px/1 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;letter-spacing:-.2px;min-width:34px}
 .qvz .qvl i{display:block;width:56px;height:3px;border-radius:3px;background:rgba(255,255,255,.22);overflow:hidden}
 .qvz .qvl u{display:block;height:100%;border-radius:3px;background:var(--bg);transform-origin:left;transform:scaleX(0);transition:transform .2s var(--ease)}
-.qvz .qvr{display:flex;align-items:center;gap:7px;height:40px;padding:0 16px 0 13px;border-radius:999px;background:rgba(255,255,255,.16);font:700 14px/1 Inter,system-ui,sans-serif;transition:transform .4s var(--sp),background .25s var(--ease)}
-.qvz .qvr:active{transform:scale(.94);background:rgba(255,255,255,.28)}
-.qvz .qvr svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round}
+.qvz .qvr{display:flex;align-items:center;gap:5px;height:24px;padding:0;background:none;color:inherit;font:600 12px/1 Inter,system-ui,sans-serif;opacity:.85;transition:transform .4s var(--sp),opacity .25s var(--ease)}
+.qvz .qvr:active{transform:scale(.94);opacity:1}
+.qvz .qvr svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round}
 </style>
 </head>
 <body>
@@ -3468,9 +3468,9 @@ function qvLbl(){
   var s=qvZ.s,bx=$("#qvb");
   $("#qvt").textContent=s.toFixed(1).replace(/\.0$/,"")+"×";
   $("#qvf").style.transform="scaleX("+Math.max(0,Math.min(1,(s-1)/(QV_MAX-1)))+")";
-  /* yakınlaşmışken görünür; etkileşim bitince biraz soluklaşır */
+  /* yakınlaşmışken görünür; etkileşim bitince tamamen gizlenir */
   bx.classList.toggle("on",s>1.001);bx.classList.remove("dim");
-  clearTimeout(qvDT);if(s>1.001)qvDT=setTimeout(function(){bx.classList.add("dim")},1600);
+  clearTimeout(qvDT);if(s>1.001)qvDT=setTimeout(function(){bx.classList.add("dim")},1200);
 }
 function qvApply(anim){
   var im=$("#qvi");im.classList.toggle("za",!!anim);
