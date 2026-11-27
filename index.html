@@ -1576,6 +1576,58 @@ html,body,*{scrollbar-width:none!important;-ms-overflow-style:none!important;scr
 #tz .hcd .hcbar .bc{background:#2fbf71}#tz .hcd .hcbar .bw{background:#ff5a4d}#tz .hcd .hcbar .bb{background:#cfcbc4}
 #tz .hcd .hcbar i[style*="flex-grow:0"]{display:none}
 @media (max-width:640px){#tz .hcd .hcn,#tz .hcd .hcq{font-size:24px}}
+
+/* ===== Sonuç sayfası: tam ekran ===== */
+#tzs .tzw{max-width:none;width:100%;min-height:100%;margin:0;padding:calc(20px + env(safe-area-inset-top,0px)) 28px calc(40px + env(safe-area-inset-bottom,0px))}
+.rsh{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;margin-bottom:22px}
+.rsh h1{font-size:44px;font-weight:800;letter-spacing:-1px;line-height:1;justify-self:start}
+.rsh .rsd8{font:700 18px/1 Inter,system-ui,sans-serif;color:var(--dim);white-space:nowrap;font-variant-numeric:tabular-nums}
+.rsh .qb{justify-self:end;white-space:nowrap}
+.rsp{padding:26px 28px 24px;margin-bottom:12px;border-radius:26px;background:#fff;background:color-mix(in srgb,var(--c) 13%,var(--surf));box-shadow:0 6px 16px -10px rgba(17,17,17,.14);animation:tzRise .6s var(--ease) backwards}
+.rsp-t{display:flex;align-items:center;gap:28px}
+.rsp .big{flex:none;font:800 64px/1 Inter,system-ui,sans-serif;letter-spacing:-2px;font-variant-numeric:tabular-nums;color:var(--fg)}
+.rsp-i{flex:1;min-width:0}
+.rsp-n{font:800 24px/1.15 Inter,system-ui,sans-serif;letter-spacing:-.3px;color:var(--fg);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rsp-m{display:flex;align-items:center;flex-wrap:wrap;gap:4px 0;margin-top:8px;font:600 15px/1.3 Inter,system-ui,sans-serif;color:#55524d;font-variant-numeric:tabular-nums}
+.rsp .hct,.rsq .hct{display:inline-flex;align-items:center;height:22px;margin-right:9px;padding:0 10px;border-radius:11px;background:var(--fg);color:var(--bg);font:800 12px/1 Inter,system-ui,sans-serif;letter-spacing:.3px}
+.rsp-s{flex:none;display:flex;gap:26px}
+.rsp-s span{display:flex;flex-direction:column;gap:6px}
+.rsp-s b{font:800 32px/1 Inter,system-ui,sans-serif;letter-spacing:-.6px;font-variant-numeric:tabular-nums}
+.rsp-s small{display:flex;align-items:center;gap:7px;font:700 14px/1 Inter,system-ui,sans-serif;color:#3b3935;white-space:nowrap}
+.rsp-s small:before{content:"";width:10px;height:10px;border-radius:50%;background:#2fbf71}
+.rsp-s .w small:before{background:#ff5a4d}.rsp-s .b small:before{background:#cfcbc4}.rsp-s .u small:before{background:#ffb46e}
+.rsbar{display:flex;height:8px;margin-top:22px;border-radius:8px;overflow:hidden;background:rgba(17,17,17,.08)}
+.rsbar i{display:block;flex-basis:0;min-width:0;height:100%}
+.rsbar .bc{background:#2fbf71}.rsbar .bw{background:#ff5a4d}.rsbar .bb{background:#cfcbc4}.rsbar .bu{background:#ffb46e}
+.rsbar i[style*="flex-grow:0"]{display:none}
+.rsa{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:6px;animation:tzRise .6s var(--ease) backwards}
+.rsa .tzb{height:54px;font-size:16px}
+.rssec{animation:tzRise .6s var(--ease) backwards}
+.rsl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.rsq{display:grid;grid-template-columns:168px minmax(0,1fr);gap:16px;padding:16px;border-radius:24px;background:#fff;background:color-mix(in srgb,var(--sc,#cfcbc4) 12%,var(--surf));box-shadow:0 6px 16px -10px rgba(17,17,17,.14);animation:tzRise .55s var(--ease) calc(var(--i,0)*40ms) backwards}
+.rsq.st-c{--sc:#2fbf71}.rsq.st-w{--sc:#ff5a4d}.rsq.st-u{--sc:#ffb46e}
+.rsq-th{display:block;align-self:start;width:100%;aspect-ratio:4/3;padding:0;border-radius:16px;overflow:hidden;background:var(--surf2);transition:transform .4s var(--sp)}
+button.rsq-th:active{transform:scale(.96)}
+.rsq-th img{display:block;width:100%;height:100%;object-fit:cover}
+.rsq-b{display:flex;flex-direction:column;min-width:0}
+.rsq-h{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.rsq-t{min-width:0}
+.rsq-t b{display:block;font:800 22px/1.1 Inter,system-ui,sans-serif;letter-spacing:-.3px}
+.rsq-t small{display:block;margin-top:5px;font:600 13px/1.3 Inter,system-ui,sans-serif;color:var(--dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rsq-p{flex:none;display:inline-flex;align-items:center;height:30px;padding:0 14px;border-radius:15px;background:var(--sc,#cfcbc4);color:#111;font:800 13px/1 Inter,system-ui,sans-serif;white-space:nowrap}
+.rsq-a{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:auto;padding-top:14px}
+.rsq-v{min-width:0;padding:10px 14px 11px;border-radius:14px;background:var(--surf)}
+.rsq-v small{display:block;font:700 12px/1 Inter,system-ui,sans-serif;color:var(--dim)}
+.rsq-v b{display:block;margin-top:6px;font:800 24px/1.1 Inter,system-ui,sans-serif;word-break:break-word;-webkit-user-select:text;user-select:text}
+.rsq-v b.lg{font-size:16px;line-height:1.25}
+.rsq.st-c .rsq-v.mine b{color:#157a43}.rsq.st-w .rsq-v.mine b{color:#c2271c}
+.rsq .tzov{margin-top:10px}
+.rsx{display:flex;justify-content:center;margin-top:32px}
+.rsdel{display:inline-flex;align-items:center;gap:9px;height:46px;padding:0 24px;border-radius:999px;background:rgba(209,47,53,.12);color:#d12f35;font:700 15px/1 Inter,system-ui,sans-serif;transition:transform .4s var(--sp)}
+.rsdel:active{transform:scale(.95)}
+.rsdel svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+@media (max-width:900px){.rsl{grid-template-columns:1fr}.rsp-t{flex-wrap:wrap;gap:18px 24px}.rsp-i{flex:1 1 220px}.rsp-s{flex-basis:100%}}
+@media (max-width:560px){.rsh h1{font-size:34px}.rsh .rsd8{font-size:15px}.rsa{grid-template-columns:1fr}.rsq{grid-template-columns:110px minmax(0,1fr);gap:12px;padding:14px}.rsp{padding:20px 20px 18px}.rsp .big{font-size:54px}}
 </style>
 </head>
 <body>
@@ -4462,24 +4514,34 @@ function rsClose(){$("#tzs").classList.remove("on");RSU.forEach(function(u){URL.
 function rsOpen(id,live){RSID=id;RSLIVE=!!live;rsRender(true);$("#tzs").classList.add("on")}
 var TMPREC=null;
 function recOf(id){return HI.filter(function(r){return r.id===id})[0]||(TMPREC&&TMPREC.id===id?TMPREC:undefined)}
+var MONF=["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
 function rsRender(top){
   var rec=recOf(RSID);if(!rec){$("#tzs").classList.remove("on");return}
   RSU.forEach(function(u){URL.revokeObjectURL(u)});RSU=[];
-  var sc=$("#tzs"),y=sc.scrollTop,im=imap(),s=sum(rec),p=rpct(rec),tot=rec.items.length;
+  var sc=$("#tzs"),y=sc.scrollTop,im=imap(),s=sum(rec),p=rpct(rec),tot=rec.items.length,col=hSc(p),dd=new Date(rec.ts);
   var att="";if(rec.packId){var rs=pkRecs(rec.packId),k=rs.map(function(r){return r.id}).indexOf(rec.id);if(k>=0)att=" · "+(k+1)+". tur"}
-  var h='<div class="tzh"><div><h1>Sonuç</h1><p>'+esc(rec.name)+' · '+fdate(rec.ts)+att+'</p></div><button class="qb" id="tzsx" type="button">'+(RSLIVE?"Kapat":"Geri dön")+'</button></div>';
-  h+='<div class="tzsc2"><div class="big">'+(p==null?"—":"%"+p)+'</div><div class="rt"><div class="tzln">'+s.c+' / '+(tot-s.u)+' doğru</div><div class="tzcn"><span style="--c:#2fbf71">'+s.c+' doğru</span><span style="--c:#ff5a4d">'+s.w+' yanlış</span><span style="--c:#cfcbc4">'+s.b+' boş</span>'+(s.u?'<span style="--c:#ffb46e">'+s.u+' kontrol edilmedi</span>':'')+'<span style="--c:#111">'+fdur(rec.dur)+'</span></div></div></div>';
+  var isT=rec.kind!=="pack";
+  /* Üst çubuk: solda başlık, ortada tarih, sağda geri dön */
+  var h='<div class="rsh"><h1>Sonuç</h1><span class="rsd8">'+dd.getDate()+" "+MONF[dd.getMonth()]+" "+dd.getFullYear()+'</span><button class="qb" id="tzsx" type="button">'+(RSLIVE?"Kapat":"Geri dön")+'</button></div>';
+  /* Özet paneli */
+  h+='<div class="rsp" style="--c:'+col+';--i:0"><div class="rsp-t"><div class="big">'+(p==null?"—":"%"+p)+'</div>'
+    +'<div class="rsp-i"><div class="rsp-n">'+esc(rec.name)+'</div><div class="rsp-m">'+(isT?'<span class="hct">Test</span>':'')+tot+' soru · '+fdur(rec.dur)+att+(rec.tmp?' · Geçmişe kaydedilmez':'')+'</div></div>'
+    +'<div class="rsp-s"><span class="c"><b>'+s.c+'</b><small>Doğru</small></span><span class="w"><b>'+s.w+'</b><small>Yanlış</small></span><span class="b"><b>'+s.b+'</b><small>Boş</small></span>'+(s.u?'<span class="u"><b>'+s.u+'</b><small>Kontrol edilmedi</small></span>':'')+'</div></div>'
+    +'<div class="rsbar"><i class="bc" style="flex-grow:'+s.c+'"></i><i class="bw" style="flex-grow:'+s.w+'"></i><i class="bb" style="flex-grow:'+s.b+'"></i><i class="bu" style="flex-grow:'+s.u+'"></i></div></div>';
+  /* Tekrar çöz */
   var wrong=rec.items.filter(function(x){return(x.st==="w"||x.st==="b")&&im[x.id]}).length;
-  h+='<div class="tzac"><button class="tzb pr" type="button" data-a="rw"'+(wrong?"":" disabled")+'>Yanlış ve boşları tekrar çöz ('+wrong+')</button><button class="tzb" type="button" data-a="ra">Aynısını tekrar çöz</button>'+(RSLIVE?'':'<button class="tzb dg" type="button" data-a="rd">Kaydı sil</button>')+'</div>';
+  h+='<div class="rsa" style="--i:1"><button class="tzb pr" type="button" data-a="rw"'+(wrong?"":" disabled")+'>Yanlış ve boşları tekrar çöz</button><button class="tzb" type="button" data-a="ra">Aynısını tekrar çöz</button></div>';
+  /* Sorular */
+  h+='<div class="tzdh rssec" style="--i:2">Sorular<em>'+tot+'</em></div><div class="rsl">';
   rec.items.forEach(function(x,i){
     var it=im[x.id],st=x.st,lbl=st==="c"?"Doğru":st==="w"?"Yanlış":st==="b"?"Boş":"Kontrol edilmedi";
-    h+='<div class="tzit st-'+st+'" data-i="'+i+'">';
-    if(it){var u=URL.createObjectURL(it.thumb||it.blob);RSU.push(u);h+='<button type="button" class="tzth" data-img="'+x.id+'" aria-label="Soruyu büyüt"><img alt="Soru" src="'+u+'"></button>'}
-    else h+='<div class="tzth"></div>';
-    h+='<div class="tzib"><div class="tzin2"><b>Soru '+(i+1)+'</b><span class="tzbd st-'+st+'">'+lbl+(x.o?" (sen belirledin)":"")+'</span>'+(it?'<small>'+esc(dlab(it))+'</small>':'<small>Soru silinmiş</small>')+'</div>';
+    h+='<div class="rsq st-'+st+'" data-i="'+i+'" style="--i:'+Math.min(i+3,14)+'">';
+    if(it){var u=URL.createObjectURL(it.thumb||it.blob);RSU.push(u);h+='<button type="button" class="rsq-th" data-img="'+x.id+'" aria-label="Soruyu büyüt"><img alt="Soru" src="'+u+'"></button>'}
+    else h+='<div class="rsq-th"></div>';
+    h+='<div class="rsq-b"><div class="rsq-h"><div class="rsq-t"><b>Soru '+(i+1)+'</b><small>'+(it?esc(dlab(it)):"Soru silinmiş")+(x.o?" · sen belirledin":"")+'</small></div><span class="rsq-p">'+lbl+'</span></div>';
     if(it){
-      var k=it.ans!=null&&String(it.ans).trim()?esc(it.ans):"—";
-      h+='<div class="tzia">Cevabın: <b>'+(x.a?esc(x.a):"boş")+'</b><br>Doğru cevap: <b>'+k+'</b></div>';
+      var k=it.ans!=null&&String(it.ans).trim()?esc(it.ans):"—",mine=x.a?esc(x.a):"boş";
+      h+='<div class="rsq-a"><div class="rsq-v mine"><small>Cevabın</small><b'+(mine.length>8?' class="lg"':'')+'>'+mine+'</b></div><div class="rsq-v"><small>Doğru cevap</small><b'+(k.length>8?' class="lg"':'')+'>'+k+'</b></div></div>';
       if(qtype(it)==="open"||k==="—"){
         if(st==="w"||st==="u")h+='<div class="tzov"><button class="tzb" type="button" data-ov="c">Doğru say</button>'+(st==="u"?'<button class="tzb" type="button" data-ov="w">Yanlış say</button>':'')+'</div>';
         else if(st==="c")h+='<div class="tzov"><button class="tzb" type="button" data-ov="w">Yanlış say</button></div>';
@@ -4487,6 +4549,8 @@ function rsRender(top){
     }
     h+='</div></div>';
   });
+  h+='</div>';
+  if(!RSLIVE)h+='<div class="rsx"><button class="rsdel" type="button" data-a="rd"><svg viewBox="0 0 24 24"><path d="M4 7h16M9.5 7V4.5h5V7M6.5 7l.8 12a1.5 1.5 0 001.5 1.4h6.4a1.5 1.5 0 001.5-1.4l.8-12M10 11v5M14 11v5"/></svg>Kaydı sil</button></div>';
   $("#tzsw").innerHTML=h;sc.scrollTop=top?0:y;
 }
 function rsOverride(i,st){
@@ -4827,7 +4891,7 @@ $("#tzs").addEventListener("click",function(e){
   var t=e.target,b;
   if(t.closest("#tzsx")){rsClose();return}
   if(b=t.closest("[data-img]")){var it=imap()[b.dataset.img];if(it){var li=$("#tzli");if(li._u)URL.revokeObjectURL(li._u);li._u=URL.createObjectURL(it.blob);li.src=li._u;$("#tzl").classList.add("on")}return}
-  if(b=t.closest("[data-ov]")){var c=t.closest(".tzit");if(c)rsOverride(+c.dataset.i,b.dataset.ov);return}
+  if(b=t.closest("[data-ov]")){var c=t.closest(".rsq");if(c)rsOverride(+c.dataset.i,b.dataset.ov);return}
   if(b=t.closest("[data-a]")){
     var a=b.dataset.a;
     if(a==="rw")rsAgain(true);else if(a==="ra")rsAgain(false);
