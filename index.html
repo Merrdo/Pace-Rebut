@@ -3009,6 +3009,7 @@ function match(it){
 var VLO=null,TMO=null;
 function VL(){var a=[];if(VLO){var m={};ITEMS.forEach(function(it,i){m[it.id]=i});VLO.forEach(function(id){if(m[id]!=null)a.push(m[id])});return a}for(var i=0;i<ITEMS.length;i++)if(match(ITEMS[i]))a.push(i);return a}
 function go(d){var L=VL(),p=L.indexOf(cur);if(p<0)return;var j=L[p+d];if(j!=null)view(j,d)}
+var warmT=0;function warmLater(L,p,tok){clearTimeout(warmT);warmT=setTimeout(function(){if(tok===vTok)warmN(L,p)},750)}
 function warmN(L,p){if(L[p+1]!=null)warm(L[p+1]);if(L[p-1]!=null)warm(L[p-1])}
 /* Yumuşak filtre: kalan kartlar yeni yerine kayar, gelenler belirir, giden kartlar solarak çıkar */
 function softGrid(g,fn){
@@ -3471,22 +3472,19 @@ function qvSrc(id){
 function qvFlip(r0,r1,rad0,rad1){
   var s=Math.max(r0.width/r1.width,r0.height/r1.height)||1,
       dx=(r0.left+r0.width/2)-(r1.left+r1.width/2),dy=(r0.top+r0.height/2)-(r1.top+r1.height/2),
-      ix=Math.max(0,(r1.width-r0.width/s)/2),iy=Math.max(0,(r1.height-r0.height/s)/2);
-  return{
-    from:{transform:"translate("+dx+"px,"+dy+"px) scale("+s+")",clipPath:"inset("+iy+"px "+ix+"px round "+(rad0/s)+"px)"},
-    to:{transform:"translate(0px,0px) scale(1)",clipPath:"inset(0px 0px round "+rad1+"px)"}
-  };
+      from={transform:"translate("+dx+"px,"+dy+"px) scale("+s+")"},to={transform:"translate(0px,0px) scale(1)"};
+  /* PERFORMANS: clip-path animasyonu her karede 1600x1200 resmi yeniden boyar (kasma). Sorular hep 4:3 olduğundan oranlar
+     uyuşuyorsa yalnızca transform (GPU'da, ana iş parçacığı dışında) kullanılır; clip-path sadece oranlar belirgin farklıysa. */
+  var ar0=r0.width/r0.height,ar1=r1.width/r1.height;
+  if(Math.abs(ar0/ar1-1)>.04){
+    var ix=Math.max(0,(r1.width-r0.width/s)/2),iy=Math.max(0,(r1.height-r0.height/s)/2);
+    from.clipPath="inset("+iy+"px "+ix+"px round "+(rad0/s)+"px)";to.clipPath="inset(0px 0px round "+rad1+"px)";
+  }
+  return{from:from,to:to};
 }
-function qvChrome(on){
-  qvAn.forEach(function(a){try{a.cancel()}catch(e){}});qvAn=[];
-  if(REDUCE||!document.body.animate)return;
-  var els=$("#qv").querySelectorAll(".qvb,.qvn,.qvt,.qvk");
-  [].forEach.call(els,function(e,k){
-    if(e.hidden)return;
-    qvAn.push(e.animate(on?[{opacity:0,translate:"0 10px"},{opacity:1,translate:"0 0"}]:[{opacity:1,translate:"0 0"},{opacity:0,translate:"0 6px"}],
-      {duration:on?400:180,delay:on?170+k*30:0,easing:QVE,fill:on?"backwards":"forwards"}));
-  });
-}
+/* PERFORMANS: 8 kontrol düğmesinin ayrı ayrı belirme/kaybolma animasyonu her karede ana iş parçacığı işi (commit) yaratıp açılışı
+   kastırıyordu (ölçüm: 40 → 9 commit). Düğmeler artık animasyonsuz; yumuşaklığı karanlık zemin geçişi ve resim uçuşu sağlıyor. */
+function qvChrome(on){qvAn.forEach(function(a){try{a.cancel()}catch(e){}});qvAn=[]}
 function qvOpenFx(it,im){
   qvHeal();qvChrome(true);
   var r1=im.getBoundingClientRect(),src=r1.width?qvSrc(it.id):null;
@@ -3536,7 +3534,7 @@ function view(i,dir){
     Promise.race([dec(),new Promise(function(r){setTimeout(r,450)})]).then(function(){
       if(tok!==vTok)return;
       if(!v.classList.contains("on")&&!REDUCE&&im.animate){try{qvOpenFx(it,im)}catch(e){qvHeal()}}
-      v.classList.add("on");warmN(L,pos);
+      v.classList.add("on");warmLater(L,pos,tok);
     });
     return;
   }
@@ -3551,7 +3549,7 @@ function view(i,dir){
     if(tok!==vTok)return;
     qvAnims(im).forEach(function(a){try{a.cancel()}catch(e){}});
     im.animate([{opacity:0,transform:"translateX("+(14*dir)+"px)"},{opacity:1,transform:"none"}],{duration:260,easing:"cubic-bezier(.25,.8,.25,1)"});
-    warmN(L,pos);
+    warmLater(L,pos,tok);
   },function(){if(tok===vTok)qvHeal()});
 }
 function closeV(){
@@ -3573,7 +3571,7 @@ function closeV(){
             A=qvFlip(qr0,rn,rad,rad).from,B=qvFlip(rc,rn,rad,qs.rad).from;
         qvAnims(qim).forEach(function(a){try{a.cancel()}catch(e){}});
         A.opacity=1;B.opacity=1;A.offset=0;B.offset=.8;
-        var C={transform:B.transform,clipPath:B.clipPath,opacity:0,offset:1};
+        var C={transform:B.transform,opacity:0,offset:1};if(B.clipPath)C.clipPath=B.clipPath;
         qim.animate([A,B,C],{duration:460,easing:QVE,fill:"forwards"});
       }
     }
@@ -4403,8 +4401,9 @@ function tmOpen(fs){
 }
 function tmNav(id){
   if(!R)return;var k=R.ids.indexOf(id);
-  if(k>=0&&k!==R.idx){R.idx=k;runSave()}
-  paintRun();
+  /* PERFORMANS: soru değişmediyse (görüntüleyici ilk açılırken) sayfayı yeniden kurma: açılış animasyonunun ilk karesinde
+     cevap alanı/numara şeridi/resim yeniden çiziliyor ve kasma yapıyordu. Sadece soru gerçekten değiştiyse çiz. */
+  if(k>=0&&k!==R.idx){R.idx=k;runSave();paintRun()}
 }
 function tmKey(e){
   if(!R||e.ctrlKey||e.metaKey||e.altKey)return false;
