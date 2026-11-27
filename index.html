@@ -1196,7 +1196,7 @@ textarea.qfi{height:140px;resize:none}
 .hbi i{display:block;flex:1;min-width:0;max-width:30px;height:var(--h);border-radius:6px 6px 3px 3px;background:var(--sc);transform-origin:bottom}
 .fresh .hbi i{animation:tzCol .6s var(--ease) calc(var(--k,0)*35ms + .25s) backwards}
 .fresh .hpb i{animation:tzBar .8s var(--ease) .3s backwards}
-#tz .hsec{margin:22px 2px 12px}
+:is(#tz,#tzwt) .hsec{margin:22px 2px 12px}
 @media (max-width:700px){.hst{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.hsc{padding:14px 14px 13px;border-radius:20px}.hsc small{font-size:13px}.hsc>b{font-size:32px;letter-spacing:-.8px}.hsc.g{grid-column:1/-1}.hsc>span{font-size:12px}.hlg{gap:2px 8px}.hlg em{font-size:12px}}
 /* Ekran geçişleri */
 .tz,.tzp,.tzs,.tzr{transform:translateY(20px) scale(.985);transition:opacity .35s var(--ease),transform .6s var(--ease),visibility 0s .35s}
@@ -1557,25 +1557,25 @@ html,body,*{scrollbar-width:none!important;-ms-overflow-style:none!important;scr
 .qvz .qvr svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round}
 
 /* ===== Geçmiş kartları: Paketler gibi geniş, başarıya göre renkli ===== */
-#tz .hcd{position:relative;display:flex;flex-direction:column;align-items:stretch;gap:0;width:auto;min-height:150px;margin:0;padding:22px 22px 20px;border-radius:26px;text-align:left;cursor:pointer;background:#fff;background:color-mix(in srgb,var(--c) 13%,var(--surf));box-shadow:0 6px 16px -10px rgba(17,17,17,.14)}
-#tz .hcd:active{transform:scale(.975)}
-#tz .hcd{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
-#tz .hcd.pk,#tz .hcd.pk:active{transform:scale(.97);box-shadow:0 14px 28px -12px rgba(17,17,17,.35)}
-#tz .hcd .hch{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
-#tz .hcd .hcn{flex:1;min-width:0;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;overflow:hidden;word-break:break-word;font:800 27px/1.08 Inter,system-ui,sans-serif;letter-spacing:-.4px;color:var(--fg)}
-#tz .hcd .hcq{flex:none;white-space:nowrap;font:800 27px/1.08 Inter,system-ui,sans-serif;letter-spacing:-.4px;color:var(--fg);font-variant-numeric:tabular-nums}
-#tz .hcd .hcm{display:flex;align-items:center;margin-top:8px;font:600 15px/1.3 Inter,system-ui,sans-serif;color:#55524d;font-variant-numeric:tabular-nums}
-#tz .hcd .hct{display:inline-flex;align-items:center;height:22px;margin-right:9px;padding:0 10px;border-radius:11px;background:var(--fg);color:var(--bg);font:800 12px/1 Inter,system-ui,sans-serif;letter-spacing:.3px}
-#tz .hcd .hcf{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:auto;padding-top:18px}
-#tz .hcd .hlg{flex:1;min-width:0;gap:3px 16px;padding-bottom:1px}
-#tz .hcd .hlg em{font-size:16px;font-weight:800;gap:7px}
-#tz .hcd .hlg em:before{width:10px;height:10px}
-#tz .hcd .hcp{flex:none;display:inline-flex;align-items:center;height:42px;padding:0 17px;border-radius:21px;background:var(--c);color:#111;font:800 23px/1 Inter,system-ui,sans-serif;letter-spacing:-.4px;font-variant-numeric:tabular-nums}
-#tz .hcd .hcbar{display:flex;gap:0;height:8px;margin-top:8px;border-radius:8px;overflow:hidden;background:rgba(17,17,17,.08)}
-#tz .hcd .hcbar i{display:block;flex-basis:0;min-width:0;height:100%}
-#tz .hcd .hcbar .bc{background:#2fbf71}#tz .hcd .hcbar .bw{background:#ff5a4d}#tz .hcd .hcbar .bb{background:#cfcbc4}
-#tz .hcd .hcbar i[style*="flex-grow:0"]{display:none}
-@media (max-width:640px){#tz .hcd .hcn,#tz .hcd .hcq{font-size:24px}}
+:is(#tz,#tzwt) .hcd{position:relative;display:flex;flex-direction:column;align-items:stretch;gap:0;width:auto;min-height:150px;margin:0;padding:22px 22px 20px;border-radius:26px;text-align:left;cursor:pointer;background:#fff;background:color-mix(in srgb,var(--c) 13%,var(--surf));box-shadow:0 6px 16px -10px rgba(17,17,17,.14)}
+:is(#tz,#tzwt) .hcd:active{transform:scale(.975)}
+:is(#tz,#tzwt) .hcd{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+:is(#tz,#tzwt) .hcd.pk,:is(#tz,#tzwt) .hcd.pk:active{transform:scale(.97);box-shadow:0 14px 28px -12px rgba(17,17,17,.35)}
+:is(#tz,#tzwt) .hcd .hch{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+:is(#tz,#tzwt) .hcd .hcn{flex:1;min-width:0;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;overflow:hidden;word-break:break-word;font:800 27px/1.08 Inter,system-ui,sans-serif;letter-spacing:-.4px;color:var(--fg)}
+:is(#tz,#tzwt) .hcd .hcq{flex:none;white-space:nowrap;font:800 27px/1.08 Inter,system-ui,sans-serif;letter-spacing:-.4px;color:var(--fg);font-variant-numeric:tabular-nums}
+:is(#tz,#tzwt) .hcd .hcm{display:flex;align-items:center;margin-top:8px;font:600 15px/1.3 Inter,system-ui,sans-serif;color:#55524d;font-variant-numeric:tabular-nums}
+:is(#tz,#tzwt) .hcd .hct{display:inline-flex;align-items:center;height:22px;margin-right:9px;padding:0 10px;border-radius:11px;background:var(--fg);color:var(--bg);font:800 12px/1 Inter,system-ui,sans-serif;letter-spacing:.3px}
+:is(#tz,#tzwt) .hcd .hcf{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:auto;padding-top:18px}
+:is(#tz,#tzwt) .hcd .hlg{flex:1;min-width:0;gap:3px 16px;padding-bottom:1px}
+:is(#tz,#tzwt) .hcd .hlg em{font-size:16px;font-weight:800;gap:7px}
+:is(#tz,#tzwt) .hcd .hlg em:before{width:10px;height:10px}
+:is(#tz,#tzwt) .hcd .hcp{flex:none;display:inline-flex;align-items:center;height:42px;padding:0 17px;border-radius:21px;background:var(--c);color:#111;font:800 23px/1 Inter,system-ui,sans-serif;letter-spacing:-.4px;font-variant-numeric:tabular-nums}
+:is(#tz,#tzwt) .hcd .hcbar{display:flex;gap:0;height:8px;margin-top:8px;border-radius:8px;overflow:hidden;background:rgba(17,17,17,.08)}
+:is(#tz,#tzwt) .hcd .hcbar i{display:block;flex-basis:0;min-width:0;height:100%}
+:is(#tz,#tzwt) .hcd .hcbar .bc{background:#2fbf71}:is(#tz,#tzwt) .hcd .hcbar .bw{background:#ff5a4d}:is(#tz,#tzwt) .hcd .hcbar .bb{background:#cfcbc4}
+:is(#tz,#tzwt) .hcd .hcbar i[style*="flex-grow:0"]{display:none}
+@media (max-width:640px){:is(#tz,#tzwt) .hcd .hcn,:is(#tz,#tzwt) .hcd .hcq{font-size:24px}}
 
 /* ===== Sonuç sayfası: tam ekran ===== */
 #tzs .tzw{max-width:none;width:100%;min-height:100%;margin:0;padding:calc(20px + env(safe-area-inset-top,0px)) 28px calc(40px + env(safe-area-inset-bottom,0px))}
@@ -1630,14 +1630,8 @@ button.rsq-th:active{transform:scale(.96)}
 @media (max-width:560px){.rsh h1{font-size:34px}.rsh .rsd8{font-size:15px}.rsa{grid-template-columns:1fr}.rsq{grid-template-columns:110px minmax(0,1fr);gap:12px;padding:14px}.rsp{padding:20px 20px 18px}.rsp .big{font-size:54px}}
 
 /* ===== Yanlış Testleri girişi ve sonuç ekranı Kaydet butonu ===== */
-.wtb{display:flex;align-items:center;gap:14px;width:100%;margin:0 0 14px;padding:14px 18px;border-radius:22px;text-align:left;background:#fff;background:var(--surf);box-shadow:0 6px 16px -10px rgba(17,17,17,.14);transition:transform .45s var(--sp)}
-.wtb:active{transform:scale(.98)}
-.wtb .wti{flex:none;display:grid;place-items:center;width:44px;height:44px;border-radius:14px;background:rgba(255,90,77,.16);color:#d12f35}
-.wtb .wti svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
-.wtb .wtt{flex:1;min-width:0}
-.wtb .wtt b{display:block;font:800 18px/1.15 Inter,system-ui,sans-serif;color:var(--fg)}
-.wtb .wtt small{display:block;margin-top:3px;font:600 13px Inter,system-ui,sans-serif;color:var(--dim)}
-.wtb .wtc{flex:none;width:22px;height:22px;fill:none;stroke:var(--dim);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.tzhr{display:flex;align-items:center;gap:10px;flex:none}
+#tzwb[hidden]{display:none}
 .rsfab{position:fixed;z-index:12;right:calc(28px + env(safe-area-inset-right,0px));bottom:calc(28px + env(safe-area-inset-bottom,0px));height:64px;padding:0 30px 0 24px;border-radius:32px;display:flex;align-items:center;gap:10px;background:var(--fg);color:var(--bg);font:800 18px/1 Inter,system-ui,sans-serif;box-shadow:0 16px 34px -10px rgba(17,17,17,.5),0 4px 10px rgba(17,17,17,.14);opacity:0;transform:translateY(24px) scale(.7);pointer-events:none;transition:opacity .3s var(--ease),transform .6s var(--sp),background .3s}
 .rsfab.on{opacity:1;transform:none;pointer-events:auto}
 .rsfab.on:active{transform:scale(.94)}
@@ -1752,7 +1746,7 @@ button.rsq-th:active{transform:scale(.96)}
     </div>
   </div>
   <div class="tz" id="tz" role="dialog" aria-modal="true" aria-label="Test ve paketler"><div class="tzw">
-    <div class="tzh tzh-top"><h1 class="tzn" id="tzn" role="tablist" aria-label="Test sayfaları"><button type="button" role="tab" data-t="gen" class="on" aria-selected="true">Test</button><button type="button" role="tab" data-t="pk" aria-selected="false">Paketler</button><button type="button" role="tab" data-t="hi" aria-selected="false">Geçmiş</button></h1><button class="qb" id="tzx" type="button">Kapat</button></div>
+    <div class="tzh tzh-top"><h1 class="tzn" id="tzn" role="tablist" aria-label="Test sayfaları"><button type="button" role="tab" data-t="gen" class="on" aria-selected="true">Test</button><button type="button" role="tab" data-t="pk" aria-selected="false">Paketler</button><button type="button" role="tab" data-t="hi" aria-selected="false">Geçmiş</button></h1><div class="tzhr"><button class="qb" id="tzwb" type="button" hidden>Yanlış Testleri</button><button class="qb" id="tzx" type="button">Kapat</button></div></div>
     <div class="tzg" id="tzt" hidden><button type="button" data-t="gen">Test oluştur</button><button type="button" data-t="pk">Paketler</button><button type="button" data-t="hi">Geçmiş</button></div>
     <div id="tzb"></div>
   </div></div>
@@ -4137,7 +4131,7 @@ function hubRender(){
   [].forEach.call(t.querySelectorAll(".tzg"),function(g){g.insertAdjacentHTML("afterbegin",'<i class="tzpl"></i>')});
   var k=HUB.tab+"|"+G.mode;
   if(HUB.k===k&&b.firstChild)morph(b,t);else{b.innerHTML=t.innerHTML;fresh(b)}
-  HUB.k=k;gSum();pills();
+  HUB.k=k;gSum();pills();$("#tzwb").hidden=HUB.tab!=="hi";
   TZFAB.classList.toggle("on",hubOn()&&HUB.tab==="pk"&&!PSL.on);b.classList.toggle("pkp",HUB.tab==="pk");
 }
 function hubOn(){return $("#tz").classList.contains("on")}
@@ -4617,16 +4611,9 @@ function rsTryClose(){
 RSFAB.onclick=function(){var rec=recOf(RSID);if(rec&&!rec.wt)rsSave()};
 
 /* ---------- Yanlış Testleri sayfası ---------- */
-function wtBar(){
-  return'<button type="button" class="wtb" data-a="wt"><span class="wti"><svg viewBox="0 0 24 24"><path d="M7 4h8l4 4v12H7z"/><path d="M10.5 11.5l4 4M14.5 11.5l-4 4"/></svg></span><span class="wtt"><b>Yanlış Testleri</b><small>'+(WT.length?WT.length+" kayıt":"Henüz kayıt yok")+'</small></span><svg class="wtc" viewBox="0 0 24 24"><path d="M9 5.5l6.5 6.5L9 18.5"/></svg></button>';
-}
 function wtRender(){
-  var h='<div class="tzh"><div><h1 style="font-size:38px">Yanlış Testleri</h1><p>'+WT.length+' kayıt</p></div><button class="qb" id="tzwtx" type="button">Geri dön</button></div>';
-  if(!WT.length)h+='<div class="tzemp"><b>Henüz yanlış testi yok</b><span>Yanlışları tekrar çözüp sonuç ekranında Kaydet\'e bastığında burada listelenir.</span></div>';
-  else WT.slice().sort(function(a,c){return c.ts-a.ts}).forEach(function(r){
-    var s=sum(r),pc=rpct(r);
-    h+='<button type="button" class="tzhi" data-id="'+r.id+'"><div class="mid"><b>'+esc(r.name)+'</b><small>'+fdate(r.ts)+' · '+fdur(r.dur)+' · '+s.c+' doğru, '+s.w+' yanlış, '+(s.b+s.u)+' boş</small></div><div class="sc"><b>'+(pc==null?"—":"%"+pc)+'</b></div></button>';
-  });
+  var h='<div class="tzh" style="align-items:center;margin-bottom:18px"><h1>Yanlış Testleri</h1><button class="qb" id="tzwtx" type="button">Geri dön</button></div>';
+  h+=WT.length?histHtml(WT):'<div class="tzemp"><b>Henüz yanlış testi yok</b><span>Yanlışları tekrar çözüp sonuç ekranında Kaydet\'e bastığında burada listelenir.</span></div>';
   $("#tzwtw").innerHTML=h;
 }
 function wtOpen(){wtRender();var z=$("#tzwt");z.scrollTop=0;z.classList.add("on")}
@@ -4646,9 +4633,13 @@ function hKey(r){
   return"t"+(h>>>0).toString(36);
 }
 function rHi(b){
-  var h=resumeBanner()+wtBar();
+  var h=resumeBanner();
   if(!HI.length){b.innerHTML=h+'<div class="tzemp"><b>Henüz çözülmüş test yok</b><span>Çözdüğün testler ve paketler sonuçlarıyla birlikte burada günlere ayrılarak listelenir.</span></div>';return}
-  var all=HI.slice().sort(function(a,c){return c.ts-a.ts}),nq=0,ps=[];
+  b.innerHTML=h+histHtml(HI);
+}
+function histHtml(src){
+  var h="";
+  var all=src.slice().sort(function(a,c){return c.ts-a.ts}),nq=0,ps=[];
   all.forEach(function(r){nq+=r.items.length;var p=rpct(r);if(p!=null)ps.push(p)});
   var avg=ps.length?Math.round(ps.reduce(function(a,c){return a+c},0)/ps.length):null;
   var last=all.slice(0,14).reverse(),bars=last.map(function(r,k){var p=rpct(r);return'<i style="--h:'+(p==null?8:Math.max(8,p))+'%;--sc:'+hSc(p)+';--k:'+k+'" title="'+(p==null?"—":"%"+p)+'"></i>'}).join("");
@@ -4686,7 +4677,7 @@ function rHi(b){
       +'</button>';
   });
   if(open)h+='</div>';
-  b.innerHTML=h;
+  return h;
 }
 /* Paket istatistiği: eğimli başarı grafiği */
 function trend(rc){
@@ -4819,6 +4810,7 @@ $("#tzm").addEventListener("click",function(e){
 
 /* ---------- Olaylar ---------- */
 $("#tzx").onclick=hubClose;
+$("#tzwb").onclick=function(){wtOpen()};
 var HUBORD=["gen","pk","hi"],hubBusy=0;
 function hubGo(tab){
   if(tab===HUB.tab||hubBusy)return;
