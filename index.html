@@ -1429,33 +1429,6 @@ textarea.qfi{height:140px;resize:none}
 #tz .tzpk .ac .tzb{flex:none;width:auto;height:46px;padding:0 24px;font-size:16px}
 #tz .tzpk .ac .tzb.pr{padding:0 30px}
 #tz .tzpk .ac .tzb.pr{flex:none}
-/* Paket kartı: yatay dikdörtgen */
-#tz .tzpg{grid-template-columns:1fr;gap:10px}
-@media (min-width:1200px){#tz .tzpg{grid-template-columns:1fr 1fr}}
-#tz .tzpk{flex-direction:row;align-items:center;gap:16px;min-height:0;padding:14px 16px 14px 14px;border-radius:22px}
-#tz .tzpk .tzpc{margin-right:-16px}
-#tz .tzpk.sm .tzpc{margin-right:0}
-#tz .tzpk .pkq{flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;width:70px;height:70px;border-radius:18px;background:var(--c);color:#111}
-#tz .tzpk:not([style]) .pkq{background:var(--surf2)}
-#tz .tzpk .pkq b{font:800 26px/1 "Baloo 2",ui-rounded,system-ui,sans-serif;font-variant-numeric:tabular-nums;letter-spacing:-.5px}
-#tz .tzpk .pkq i{margin-top:3px;font:700 11px/1 Inter,system-ui,sans-serif;font-style:normal;opacity:.7}
-#tz .tzpk .pkm{flex:1;min-width:0}
-#tz .tzpk h3{font-size:21px;line-height:1.1;letter-spacing:-.3px;-webkit-line-clamp:2;line-clamp:2}
-#tz .tzpk .pks{display:flex;flex-wrap:wrap;gap:3px 14px;margin-top:7px;font:600 13px Inter,system-ui,sans-serif;color:#55524d;font-variant-numeric:tabular-nums}
-#tz .tzpk .pks span{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
-#tz .tzpk .pks .sc:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--sc)}
-#tz .tzpk .ac{display:flex;margin:0;padding:0;gap:8px;flex:none}
-#tz .tzpk .ac .tzb{height:42px;padding:0 20px;font-size:15px}
-#tz .tzpk .ac .tzb.pr{padding:0 24px}
-@media (max-width:640px){
-  #tz .tzpk{flex-wrap:wrap;gap:12px 14px;padding:14px}
-  #tz .tzpk .tzpc{margin-right:-14px}#tz .tzpk.sm .tzpc{margin-right:0}
-  #tz .tzpk .pkq{width:62px;height:62px;border-radius:16px}
-  #tz .tzpk .pkm{flex:1 1 0}
-  #tz .tzpk h3{font-size:19px}
-  #tz .tzpk .ac{flex:1 1 100%;display:grid;grid-template-columns:2fr 1fr}
-  #tz .tzpk .ac .tzb{width:100%;padding:0 10px}
-}
 /* Paket rengi: daire buton, aşağı doğru açılan ayrı renkler */
 .tzpv .tzpva{position:relative;z-index:5}
 .tzcw{position:relative;flex:none;margin-left:auto}
@@ -4173,13 +4146,9 @@ function pkDom(p,im){
 }
 function pkCol(p,im){return p.col||pkDom(p,im)}
 function pkCard(p,im,sm){
-  var ex=p.ids.filter(function(i){return im[i]}),on=!!PSL.ids[p.id],best=pkCol(p,im),st=pkStat(p);
+  var ex=p.ids.filter(function(i){return im[i]}),on=!!PSL.ids[p.id],best=pkCol(p,im);
   var h='<div class="tzpk'+(sm?" sm":"")+(on?" sel":"")+'" data-id="'+p.id+'"'+(best?' style="--c:'+best+'"':'')+'>';
-  h+='<span class="tzpc">'+TCK+'</span><div class="pkq"><b>'+ex.length+'</b><i>soru</i></div>';
-  h+='<div class="pkm"><h3>'+esc(p.name)+'</h3><div class="pks">';
-  if(st.n){var lp=rpct(st.last);h+='<span>'+st.n+' tur</span><span class="sc" style="--sc:'+hSc(lp)+'">Son '+(lp==null?"—":"%"+lp)+'</span><span>Ort. '+(st.avg==null?"—":"%"+st.avg)+'</span>'}
-  else h+='<span>Henüz çözülmedi</span>';
-  h+='</div></div>';
+  h+='<div class="tzpt2"><span class="tzpc">'+TCK+'</span><h3>'+esc(p.name)+'</h3></div><div class="tzpn"><b>'+ex.length+'</b><i>soru</i></div>';
   h+='<div class="ac"><button class="tzb pr" type="button" data-a="go"'+(ex.length&&!sm?"":" disabled")+'>Başlat</button><button class="tzb" type="button" data-a="st"'+(sm?" disabled":"")+'>İstatistik</button></div></div>';
   return h;
 }
