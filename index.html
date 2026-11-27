@@ -1559,6 +1559,8 @@ html,body,*{scrollbar-width:none!important;-ms-overflow-style:none!important;scr
 /* ===== Geçmiş kartları: Paketler gibi geniş, başarıya göre renkli ===== */
 #tz .hcd{position:relative;display:flex;flex-direction:column;align-items:stretch;gap:0;width:auto;min-height:150px;margin:0;padding:22px 22px 20px;border-radius:26px;text-align:left;cursor:pointer;background:#fff;background:color-mix(in srgb,var(--c) 13%,var(--surf));box-shadow:0 6px 16px -10px rgba(17,17,17,.14)}
 #tz .hcd:active{transform:scale(.975)}
+#tz .hcd{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+#tz .hcd.pk,#tz .hcd.pk:active{transform:scale(.97);box-shadow:0 14px 28px -12px rgba(17,17,17,.35)}
 #tz .hcd .hch{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
 #tz .hcd .hcn{flex:1;min-width:0;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;overflow:hidden;word-break:break-word;font:800 27px/1.08 Inter,system-ui,sans-serif;letter-spacing:-.4px;color:var(--fg)}
 #tz .hcd .hcq{flex:none;white-space:nowrap;font:800 27px/1.08 Inter,system-ui,sans-serif;letter-spacing:-.4px;color:var(--fg);font-variant-numeric:tabular-nums}
@@ -4163,14 +4165,16 @@ function psDelete(){
   });
 }
 /* Pakete basılı tutunca açılan hızlı panel */
-var tpOn=false,tpId=null,tpEl=document.createElement("div");
+var tpOn=false,tpId=null,tpHi=false,tpEl=document.createElement("div");
 tpEl.className="qpop";tpEl.id="tzpop";tpEl.setAttribute("role","menu");tpEl.setAttribute("aria-label","Paket işlemleri");
 tpEl.innerHTML='<button type="button" role="menuitem" data-a="pn"><svg viewBox="0 0 24 24"><path d="M9 4h6l-1 6 3 3v2H7v-2l3-3-1-6zM12 15v5.5"/></svg><span>Sabitle</span></button><button type="button" role="menuitem" data-a="ed"><svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16v4zM13.5 6.5l4 4"/></svg>Düzenle</button><button type="button" role="menuitem" data-a="se"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg>Seç</button><hr><button type="button" role="menuitem" class="dg" data-a="dl"><svg viewBox="0 0 24 24"><path d="M4 7h16M9.5 7V4.5h5V7M6.5 7l.8 12a1.5 1.5 0 001.5 1.4h6.4a1.5 1.5 0 001.5-1.4l.8-12"/></svg>Sil</button>';
 document.body.appendChild(tpEl);
-function tpClose(){tpOn=false;tpId=null;tpEl.classList.remove("on");[].forEach.call(document.querySelectorAll(".tzpk.pk"),function(c){c.classList.remove("pk")})}
+function tpClose(){tpOn=false;tpId=null;tpEl.classList.remove("on");[].forEach.call(document.querySelectorAll(".tzpk.pk,.hcd.pk"),function(c){c.classList.remove("pk")})}
 function tpOpen(card,x,y){
-  tpClose();tpOn=true;tpId=card.dataset.id;card.classList.add("pk");
-  var pp=PK.filter(function(x){return x.id===tpId})[0];tpEl.querySelector('[data-a="pn"] span').textContent=pp&&pp.pin?"Sabitlemeyi kaldır":"Sabitle";
+  tpClose();tpOn=true;tpId=card.dataset.id;tpHi=card.classList.contains("hcd");card.classList.add("pk");
+  [].forEach.call(tpEl.children,function(c){c.style.display=tpHi&&c.dataset.a!=="dl"?"none":""});
+  tpEl.setAttribute("aria-label",tpHi?"Geçmiş işlemleri":"Paket işlemleri");
+  if(!tpHi){var pp=PK.filter(function(x){return x.id===tpId})[0];tpEl.querySelector('[data-a="pn"] span').textContent=pp&&pp.pin?"Sabitlemeyi kaldır":"Sabitle"}
   var W=window.innerWidth,H=window.innerHeight,w=tpEl.offsetWidth,h=tpEl.offsetHeight,m=12;
   var l=x+20;if(l+w>W-m)l=x-20-w;l=Math.max(m,Math.min(l,W-w-m));
   var tp=Math.max(m,Math.min(y-24,H-h-m));
@@ -4178,7 +4182,8 @@ function tpOpen(card,x,y){
   void tpEl.offsetWidth;tpEl.classList.add("on");
 }
 tpEl.onclick=function(e){
-  var b=e.target.closest("button");if(!b||!tpOn)return;var a=b.dataset.a,id=tpId;tpClose();
+  var b=e.target.closest("button");if(!b||!tpOn)return;var a=b.dataset.a,id=tpId,hi=tpHi;tpClose();
+  if(hi){if(a==="dl")hiDelete(id);return}
   if(a==="ed"){var p=PK.filter(function(x){return x.id===id})[0];if(p)peOpen(p)}
   else if(a==="se"){PSL.on=true;PSL.ids={};PSL.ids[id]=1;hubRender()}
   else if(a==="dl")pkDelete(id);
@@ -4190,7 +4195,7 @@ document.addEventListener("keydown",function(e){if(e.key!=="Escape")return;if(tp
   var b=$("#tzb"),t=0,sx=0,sy=0,tg=null,LP=450;
   function cancel(){clearTimeout(t);t=0;tg=null}
   b.addEventListener("pointerdown",function(e){
-    var c=e.target.closest(".tzpk");if(!c||e.button>0||PSL.on)return;
+    var c=e.target.closest(".tzpk,.hcd");if(!c||e.button>0||PSL.on)return;
     sx=e.clientX;sy=e.clientY;tg=c;
     t=setTimeout(function(){t=0;if(!tg)return;var card=tg;tg=null;PSL.sup=1;try{navigator.vibrate&&navigator.vibrate(12)}catch(x){}tpOpen(card,sx,sy)},LP);
   });
@@ -4198,7 +4203,7 @@ document.addEventListener("keydown",function(e){if(e.key!=="Escape")return;if(tp
   ["pointerup","pointercancel","pointerleave"].forEach(function(n){b.addEventListener(n,function(){if(n==="pointerup"&&PSL.sup===1)PSL.sup=Date.now();cancel()})});
   $("#tz").addEventListener("scroll",function(){cancel();if(tpOn)tpClose()});
   b.addEventListener("click",function(e){if(PSL.sup>1&&Date.now()-PSL.sup<400){e.stopPropagation();e.preventDefault()}},true);
-  b.addEventListener("contextmenu",function(e){if(e.target.closest(".tzpk"))e.preventDefault()});
+  b.addEventListener("contextmenu",function(e){if(e.target.closest(".tzpk,.hcd"))e.preventDefault()});
 })();
 
 function pkStart(id){
@@ -4210,6 +4215,12 @@ function pkRun(id,sh){
   var p=PK.filter(function(x){return x.id===id})[0];if(!p)return;
   var im=imap(),ids=p.ids.filter(function(i){return im[i]});if(!ids.length){Q.toast("Pakette soru kalmamış");return}
   runStart({ids:sh?shuf(ids):ids,kind:"pack",name:p.name,packId:p.id});
+}
+function hiDelete(id){
+  var r=HI.filter(function(x){return x.id===id})[0];if(!r)return;
+  mdl({h:"Kayıt silinsin mi?",p:"“"+r.name+"” sonucu geçmişten silinir. Sorulardaki çözüldü işaretleri değişmez.",btns:[{t:"Vazgeç",v:"cancel"},{t:"Sil",v:"ok",c:"dg"}]}).then(function(x){
+    if(x.v!=="ok")return;HI=HI.filter(function(q){return q.id!==id});sv(K_HI,HI);refreshHub();Q.toast("Kayıt silindi");
+  });
 }
 function pkDelete(id){
   var p=PK.filter(function(x){return x.id===id})[0];if(!p)return;
