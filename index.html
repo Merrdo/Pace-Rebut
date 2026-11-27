@@ -1767,7 +1767,15 @@ var KA=[
 ["tUp","t","Süre","Geri sayıma 5 dk ekle","Geri sayım hazırken süreyi 5 dakika artırır.","ArrowUp"],
 ["tDown","t","Süre","Geri sayımdan 5 dk çıkar","Geri sayım hazırken süreyi 5 dakika azaltır.","ArrowDown"],
 ["kPrev","k","Konular","Önceki ders","Konular sayfasında bir önceki dersi seçer.","ArrowLeft"],
-["kNext","k","Konular","Sonraki ders","Konular sayfasında bir sonraki dersi seçer.","ArrowRight"]
+["kNext","k","Konular","Sonraki ders","Konular sayfasında bir sonraki dersi seçer.","ArrowRight"],
+["qPrev","q","Sorular","Önceki soru","Açık soruda bir önceki soruya geçer.","ArrowLeft"],
+["qNext","q","Sorular","Sonraki soru","Açık soruda bir sonraki soruya geçer.","ArrowRight"],
+["qSolved","q","Sorular","Çözüldü işaretle","Açık soruyu çözüldü olarak işaretler, tekrar basınca işareti kaldırır.","Enter"],
+["qAnswer","q","Sorular","Cevabı göster","Açık sorunun cevabını gösterir veya gizler.", " "],
+["qDet","q","Sorular","Detay panelini aç","Kaynak, sayfa ve açıklama panelini açar.","ArrowDown"],
+["qDetOff","q","Sorular","Detay panelini kapat","Açık olan detay panelini kapatır.","ArrowUp"],
+["qDet2","q","Sorular","Detay panelini aç / kapat","Detay panelini açar, açıksa kapatır.","i"],
+["qClose","q","Sorular","Soruyu kapat","Açık soruyu kapatıp listeye döner.","x"]
 ],KDEF={},KB={on:1,map:{}};
 /* Nav kısayolları alt çubuktaki (.db) sıraya göre OTOMATİK üretilir: sayfa sırası değişir ya da yeni sayfa eklenirse atamalar kendiliğinden uyar. Kullanıcı özelleştirmeleri sayfa adına (nav:<data-v>) bağlıdır. */
 (function(){
@@ -2905,6 +2913,14 @@ document.addEventListener("keydown",function(e){
   if(kRun(id,e,{fs:fs,cs:cs,a:a,btn:btn})){e.preventDefault();if(btn&&(e.key===" "||e.key==="Enter"))a.blur()}
 });
 
+/* Soru görüntüleyici (ayrı modül) için köprü: basılan tuşa atanmış "q" kapsamlı kısa yolun adını verir */
+window.ddKey=function(e,sc){
+  if(!KB.on)return null;
+  var key=kbNorm(e),id=null;if(!key)return null;
+  KA.some(function(x){if(x[1]===sc&&kbGet(x[0])===key){id=x[0];return true}});
+  return id;
+};
+window.ddKeyOn=function(){return !!KB.on};
 /* Klavye kısa yolları sayfası */
 var KL={id:null},kbAt=0,kbTt=0,MAC=/Mac|iPhone|iPad/.test(navigator.platform||navigator.userAgent||""),
 KFX=[["Esc","Tam ekrandan çık","Açık pencereyi ve sayfayı kapatır."],["Tab","Odağı ilerlet","Düğmeler ve konular arasında gezer. Konuyu Boşluk ya da Enter ile işaretleyebilirsin."]];
@@ -2935,7 +2951,7 @@ function kbDupX(id){
 function kbDup(id){return kbDupX(id).map(function(b){return b[3]})}
 function kbRender(){
   var h="";
-  ["Genel","Süre","Konular"].forEach(function(g){
+  ["Genel","Süre","Konular","Sorular"].forEach(function(g){
     h+='<div class="grp">'+g+'</div><div class="card kbg">';
     KA.forEach(function(a){
       if(a[2]!==g)return;
@@ -3568,7 +3584,7 @@ function qvInertia(vx,vy){
 }
 function qvReset(){qvTok++;qvBusy=false;qvSw=null;var _i=$("#qvi");_i.style.transition="";_i.style.opacity="";cancelAnimationFrame(qvRaf);qvRaf=0;qvZ.s=1;qvZ.x=0;qvZ.y=0;qvPt={};qvG=null;qvTap=null;qvApply(false)}
 function qvDet(on){
-  var m=$("#qvm"),c=$("#qvp");if(on&&!m.classList.contains("has"))on=false;
+  var m=$("#qvm"),c=$("#qvp");if(on&&(!m.classList.contains("has")||qvZ.s>1.001))on=false;
   m.classList.toggle("open",!!on);c.classList.toggle("on",!!on);
 }
 function qvDetFill(it){
@@ -3733,10 +3749,29 @@ $("#qvr").onclick=function(){qvZoomC(1,true)};
   },{passive:false});
   window.addEventListener("resize",function(){if($("#qv").classList.contains("on"))qvReset()});
 })();
+function qvKey(id,e){
+  switch(id){
+    case"qPrev":qvGo(-1);break;
+    case"qNext":qvGo(1);break;
+    case"qSolved":if(!e.repeat)$("#qvk").click();break;
+    case"qAnswer":if(!e.repeat&&$("#qva").style.display!=="none")$("#qva").click();break;
+    case"qDet":qvDet(true);break;
+    case"qDetOff":qvDet(false);break;
+    case"qDet2":if(!e.repeat)qvDet(!$("#qvp").classList.contains("on"));break;
+    case"qClose":qvClose();break;
+  }
+}
 document.addEventListener("keydown",function(e){
   if(!$("#qv").classList.contains("on"))return;
   if(e.key==="Escape"){e.preventDefault();e.stopImmediatePropagation();if($("#qvp").classList.contains("on"))qvDet(false);else qvClose();return}
-  if(e.key==="ArrowLeft"||e.key==="ArrowRight"){e.preventDefault();e.stopImmediatePropagation();qvGo(e.key==="ArrowRight"?1:-1);return}
+  var a=document.activeElement;
+  if(a&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName))return;
+  if(!e.altKey&&!e.isComposing&&window.ddKey){
+    var id=window.ddKey(e,"q");
+    if(id){e.preventDefault();e.stopImmediatePropagation();if(a&&a.tagName==="BUTTON")a.blur();qvKey(id,e);return}
+  }
+  /* kısa yollar kapalıyken eski davranış: oklarla geçiş */
+  if(window.ddKeyOn&&!window.ddKeyOn()&&(e.key==="ArrowLeft"||e.key==="ArrowRight")){e.preventDefault();e.stopImmediatePropagation();qvGo(e.key==="ArrowRight"?1:-1);return}
   if(e.key==="+"||e.key==="="){e.preventDefault();qvZoomC(qvZ.s*1.6,true)}
   else if(e.key==="-"||e.key==="_"){e.preventDefault();qvZoomC(qvZ.s/1.6,true)}
   else if(e.key==="0"){e.preventDefault();qvZoomC(1,true)}
