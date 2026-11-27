@@ -1455,6 +1455,17 @@ html,body,*{scrollbar-width:none!important;-ms-overflow-style:none!important;scr
 .qsr:not([hidden]),.qsx:not([hidden]),.tzpfn:not([hidden]){animation:qsoftf .3s ease both}
 @keyframes qsoftf{from{opacity:0}to{opacity:1}}
 @media (prefers-reduced-motion:reduce){.qnr:not([hidden]),.qsr:not([hidden]),.qsx:not([hidden]),.tzpfn:not([hidden]){animation:none}}
+
+/* ===== Soru görüntüleyici: yeni açılış/kapanış =====
+   Eski sorun: .qv katmanının tamamı opacity + scale(.985) ile animasyonlanıyordu; koyu zemin yarı saydam
+   kaldığı için kenarlardan krem sayfa görünüyordu. Şimdi: zemin ayrı bir sabit katman (::before, hiç ölçeklenmez),
+   resim tıklanan karttan büyür (paylaşılan öğe geçişi), kontroller ayrıca yumuşakça belirir. */
+.qv{background:transparent;opacity:1;transform:none;transition:visibility 0s .46s}
+.qv.on{transition-delay:0s}
+.qv::before{content:"";position:absolute;inset:0;background:#111;opacity:0;transition:opacity .42s var(--ease)}
+.qv.on::before{opacity:1}
+/* hayalet katman kaldırıldı: uçuş artık #qvi üzerinde transform + clip-path ile yapılıyor */
+#qvi{transform-origin:50% 50%}
 </style>
 </head>
 <body>
@@ -3420,6 +3431,95 @@ function fill(it){
   var a=$("#qva");a.hidden=!it.ans;var an=String(it.ans||"").trim(),n=an.length;a.classList.toggle("tx",n>12||/\n/.test(an));a.style.setProperty("--fs",(n<=2?56:n===3?50:n===4?42:n===5?36:n===6?31:n===7?27:n===8?24:21)+"px");a.style.setProperty("--c",it.ders?lcol(it):"#e9e6e0");
   $("#qvav").textContent=it.ans||"";ansOn=false;a.classList.remove("on");$("#qvat").hidden=false;$("#qvr").hidden=true;
 }
+/* --- Açılış/kapanış efektleri ---
+   KÖK NEDEN DÜZELTMESİ (soru gözükmeme hatası): Eski sürüm gerçek resmi (#qvi) inline opacity:0 ile gizleyip üstte "hayalet" kopya
+   uçuruyor, resmi yalnızca hayaletin onfinish olayında geri açıyordu. Hayalet başka bir olayla silinir ya da animasyon iptal edilirse
+   (hızlı dokunuş, sayfa değişimi, arka plana geçiş) onfinish hiç tetiklenmiyor, resim sonsuza dek gizli kalıyordu.
+   Yeni tasarım: hiçbir şey GİZLENMEZ. Uçuş doğrudan #qvi üzerinde, yalnızca transform + clip-path ile (fill yok) çalışır; bitse, iptal
+   edilse, hata verse de resim doğal hâlinde görünür kalır. Ek olarak her açılışta qvHeal(), kapanıştan sonra qvHeal() ve bir bekçi
+   (qvWatch) resmi ne olursa olsun görünür duruma geri getirir. Animasyon layout (left/top/width/height) değil transform kullandığı için akıcıdır. */
+var qvAn=[],QVE="cubic-bezier(.22,1,.36,1)",qvHealT=0;
+function qvAnims(e){try{return e.getAnimations()}catch(x){return[]}}
+function qvHeal(){
+  var im=$("#qvi");if(!im)return;
+  im.style.opacity="";im.style.visibility="";im.style.transform="";im.style.clipPath="";
+  qvAnims(im).forEach(function(a){try{a.cancel()}catch(x){}});
+}
+function qvSeen(r){return r&&r.width>0&&r.height>0&&r.bottom>0&&r.top<innerHeight&&r.right>0&&r.left<innerWidth}
+/* Eleman gerçekten ekranda ve en üstte mi (başka bir sayfanın altında kalan kartı kaynak sayma) */
+function qvTop(el,r){
+  if(!document.elementsFromPoint)return true;
+  var x=Math.min(innerWidth-1,Math.max(0,(Math.max(r.left,0)+Math.min(r.right,innerWidth))/2)),
+      y=Math.min(innerHeight-1,Math.max(0,(Math.max(r.top,0)+Math.min(r.bottom,innerHeight))/2)),
+      st=document.elementsFromPoint(x,y);
+  for(var i=0;i<st.length;i++){var n=st[i];if(n.closest&&n.closest("#qv"))continue;return n===el||el.contains(n)}
+  return false;
+}
+/* Soruyu açan yerin (Sorular, Paket ekleme, Özet, Test) o an görünen resmi; yoksa null */
+function qvSrc(id){
+  var sid=String(id).replace(/[^\w-]/g,""),
+      c=[].slice.call(document.querySelectorAll('.qi[data-id="'+sid+'"]:not(.qgh),.tzqi[data-id="'+sid+'"]'));
+  var t=document.getElementById("tzrimg");if(t&&t.closest("#tzr.on"))c.push(t);
+  for(var k=0;k<c.length;k++){
+    var e=c[k];if(e.hidden)continue;
+    var r=e.getBoundingClientRect();
+    if(qvSeen(r)&&qvTop(e,r))return{el:e,r:r,rad:parseFloat(getComputedStyle(e).borderRadius)||0};
+  }
+  return null;
+}
+/* FLIP: resim kendi son konumunda durur; r0 alanını (kart) gösterecek transform + clip-path döner. Ölçek tek tip (bozulma yok), taşan kısım kırpılır. */
+function qvFlip(r0,r1,rad0,rad1){
+  var s=Math.max(r0.width/r1.width,r0.height/r1.height)||1,
+      dx=(r0.left+r0.width/2)-(r1.left+r1.width/2),dy=(r0.top+r0.height/2)-(r1.top+r1.height/2),
+      ix=Math.max(0,(r1.width-r0.width/s)/2),iy=Math.max(0,(r1.height-r0.height/s)/2);
+  return{
+    from:{transform:"translate("+dx+"px,"+dy+"px) scale("+s+")",clipPath:"inset("+iy+"px "+ix+"px round "+(rad0/s)+"px)"},
+    to:{transform:"translate(0px,0px) scale(1)",clipPath:"inset(0px 0px round "+rad1+"px)"}
+  };
+}
+function qvChrome(on){
+  qvAn.forEach(function(a){try{a.cancel()}catch(e){}});qvAn=[];
+  if(REDUCE||!document.body.animate)return;
+  var els=$("#qv").querySelectorAll(".qvb,.qvn,.qvt,.qvk");
+  [].forEach.call(els,function(e,k){
+    if(e.hidden)return;
+    qvAn.push(e.animate(on?[{opacity:0,translate:"0 10px"},{opacity:1,translate:"0 0"}]:[{opacity:1,translate:"0 0"},{opacity:0,translate:"0 6px"}],
+      {duration:on?400:180,delay:on?170+k*30:0,easing:QVE,fill:on?"backwards":"forwards"}));
+  });
+}
+function qvOpenFx(it,im){
+  qvHeal();qvChrome(true);
+  var r1=im.getBoundingClientRect(),src=r1.width?qvSrc(it.id):null;
+  if(src){
+    var f=qvFlip(src.r,r1,src.rad,parseFloat(getComputedStyle(im).borderRadius)||0);
+    im.animate([f.from,f.to],{duration:560,easing:QVE});
+    return;
+  }
+  im.animate([{opacity:0,transform:"scale(.94)"},{opacity:1,transform:"none"}],{duration:480,easing:QVE});
+}
+/* Resim kaynağı: URL iptal edilmiş/bozulmuşsa blob'dan yenisini üretip bir kez daha dener */
+function qvSetSrc(im,it,u){
+  im._rt=0;
+  im.onerror=function(){
+    if(im._rt)return;im._rt=1;
+    try{if(VU[it.id])URL.revokeObjectURL(VU[it.id]);VU[it.id]=URL.createObjectURL(it.blob);im.src=VU[it.id]}catch(e){}
+  };
+  im.src=u;
+}
+/* Bekçi: açılıştan sonra resim hâlâ görünmezse (hangi nedenle olursa olsun) otomatik düzeltir */
+function qvWatch(tok,n){
+  clearTimeout(qvHealT);n=n||0;
+  qvHealT=setTimeout(function(){
+    var v=$("#qv"),im=$("#qvi");
+    if(tok!==vTok||!v.classList.contains("on"))return;
+    var run=qvAnims(im).some(function(a){return a.playState==="running"||a.playState==="pending"});
+    if(run&&n<8){qvWatch(tok,n+1);return}
+    var cs=getComputedStyle(im);
+    if(parseFloat(cs.opacity)<.99||cs.visibility!=="visible"||im.style.opacity==="0")qvHeal();
+  },1100);
+}
+document.addEventListener("visibilitychange",function(){if(!document.hidden&&$("#qv").classList.contains("on"))qvWatch(vTok)});
+window.addEventListener("pageshow",function(){if($("#qv").classList.contains("on"))qvWatch(vTok)});
 /* dir: 1 ileri, -1 geri, 0 solma; belirtilmezse ilk açılış */
 function view(i,dir){
   if(i<0||i>=ITEMS.length)return;
@@ -3429,32 +3529,62 @@ function view(i,dir){
   var L=VL(),pos=L.indexOf(i);if(pos<0){L=[i];pos=0}
   $("#qvcn").textContent=pos+1;$("#qvct").textContent="/ "+L.length;$("#qvc").style.setProperty("--p",(pos+1)/L.length);flashCn();
   $("#qvp").hidden=pos<=0;$("#qvn").hidden=pos>=L.length-1;
+  qvWatch(tok);
   var dec=function(){return im.decode?im.decode().catch(function(){}):Promise.resolve()};
   if(!opened||typeof dir!=="number"||REDUCE||!im.animate){
-    im.src=u;fill(it);
-    Promise.race([dec(),new Promise(function(r){setTimeout(r,450)})]).then(function(){if(tok===vTok){v.classList.add("on");warmN(L,pos)}});
+    qvHeal();qvSetSrc(im,it,u);fill(it);
+    Promise.race([dec(),new Promise(function(r){setTimeout(r,450)})]).then(function(){
+      if(tok!==vTok)return;
+      if(!v.classList.contains("on")&&!REDUCE&&im.animate){try{qvOpenFx(it,im)}catch(e){qvHeal()}}
+      v.classList.add("on");warmN(L,pos);
+    });
     return;
   }
   var pre=new Image();pre.src=u;
   var pd=pre.decode?pre.decode().catch(function(){}):Promise.resolve();
-  im.getAnimations().forEach(function(a){a.cancel()});
+  qvAnims(im).forEach(function(a){try{a.cancel()}catch(e){}});
   var out=im.animate([{opacity:1,transform:"none"},{opacity:0,transform:"translateX("+(-14*dir)+"px)"}],{duration:110,easing:"ease-out",fill:"forwards"});
   Promise.all([out.finished,pd]).then(function(){
     if(tok!==vTok)return;
-    im.src=u;fill(it);return dec();
+    qvSetSrc(im,it,u);fill(it);return dec();
   }).then(function(){
     if(tok!==vTok)return;
-    im.getAnimations().forEach(function(a){a.cancel()});
+    qvAnims(im).forEach(function(a){try{a.cancel()}catch(e){}});
     im.animate([{opacity:0,transform:"translateX("+(14*dir)+"px)"},{opacity:1,transform:"none"}],{duration:260,easing:"cubic-bezier(.25,.8,.25,1)"});
     warmN(L,pos);
-  },function(){});
+  },function(){if(tok===vTok)qvHeal()});
 }
 function closeV(){
+  var qim=$("#qvi"),qit=ITEMS[cur],qv=$("#qv"),qwas=qv.classList.contains("on"),qfx=qwas&&!REDUCE&&!!qim.animate,qr0=null,qs=null;
+  if(qfx){zoomReset(false);qr0=qim.getBoundingClientRect();if(qit)qs=qvSrc(qit.id)}
   VLO=null;var tmo=TMO;TMO=null;if(tmo&&tmo.close)setTimeout(tmo.close,0);
   setTimeout(function(){if(!TMO)$("#qv").classList.remove("tm")},420);
   if(fsOn)setFs(false,true);zoomReset(false);
-  $("#qv").classList.remove("on");cur=-1;if(UNS)applyFilter();sheet(false);dlg(false);menu(false);vTok++;
-  setTimeout(function(){if(cur<0){Object.keys(VU).forEach(function(k){URL.revokeObjectURL(VU[k])});VU={}}},400);
+  qv.classList.remove("on");cur=-1;if(UNS)applyFilter();sheet(false);dlg(false);menu(false);vTok++;clearTimeout(qvHealT);
+  if(qfx){
+    qvChrome(false);
+    var done=false;
+    if(qs&&qr0&&qr0.width){
+      try{qs.el.scrollIntoView({block:"nearest",behavior:"instant"})}catch(e){}
+      var rc=qs.el.getBoundingClientRect(),rn=qim.getBoundingClientRect();
+      if(qvSeen(rc)&&rn.width){
+        done=true;
+        var rad=parseFloat(getComputedStyle(qim).borderRadius)||0,
+            A=qvFlip(qr0,rn,rad,rad).from,B=qvFlip(rc,rn,rad,qs.rad).from;
+        qvAnims(qim).forEach(function(a){try{a.cancel()}catch(e){}});
+        A.opacity=1;B.opacity=1;A.offset=0;B.offset=.8;
+        var C={transform:B.transform,clipPath:B.clipPath,opacity:0,offset:1};
+        qim.animate([A,B,C],{duration:460,easing:QVE,fill:"forwards"});
+      }
+    }
+    if(!done){
+      qvAnims(qim).forEach(function(a){try{a.cancel()}catch(e){}});
+      qim.animate([{opacity:1,transform:"none"},{opacity:0,transform:"scale(.96)"}],{duration:280,easing:QVE,fill:"forwards"});
+    }
+  }
+  /* Görüntüleyici gizlendikten sonra resmi mutlaka doğal (görünür) hâline döndür: sonraki açılış hiçbir kalıntıyla başlamaz */
+  setTimeout(function(){if(cur<0&&!$("#qv").classList.contains("on"))qvHeal()},700);
+  setTimeout(function(){if(cur<0){Object.keys(VU).forEach(function(k){URL.revokeObjectURL(VU[k])});VU={}}},800);
 }
 function del(){
   var it=ITEMS[cur];if(!it)return;var keep=cur;dlg(false);
@@ -4453,7 +4583,7 @@ function pvOpen(id){
     h+='<div class="tzpgd tzpvg">';
     ids.forEach(function(i,k){
       var it=im[i],u=URL.createObjectURL(it.thumb||it.blob);PVU.push(u);
-      h+='<button type="button" class="tzpi tzqi" data-i="'+k+'" style="--i:'+k+'" aria-label="Soru '+(k+1)+'"><img alt="Soru" decoding="async" draggable="false" src="'+u+'">'+(it.ders?'<span class="dc" style="--c:'+Q.lcol(it)+'">'+esc(it.g+" · "+it.ders)+'</span>':'')+(it.solved?'<span class="sv">Çözüldü</span>':'')+'<span class="nb">'+(k+1)+'</span></button>';
+      h+='<button type="button" class="tzpi tzqi" data-i="'+k+'" data-id="'+i+'" style="--i:'+k+'" aria-label="Soru '+(k+1)+'"><img alt="Soru" decoding="async" draggable="false" src="'+u+'">'+(it.ders?'<span class="dc" style="--c:'+Q.lcol(it)+'">'+esc(it.g+" · "+it.ders)+'</span>':'')+(it.solved?'<span class="sv">Çözüldü</span>':'')+'<span class="nb">'+(k+1)+'</span></button>';
     });
     h+='</div>';
   }
