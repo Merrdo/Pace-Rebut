@@ -3639,8 +3639,19 @@ function qvInfo(it,d){
   $("#qvnl").disabled=i<=0;$("#qvnr").disabled=i<0||i>=n-1;
   if(d&&$("#qvmt").animate)$("#qvmt").animate([{opacity:0,transform:"translateX("+(d*10)+"px)"},{opacity:1,transform:"none"}],{duration:300,easing:"cubic-bezier(.22,1,.36,1)"});
 }
+var qvHook=null;
+/* Başka sayfalardan (paket sayfası, paket editörü) açılış: list = soru kimlikleri (gezinme sırası), hook = görüntüleyici kapanınca çağrılır */
+function qvOpenList(id,list,hook){
+  var by={};ITEMS.forEach(function(x){by[x.id]=x});
+  var l=(list||[]).map(function(v){return by[v]}).filter(Boolean).map(function(x){return x.id}),it=by[id];
+  if(!it||l.indexOf(it.id)<0)return;
+  qvHook=hook||null;qvL=l;
+  qvReset();qvSetImg(it);qvInfo(it,0);
+  $("#qv").classList.add("on");
+}
 function qvOpen(id){
   var it=ITEMS.filter(function(x){return x.id===id})[0];if(!it)return;
+  qvHook=null;
   qvL=ITEMS.filter(match).map(function(x){return x.id});
   if(qvL.indexOf(id)<0)qvL=ITEMS.map(function(x){return x.id});
   qvReset();qvSetImg(it);qvInfo(it,0);
@@ -3682,6 +3693,7 @@ function qvSlide(it,d){
 function qvClose(){
   var v=$("#qv");if(!v.classList.contains("on"))return;
   v.classList.remove("on");
+  if(qvHook){var hk=qvHook;qvHook=null;try{hk()}catch(e){}}
   setTimeout(function(){var im=$("#qvi");if(!v.classList.contains("on")){qvReset();if(im._u){URL.revokeObjectURL(im._u);im._u=null;im.removeAttribute("src")}}},300);
 }
 $("#qvx").onclick=qvClose;
@@ -3851,7 +3863,7 @@ $("#qsrc").onclick=function(){qk(true)};$("#qkx").onclick=$("#qkb").onclick=func
 document.addEventListener("keydown",function(e){if(qkOn&&e.key==="Escape"){qk(false);e.preventDefault();e.stopImmediatePropagation()}},true);
 
 /* Test ve Paket modülü için köprü */
-window.ddQ={items:function(){return ITEMS},lcol:lcol,toast:toast,mark:function(map){
+window.ddQ={items:function(){return ITEMS},lcol:lcol,toast:toast,open:qvOpenList,mark:function(map){
   var ch=[];ITEMS.forEach(function(it){if(Object.prototype.hasOwnProperty.call(map,it.id)){var v=!!map[it.id];if(!!it.solved!==v){it.solved=v;if(v)it.solvedTs=Date.now();else delete it.solvedTs;ch.push(it)}}});
   if(!ch.length)return Promise.resolve(0);
   render();
@@ -4200,7 +4212,7 @@ function peOpen(pack,preset){
     if(k<NF)bt.style.setProperty("--i",k);
     bt.dataset.id=it.id;bt.dataset.f=(it.g||"")+"|"+(it.ders||"");bt.dataset.g=it.g||"";
     bt.setAttribute("aria-label","Soruyu aç");
-    bt.innerHTML='<img alt="Soru" decoding="async" loading="lazy" draggable="false" src="'+u+'">'+(it.ders?'<span class="qdc" style="--c:'+Q.lcol(it)+'">'+esc(it.g+" · "+it.ders)+'</span>':'')+'<span class="qck">'+TICK+'</span>'+(it.solved?'<span class="qok" aria-hidden="true"><svg viewBox="0 0 24 24"><path pathLength="1" d="M4.5 12.8l5 5L19.5 7"/></svg></span>':'');
+    bt.innerHTML='<img alt="Soru" decoding="async" loading="lazy" draggable="false" src="'+u+'">'+(it.ders?'<span class="qdc" style="--c:'+Q.lcol(it)+'">'+esc(it.g+" · "+it.ders)+'</span>':'')+'<span class="qck">'+TICK+'</span>'+'<span class="qok" aria-hidden="true"><svg viewBox="0 0 24 24"><path pathLength="1" d="M4.5 12.8l5 5L19.5 7"/></svg></span>';
     bt._h=" "+ordNorm([it.g,it.ders,it.book,it.page?"sayfa "+it.page:"",it.note].join(" "))+" ";
     return bt;
   }
@@ -4528,11 +4540,22 @@ function pvOpen(id){
     h+='<div class="tzpgd tzpvg">';
     ids.forEach(function(i,k){
       var it=im[i],u=URL.createObjectURL(it.thumb||it.blob);PVU.push(u);
-      h+='<button type="button" class="tzpi tzqi'+(it.solved?" ok":"")+'" data-i="'+k+'" data-id="'+i+'" style="--i:'+k+'" aria-label="Soru '+(k+1)+'"><img alt="Soru" decoding="async" draggable="false" src="'+u+'">'+(it.ders?'<span class="dc" style="--c:'+Q.lcol(it)+'">'+esc(it.g+" · "+it.ders)+'</span>':'')+(it.solved?'<span class="qok" aria-hidden="true"><svg viewBox="0 0 24 24"><path pathLength="1" d="M4.5 12.8l5 5L19.5 7"/></svg></span>':'')+'<span class="nb">'+(k+1)+'</span></button>';
+      h+='<button type="button" class="tzpi tzqi'+(it.solved?" ok":"")+'" data-i="'+k+'" data-id="'+i+'" style="--i:'+k+'" aria-label="Soru '+(k+1)+'"><img alt="Soru" decoding="async" draggable="false" src="'+u+'">'+(it.ders?'<span class="dc" style="--c:'+Q.lcol(it)+'">'+esc(it.g+" · "+it.ders)+'</span>':'')+'<span class="qok" aria-hidden="true"><svg viewBox="0 0 24 24"><path pathLength="1" d="M4.5 12.8l5 5L19.5 7"/></svg></span>'+'<span class="nb">'+(k+1)+'</span></button>';
     });
     h+='</div>';
   }
   $("#tzpvw").innerHTML=h;$("#tzpv").scrollTop=0;$("#tzpv").classList.add("on");
+}
+/* Soru sayfası kapanınca: tikleri güncelle, silinenleri kaldır, numaraları yeniden diz */
+function pvSync(){
+  var by=imap(),cards=[].slice.call(document.querySelectorAll("#tzpvw .tzqi"));
+  PV.ids=PV.ids.filter(function(i){return by[i]});
+  var k=0;
+  cards.forEach(function(c){
+    var it=by[c.dataset.id];
+    if(!it){c.remove();return}
+    c.dataset.i=k;c.classList.toggle("ok",!!it.solved);var nb=c.querySelector(".nb");if(nb)nb.textContent=k+1;c.setAttribute("aria-label","Soru "+(k+1));k++;
+  });
 }
 function pvClose(){pvColSet(false);
   $("#tzpv").classList.remove("on");var u=PVU;PVU=[];
@@ -4549,6 +4572,8 @@ $("#tzpv").addEventListener("click",function(e){
     setTimeout(function(){pvColSet(false)},160);return}
   if(!t.closest("#tzcw"))pvColSet(false);
   if(t.closest("#tzpvx")){pvClose();return}
+  var qc=t.closest(".tzqi");
+  if(qc){var qid=PV.ids[+qc.dataset.i];if(qid!=null)Q.open(qid,PV.ids,pvSync);return}
   if(t.closest("[data-a=pvgo]")){pkStart(PV.id);return}
   if(t.closest("[data-a=pvst]")){pdOpen(PV.id);return}
 });
@@ -4661,8 +4686,21 @@ $("#tzpg").onclick=function(e){
   var b=e.target.closest(".qi");if(!b)return;
   if(peSup>1&&Date.now()-peSup<400)return;
   var id=b.dataset.id;
-  if(Object.keys(PE.sel).length){if(PE.sel[id])delete PE.sel[id];else PE.sel[id]=1;b.classList.toggle("sel",!!PE.sel[id]);peCount()}
+  if(Object.keys(PE.sel).length){if(PE.sel[id])delete PE.sel[id];else PE.sel[id]=1;b.classList.toggle("sel",!!PE.sel[id]);peCount();return}
+  var by=imap(),it=by[id];if(!it)return;
+  Q.open(it.id,peVis().map(function(c){return c.dataset.id}),peSync);
 };
+/* Soru sayfası kapanınca: çözüldü tiklerini güncelle, silinen soruları kartlardan kaldır */
+function peSync(){
+  var by=imap(),g=$("#tzpg"),gone=false;
+  [].slice.call(g.children).forEach(function(c){
+    if(c.classList.contains("qgh"))return;
+    var it=by[c.dataset.id];
+    if(!it){delete PE.sel[c.dataset.id];c.remove();gone=true;return}
+    c.classList.toggle("ok",!!it.solved);
+  });
+  if(gone)PE.sel=PE.sel;peCount();
+}
 (function(){
   var g=$("#tzpg"),t=0,sx=0,sy=0,tg=null,LP=450;
   function cancel(){clearTimeout(t);t=0;tg=null}
