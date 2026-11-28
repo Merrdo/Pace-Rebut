@@ -671,11 +671,11 @@ html[data-theme=dark] .c1{--nl:#5aa2ff}
 .c1w span{padding:14px 10px 0;font-size:19px;font-weight:500;color:var(--fg)}
 .c1w span:nth-child(6),.c1w span:nth-child(7){color:var(--dim)}
 
-.c1dg .c1nl{height:2px;margin-top:-1px;border-radius:2px;box-shadow:0 0 10px color-mix(in srgb,var(--nl) 55%,transparent)}
-.c1dg .c1nl:before{left:-6px;top:-5px;width:12px;height:12px;box-shadow:none}
+.c1dg .c1nl{height:2px;margin-top:-1px;border-radius:2px;box-shadow:0 0 0 1px color-mix(in srgb,var(--bg) 75%,transparent)}
+.c1dg .c1nl:before{left:-6px;top:-5px;width:12px;height:12px;box-shadow:0 0 0 2px color-mix(in srgb,var(--bg) 75%,transparent)}
 .c1dg .c1nl.wk:after{right:auto;left:10px}
 .c1dg .c1nl.wk.ov:after{left:auto;right:calc(100%*(var(--i) + 1) + 12px)}
-.c1dg .c1nl:after{content:attr(data-t);position:absolute;right:calc(100%*(var(--i) + 1) + 12px);top:50%;transform:translateY(-50%);padding:3px 8px 2px;border-radius:999px;background:var(--nl);color:#fff;font:700 12px/1.3 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;white-space:nowrap;box-shadow:0 3px 10px -2px color-mix(in srgb,var(--nl) 60%,transparent)}
+.c1dg .c1nl:after{content:attr(data-t);position:absolute;right:calc(100%*(var(--i) + 1) + 12px);top:50%;transform:translateY(-50%);padding:3px 8px 2px;border-radius:999px;background:var(--nl);color:#fff;font:700 12px/1.3 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;white-space:nowrap;box-shadow:0 0 0 2px color-mix(in srgb,var(--bg) 75%,transparent)}
 .c1hl{transition:opacity .25s var(--ease)}
 .c1hl.nh{opacity:0}
 .c1{--gw:76px}
@@ -4004,7 +4004,7 @@ document.addEventListener("keydown",function(e){
       /* Hafta: etiket çizginin başında durur; o saatte görev varsa saat sütununa geçer */
       var c=g.querySelectorAll(".c1wcol")[+l.style.getPropertyValue("--i")||0],t=c?c.querySelectorAll(".wtc"):[];
       ov=false;
-      Array.prototype.forEach.call(t,function(x){if(y>x.offsetTop-14&&y<x.offsetTop+x.offsetHeight+14)ov=true});
+      Array.prototype.forEach.call(t,function(x){var tp=parseFloat(x.style.top)||0,ht=parseFloat(x.style.height)||0;if(y>tp-14&&y<tp+ht+14)ov=true});
       l.classList.toggle("ov",ov);
     }
     if(!ov)return;
