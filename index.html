@@ -465,21 +465,51 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 @media (max-width:767px){.app:before{content:"Bu uygulama şimdilik tablet için tasarlandı.";position:fixed;inset:0;z-index:9;display:grid;place-items:center;background:var(--bg);color:var(--dim);text-align:center;padding:30px}}
 
 /* Takvim 1 */
-.c1{--ln:color-mix(in srgb,var(--fg) 16%,var(--bg));position:absolute;inset:0;display:flex;flex-direction:column;padding:46px 0 0}
+.c1{--ln:color-mix(in srgb,var(--fg) 16%,var(--bg));--tn:color-mix(in srgb,var(--fg) 7%,transparent);position:absolute;inset:0;display:flex;flex-direction:column;padding:46px 0 0;overflow:hidden}
 .c1h{flex:none;display:flex;align-items:baseline;gap:10px;margin:0 24px 22px;font-size:38px;line-height:1;font-weight:800;letter-spacing:-.02em;color:var(--fg)}
-.c1h em{font-style:normal;font-weight:500;color:var(--dim)}
+.c1h button{font:inherit;letter-spacing:inherit;color:var(--dim);font-weight:500;background:none;border:0;padding:0;cursor:pointer;transition:color .4s var(--ease)}
+.c1h button:active{color:var(--fg)}
+.c1b{flex:1;min-height:0;display:flex;flex-direction:column}
+.c1b.an{animation:c1in .7s var(--ease) backwards}
+@keyframes c1in{from{opacity:0;transform:translateX(calc(var(--dx,0)*22px)) scale(.992)}to{opacity:1;transform:none}}
 .c1w{flex:none;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));margin-bottom:10px}
 .c1w span{padding:0 10px;text-align:right;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
 .c1g{flex:1;min-height:0;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:1px;background:var(--ln);border-top:1px solid var(--ln);overflow:hidden}
 .c1t{display:flex;justify-content:flex-end;align-items:flex-start;padding:8px 10px;min-width:0;min-height:0;background:var(--bg);color:var(--fg);font-size:14px;font-weight:700}
-.c1m{position:absolute;top:44px;right:24px;z-index:2;width:42px;height:42px;display:grid;place-items:center;border-radius:999px;background:color-mix(in srgb,var(--fg) 7%,var(--bg));color:var(--fg);transition:transform .5s var(--sp)}
-.c1m:active{transform:scale(.92)}
-.c1m svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
-.app.c1on:not(.c1dk) .dock{transform:translate(-50%,160%);opacity:0;pointer-events:none}
-.c1t b{display:grid;place-items:center;min-width:26px;height:26px;padding:0 6px;border-radius:999px;font:inherit}
 .c1t:nth-child(7n+6),.c1t:nth-child(7n+7){background:color-mix(in srgb,var(--fg) 5%,var(--bg))}
+.c1t b{display:grid;place-items:center;min-width:26px;height:26px;padding:0 6px;border-radius:999px;font:inherit}
 .c1t.o{color:var(--dim);font-weight:500}
 .c1t.t b{background:var(--fg);color:var(--bg)}
+.c1y{flex:1;min-height:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));gap:1px;background:var(--ln);border-top:1px solid var(--ln);overflow:hidden}
+@media (orientation:portrait){.c1y{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(4,minmax(0,1fr))}}
+.c1ym{display:flex;flex-direction:column;gap:8px;padding:14px 16px 12px;min-width:0;min-height:0;background:var(--bg);color:var(--fg);text-align:left;cursor:pointer;transition:background .5s var(--ease),transform .5s var(--sp)}
+.c1ym:active{transform:scale(.985)}
+@media (hover:hover){.c1ym:hover{background:color-mix(in srgb,var(--fg) 4%,var(--bg))}}
+.c1mn{display:block;font-size:15px;font-weight:800}
+.c1ym.cur .c1mn:after{content:"";display:inline-block;width:6px;height:6px;margin-left:7px;border-radius:50%;background:var(--fg);vertical-align:middle}
+.c1mg{flex:1;min-height:0;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));grid-template-rows:repeat(6,minmax(0,1fr));align-items:center;justify-items:center;font-size:11px;font-weight:600;color:var(--fg)}
+.c1mg .t{display:grid;place-items:center;min-width:20px;height:20px;border-radius:999px;background:var(--fg);color:var(--bg)}
+.c1m{position:absolute;top:44px;right:24px;z-index:4;width:42px;height:42px;display:grid;place-items:center;border-radius:999px;background:var(--tn);color:var(--fg);transition:transform .5s var(--sp),background .5s var(--ease),color .5s var(--ease)}
+.c1m:active{transform:scale(.92)}
+.c1m svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.c1.po .c1m{background:var(--fg);color:var(--bg)}
+.c1s{position:absolute;inset:0;z-index:2;visibility:hidden}
+.c1.po .c1s{visibility:visible}
+.c1p{position:absolute;top:96px;right:24px;z-index:3;width:min(330px,calc(100% - 48px));display:flex;flex-direction:column;gap:8px;padding:8px;border-radius:30px;background:var(--glass,rgba(255,255,255,.9));-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:var(--glass-sh,0 10px 32px rgba(0,0,0,.1));transform-origin:top right;opacity:0;visibility:hidden;transform:translateY(-12px) scale(.94);pointer-events:none;transition:transform .7s var(--ease),opacity .45s var(--ease),visibility 0s .7s}
+.c1.po .c1p{opacity:1;visibility:visible;transform:none;pointer-events:auto;transition-delay:0s}
+.c1seg{--s:0;position:relative;display:grid;grid-template-columns:1fr 1fr;padding:5px;border-radius:999px;background:var(--tn)}
+.c1seg i{position:absolute;top:5px;left:5px;width:calc(50% - 5px);height:calc(100% - 10px);border-radius:999px;background:var(--fg);transform:translateX(calc(var(--s)*100%));transition:transform .65s var(--ease)}
+.c1seg button{position:relative;z-index:1;height:38px;border-radius:999px;font-size:14px;font-weight:700;color:var(--fg);transition:color .35s var(--ease)}
+.c1seg button.on{color:var(--bg)}
+.c1nv{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:2px 2px 0}
+.c1nv button{flex:none;width:38px;height:38px;display:grid;place-items:center;border-radius:999px;background:var(--tn);color:var(--fg);transition:transform .5s var(--sp)}
+.c1nv button:active{transform:scale(.9)}
+.c1nv svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.c1nt{flex:1;text-align:center;font-size:16px;font-weight:800;letter-spacing:-.01em;color:var(--fg)}
+.c1ac{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.c1ac button{height:40px;border-radius:999px;background:var(--tn);color:var(--fg);font-size:13px;font-weight:700;transition:transform .5s var(--sp)}
+.c1ac button:active{transform:scale(.95)}
+@media (prefers-reduced-motion:reduce){.c1b.an{animation:none}.c1p,.c1seg i{transition:none}}
 /* Takvim */
 .card .chip{background:var(--surf2);color:#55524d}.card .chip.on{background:var(--fg);color:var(--bg)}
 .gl{margin-top:14px}.gr{display:flex;align-items:center;gap:12px;padding:10px 12px;margin-bottom:4px;border-radius:14px}.gl{--gk:#2fbf71;--gt:#1d8a50}.gl.w{--gk:#9b6cff;--gt:#6a3fd1}.gm{margin:18px 12px 6px;font-size:16px;font-weight:800}.gm:first-child{margin-top:4px}.gr.up{background:color-mix(in srgb,var(--gk) 16%,transparent)}.gr.pa{opacity:.5}.gr em{flex:none;font-style:normal;font-size:13px;font-weight:700;color:var(--gt)}.card .chip.on[data-lt=r]{background:#2fbf71;color:#fff}.card .chip.on[data-lt=w]{background:#9b6cff;color:#fff}.gr i{width:10px;height:10px;border-radius:50%;background:var(--gk);flex:none}.gr b{width:96px;flex:none;font:600 15px Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums}.gr span{flex:1;font-size:16px;font-weight:500}.gy{display:flex;align-items:center;gap:10px;margin-top:14px;flex-wrap:wrap}.gy b{font:600 20px Inter,system-ui,sans-serif;min-width:56px;text-align:center}
@@ -2138,7 +2168,17 @@ html[data-theme=dark]{color-scheme:dark;--bg:#000;--fg:#f4f4f2;--dim:#9c9a95;--s
       </div>
     </section>
     <section class="view" id="v-cal"><div class="cal" id="cal"></div><div class="cset" id="cset"></div></section>
-    <section class="view" id="v-cal1"><div class="c1" id="c1"><button class="c1m" id="c1m" type="button" aria-label="Menüyü göster / gizle"><svg viewBox="0 0 24 24"><path d="M5 7h14M5 12h14M5 17h14"/></svg></button><div class="c1h" id="c1h"></div><div class="c1w" id="c1w"></div><div class="c1g" id="c1g"></div></div></section>
+    <section class="view" id="v-cal1"><div class="c1" id="c1">
+      <button class="c1m" id="c1m" type="button" aria-label="Takvim paneli" aria-haspopup="dialog" aria-expanded="false"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="6.5" height="6.5" rx="2"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="2"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="2"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="2"/></svg></button>
+      <div class="c1h" id="c1h"></div>
+      <div class="c1b" id="c1b"></div>
+      <div class="c1s" id="c1s"></div>
+      <div class="c1p" id="c1p" role="dialog" aria-label="Takvim paneli" aria-hidden="true" inert>
+        <div class="c1seg" id="c1seg"><i></i><button type="button" data-v="m" class="on">Ay</button><button type="button" data-v="y">Yıl</button></div>
+        <div class="c1nv"><button type="button" data-a="p" aria-label="Önceki"><svg viewBox="0 0 24 24"><path d="M14.5 6l-6 6 6 6"/></svg></button><div class="c1nt" id="c1nt"></div><button type="button" data-a="n" aria-label="Sonraki"><svg viewBox="0 0 24 24"><path d="M9.5 6l6 6-6 6"/></svg></button></div>
+        <div class="c1ac"><button type="button" data-a="t">Bugün</button><button type="button" data-a="d">Sayfalar</button></div>
+      </div>
+    </div></section>
     <section class="view" id="v-questions"><div class="qw">
       <div class="qh"><h1>Sorular<em id="qcnt"></em></h1>
         <div class="qa">
@@ -3686,23 +3726,65 @@ document.addEventListener("keydown",function(e){
   }
 });
 
-/* Takvim 1: esit boyutlu, bitisik ay izgarasi */
+/* Takvim 1: ay / yil gorunumu ve panel */
 (function(){
-  var g=document.getElementById("c1g");if(!g)return;
+  var root=document.getElementById("c1");if(!root)return;
+  var E=function(i){return document.getElementById(i)};
   var AY=["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"],GN=["Pzt","Sal","Çar","Per","Cum","Cmt","Paz"];
-  var n=new Date(),y=n.getFullYear(),m=n.getMonth();
-  var off=(new Date(y,m,1).getDay()+6)%7,days=new Date(y,m+1,0).getDate(),rows=Math.ceil((off+days)/7),h="";
-  document.getElementById("c1h").innerHTML=AY[m]+" <em>"+y+"</em>";
-  document.getElementById("c1w").innerHTML=GN.map(function(x){return"<span>"+x+"</span>"}).join("");
-  for(var i=0;i<rows*7;i++){
-    var d=new Date(y,m,1-off+i),im=d.getMonth()===m;
-    h+='<div class="c1t'+(im?"":" o")+(im&&d.getDate()===n.getDate()?" t":"")+'"><b>'+d.getDate()+'</b></div>';
+  var ap=document.querySelector(".app"),hd=E("c1h"),bd=E("c1b"),pn=E("c1p"),sg=E("c1seg"),nt=E("c1nt"),mb=E("c1m");
+  var n=new Date(),T={y:n.getFullYear(),m:n.getMonth(),d:n.getDate()};
+  var S={v:"m",y:T.y,m:T.m};
+  function isT(y,m,d){return y===T.y&&m===T.m&&d===T.d}
+  function mon(){
+    var y=S.y,m=S.m,off=(new Date(y,m,1).getDay()+6)%7,days=new Date(y,m+1,0).getDate(),rows=Math.ceil((off+days)/7),c="";
+    for(var i=0;i<rows*7;i++){var d=new Date(y,m,1-off+i),im=d.getMonth()===m;c+='<div class="c1t'+(im?"":" o")+(im&&isT(y,m,d.getDate())?" t":"")+'"><b>'+d.getDate()+'</b></div>'}
+    return'<div class="c1w">'+GN.map(function(x){return"<span>"+x+"</span>"}).join("")+'</div><div class="c1g" style="grid-template-rows:repeat('+rows+',minmax(0,1fr))">'+c+'</div>';
   }
-  var ap=document.querySelector(".app"),mb=document.getElementById("c1m");
-  if(mb)mb.addEventListener("click",function(){ap.classList.toggle("c1dk")});
-  g.addEventListener("click",function(){ap.classList.remove("c1dk")});
-  g.style.gridTemplateRows="repeat("+rows+",minmax(0,1fr))";
-  g.innerHTML=h;
+  function yr(){
+    var y=S.y,h='<div class="c1y">';
+    for(var mo=0;mo<12;mo++){
+      var off=(new Date(y,mo,1).getDay()+6)%7,days=new Date(y,mo+1,0).getDate(),c="";
+      for(var i=0;i<42;i++){var d=i-off+1;c+=(d>=1&&d<=days)?'<span'+(isT(y,mo,d)?' class="t"':"")+'>'+d+'</span>':'<i></i>'}
+      h+='<button type="button" class="c1ym'+(y===T.y&&mo===T.m?" cur":"")+'" data-m="'+mo+'"><span class="c1mn">'+AY[mo]+'</span><span class="c1mg">'+c+'</span></button>';
+    }
+    return h+'</div>';
+  }
+  function draw(dx){
+    var y=S.v==="y";
+    hd.innerHTML=y?'<span>'+S.y+'</span>':'<span>'+AY[S.m]+'</span> <button type="button" id="c1yb" aria-label="Yıl görünümünü aç">'+S.y+'</button>';
+    nt.textContent=y?S.y:AY[S.m]+" "+S.y;
+    sg.style.setProperty("--s",y?1:0);
+    Array.prototype.forEach.call(sg.querySelectorAll("button"),function(b){b.classList.toggle("on",b.dataset.v===S.v)});
+    bd.innerHTML=y?yr():mon();
+    bd.style.setProperty("--dx",dx||0);
+    bd.classList.remove("an");void bd.offsetWidth;bd.classList.add("an");
+  }
+  function setP(o){
+    root.classList.toggle("po",o);pn.inert=!o;pn.setAttribute("aria-hidden",o?"false":"true");mb.setAttribute("aria-expanded",o?"true":"false");
+    if(o)ap.classList.remove("c1dk");
+  }
+  mb.addEventListener("click",function(){setP(!root.classList.contains("po"))});
+  E("c1s").addEventListener("click",function(){setP(false)});
+  document.addEventListener("keydown",function(e){if(e.key==="Escape"&&root.classList.contains("po"))setP(false)});
+  Array.prototype.forEach.call(document.querySelectorAll(".db"),function(b){b.addEventListener("click",function(){setP(false)})});
+  hd.addEventListener("click",function(e){if(e.target.id==="c1yb"){S.v="y";draw(0)}});
+  bd.addEventListener("click",function(e){
+    ap.classList.remove("c1dk");
+    var t=e.target.closest?e.target.closest(".c1ym"):null;
+    if(t){S.m=+t.dataset.m;S.v="m";draw(0)}
+  });
+  pn.addEventListener("click",function(e){
+    var b=e.target.closest?e.target.closest("button"):null;if(!b)return;
+    if(b.dataset.v){if(S.v!==b.dataset.v){S.v=b.dataset.v;draw(0)}return}
+    var a=b.dataset.a;
+    if(a==="p"||a==="n"){
+      var k=a==="n"?1:-1;
+      if(S.v==="y")S.y+=k;else{S.m+=k;if(S.m<0){S.m=11;S.y--}else if(S.m>11){S.m=0;S.y++}}
+      draw(k);
+    }else if(a==="t"){S.y=T.y;S.m=T.m;draw(0)}
+    else if(a==="d"){setP(false);ap.classList.add("c1dk")}
+  });
+  draw(0);
 })();
 
 /* Gezinme */
