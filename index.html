@@ -465,13 +465,17 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 @media (max-width:767px){.app:before{content:"Bu uygulama şimdilik tablet için tasarlandı.";position:fixed;inset:0;z-index:9;display:grid;place-items:center;background:var(--bg);color:var(--dim);text-align:center;padding:30px}}
 
 /* Takvim 1 */
-.c1{--ln:color-mix(in srgb,var(--fg) 16%,var(--bg));position:absolute;inset:0;display:flex;flex-direction:column;padding:34px 0 var(--dock-space)}
-.c1h{flex:none;display:flex;align-items:baseline;gap:10px;margin:0 24px 18px;font-size:34px;line-height:1;font-weight:800;letter-spacing:-.02em;color:var(--fg)}
+.c1{--ln:color-mix(in srgb,var(--fg) 16%,var(--bg));position:absolute;inset:0;display:flex;flex-direction:column;padding:46px 0 0}
+.c1h{flex:none;display:flex;align-items:baseline;gap:10px;margin:0 24px 22px;font-size:38px;line-height:1;font-weight:800;letter-spacing:-.02em;color:var(--fg)}
 .c1h em{font-style:normal;font-weight:500;color:var(--dim)}
-.c1w{flex:none;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));margin-bottom:8px}
+.c1w{flex:none;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));margin-bottom:10px}
 .c1w span{padding:0 10px;text-align:right;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
-.c1g{flex:1;min-height:0;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:1px;background:var(--ln);border-top:1px solid var(--ln);border-bottom:1px solid var(--ln);overflow:hidden}
+.c1g{flex:1;min-height:0;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:1px;background:var(--ln);border-top:1px solid var(--ln);overflow:hidden}
 .c1t{display:flex;justify-content:flex-end;align-items:flex-start;padding:8px 10px;min-width:0;min-height:0;background:var(--bg);color:var(--fg);font-size:14px;font-weight:700}
+.c1m{position:absolute;top:44px;right:24px;z-index:2;width:42px;height:42px;display:grid;place-items:center;border-radius:999px;background:color-mix(in srgb,var(--fg) 7%,var(--bg));color:var(--fg);transition:transform .5s var(--sp)}
+.c1m:active{transform:scale(.92)}
+.c1m svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.app.c1on:not(.c1dk) .dock{transform:translate(-50%,160%);opacity:0;pointer-events:none}
 .c1t b{display:grid;place-items:center;min-width:26px;height:26px;padding:0 6px;border-radius:999px;font:inherit}
 .c1t:nth-child(7n+6),.c1t:nth-child(7n+7){background:color-mix(in srgb,var(--fg) 5%,var(--bg))}
 .c1t.o{color:var(--dim);font-weight:500}
@@ -2134,7 +2138,7 @@ html[data-theme=dark]{color-scheme:dark;--bg:#000;--fg:#f4f4f2;--dim:#9c9a95;--s
       </div>
     </section>
     <section class="view" id="v-cal"><div class="cal" id="cal"></div><div class="cset" id="cset"></div></section>
-    <section class="view" id="v-cal1"><div class="c1" id="c1"><div class="c1h" id="c1h"></div><div class="c1w" id="c1w"></div><div class="c1g" id="c1g"></div></div></section>
+    <section class="view" id="v-cal1"><div class="c1" id="c1"><button class="c1m" id="c1m" type="button" aria-label="Menüyü göster / gizle"><svg viewBox="0 0 24 24"><path d="M5 7h14M5 12h14M5 17h14"/></svg></button><div class="c1h" id="c1h"></div><div class="c1w" id="c1w"></div><div class="c1g" id="c1g"></div></div></section>
     <section class="view" id="v-questions"><div class="qw">
       <div class="qh"><h1>Sorular<em id="qcnt"></em></h1>
         <div class="qa">
@@ -3694,6 +3698,9 @@ document.addEventListener("keydown",function(e){
     var d=new Date(y,m,1-off+i),im=d.getMonth()===m;
     h+='<div class="c1t'+(im?"":" o")+(im&&d.getDate()===n.getDate()?" t":"")+'"><b>'+d.getDate()+'</b></div>';
   }
+  var ap=document.querySelector(".app"),mb=document.getElementById("c1m");
+  if(mb)mb.addEventListener("click",function(){ap.classList.toggle("c1dk")});
+  g.addEventListener("click",function(){ap.classList.remove("c1dk")});
   g.style.gridTemplateRows="repeat("+rows+",minmax(0,1fr))";
   g.innerHTML=h;
 })();
@@ -3710,6 +3717,7 @@ $$(".db").forEach(function(b,n){b.onclick=function(){
   $("#dock").style.setProperty("--i",n);
   $$(".db").forEach(function(x){x.classList.toggle("on",x===b)});
   $$(".view").forEach(function(e){e.classList.toggle("on",e.id==="v-"+b.dataset.v)});
+  ap.classList.toggle("c1on",b.dataset.v==="cal1");ap.classList.remove("c1dk");
   (function(q){q.inert=!q.classList.contains("on");q.setAttribute("aria-hidden",q.inert?"true":"false")})($("#v-questions"));
 }});
 
