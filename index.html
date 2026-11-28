@@ -72,6 +72,7 @@ div.hl{margin-top:10px;font-size:20px;font-weight:700}
 div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);cursor:pointer;margin-top:2px}
 .grp{display:flex;align-items:center;gap:12px;font:800 22px/1.1 "Baloo 2",ui-rounded,system-ui,sans-serif;letter-spacing:-.3px;text-transform:none;color:var(--fg);margin:30px 2px 14px}
 .grp:after{content:"";flex:1;height:1px;background:var(--surf2)}
+.sp .grp:after,.sheet .grp:after{display:none}
 .sg{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .sub{position:relative;text-align:left;padding:16px 16px 34px;border-radius:20px;background:var(--surf);box-shadow:0 1px 0 rgba(17,17,17,.04),0 6px 16px -8px rgba(17,17,17,.12);transition:background .4s var(--ease),transform .5s var(--sp),box-shadow .4s var(--ease)}
 .sub:active{transform:scale(.96)}
@@ -2392,6 +2393,11 @@ var KA=[
 ["tDown","t","Süre","Geri sayımdan 5 dk çıkar","Geri sayım hazırken süreyi 5 dakika azaltır.","ArrowDown"],
 ["kPrev","k","Konular","Önceki ders","Konular sayfasında bir önceki dersi seçer.","ArrowLeft"],
 ["kNext","k","Konular","Sonraki ders","Konular sayfasında bir sonraki dersi seçer.","ArrowRight"],
+["cPrev","c","Takvim","Önceki dönem","Takvim 1 sayfasında bir önceki günü, haftayı, ayı ya da yılı açar.","ArrowLeft"],
+["cNext","c","Takvim","Sonraki dönem","Takvim 1 sayfasında bir sonraki günü, haftayı, ayı ya da yılı açar.","ArrowRight"],
+["cUp","c","Takvim","Önceki görünüm","Gün, Hafta, Ay, Yıl panelinde bir sola geçer (Yıl → Ay → Hafta → Gün).","ArrowUp"],
+["cDown","c","Takvim","Sonraki görünüm","Gün, Hafta, Ay, Yıl panelinde bir sağa geçer (Gün → Hafta → Ay → Yıl).","ArrowDown"],
+["cToday","c","Takvim","Bugüne dön","Takvim 1 sayfasında bugünün tarihine döner.","t"],
 ["qPrev","q","Sorular","Önceki soru","Açık soruda bir önceki soruya geçer.","ArrowLeft"],
 ["qNext","q","Sorular","Sonraki soru","Açık soruda bir sonraki soruya geçer.","ArrowRight"],
 ["qSolved","q","Sorular","Çözüldü işaretle","Açık soruyu çözüldü olarak işaretler, tekrar basınca işareti kaldırır.","Enter"],
@@ -2667,7 +2673,7 @@ function buildSettings(){
   '<div class="sp-main" id="spm"><div class="sp-in">'+
     '<section class="sp-sec" id="sp-gen"><div class="grp">Genel</div><div class="sp-g">'+
       '<div class="card lc"><div><h2>Dersler</h2><p>TYT ve AYT derslerini sırala, renklerini değiştir, yeni ders ekle.</p><div class="dots">'+vis().map(function(s){return'<i style="--c:'+s.c+'"></i>'}).join("")+'</div></div><button class="btn pr" id="ld">Düzenle</button></div>'+
-      '<div class="card lc kbc"><button class="kbo" id="kbo"><div><h2>Klavye kısa yolları</h2><p>Sayfa geçişi, süre ve konular için kısa yolları gör ve özelleştir.</p></div><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button><button class="tg'+(KB.on?" on":"")+'" data-kb="tg" aria-label="Klavye kısa yolları"><i></i></button></div>'+
+      '<div class="card lc kbc"><button class="kbo" id="kbo"><div><h2>Klavye kısa yolları</h2><p>Sayfa geçişi, süre, konular ve takvim için kısa yolları gör ve özelleştir.</p></div><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button><button class="tg'+(KB.on?" on":"")+'" data-kb="tg" aria-label="Klavye kısa yolları"><i></i></button></div>'+
       '<div class="card lc wide"><div><h2>Soruda basılı tutma</h2><p>Bir soruya basılı tutunca ne olsun? İkisini deneyip birini seç.</p></div><div class="lpm" id="lpm"><button type="button" data-m="pop">Bastığım yerde panel</button><button type="button" data-m="bar">Seçim + alt çubuk</button></div></div>'+
     '</div></section>'+
     '<section class="sp-sec" id="sp-gor"><div class="grp">Görünüm</div><p class="sp-lead">Uygulamanın arkaplanını seç. Koyu tema saf siyah kullanır, OLED ekranlarda pil tasarrufu sağlar ve gece gözünü yormaz.</p><div class="sp-g"><div class="card wide"><h2>Arkaplan</h2><p>Tüm ekranlara anında uygulanır, bu cihazda hatırlanır.</p><div class="bgp" id="bgp" role="radiogroup" aria-label="Arkaplan">'+
@@ -3829,11 +3835,17 @@ document.addEventListener("keydown",function(e){
     bd.addEventListener("pointercancel",function(){id=null});
     bd.addEventListener("click",function(e){if(Date.now()-sup<350){e.stopPropagation();e.preventDefault()}},true);
   })();
-  document.addEventListener("keydown",function(e){
-    if(e.defaultPrevented||e.ctrlKey||e.metaKey||e.altKey||e.shiftKey)return;
-    if(!E("v-cal1").classList.contains("on"))return;
-    if(e.key==="ArrowLeft"||e.key==="ArrowRight"){var k=e.key==="ArrowRight"?1:-1;e.preventDefault();go(function(){S.dt=step(k)},k)}
-  });
+  /* Klavye kısa yolları (Ayarlar > Klavye kısa yolları > Takvim) bu işlevi çağırır */
+  window.c1Act=function(id){
+    if(id==="cPrev"||id==="cNext"){var k=id==="cNext"?1:-1;go(function(){S.dt=step(k)},k);return true}
+    if(id==="cUp"||id==="cDown"){
+      var o=["d","w","m","y"],i=o.indexOf(S.v)+(id==="cDown"?1:-1);
+      if(i>=0&&i<o.length)go(function(){S.v=o[i]},0);
+      return true;
+    }
+    if(id==="cToday"){if(!same(S.dt,TD))go(function(){S.dt=TD},S.dt<TD?1:-1);return true}
+    return false;
+  };
   setInterval(function(){var l=bd.querySelector(".c1nl");if(l){var t=new Date();l.style.setProperty("--m",t.getHours()*60+t.getMinutes())}},30000);
   go(function(){},0);
 })();
@@ -3873,6 +3885,7 @@ function kRun(id,e,c){
       if(id.indexOf("nav:")===0){k=$('.db[data-v="'+id.slice(4)+'"]');if(k&&!k.classList.contains("on"))k.click();return true}
       break;
     case"fs":kFs();return true;
+    case"cPrev":case"cNext":case"cUp":case"cDown":case"cToday":return window.c1Act?window.c1Act(id):false;
     case"tToggle":if(!e.repeat)go();return true;
     case"tReset":reset();return true;
     case"tSkip":if(MODE!=="pm")return false;skip();return true;
@@ -3902,7 +3915,7 @@ document.addEventListener("keydown",function(e){
     return;
   }
   var key=kbNorm(e);if(!key)return;
-  var sc=v==="timer"?"t":v==="topics"?"k":"",id=null;
+  var sc=v==="timer"?"t":v==="topics"?"k":v==="cal1"?"c":"",id=null;
   KA.some(function(x){if((x[1]==="g"||x[1]===sc)&&kbGet(x[0])===key){id=x[0];return true}});
   if(!id)return;
   var btn=!!a&&a.tagName==="BUTTON";
@@ -3947,7 +3960,7 @@ function kbDupX(id){
 function kbDup(id){return kbDupX(id).map(function(b){return b[3]})}
 function kbRender(){
   var h="";
-  ["Genel","Süre","Konular","Sorular"].forEach(function(g){
+  ["Genel","Süre","Konular","Takvim","Sorular"].forEach(function(g){
     h+='<div class="grp">'+g+'</div><div class="card kbg">';
     KA.forEach(function(a){
       if(a[2]!==g)return;
