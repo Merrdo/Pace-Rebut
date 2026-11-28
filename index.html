@@ -5,7 +5,32 @@
 <title>DD</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
 <meta name="theme-color" content="#f4f2ee">
-<meta name="color-scheme" content="light">
+<meta name="color-scheme" content="light dark">
+<script>
+/* Tema: "light" (krem) ya da "dark" (saf siyah). Tercih "dd-theme" anahtarında saklanır, yedeğe dahildir. */
+(function(){
+  var h=document.documentElement;
+  function meta(n){return document.querySelector('meta[name="'+n+'"]')}
+  function paint(d){
+    if(d)h.setAttribute("data-theme","dark");else h.removeAttribute("data-theme");
+    var m=meta("theme-color");if(m)m.setAttribute("content",d?"#000000":"#f4f2ee");
+    var s=meta("apple-mobile-web-app-status-bar-style");if(s)s.setAttribute("content",d?"black":"default");
+  }
+  var cur="light";try{if(localStorage.getItem("dd-theme")==="dark")cur="dark"}catch(e){}
+  paint(cur==="dark");
+  window.DDTheme={
+    get:function(){return h.getAttribute("data-theme")==="dark"?"dark":"light"},
+    set:function(t){
+      t=t==="dark"?"dark":"light";if(t===this.get())return;
+      try{localStorage.setItem("dd-theme",t)}catch(e){}
+      var go=function(){paint(t==="dark")},rm=false;
+      try{rm=window.matchMedia("(prefers-reduced-motion: reduce)").matches}catch(e){}
+      if(document.startViewTransition&&!rm){try{document.startViewTransition(go);return}catch(e){}}
+      go();
+    }
+  };
+})();
+</script>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -17,7 +42,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Inter:wght@400;500;600&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f4f2ee;--fg:#111;--dim:#8a8782;--surf:#fff;--surf2:#e9e6e0;--ink:#111;--ac:#111;--c:#ff90e8;--ct:#b8189a;--sp:cubic-bezier(.34,1.56,.64,1);--ease:cubic-bezier(.22,1,.36,1);--nav-h:58px;--nav-gap:18px;--dock-space:calc(var(--nav-h) + var(--nav-gap) + 28px + env(safe-area-inset-bottom,0px))}
+:root{color-scheme:light;--bg:#f4f2ee;--fg:#111;--dim:#8a8782;--surf:#fff;--surf2:#e9e6e0;--ink:#111;--ac:#111;--c:#ff90e8;--ct:#b8189a;--sp:cubic-bezier(.34,1.56,.64,1);--ease:cubic-bezier(.22,1,.36,1);--nav-h:58px;--nav-gap:18px;--dock-space:calc(var(--nav-h) + var(--nav-gap) + 28px + env(safe-area-inset-bottom,0px))}
 *{box-sizing:border-box;margin:0;padding:0}
 *{scrollbar-width:none;-ms-overflow-style:none}*::-webkit-scrollbar{display:none;width:0;height:0}
 html,body{width:100%;height:100dvh;background:var(--bg);color:var(--fg);overflow:hidden;font-family:"Baloo 2",ui-rounded,"Avenir Next",system-ui,sans-serif;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;overscroll-behavior:none;touch-action:manipulation}
@@ -26,7 +51,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .app{height:100dvh}
 
 /* Alt cubuk */
-.dock{--tw:112px;--th:calc(var(--nav-h) - 12px);--i:0;position:fixed;left:50%;bottom:calc(var(--nav-gap) + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:5;display:flex;padding:6px;border-radius:999px;background:rgba(255,255,255,.9);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:0 10px 32px rgba(0,0,0,.1)}
+.dock{--tw:112px;--th:calc(var(--nav-h) - 12px);--i:0;position:fixed;left:50%;bottom:calc(var(--nav-gap) + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:5;display:flex;padding:6px;border-radius:999px;background:var(--glass,rgba(255,255,255,.9));-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:var(--glass-sh,0 10px 32px rgba(0,0,0,.1))}
 .ind{position:absolute;top:6px;left:6px;width:var(--tw);height:var(--th);border-radius:999px;background:var(--fg);transform:translateX(calc(var(--i)*100%));transition:transform .65s var(--ease)}
 .db{position:relative;z-index:1;width:var(--tw);height:var(--th);display:flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;color:var(--fg);font-size:15px;font-weight:700;transition:color .35s var(--ease),transform .5s var(--sp)}
 .db:active{transform:scale(.95)}
@@ -195,7 +220,7 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .swi{min-height:0;overflow:hidden}
 .lw.drag{position:relative;z-index:3;will-change:transform}.ll.fast .sw{transition:none}.lw.drag.rel .lr{transform:none;box-shadow:none}.lw.drag .li{overflow:visible}
 .lw.drag .lr{transform:scale(1.025);box-shadow:0 20px 44px rgba(0,0,0,.16)}.lw.drag .grip{cursor:grabbing}
-.fl{height:44px;padding:0 18px;border-radius:999px;background:rgba(255,255,255,.88);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:0 8px 24px rgba(0,0,0,.1);font-size:16px;font-weight:700;transition:transform .5s var(--sp),opacity .45s var(--ease)}
+.fl{height:44px;padding:0 18px;border-radius:999px;background:var(--glass2,rgba(255,255,255,.88));-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:var(--glass-sh2,0 8px 24px rgba(0,0,0,.1));font-size:16px;font-weight:700;transition:transform .5s var(--sp),opacity .45s var(--ease)}
 .fl:active{transform:scale(.93)}
 .fl-l{position:fixed;z-index:5;top:calc(18px + env(safe-area-inset-top,0px));left:24px;opacity:0;transform:translateY(-14px);pointer-events:none}
 .fl-l.on{opacity:1;transform:none;pointer-events:auto}.fl-l.on:active{transform:scale(.93)}
@@ -1672,7 +1697,7 @@ html,body,*{scrollbar-width:none!important;-ms-overflow-style:none!important;scr
 /* Sorular sekmesi: giriş/çıkışta sadece opacity geçişi. Büyük resim ızgarasında scale() katmanı yeniden rasterlatıp takılma yapıyordu */
 /* Sorular sayfası artık diğer sayfalarla aynı yumuşak .view geçişini kullanır (opacity + hafif scale) */
 /* Sayfa geçişi sırasında dock'un arka plan bulanıklığı kapatılır: altındaki hareketli büyük katmanı her karede yeniden bulandırmak (backdrop-filter) pahalı */
-.app.navx .dock{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(255,255,255,.97)}
+.app.navx .dock{-webkit-backdrop-filter:none;backdrop-filter:none;background:var(--glass3,rgba(255,255,255,.97))}
 
 /* ===== Sorular sayfası ve içindeki tam ekran sayfalar: Test sayfasıyla aynı yumuşak geçiş (opacity + hafif yükselme/scale) ===== */
 .qc{transform:translateY(20px) scale(.985);transition:opacity .35s var(--ease),transform .6s var(--ease),visibility 0s .35s}
@@ -1874,6 +1899,190 @@ button.rsq-th:active{transform:scale(.96)}
 .rsfab.on:active{transform:scale(.94)}
 .rsfab svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round}
 .rsfab.ok{background:#2fbf71;color:#fff;pointer-events:none}
+
+.tzres .tzb.gh{background:rgba(255,255,255,.14);color:#fff}
+/* ===== Görünüm ayarı: Arkaplan seçici (tema bağımsız) ===== */
+.bgp{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:16px}
+.bgt{position:relative;display:flex;flex-direction:column;gap:12px;padding:12px;border-radius:22px;text-align:left;background:var(--surf2);box-shadow:inset 0 0 0 2px transparent;transition:transform .5s var(--sp),box-shadow .3s var(--ease),background .3s}
+.bgt:active{transform:scale(.97)}
+.bgt.on{box-shadow:inset 0 0 0 3px var(--fg)}
+.bgt .bgv{position:relative;display:block;height:132px;border-radius:14px;overflow:hidden;background:var(--b);box-shadow:inset 0 0 0 1px var(--l)}
+.bgt .bgv i{position:absolute;display:block}
+.bgt .bgv .c1{left:12px;top:14px;width:46%;height:46px;border-radius:12px;background:var(--s)}
+.bgt .bgv .c2{right:12px;top:14px;width:calc(54% - 36px);height:46px;border-radius:12px;background:var(--s)}
+.bgt .bgv .c3{left:12px;right:12px;top:68px;height:20px;border-radius:8px;background:var(--s)}
+.bgt .bgv .tx{left:20px;top:24px;width:28%;height:7px;border-radius:4px;background:var(--f)}
+.bgt .bgv .tx2{left:20px;top:38px;width:18%;height:6px;border-radius:3px;background:var(--d)}
+.bgt .bgv .dk{left:50%;bottom:10px;width:62%;height:20px;margin-left:-31%;border-radius:10px;background:var(--s);box-shadow:0 0 0 1px var(--l)}
+.bgt .bgv .dk:after{content:"";position:absolute;left:3px;top:3px;bottom:3px;width:30%;border-radius:8px;background:var(--f)}
+.bgt .bgl{display:flex;align-items:center;gap:10px;font-size:17px;font-weight:700}
+.bgt .bgl small{display:block;margin-top:1px;font:500 13px Inter,system-ui,sans-serif;color:var(--dim)}
+.bgt .bgk{margin-left:auto;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;box-shadow:inset 0 0 0 2px var(--dim);transition:background .25s,box-shadow .25s}
+.bgt .bgk svg{width:15px;height:15px;fill:none;stroke:var(--bg);stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;opacity:0}
+.bgt.on .bgk{background:var(--fg);box-shadow:none}
+.bgt.on .bgk svg{opacity:1}
+.bgt[data-t=light] .bgv{--b:#f4f2ee;--s:#fff;--f:#111;--d:#8a8782;--l:rgba(17,17,17,.1)}
+.bgt[data-t=dark] .bgv{--b:#000;--s:#161616;--f:#f4f4f2;--d:#8f8d88;--l:rgba(255,255,255,.12)}
+@media (max-width:760px){.bgp{grid-template-columns:1fr}}
+
+/* ===== KOYU TEMA: saf siyah ===== */
+html[data-theme=dark]{color-scheme:dark;--bg:#000;--fg:#f4f4f2;--dim:#9c9a95;--surf:#121212;--surf2:#202020;--ac:#f4f4f2;--glass:rgba(22,22,22,.86);--glass-sh:0 10px 32px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.08);--glass2:rgba(28,28,28,.92);--glass-sh2:0 8px 24px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.08);--glass3:rgba(18,18,18,.97)}
+:where(html[data-theme=dark]) ::selection{background:rgba(255,255,255,.25)}
+:where(html[data-theme=dark]) .dl{background:rgba(255,255,255,.08);color:#ff7a7f}
+:where(html[data-theme=dark]) .btn.dg{background:rgba(209,47,53,.16);color:#ff7a7f}
+:where(html[data-theme=dark]) .tg i{background:#8d8b86;box-shadow:0 2px 6px rgba(0,0,0,.5)}
+:where(html[data-theme=dark]) .tg.on i{background:var(--bg)}
+:where(html[data-theme=dark]) #snv::-webkit-slider-thumb{background:var(--bg);box-shadow:0 0 0 3px var(--fg)}
+:where(html[data-theme=dark]) #snv::-moz-range-thumb{background:var(--bg);box-shadow:0 0 0 3px var(--fg)}
+:where(html[data-theme=dark]) .mod,:where(html[data-theme=dark]) .tzd,:where(html[data-theme=dark]) .qz,:where(html[data-theme=dark]) .dp-bd{background:rgba(0,0,0,.66)}
+:where(html[data-theme=dark]) .qkb{background:rgba(0,0,0,.62)}
+:where(html[data-theme=dark]) .mc,:where(html[data-theme=dark]) .tzdc,:where(html[data-theme=dark]) .dp-card,:where(html[data-theme=dark]) .qzc,:where(html[data-theme=dark]) .qkp,:where(html[data-theme=dark]) .mn.on,:where(html[data-theme=dark]) .tzfm.on{box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.09)}
+:where(html[data-theme=dark]) .qzc{background:var(--surf)}
+:where(html[data-theme=dark]) .qkp{background:var(--surf)}
+:where(html[data-theme=dark]) .th h1 em{color:var(--c)}
+:where(html[data-theme=dark]) .tzres .tzb.gh,:where(html[data-theme=dark]) .tzres .tzb.gh:active{background:rgba(0,0,0,.14);color:var(--bg)}
+:where(html[data-theme=dark]) input,:where(html[data-theme=dark]) textarea{caret-color:var(--fg)}
+:where(html[data-theme=dark]) ::placeholder{color:var(--dim)}
+:where(html[data-theme=dark]) .bgt{background:var(--surf2)}
+:where(html[data-theme=dark]) .msg.ok{color:#3be08a}
+:where(html[data-theme=dark]) .msg.er{color:#ff7a7f}
+:where(html[data-theme=dark]) .drop{border:2px dashed rgba(255,255,255,.2)}
+:where(html[data-theme=dark]) .pvh{border-bottom:1px solid rgba(255,255,255,.1)}
+:where(html[data-theme=dark]) .card .pvn{color:#ff7a7f}
+:where(html[data-theme=dark]) .seg button{color:#b9b7b2}
+:where(html[data-theme=dark]) .pp{background:rgba(255,255,255,.06)}
+:where(html[data-theme=dark]) .pdots i{background:rgba(255,255,255,.14)}
+:where(html[data-theme=dark]) #stbody .ln{border-top:2px dashed rgba(255,255,255,.22)}
+:where(html[data-theme=dark]) #stbody .bx i{background:#2a2a2a}
+:where(html[data-theme=dark]) #stbody .mdy.g .n,:where(html[data-theme=dark]) #stbody .mdy.g b{color:#5fe3a0}
+:where(html[data-theme=dark]) .card .chip{color:#b9b7b2}
+:where(html[data-theme=dark]) .dp-d:after{box-shadow:inset 0 0 0 2px #303030}
+:where(html[data-theme=dark]) .dp-d.o{color:#6a6a6a}
+:where(html[data-theme=dark]) .dp-d.p{color:#4a4a4a}
+:where(html[data-theme=dark]) .dp-m button.t{box-shadow:inset 0 0 0 2px #303030}
+:where(html[data-theme=dark]) .kbk.cf{color:#ff7a7f}
+:where(html[data-theme=dark]) .qi small{background:var(--fg);color:var(--bg)}
+:where(html[data-theme=dark]) .qs{background:var(--fg);color:var(--bg)}
+:where(html[data-theme=dark]) .qun{background:var(--fg);color:var(--bg)}
+:where(html[data-theme=dark]) .qun button{background:rgba(0,0,0,.16);color:var(--bg)}
+:where(html[data-theme=dark]) .qvgr{background:var(--surf)}
+:where(html[data-theme=dark]) .qvgr:after{background:#303030}
+:where(html[data-theme=dark]) .qvdt{background:var(--c,#1c1c1c)}
+:where(html[data-theme=dark]) .qvhd small{color:var(--dim)}
+:where(html[data-theme=dark]) .qvcd{background:var(--bg)}
+:where(html[data-theme=dark]) .qvcd .ic{background:var(--surf)}
+:where(html[data-theme=dark]) .qvcd .ic svg{stroke:var(--fg)}
+:where(html[data-theme=dark]) .qvcd .l{color:var(--dim)}
+:where(html[data-theme=dark]) .qvcd .s{color:var(--dim)}
+:where(html[data-theme=dark]) .qvem{border:2px dashed #2a2a2a}
+:where(html[data-theme=dark]) .qvem span{color:var(--dim)}
+:where(html[data-theme=dark]) .qi .qck{box-shadow:inset 0 0 0 2px var(--fg)}
+:where(html[data-theme=dark]) .qi .qck svg{stroke:var(--bg)}
+:where(html[data-theme=dark]) .qi.sel .qck{background:var(--fg)}
+:where(html[data-theme=dark]) .qbar{background:var(--fg);color:var(--bg)}
+:where(html[data-theme=dark]) .qbar button{background:rgba(0,0,0,.14);color:var(--bg)}
+:where(html[data-theme=dark]) .qpop{background:var(--surf);box-shadow:0 18px 40px -12px rgba(17,17,17,.4),0 0 0 1px rgba(255,255,255,.06)}
+:where(html[data-theme=dark]) .qpop .dg{color:#ff7a7f}
+:where(html[data-theme=dark]) .qpop hr{background:rgba(255,255,255,.1)}
+:where(html[data-theme=dark]) .qc .fl{background:var(--surf);color:var(--fg)}
+:where(html[data-theme=dark]) .qcn{color:var(--dim)}
+:where(html[data-theme=dark]) .qsl{background:#303030}
+:where(html[data-theme=dark]) .qsl i{background:var(--fg)}
+:where(html[data-theme=dark]) .qsn{color:var(--dim)}
+:where(html[data-theme=dark]) .qsn.cur,:where(html[data-theme=dark]) .qsn.done{color:var(--fg)}
+:where(html[data-theme=dark]) .qsn span{box-shadow:inset 0 0 0 2.5px #4d4d4d;color:var(--dim)}
+:where(html[data-theme=dark]) .qsn.done span{background:var(--fg);color:var(--bg);box-shadow:inset 0 0 0 2.5px var(--fg)}
+:where(html[data-theme=dark]) .qsn.cur span{background:var(--fg);color:var(--bg);box-shadow:inset 0 0 0 2.5px var(--fg),0 0 0 3px var(--bg),0 0 0 5px var(--fg)}
+:where(html[data-theme=dark]) .qcb input[type=range]::-webkit-slider-runnable-track{background:linear-gradient(90deg,var(--fg) calc(13px + (100% - 26px)*var(--f)),#303030 calc(13px + (100% - 26px)*var(--f)))}
+:where(html[data-theme=dark]) .qcb input[type=range]::-webkit-slider-thumb{background:var(--surf);border:4px solid var(--fg)}
+:where(html[data-theme=dark]) .qcb input[type=range]::-moz-range-track{background:#303030}
+:where(html[data-theme=dark]) .qcb input[type=range]::-moz-range-progress{background:var(--fg)}
+:where(html[data-theme=dark]) .qcb input[type=range]::-moz-range-thumb{background:var(--surf);border:4px solid var(--fg)}
+:where(html[data-theme=dark]) .qnv .fl.pr{background:var(--fg);color:var(--bg)}
+:where(html[data-theme=dark]) .qpv b:before{background:var(--c,#4d4d4d)}
+:where(html[data-theme=dark]) .qpsh{background:var(--surf);color:var(--fg)}
+:where(html[data-theme=dark]) .qpop .ok{color:#3be08a}
+:where(html[data-theme=dark]) .tzg button{color:#b9b7b2}
+:where(html[data-theme=dark]) .tzo .ck{box-shadow:inset 0 0 0 2px #383838}
+:where(html[data-theme=dark]) .tzo .ck svg{stroke:var(--bg)}
+:where(html[data-theme=dark]) .tzch{color:#b9b7b2}
+:where(html[data-theme=dark]) .tzbar{background:var(--fg);color:var(--bg)}
+:where(html[data-theme=dark]) .tzbar small{color:rgba(0,0,0,.6)}
+:where(html[data-theme=dark]) .tzbar .tzb{background:rgba(0,0,0,.14);color:var(--bg)}
+:where(html[data-theme=dark]) .tzbar .tzb.pr{background:var(--bg);color:var(--fg)}
+:where(html[data-theme=dark]) .tzb.dg{color:#ff7a7f}
+:where(html[data-theme=dark]) .tzres{background:var(--fg);color:var(--bg)}
+:where(html[data-theme=dark]) .tzres small{color:rgba(0,0,0,.65)}
+:where(html[data-theme=dark]) .tzres .tzb{background:var(--bg);color:var(--fg)}
+:where(html[data-theme=dark]) .tzpk .sts{color:#b9b7b2}
+:where(html[data-theme=dark]) .tzbr .bb{background:#383838}
+:where(html[data-theme=dark]) .tzpti::placeholder{color:rgba(255,255,255,.2)}
+:where(html[data-theme=dark]) .tzfd i{background:#303030}
+:where(html[data-theme=dark]) .tzsv svg{box-shadow:inset 0 0 0 2px #383838}
+:where(html[data-theme=dark]) .tzsb{background:var(--fg);color:var(--bg)}
+:where(html[data-theme=dark]) .tzsbx{background:rgba(0,0,0,.14);color:var(--bg)}
+:where(html[data-theme=dark]) .tzsbk{background:var(--bg);color:var(--fg)}
+:where(html[data-theme=dark]) .tzpi .cx{box-shadow:inset 0 0 0 2px var(--fg)}
+:where(html[data-theme=dark]) .tzpi .cx svg{stroke:var(--bg)}
+:where(html[data-theme=dark]) .tzpi.sel .cx{background:var(--fg)}
+:where(html[data-theme=dark]) .tzrm{color:#b9b7b2}
+:where(html[data-theme=dark]) .tzri img{background:var(--surf)}
+:where(html[data-theme=dark]) .tzit{box-shadow:inset 4px 0 0 var(--sc,#383838)}
+:where(html[data-theme=dark]) .tzbd.st-c{color:#3be08a}
+:where(html[data-theme=dark]) .tzbd.st-w{color:#ff7a70}
+:where(html[data-theme=dark]) .tzbd.st-u{color:#ffc78a}
+:where(html[data-theme=dark]) .tzia{color:#b9b7b2}
+:where(html[data-theme=dark]) .hsc small{color:#b9b7b2}
+:where(html[data-theme=dark]) .hlg em{color:#dcdad5}
+:where(html[data-theme=dark]) .hlg .b:before{background:#383838}
+:where(html[data-theme=dark]) .tzfxi{background:color-mix(in srgb,#ffb46e 22%,var(--surf));color:#ffc78a}
+:where(html[data-theme=dark]) .tzpc{box-shadow:inset 0 0 0 2px #383838}
+:where(html[data-theme=dark]) #tz .tzpk .tzpn b{color:#dcdad5}
+:where(html[data-theme=dark]) #tz .tzpk .tzpn i{color:#dcdad5}
+:where(html[data-theme=dark]) .tzcb{background:var(--c,#303030);border:4px solid var(--surf);box-shadow:0 6px 16px -6px rgba(17,17,17,.4),0 0 0 1px rgba(255,255,255,.06)}
+:where(html[data-theme=dark]) .tzcs{border:4px solid var(--surf);box-shadow:0 8px 16px -6px rgba(17,17,17,.4),0 0 0 1px rgba(255,255,255,.06)}
+:where(html[data-theme=dark]) .qzit p{color:#e4e2dd}
+:where(html[data-theme=dark]) .qv img{background:var(--surf)}
+:where(html[data-theme=dark]) .qvmd{background:var(--c,var(--surf2))}
+:where(html[data-theme=dark]) .qva .qvaa{background:var(--c,var(--surf2))}
+:where(html[data-theme=dark]) .qvdel{background:rgba(209,47,53,.18);color:#ff7a7f}
+:where(html[data-theme=dark]) :is(#tz,#tzwt) .hcd .hcm{color:#b9b7b2}
+:where(html[data-theme=dark]) :is(#tz,#tzwt) .hcd .hcbar{background:rgba(255,255,255,.08)}
+:where(html[data-theme=dark]) :is(#tz,#tzwt) .hcd .hcbar .bb{background:#383838}
+:where(html[data-theme=dark]) .rsp-m{color:#b9b7b2}
+:where(html[data-theme=dark]) .rsp-s small{color:#dcdad5}
+:where(html[data-theme=dark]) .rsp-s .b small:before{background:#383838}
+:where(html[data-theme=dark]) .rsbar{background:rgba(255,255,255,.08)}
+:where(html[data-theme=dark]) .rsbar .bb{background:#383838}
+:where(html[data-theme=dark]) .rsq{background:color-mix(in srgb,var(--sc,#383838) 12%,var(--surf))}
+:where(html[data-theme=dark]) .rsq-p{background:var(--sc,#383838)}
+:where(html[data-theme=dark]) .rsq.st-c .rsq-v.mine b{color:#3be08a}
+:where(html[data-theme=dark]) .rsq.st-w .rsq-v.mine b{color:#ff7a70}
+:where(html[data-theme=dark]) .rsdel{color:#ff7a7f}
+@media (hover:hover){:where(html[data-theme=dark]) .tzch:hover:not(.on),:where(html[data-theme=dark]) .tzlb:hover:not(.on){background:#2a2a2a}
+:where(html[data-theme=dark]) .gn-ed:hover{background:#2a2a2a}
+:where(html[data-theme=dark]) .gn-mk:hover{background:#2a2a2a}
+:where(html[data-theme=dark]) .qzh button:not([aria-pressed=true]):hover{background:#2a2a2a}
+:where(html[data-theme=dark]) .qzst:not(:disabled):hover{background:#2a2a2a}}
+@media (max-width:900px){:where(html[data-theme=dark]) .gn-sumc{background:var(--fg);color:var(--bg)}
+:where(html[data-theme=dark]) .gn-ed{background:rgba(0,0,0,.14);color:var(--bg)}
+:where(html[data-theme=dark]) .gn-big span{color:rgba(0,0,0,.6)}
+:where(html[data-theme=dark]) .gn-ttl{color:rgba(0,0,0,.6)}
+:where(html[data-theme=dark]) .gn-go{background:var(--bg);color:var(--fg)}
+:where(html[data-theme=dark]) .gn-mk{background:rgba(0,0,0,.14);color:var(--bg)}
+:where(html[data-theme=dark]) .gn-set{background:rgba(0,0,0,.14);color:var(--bg)}
+:where(html[data-theme=dark]) .gn-set:active{background:var(--bg);color:var(--fg)}}
+
+:where(html[data-theme=dark]) :is(.pmp,.pp){--pa:#ff6f9c}
+:where(html[data-theme=dark]) :is(.pmp,.pp)[data-ph="1"]{--pa:#6ea8ff}
+:where(html[data-theme=dark]) :is(.pmp,.pp)[data-ph="2"]{--pa:#b79cff}
+:where(html[data-theme=dark]) .sub.on{color:var(--ink)}
+:where(html[data-theme=dark]) .qd.on{color:var(--ink)}
+:where(html[data-theme=dark]) .qd.on:before{background:var(--ink)}
+:where(html[data-theme=dark]) .tzmo.on .ic{background:rgba(0,0,0,.14)}
+:where(html[data-theme=dark]) .qvz .qvl i{background:rgba(0,0,0,.22)}
+:where(html[data-theme=dark]) .tzpc svg{stroke:var(--bg)}
+:where(html[data-theme=dark]) .rsfab.ok{color:#04220f}
 </style>
 </head>
 <body>
@@ -2390,14 +2599,15 @@ function buildSettings(){
     dl:'<path d="M12 4v11M7.5 10.5L12 15l4.5-4.5M5 19.5h14"/>',
     ul:'<path d="M12 15V4M7.5 8.5L12 4l4.5 4.5M5 19.5h14"/>',
     tr:'<path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/>',
-    fl:'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/>'
+    fl:'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/>',
+    gor:'<path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/>'
   };
   function I(k){return'<svg viewBox="0 0 24 24">'+P[k]+'</svg>'}
   var DROP='<button class="drop" id="dip" type="button">'+I("ul")+'<b>Yedek dosyasını seç</b><small>ya da buraya sürükleyip bırak</small></button>';
   var lb=BK.last();
   $("#set").innerHTML='<div class="sp">'+
   '<aside class="sp-rail"><h1>Ayarlar</h1><p>Uygulamayı kendine göre düzenle, verilerini yönet.</p>'+
-    '<nav class="sp-nav" id="spn"><button data-s="gen" class="on">'+I("gen")+'Genel</button><button data-s="dat">'+I("dat")+'Veri yönetimi</button></nav>'+
+    '<nav class="sp-nav" id="spn"><button data-s="gen" class="on">'+I("gen")+'Genel</button><button data-s="gor">'+I("gor")+'Görünüm</button><button data-s="dat">'+I("dat")+'Veri yönetimi</button></nav>'+
     '<div class="sp-foot" id="spf"></div></aside>'+
   '<div class="sp-main" id="spm"><div class="sp-in">'+
     '<section class="sp-sec" id="sp-gen"><div class="grp">Genel</div><div class="sp-g">'+
@@ -2405,6 +2615,9 @@ function buildSettings(){
       '<div class="card lc kbc"><button class="kbo" id="kbo"><div><h2>Klavye kısa yolları</h2><p>Sayfa geçişi, süre ve konular için kısa yolları gör ve özelleştir.</p></div><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button><button class="tg'+(KB.on?" on":"")+'" data-kb="tg" aria-label="Klavye kısa yolları"><i></i></button></div>'+
       '<div class="card lc wide"><div><h2>Soruda basılı tutma</h2><p>Bir soruya basılı tutunca ne olsun? İkisini deneyip birini seç.</p></div><div class="lpm" id="lpm"><button type="button" data-m="pop">Bastığım yerde panel</button><button type="button" data-m="bar">Seçim + alt çubuk</button></div></div>'+
     '</div></section>'+
+    '<section class="sp-sec" id="sp-gor"><div class="grp">Görünüm</div><p class="sp-lead">Uygulamanın arkaplanını seç. Koyu tema saf siyah kullanır, OLED ekranlarda pil tasarrufu sağlar ve gece gözünü yormaz.</p><div class="sp-g"><div class="card wide"><h2>Arkaplan</h2><p>Tüm ekranlara anında uygulanır, bu cihazda hatırlanır.</p><div class="bgp" id="bgp" role="radiogroup" aria-label="Arkaplan">'+
+      [["light","Açık","Sıcak krem arkaplan"],["dark","Koyu","Saf siyah arkaplan"]].map(function(r){return'<button type="button" class="bgt" data-t="'+r[0]+'" role="radio" aria-checked="false"><span class="bgv"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="tx"></i><i class="tx2"></i><i class="dk"></i></span><span class="bgl"><span>'+r[1]+'<small>'+r[2]+'</small></span><span class="bgk"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></span></button>'}).join("")+
+    '</div></div></div></section>'+
     '<section class="sp-sec" id="sp-dat"><div class="grp">Veri yönetimi</div><p class="sp-lead">Uygulamadaki her şey tek bir yedek dosyasında toplanır: ilerleme, çalışma süreleri, dersler, soru görselleri, testler, takvim, kısa yollar ve ayarlar.</p><div class="sp-g">'+
       '<div class="card dmc"><div class="dmh"><div class="ic" style="--c:#c6f36b">'+I("dl")+'</div><div><h2>Dışa aktar</h2><p>Tüm verilerini bir dosyaya yedekle.</p></div></div><div class="chips" id="dxc"></div><div class="row"><button class="btn pr" id="dxb">Yedeği indir</button></div><div class="msg" id="dxm">'+(lb?"Son yedek: "+BK.when(lb):"Henüz yedek almadın.")+'</div></div>'+
       '<div class="card dmc" id="di"><div class="dmh"><div class="ic" style="--c:#6ec6ff">'+I("ul")+'</div><div><h2>İçe aktar</h2><p>Daha önce aldığın yedeği yükle. Mevcut veriler yedektekilerle değiştirilir.</p></div></div><div id="dib">'+DROP+'</div><input type="file" id="dif" accept=".json,.txt,application/json,text/plain" style="display:none"><div class="msg" id="dim"></div></div>'+
@@ -2412,6 +2625,12 @@ function buildSettings(){
     '</div></section>'+
   '</div></div></div>';
   var mn=$("#spm");if(keep)mn.scrollTop=keep;
+
+  /* Görünüm: arkaplan (tema) seçici */
+  (function(){var bs=$$("#bgp .bgt");
+    function paint(c){bs.forEach(function(b){var on=b.dataset.t===c;b.classList.toggle("on",on);b.setAttribute("aria-checked",on?"true":"false")})}paint(DDTheme.get());
+    bs.forEach(function(b){b.onclick=function(){DDTheme.set(b.dataset.t);paint(b.dataset.t)}});
+  })();
 
   /* Genel */
   (function(){var m="pop";try{m=localStorage.getItem("dd-lpmode")||"pop"}catch(e){}
@@ -4624,7 +4843,7 @@ function refreshHub(){if(hubOn())hubRender()}
 function resumeBanner(){
   if(!RS)return"";
   var im=imap(),n=RS.ids.filter(function(i){return im[i]}).length,a=Object.keys(RS.ans).filter(function(k){return String(RS.ans[k]).trim()}).length;
-  return'<div class="tzres"><div><b>Devam eden test</b><small>'+esc(RS.name||"Test")+' · '+a+'/'+n+' cevaplandı</small></div><div style="display:flex;gap:8px"><button class="tzb" type="button" data-a="rdel" style="background:rgba(255,255,255,.14);color:#fff">Sil</button><button class="tzb" type="button" data-a="rgo">Devam et</button></div></div>';
+  return'<div class="tzres"><div><b>Devam eden test</b><small>'+esc(RS.name||"Test")+' · '+a+'/'+n+' cevaplandı</small></div><div style="display:flex;gap:8px"><button class="tzb gh" type="button" data-a="rdel">Sil</button><button class="tzb" type="button" data-a="rgo">Devam et</button></div></div>';
 }
 function rGen(b){
   var gi=gInfo(),h=resumeBanner();
