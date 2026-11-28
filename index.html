@@ -505,16 +505,17 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .c1nl:before{content:"";position:absolute;left:-5px;top:-4px;width:10px;height:10px;border-radius:50%;background:var(--fg)}
 .c1y{flex:1;min-height:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));gap:0 clamp(14px,2.6vw,40px);padding:0 clamp(16px,2.4vw,36px) 22px;overflow:hidden}
 @media (orientation:portrait){.c1y{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(4,minmax(0,1fr));gap:0 clamp(12px,3vw,28px)}}
-.c1ym{display:flex;flex-direction:column;gap:4px;padding:8px 8px 10px;min-width:0;min-height:0;border-radius:20px;background:transparent;color:var(--fg);text-align:left;cursor:pointer;font-family:Inter,"SF Pro Display",system-ui,-apple-system,Roboto,sans-serif;font-size:clamp(11px,1.3vw,16px);transition:background .5s var(--ease),transform .5s var(--sp)}
-@media (orientation:portrait){.c1ym{font-size:clamp(11px,2.2vw,16px)}}
+.c1ym{display:flex;flex-direction:column;gap:4px;padding:8px 8px 10px;min-width:0;min-height:0;border-radius:20px;background:transparent;color:var(--fg);text-align:left;cursor:pointer;font-family:Inter,"SF Pro Display",system-ui,-apple-system,Roboto,sans-serif;font-size:clamp(11px,1.2vw,15px);transition:background .5s var(--ease),transform .5s var(--sp)}
+@media (orientation:portrait){.c1ym{font-size:clamp(11px,2.1vw,15px)}}
 .c1ym:active{transform:scale(.985)}
 @media (hover:hover){.c1ym:hover{background:color-mix(in srgb,var(--fg) 5%,var(--bg))}}
-.c1mn{display:block;flex:none;margin-bottom:6px;font-size:1.5em;font-weight:600;letter-spacing:-.01em}
+.c1mn{display:block;flex:none;margin-bottom:6px;font-size:1.4em;font-weight:600}
 .c1ym.cur .c1mn:after{content:"";display:inline-block;width:6px;height:6px;margin-left:7px;border-radius:50%;background:var(--fg);vertical-align:middle}
 .c1wd,.c1mg{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));justify-items:center;align-items:center}
-.c1wd{flex:none;font-size:.82em;font-weight:500;color:color-mix(in srgb,var(--fg) 62%,var(--bg));padding-bottom:4px}
-.c1mg{flex:1;min-height:0;grid-template-rows:repeat(6,minmax(0,1fr));font-weight:500;font-variant-numeric:tabular-nums;color:var(--fg)}
-.c1mg .t{display:grid;place-items:center;font-weight:600;height:min(2em,100%);aspect-ratio:1;border-radius:50%;background:var(--fg);color:var(--bg)}
+.c1wd{flex:none;font-size:.8em;font-weight:500;color:var(--dim);padding-bottom:4px}
+.c1mg{flex:1;min-height:0;grid-template-rows:repeat(6,minmax(0,1fr));font-weight:600;font-variant-numeric:tabular-nums;color:color-mix(in srgb,var(--fg) 78%,var(--bg))}
+.c1mg>:nth-child(7n+6),.c1mg>:nth-child(7n+7){color:var(--dim);font-weight:500}
+.c1mg .t{display:grid;place-items:center;font-weight:700;height:min(2em,100%);aspect-ratio:1;border-radius:50%;background:var(--fg);color:var(--bg)}
 @media (max-width:900px){.c1h{font-size:30px}.c1sw{--sw:52px}.c1sw button{font-size:12px}}
 @media (prefers-reduced-motion:reduce){.c1b,.c1b.an,.c1sw i{transition:none;animation:none}}
 /* Takvim */
