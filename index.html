@@ -465,24 +465,23 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 @media (max-width:767px){.app:before{content:"Bu uygulama şimdilik tablet için tasarlandı.";position:fixed;inset:0;z-index:9;display:grid;place-items:center;background:var(--bg);color:var(--dim);text-align:center;padding:30px}}
 
 /* Takvim 1 */
-.c1{--ln:color-mix(in srgb,var(--fg) 16%,var(--bg));--tn:color-mix(in srgb,var(--fg) 7%,transparent);--gw:56px;position:absolute;inset:0;display:flex;flex-direction:column;padding:46px 0 0;overflow:hidden}
+.c1{--ln:color-mix(in srgb,var(--fg) 16%,var(--bg));--tn:color-mix(in srgb,var(--fg) 7%,transparent);--gw:56px;position:absolute;inset:0;display:flex;flex-direction:column;padding:46px 0 26px;overflow:hidden}
 .c1h{flex:none;display:flex;align-items:baseline;gap:10px;margin:0 24px 22px;font-size:38px;line-height:1;font-weight:800;letter-spacing:-.02em;color:var(--fg);white-space:nowrap}
 .c1h button{font:inherit;letter-spacing:inherit;color:var(--dim);font-weight:500;background:none;border:0;padding:0;cursor:pointer;transition:color .4s var(--ease)}
 .c1h button:active{color:var(--fg)}
 .c1sw{--s:2;--sw:74px;position:absolute;top:40px;left:50%;z-index:3;display:grid;grid-template-columns:repeat(4,var(--sw));padding:5px;border-radius:999px;background:var(--glass,rgba(255,255,255,.9));-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:var(--glass-sh,0 10px 32px rgba(0,0,0,.1));transform:translateX(-50%)}
-.c1sw i{position:absolute;top:5px;left:5px;width:var(--sw);height:calc(100% - 10px);border-radius:999px;background:var(--fg);transform:translateX(calc(var(--s)*100%));transition:transform .8s var(--ease)}
+.c1sw i{position:absolute;top:5px;left:5px;width:var(--sw);height:calc(100% - 10px);border-radius:999px;background:var(--fg);transform:translateX(calc(var(--s)*100%));transition:transform .4s var(--ease)}
 .c1sw button{position:relative;z-index:1;height:38px;border-radius:999px;font-size:14px;font-weight:700;color:var(--fg);transition:color .45s var(--ease),transform .5s var(--sp)}
 .c1sw button:active{transform:scale(.94)}
 .c1sw button.on{color:var(--bg)}
-.c1nv{position:absolute;top:44px;right:24px;z-index:3;display:flex;align-items:center;gap:8px}
-.c1nv button{height:38px;min-width:38px;display:grid;place-items:center;padding:0 14px;border-radius:999px;background:var(--tn);color:var(--fg);font-size:13px;font-weight:700;transition:transform .5s var(--sp),background .4s var(--ease)}
-.c1nv button.ar{width:38px;padding:0}
-.c1nv button:active{transform:scale(.92)}
-.c1nv svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
-@media (hover:hover){.c1nv button:hover{background:color-mix(in srgb,var(--fg) 12%,transparent)}}
-.c1b{flex:1;min-height:0;display:flex;flex-direction:column;transition:opacity .24s ease,transform .24s ease}
+.c1b{flex:1;min-height:0;display:flex;flex-direction:column;transition:opacity .12s ease,transform .12s ease}
+.c1b,.c1b *{touch-action:pan-y}
 .c1b.out{opacity:0;transform:translateX(calc(var(--dx,0)*-16px)) scale(.992)}
-.c1b.an{animation:c1in .8s var(--ease) backwards}
+.c1b.an{animation:c1in .34s var(--ease) backwards}
+.c1hd{position:absolute;left:50%;bottom:calc(2px + env(safe-area-inset-bottom,0px));z-index:4;width:120px;height:24px;transform:translateX(-50%);display:grid;place-items:center;transition:opacity .3s var(--ease)}
+.c1hd i{width:44px;height:5px;border-radius:5px;background:color-mix(in srgb,var(--fg) 28%,transparent)}
+.app.c1dk .c1hd{opacity:0;pointer-events:none}
+.app.c1on:not(.c1dk) .dock{transform:translate(-50%,160%);opacity:0;pointer-events:none}
 @keyframes c1in{from{opacity:0;transform:translateX(calc(var(--dx,0)*24px)) scale(.992)}to{opacity:1;transform:none}}
 .c1w{flex:none;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));margin-bottom:10px}
 .c1w span{padding:0 10px;text-align:right;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
@@ -515,7 +514,7 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .c1ym.cur .c1mn:after{content:"";display:inline-block;width:6px;height:6px;margin-left:7px;border-radius:50%;background:var(--fg);vertical-align:middle}
 .c1mg{flex:1;min-height:0;display:grid;grid-template-columns:repeat(7,minmax(0,22px));grid-template-rows:repeat(6,minmax(0,1fr));justify-content:start;column-gap:0;align-items:center;justify-items:center;font-size:11px;font-weight:600;color:var(--fg)}
 .c1mg .t{display:grid;place-items:center;min-width:20px;height:20px;border-radius:999px;background:var(--fg);color:var(--bg)}
-@media (max-width:900px){.c1h{font-size:30px}.c1sw{--sw:62px}.c1sw button{font-size:13px}.c1nv button:not(.ar){padding:0 11px}}
+@media (max-width:900px){.c1h{font-size:30px}.c1sw{--sw:62px}.c1sw button{font-size:13px}}
 @media (prefers-reduced-motion:reduce){.c1b,.c1b.an,.c1sw i{transition:none;animation:none}}
 /* Takvim */
 .card .chip{background:var(--surf2);color:#55524d}.card .chip.on{background:var(--fg);color:var(--bg)}
@@ -2178,8 +2177,8 @@ html[data-theme=dark]{color-scheme:dark;--bg:#000;--fg:#f4f4f2;--dim:#9c9a95;--s
     <section class="view" id="v-cal1"><div class="c1" id="c1">
       <div class="c1h" id="c1h"></div>
       <div class="c1sw" id="c1sw" role="tablist" aria-label="Takvim görünümü"><i></i><button type="button" role="tab" data-v="d">Gün</button><button type="button" role="tab" data-v="w">Hafta</button><button type="button" role="tab" data-v="m" class="on">Ay</button><button type="button" role="tab" data-v="y">Yıl</button></div>
-      <div class="c1nv" id="c1nv"><button type="button" class="ar" data-a="p" aria-label="Önceki"><svg viewBox="0 0 24 24"><path d="M14.5 6l-6 6 6 6"/></svg></button><button type="button" data-a="t">Bugün</button><button type="button" class="ar" data-a="n" aria-label="Sonraki"><svg viewBox="0 0 24 24"><path d="M9.5 6l6 6-6 6"/></svg></button></div>
       <div class="c1b" id="c1b"></div>
+      <button type="button" class="c1hd" id="c1hd" aria-label="Alt çubuğu göster"><i></i></button>
     </div></section>
     <section class="view" id="v-questions"><div class="qw">
       <div class="qh"><h1>Sorular<em id="qcnt"></em></h1>
@@ -3733,9 +3732,9 @@ document.addEventListener("keydown",function(e){
   var root=document.getElementById("c1");if(!root)return;
   var E=function(i){return document.getElementById(i)};
   var AY=["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"],AK=["Oca","Şub","Mar","Nis","May","Haz","Tem","Ağu","Eyl","Eki","Kas","Ara"],GN=["Pzt","Sal","Çar","Per","Cum","Cmt","Paz"],GF=["Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi","Pazar"];
-  var ap=document.querySelector(".app"),hd=E("c1h"),bd=E("c1b"),sw=E("c1sw"),nv=E("c1nv");
+  var ap=document.querySelector(".app"),hd=E("c1h"),bd=E("c1b"),sw=E("c1sw");
   var n0=new Date(),TD=new Date(n0.getFullYear(),n0.getMonth(),n0.getDate());
-  var S={v:"m",dt:TD},HH=64,tm=0,first=true,IX={d:0,w:1,m:2,y:3};
+  var S={v:"m",dt:TD},HH=64,tm=0,lp=0,first=true,IX={d:0,w:1,m:2,y:3};
   var RM=window.matchMedia&&matchMedia("(prefers-reduced-motion:reduce)").matches;
   function same(a,b){return a.getFullYear()===b.getFullYear()&&a.getMonth()===b.getMonth()&&a.getDate()===b.getDate()}
   function wi(d){return(d.getDay()+6)%7}
@@ -3791,25 +3790,19 @@ document.addEventListener("keydown",function(e){
     hd.innerHTML=title();
     bd.innerHTML=body();
     bd.style.setProperty("--dx",dx||0);
-    bd.classList.remove("an");void bd.offsetWidth;bd.classList.add("an");
+    bd.classList.remove("an");void bd.offsetWidth;bd.classList.add("an");lp=Date.now();
     var ds=E("c1ds");
     if(ds){var t=new Date(),inV=S.v==="d"?same(S.dt,TD):same(ws(S.dt),ws(TD));ds.scrollTop=(inV?Math.max(0,t.getHours()-2):7)*HH}
   }
   function go(mut,dx){
     clearTimeout(tm);mut();sync();
-    if(first||RM){first=false;paint(dx);return}
+    if(first||RM||bd.classList.contains("out")||Date.now()-lp<380){first=false;bd.classList.remove("out");paint(dx);return}
     bd.style.setProperty("--dx",dx||0);bd.classList.add("out");
-    tm=setTimeout(function(){paint(dx);bd.classList.remove("out")},230);
+    tm=setTimeout(function(){paint(dx);bd.classList.remove("out")},110);
   }
   sw.addEventListener("click",function(e){
     var b=e.target.closest?e.target.closest("button"):null;if(!b||b.dataset.v===S.v)return;
     go(function(){S.v=b.dataset.v},0);
-  });
-  nv.addEventListener("click",function(e){
-    var b=e.target.closest?e.target.closest("button"):null;if(!b)return;
-    var a=b.dataset.a;
-    if(a==="p"||a==="n"){var k=a==="n"?1:-1;go(function(){S.dt=step(k)},k)}
-    else if(a==="t"){var k2=S.dt<TD?1:-1;go(function(){S.dt=TD},same(S.dt,TD)?0:k2)}
   });
   hd.addEventListener("click",function(e){if(e.target.id==="c1yb")go(function(){S.v="y"},0)});
   bd.addEventListener("click",function(e){
@@ -3820,6 +3813,20 @@ document.addEventListener("keydown",function(e){
     var dc=t.closest(".c1t,.c1dc");
     if(dc&&dc.dataset.d&&(dc.classList.contains("c1t")||S.v==="w")){var d=parse(dc.dataset.d);go(function(){S.dt=d;S.v="d"},0)}
   });
+  /* Sağa / sola kaydırarak gezinme */
+  (function(){
+    var id=null,sx=0,sy=0,sup=0;
+    bd.addEventListener("pointerdown",function(e){if(e.pointerType==="mouse"&&e.button!==0)return;id=e.pointerId;sx=e.clientX;sy=e.clientY});
+    bd.addEventListener("pointerup",function(e){
+      if(e.pointerId!==id)return;id=null;
+      var dx=e.clientX-sx,dy=e.clientY-sy;
+      if(Math.abs(dx)<48||Math.abs(dx)<Math.abs(dy)*1.4)return;
+      sup=Date.now();var k=dx<0?1:-1;go(function(){S.dt=step(k)},k);
+    });
+    bd.addEventListener("pointercancel",function(){id=null});
+    bd.addEventListener("click",function(e){if(Date.now()-sup<350){e.stopPropagation();e.preventDefault()}},true);
+  })();
+  E("c1hd").addEventListener("click",function(){ap.classList.toggle("c1dk")});
   document.addEventListener("keydown",function(e){
     if(e.defaultPrevented||e.ctrlKey||e.metaKey||e.altKey||e.shiftKey)return;
     if(!E("v-cal1").classList.contains("on"))return;
