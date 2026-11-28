@@ -539,6 +539,8 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .c1wk .c1wb.on small,.c1wk .c1wb.on b{color:#111}
 .c1dv .c1ds{border-top:0}
 .c1hc.f{border-top:0}
+.c1dv .c1hc{transition:border-color .25s var(--ease)}
+.c1dv .c1hc.hid{border-top-color:transparent}
 .c1dv .c1hc{border-left:0}
 .c1dv .c1nl{background:var(--nl)}
 .c1dv .c1nl:before{background:var(--nl)}
@@ -546,7 +548,7 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 @media (max-width:820px){.c1dv{grid-template-columns:minmax(0,1fr)}.c1wb{font-size:16px;gap:4px}}
 /* Takvim 1 > Gün: görev planı (To do mantığı) */
 .c1tt{position:absolute;left:calc(var(--gw) + 6px);right:8px;top:0;bottom:0;cursor:pointer}
-.c1tt:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(to bottom,transparent 0 calc(var(--hh)/2 - 1px),var(--ln) calc(var(--hh)/2 - 1px) calc(var(--hh)/2));opacity:0;transition:opacity .3s var(--ease);pointer-events:none}
+.c1tt:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(to bottom,transparent 0 calc(var(--hh)/2 - 1px),var(--ln) calc(var(--hh)/2 - 1px) calc(var(--hh)/2),transparent calc(var(--hh)/2) var(--hh));opacity:0;transition:opacity .3s var(--ease);pointer-events:none}
 .c1dg.dr .c1tt:before{opacity:1}
 .c1pn{position:relative;min-width:0;min-height:0;display:flex;flex-direction:column;overflow:auto;overscroll-behavior:contain;border-left:1px solid var(--ln)}
 .te-e{flex:1;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center}
@@ -3965,7 +3967,7 @@ document.addEventListener("keydown",function(e){
       t.innerHTML=lay(L).map(function(r){var x=r.x;
         return'<div class="tdc'+(x.id===fresh?" nw":"")+'" data-i="'+x.id+'" style="top:'+x.s*H/60+'px;height:'+(x.e-x.s)*H/60+'px;left:'+r.k/r.n*100+'%;width:calc('+100/r.n+'% - 6px);background:'+x.c+'"></div>'}).join("");
       [].forEach.call(t.children,function(el){var x=L.filter(function(a){return a.id==el.dataset.i})[0];if(x)fillCard(el,x)});
-      empt();
+      lnSync();empt();
     }
     function fx(sm){var L=list(),m=L.length?Math.min.apply(null,L.map(function(x){return x.s}))-30:0;
       sc.scrollTo({top:Math.max(0,m*H/60),behavior:sm?"smooth":"auto"})}
@@ -3980,8 +3982,13 @@ document.addEventListener("keydown",function(e){
         ls='<div class="tl">'+k.slice(0,sh).map(function(a,j){return'<div class="ti'+(a.d?" d":"")+'" data-k="'+j+'"><i></i><span>'+esc(a.t)+'</span></div>'}).join("")+(k.length>sh?'<div class="ti mo">+'+(k.length-sh)+' daha</div>':"")+'</div>'}
       el.classList.toggle("sm",sm);el.classList.toggle("xs",n<=15);el.classList.toggle("hb",!!bd2);el.classList.toggle("sel",!!ed&&ed.x===x);
       el.innerHTML='<b>'+esc(x.t||"Plan")+'</b><small>'+hm(x.s)+' – '+hm(x.e)+'</small>'+bd2+ls+'<i class="rz"></i>'}
+    function lnSync(){
+      if(!g)return;var L=list(),a=g.querySelectorAll(".c1hc");
+      for(var i=0;i<a.length;i++){var m=i*60,hit=false;
+        for(var j=0;j<L.length;j++){if(L[j].s<=m&&m<=L[j].e){hit=true;break}}
+        a[i].classList.toggle("hid",hit)}}
     function relay(){
-      if(!t)return;
+      if(!t)return;lnSync();
       lay(list()).forEach(function(r){var el=t.querySelector('.tdc[data-i="'+r.x.id+'"]');if(!el)return;
         el.style.left=r.k/r.n*100+"%";el.style.width="calc("+100/r.n+"% - 6px)"})}
     function drop(x){var L=list(),i=L.indexOf(x);if(i>-1)L.splice(i,1);
