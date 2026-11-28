@@ -521,8 +521,7 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .c1b{position:relative;overflow:hidden}
 .c1pg{flex:1;min-height:0;display:flex;flex-direction:column}
 .c1gh{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;pointer-events:none}
-.c1hl{display:flex;justify-content:flex-end;align-items:baseline;gap:1px;padding-right:12px;font-size:17px;font-weight:600;line-height:20px;color:var(--fg);transform:translateY(-10px)}
-.c1hl small{font-size:11px;font-weight:600;color:var(--dim)}
+.c1hl{display:flex;justify-content:flex-end;align-items:center;padding-right:12px;font-size:15px;font-weight:600;line-height:20px;letter-spacing:0;color:var(--fg);font-variant-numeric:tabular-nums;white-space:nowrap;transform:translateY(-10px)}
 /* Takvim 1 > Gün görünümü: hafta şeridi + saat ızgarası + sağda bütün panel */
 .c1dv{--nl:#e0239f;flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) clamp(280px,32vw,420px);border-top:1px solid var(--ln)}
 .c1dl{min-width:0;min-height:0;display:flex;flex-direction:column}
@@ -536,8 +535,10 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .c1wb.we{color:var(--dim)}
 .c1wb.t{color:var(--nl)}
 .c1wb.t small{font-weight:700}
-.c1wb.on{color:#111}
+.c1wk .c1wb.on{color:#111}
+.c1wk .c1wb.on small,.c1wk .c1wb.on b{color:#111}
 .c1dv .c1ds{border-top:0}
+.c1hc.f{border-top:0}
 .c1dv .c1hc{border-left:0}
 .c1dv .c1nl{background:var(--nl)}
 .c1dv .c1nl:before{background:var(--nl)}
@@ -3800,14 +3801,14 @@ document.addEventListener("keydown",function(e){
     }
     return h+"</div>";
   }
-  function hl(i){return i?(i<10?"0":"")+i+"<small>:00</small>":""}
+  function hl(i){return i?(i<10?"0":"")+i+":00":""}
   function hrs(days){
     var nn=days.length,one=nn===1,h='<div class="c1dh'+(one?" one":"")+'" style="--n:'+nn+'"><span></span>';
     days.forEach(function(d){var w=wi(d);h+='<button type="button" class="c1dc'+(same(d,TD)?" t":"")+'" data-d="'+key(d)+'"'+(one?' tabindex="-1"':"")+'><small>'+(one?GF[w]:GN[w])+'</small><b>'+d.getDate()+'</b></button>'});
     h+='</div><div class="c1ds" id="c1ds"><div class="c1dg" style="--n:'+nn+";--hh:"+HH+'px">';
     for(var i=0;i<24;i++){
       h+='<div class="c1hl">'+hl(i)+"</div>";
-      days.forEach(function(d){h+='<div class="c1hc'+(wi(d)>4?" we":"")+'"></div>'});
+      days.forEach(function(d){h+='<div class="c1hc'+(wi(d)>4?" we":"")+(i?"":" f")+'"></div>'});
     }
     days.forEach(function(d,j){if(same(d,TD)){var t=new Date();h+='<i class="c1nl" style="--i:'+j+";--m:"+(t.getHours()*60+t.getMinutes())+'"></i>'}});
     return h+"</div></div>";
@@ -3816,7 +3817,7 @@ document.addEventListener("keydown",function(e){
     var a=ws(S.dt),h='<div class="c1dv"><div class="c1dl"><div class="c1wk" role="tablist" aria-label="Haftanın günleri" style="--s:'+wi(S.dt)+'"><i class="c1hp"></i><span></span>';
     for(var i=0;i<7;i++){var d=addD(a,i);h+='<button type="button" role="tab" aria-selected="'+(same(d,S.dt)?"true":"false")+'" aria-label="'+d.getDate()+" "+AY[d.getMonth()]+" "+GF[i]+'" class="c1wb'+(same(d,S.dt)?" on":"")+(same(d,TD)?" t":"")+(i>4?" we":"")+'" data-d="'+key(d)+'"><small>'+GN[i]+'</small><b>'+d.getDate()+'</b></button>'}
     h+='</div><div class="c1ds" id="c1ds"><div class="c1dg" style="--n:1;--hh:'+HH+'px">';
-    for(var j=0;j<24;j++){h+='<div class="c1hl">'+hl(j)+'</div><div class="c1hc"></div>'}
+    for(var j=0;j<24;j++){h+='<div class="c1hl">'+hl(j)+'</div><div class="c1hc'+(j?"":" f")+'"></div>'}
     if(same(S.dt,TD))h+=nowl();
     return h+'</div></div></div><aside class="c1pn" id="c1pn" aria-label="Gün paneli"><b>Etkinlik yok</b></aside></div>';
   }
