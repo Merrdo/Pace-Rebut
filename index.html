@@ -466,15 +466,15 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 @media (max-width:767px){.app:before{content:"Bu uygulama şimdilik tablet için tasarlandı.";position:fixed;inset:0;z-index:9;display:grid;place-items:center;background:var(--bg);color:var(--dim);text-align:center;padding:30px}}
 
 /* Takvim 1 */
-.c1{--ln:color-mix(in srgb,var(--fg) 16%,var(--bg));--tn:color-mix(in srgb,var(--fg) 7%,transparent);--gw:56px;position:absolute;inset:0;display:flex;flex-direction:column;padding:98px 0 0;overflow:hidden}
-.c1h{flex:none;display:flex;align-items:baseline;gap:10px;margin:0 24px 30px;font-size:40px;line-height:1;font-weight:800;letter-spacing:-.02em;color:var(--fg);white-space:nowrap}
+.c1{--ln:color-mix(in srgb,var(--fg) 16%,var(--bg));--tn:color-mix(in srgb,var(--fg) 7%,transparent);--gw:56px;position:absolute;inset:0;display:flex;flex-direction:column;padding:46px 0 0;overflow:hidden}
+.c1h{flex:none;display:flex;align-items:baseline;gap:10px;margin:0 24px 22px;font-size:38px;line-height:1;font-weight:800;letter-spacing:-.02em;color:var(--fg);white-space:nowrap}
 .c1h button{font:inherit;letter-spacing:inherit;color:var(--dim);font-weight:500;background:none;border:0;padding:0;cursor:pointer;transition:color .4s var(--ease)}
 .c1h button:active{color:var(--fg)}
-.c1sw{--s:2;--sw:74px;position:absolute;top:22px;left:50%;z-index:3;display:grid;grid-template-columns:repeat(4,var(--sw));padding:5px;border-radius:999px;background:var(--glass,rgba(255,255,255,.9));-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:var(--glass-sh,0 10px 32px rgba(0,0,0,.1));transform:translateX(-50%)}
-.c1sw i{position:absolute;top:5px;left:5px;width:var(--sw);height:calc(100% - 10px);border-radius:999px;background:var(--fg);transform:translateX(calc(var(--s)*100%));transition:transform .4s var(--ease)}
-.c1sw button{position:relative;z-index:1;height:38px;border-radius:999px;font-size:14px;font-weight:700;color:var(--fg);transition:color .45s var(--ease),transform .5s var(--sp)}
+.c1sw{--s:2;--sw:60px;position:absolute;top:47px;left:50%;z-index:3;display:grid;grid-template-columns:repeat(4,var(--sw));padding:3px;border-radius:999px;background:color-mix(in srgb,var(--fg) 7%,transparent);transform:translateX(-50%)}
+.c1sw i{position:absolute;top:3px;left:3px;width:var(--sw);height:calc(100% - 6px);border-radius:999px;background:var(--surf,#fff);box-shadow:0 1px 3px rgba(0,0,0,.12);transform:translateX(calc(var(--s)*100%));transition:transform .4s var(--ease)}
+.c1sw button{position:relative;z-index:1;height:28px;border-radius:999px;font-size:12.5px;font-weight:600;color:var(--dim);transition:color .3s var(--ease),transform .5s var(--sp)}
 .c1sw button:active{transform:scale(.94)}
-.c1sw button.on{color:var(--bg)}
+.c1sw button.on{color:var(--fg);font-weight:700}
 .c1b{flex:1;min-height:0;display:flex;flex-direction:column;transition:opacity .12s ease,transform .12s ease}
 .c1b,.c1b *{touch-action:pan-y}
 .c1b.out{opacity:0;transform:translateX(calc(var(--dx,0)*-16px)) scale(.992)}
@@ -515,7 +515,7 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .c1wd{flex:none;font-size:.86em;font-weight:700;color:var(--dim);padding-bottom:2px}
 .c1mg{flex:1;min-height:0;grid-template-rows:repeat(6,minmax(0,1fr));font-weight:600;color:var(--fg)}
 .c1mg .t{display:grid;place-items:center;height:min(1.9em,100%);aspect-ratio:1;border-radius:50%;background:var(--fg);color:var(--bg)}
-@media (max-width:900px){.c1h{font-size:30px}.c1sw{--sw:62px}.c1sw button{font-size:13px}}
+@media (max-width:900px){.c1h{font-size:30px}.c1sw{--sw:52px}.c1sw button{font-size:12px}}
 @media (prefers-reduced-motion:reduce){.c1b,.c1b.an,.c1sw i{transition:none;animation:none}}
 /* Takvim */
 .card .chip{background:var(--surf2);color:#55524d}.card .chip.on{background:var(--fg);color:var(--bg)}
