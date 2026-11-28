@@ -517,6 +517,21 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .c1mg{flex:1;min-height:0;grid-template-rows:repeat(6,minmax(0,1fr));font-weight:500;font-variant-numeric:tabular-nums;color:var(--fg)}
 .c1mg>:nth-child(7n+6),.c1mg>:nth-child(7n+7){color:var(--dim)}
 .c1mg .t{display:grid;place-items:center;padding-top:.12em;font-weight:800;height:min(2em,100%);aspect-ratio:1;border-radius:50%;background:var(--fg);color:var(--bg)}
+/* Takvim > özel günler */
+.c1hv{--hc:#2fbf71;display:block;min-width:0;padding:2px 7px 1px 9px;border-radius:7px;background:color-mix(in srgb,var(--hc) 16%,transparent);box-shadow:inset 3px 0 0 var(--hc);color:color-mix(in srgb,var(--hc) 58%,var(--fg));font-size:12px;font-weight:700;line-height:1.35;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.c1hv.w{--hc:#9b6cff}
+.c1hv.more{padding-left:3px;background:none;box-shadow:none;color:var(--dim);font-weight:600}
+.c1t{flex-direction:column;justify-content:flex-start;align-items:flex-end;gap:5px}
+.c1ev{align-self:stretch;min-height:0;display:flex;flex-direction:column;gap:3px;overflow:hidden}
+.c1t.o .c1ev{opacity:.55}
+.c1dc .c1ev{align-self:stretch;width:100%;margin-top:2px}
+.c1mg>.h:not(.t){--hc:#2fbf71;display:grid;place-items:center;padding-top:.12em;height:min(2em,100%);aspect-ratio:1;border-radius:50%;background:color-mix(in srgb,var(--hc) 24%,transparent);color:color-mix(in srgb,var(--hc) 55%,var(--fg));font-weight:800}
+.c1mg>.h.w:not(.t){--hc:#9b6cff}
+.c1wb>.c1wd2{--hc:#2fbf71;position:absolute;left:50%;bottom:4px;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:var(--hc)}
+.c1wb>.c1wd2.w{--hc:#9b6cff}
+.c1hb{flex:none;display:flex;flex-wrap:wrap;gap:6px;padding:9px 14px 9px calc(var(--gw) + 6px);border-bottom:1px solid var(--ln)}
+.c1hb:empty{display:none}
+.c1hb .c1hv{font-size:14px;padding:3px 11px 2px 12px;border-radius:9px;max-width:100%}
 /* Takvim: geçiş katmanları + saat etiketleri */
 .c1b{position:relative;overflow:hidden}
 .c1pg{flex:1;min-height:0;display:flex;flex-direction:column}
@@ -3700,7 +3715,7 @@ function paintS(){
 $("#cset").addEventListener("click",function(e){
   var b=e.target.closest("button");if(!b)return;
   if(b.dataset.x){$("#cset").classList.remove("on")}
-  else if(b.dataset.g){CS.set[b.dataset.g]=CS.set[b.dataset.g]?0:1;b.classList.toggle("on",!!CS.set[b.dataset.g]);csv()}
+  else if(b.dataset.g){CS.set[b.dataset.g]=CS.set[b.dataset.g]?0:1;b.classList.toggle("on",!!CS.set[b.dataset.g]);csv();if(window.c1Refresh)window.c1Refresh()}
   else if(b.dataset.ly||b.dataset.lt){if(b.dataset.ly)cl.y+=+b.dataset.ly;else cl.t=b.dataset.lt;updL()}
 });
 function dkDay(){var e=$("#dkd"),d=String(new Date().getDate());if(e&&e.textContent!==d)e.textContent=d}
@@ -3854,22 +3869,35 @@ document.addEventListener("keydown",function(e){
   }
   function mon(){
     var y=S.dt.getFullYear(),m=S.dt.getMonth(),off=wi(new Date(y,m,1)),days=new Date(y,m+1,0).getDate(),rows=Math.ceil((off+days)/7),c="";
-    for(var i=0;i<rows*7;i++){var d=new Date(y,m,1-off+i),im=d.getMonth()===m;c+='<div class="c1t'+(im?"":" o")+(same(d,TD)?" t":"")+'" data-d="'+key(d)+'"><b>'+d.getDate()+'</b></div>'}
+    for(var i=0;i<rows*7;i++){var d=new Date(y,m,1-off+i),im=d.getMonth()===m;c+='<div class="c1t'+(im?"":" o")+(same(d,TD)?" t":"")+'" data-d="'+key(d)+'"><b>'+d.getDate()+'</b>'+(function(x){return x?'<div class="c1ev">'+x+'</div>':""})(hlist(d,2))+'</div>'}
     return'<div class="c1w">'+GN.map(function(x){return"<span>"+x+"</span>"}).join("")+'</div><div class="c1g" style="grid-template-rows:repeat('+rows+',minmax(0,1fr))">'+c+'</div>';
   }
   function yr(){
     var y=S.dt.getFullYear(),h='<div class="c1y">',wd='<span class="c1wd">'+["P","S","Ç","P","C","C","P"].map(function(x){return"<span>"+x+"</span>"}).join("")+"</span>";
     for(var mo=0;mo<12;mo++){
       var off=wi(new Date(y,mo,1)),days=new Date(y,mo+1,0).getDate(),c="";
-      for(var i=0;i<42;i++){var d=i-off+1;c+=(d>=1&&d<=days)?"<span"+(same(new Date(y,mo,d),TD)?' class="t"':"")+">"+d+"</span>":"<i></i>"}
+      for(var i=0;i<42;i++){var d=i-off+1;var dd=new Date(y,mo,d),hh=(d>=1&&d<=days)?hdy(dd):[],cc=(same(dd,TD)?" t":"")+(hh.length?" h"+(hh.some(function(x){return hcl(x)==="r"})?"":" w"):"");c+=(d>=1&&d<=days)?"<span"+(cc?' class="'+cc.trim()+'"':"")+(hh.length?' title="'+esc(hh.map(function(x){return x.n}).join(", "))+'"':"")+">"+d+"</span>":"<i></i>"}
       h+='<button type="button" class="c1ym'+(y===TD.getFullYear()&&mo===TD.getMonth()?" cur":"")+'" data-m="'+mo+'"><span class="c1mn">'+AY[mo]+'</span>'+wd+'<span class="c1mg">'+c+'</span></button>';
     }
     return h+"</div>";
   }
+  /* Özel günler: Takvim ayarlarındaki anahtarlara göre (hs) süzülür */
+  var PR={r:0,d:1,a:2,w:3};
+  function hdy(d){return hs(d.getFullYear(),d.getMonth(),d.getDate()).slice().sort(function(a,b){return PR[a.g]-PR[b.g]})}
+  function hcl(x){return x.g==="w"?"w":"r"}
+  function hlist(d,max){
+    var l=hdy(d);if(!l.length)return"";
+    var k=l.length>max?Math.max(1,max-1):l.length,h="",i;
+    for(i=0;i<k;i++)h+='<span class="c1hv '+hcl(l[i])+'">'+esc(l[i].n)+'</span>';
+    if(l.length>k)h+='<span class="c1hv more">+'+(l.length-k)+'</span>';
+    return h;
+  }
+  function hdot(d){var l=hdy(d);return l.length?'<i class="c1wd2 '+(l.some(function(x){return hcl(x)==="r"})?"r":"w")+'"></i>':""}
+  function hbar(d){return hdy(d).map(function(x){return'<span class="c1hv '+hcl(x)+'">'+esc(x.n)+'</span>'}).join("")}
   function hl(i){return i?(i<10?"0":"")+i+":00":""}
   function hrs(days){
     var nn=days.length,one=nn===1,h='<div class="c1dh'+(one?" one":"")+'" style="--n:'+nn+'"><span></span>';
-    days.forEach(function(d){var w=wi(d);h+='<button type="button" class="c1dc'+(same(d,TD)?" t":"")+'" data-d="'+key(d)+'"'+(one?' tabindex="-1"':"")+'><small>'+(one?GF[w]:GN[w])+'</small><b>'+d.getDate()+'</b></button>'});
+    days.forEach(function(d){var w=wi(d);h+='<button type="button" class="c1dc'+(same(d,TD)?" t":"")+'" data-d="'+key(d)+'"'+(one?' tabindex="-1"':"")+'><small>'+(one?GF[w]:GN[w])+'</small><b>'+d.getDate()+'</b>'+(function(x){return x?'<div class="c1ev">'+x+'</div>':""})(hlist(d,2))+'</button>'});
     h+='</div><div class="c1ds" id="c1ds"><div class="c1dg" style="--n:'+nn+";--hh:"+HH+'px">';
     for(var i=0;i<24;i++){
       h+='<div class="c1hl">'+hl(i)+"</div>";
@@ -3880,8 +3908,8 @@ document.addEventListener("keydown",function(e){
   }
   function dayv(){
     var a=ws(S.dt),h='<div class="c1dv"><div class="c1dl"><div class="c1wk" role="tablist" aria-label="Haftanın günleri" style="--s:'+wi(S.dt)+'"><i class="c1hp"></i><span></span>';
-    for(var i=0;i<7;i++){var d=addD(a,i);h+='<button type="button" role="tab" aria-selected="'+(same(d,S.dt)?"true":"false")+'" aria-label="'+d.getDate()+" "+AY[d.getMonth()]+" "+GF[i]+'" class="c1wb'+(same(d,S.dt)?" on":"")+(same(d,TD)?" t":"")+(i>4?" we":"")+'" data-d="'+key(d)+'"><small>'+GN[i]+'</small><b>'+d.getDate()+'</b></button>'}
-    h+='</div><div class="c1ds" id="c1ds"><div class="c1dg" style="--n:1;--hh:'+HD+'px">';
+    for(var i=0;i<7;i++){var d=addD(a,i);h+='<button type="button" role="tab" aria-selected="'+(same(d,S.dt)?"true":"false")+'" aria-label="'+d.getDate()+" "+AY[d.getMonth()]+" "+GF[i]+'" class="c1wb'+(same(d,S.dt)?" on":"")+(same(d,TD)?" t":"")+(i>4?" we":"")+'" data-d="'+key(d)+'">'+hdot(d)+'<small>'+GN[i]+'</small><b>'+d.getDate()+'</b></button>'}
+    h+='</div><div class="c1hb" id="c1hb">'+hbar(S.dt)+'</div><div class="c1ds" id="c1ds"><div class="c1dg" style="--n:1;--hh:'+HD+'px">';
     for(var j=0;j<24;j++){h+='<div class="c1hl">'+hl(j)+'</div><div class="c1hc'+(j?"":" f")+'"></div>'}
     h+='<div class="c1tt" id="tdt"></div><div class="tdq" id="tdq"><span>00:00</span></div>';
     if(same(S.dt,TD))h+=nowl();
@@ -3898,7 +3926,10 @@ document.addEventListener("keydown",function(e){
       b.dataset.d=key(d);b.setAttribute("aria-label",d.getDate()+" "+AY[d.getMonth()]+" "+GF[i]);b.setAttribute("aria-selected",on?"true":"false");
       b.classList.toggle("on",on);b.classList.toggle("t",same(d,TD));
       b.lastChild.textContent=d.getDate();
+      var od=b.querySelector(".c1wd2");if(od)od.remove();
+      var nd=hdot(d);if(nd)b.insertAdjacentHTML("afterbegin",nd);
     }
+    var hb=bd.querySelector(".c1hb");if(hb)hb.innerHTML=hbar(S.dt);
     wk.style.setProperty("--s",wi(S.dt));
     if(wc){
       void wk.offsetWidth;wk.classList.remove("nt");
@@ -4070,8 +4101,9 @@ document.addEventListener("keydown",function(e){
       var el=e.target.closest(".tdc");if(!el)return;
       var x=list().filter(function(a){return a.id==el.dataset.i})[0];if(!x)return;
       var r=e.target.classList.contains("rz");
-      D={el:el,x:x,y:e.clientY,cy:e.clientY,px:e.clientX,cx:e.clientX,sc:sc.scrollTop,s:x.s,e:x.e,m:r?"r":"m",mv:false,arm:r||e.pointerType==="mouse"||(e.pointerType==="pen"&&penWas)};
-      if(!D.arm){var d=D;D.tm=setTimeout(function(){if(D===d)lift()},e.pointerType==="pen"?240:350)}
+      D={el:el,x:x,y:e.clientY,cy:e.clientY,px:e.clientX,cx:e.clientX,sc:sc.scrollTop,s:x.s,e:x.e,m:r?"r":"m",mv:false,arm:r||e.pointerType==="mouse"||e.pointerType==="pen",pn:e.pointerType==="pen"};
+      if(!D.arm){var d=D;D.tm=setTimeout(function(){if(D===d)lift()},350)}
+      else if(D.pn){var dp=D;D.tm=setTimeout(function(){if(D===dp&&!dp.mv&&!dp.el.classList.contains("lift"))lift()},110)}
       try{el.setPointerCapture(e.pointerId)}catch(_){}}
     function onMove(e){
       if(!D)return;D.cy=e.clientY;D.cx=e.clientX;
@@ -4095,6 +4127,7 @@ document.addEventListener("keydown",function(e){
       te.addEventListener("scroll",onScroll,true);te.addEventListener("click",onClick);te.addEventListener("input",onInput);te.addEventListener("keydown",onKey);
       t.addEventListener("pointerdown",onDown);t.addEventListener("pointermove",onMove);
       t.addEventListener("touchmove",function(e){if(D&&D.arm&&e.cancelable)e.preventDefault()},{passive:false});
+      t.addEventListener("touchstart",function(e){var c=e.changedTouches&&e.changedTouches[0];if(c&&c.touchType==="stylus"&&e.cancelable&&e.target.closest(".tdc"))e.preventDefault()},{passive:false});
       t.addEventListener("pointerup",function(){end(true)});t.addEventListener("pointercancel",function(){end(false)});
       t.addEventListener("contextmenu",function(e){e.preventDefault()});t.addEventListener("dragstart",function(e){e.preventDefault()});
       t.addEventListener("click",onNew);
@@ -4173,6 +4206,7 @@ document.addEventListener("keydown",function(e){
     bd.addEventListener("click",function(e){if(Date.now()-sup<350){e.stopPropagation();e.preventDefault()}},true);
   })();
   /* Klavye kısa yolları (Ayarlar > Klavye kısa yolları > Takvim) bu işlevi çağırır */
+  window.c1Refresh=function(){first=true;go(function(){},0)};
   window.c1Act=function(id){
     if(id==="cPrev"||id==="cNext"){var k=id==="cNext"?1:-1;go(function(){S.dt=step(k)},k);return true}
     if(id==="cUp"||id==="cDown"){
