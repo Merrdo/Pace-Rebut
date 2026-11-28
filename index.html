@@ -465,10 +465,16 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 @media (max-width:767px){.app:before{content:"Bu uygulama şimdilik tablet için tasarlandı.";position:fixed;inset:0;z-index:9;display:grid;place-items:center;background:var(--bg);color:var(--dim);text-align:center;padding:30px}}
 
 /* Takvim 1 */
-.c1{position:absolute;inset:0;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));grid-template-rows:repeat(6,minmax(0,1fr));gap:8px;padding:14px 14px var(--dock-space)}
-.c1t{position:relative;display:flex;align-items:flex-start;justify-content:flex-start;padding:10px 12px;border-radius:18px;background:var(--surf);color:var(--fg);font-size:15px;font-weight:700;min-width:0;min-height:0;overflow:hidden}
-.c1t.o{color:var(--dim);background:var(--surf2);opacity:.55}
-.c1t.t{background:var(--fg);color:var(--bg)}
+.c1{--ln:color-mix(in srgb,var(--fg) 16%,var(--bg));position:absolute;inset:0;display:flex;flex-direction:column;padding:34px 24px var(--dock-space)}
+.c1h{flex:none;display:flex;align-items:baseline;gap:10px;margin:0 2px 18px;font-size:34px;line-height:1;font-weight:800;letter-spacing:-.02em;color:var(--fg)}
+.c1h em{font-style:normal;font-weight:500;color:var(--dim)}
+.c1w{flex:none;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));margin-bottom:8px}
+.c1w span{padding:0 10px;text-align:right;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
+.c1g{flex:1;min-height:0;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:1px;background:var(--ln);border:1px solid var(--ln);border-radius:18px;overflow:hidden}
+.c1t{display:flex;justify-content:flex-end;align-items:flex-start;padding:8px 10px;min-width:0;min-height:0;background:var(--bg);color:var(--fg);font-size:14px;font-weight:700}
+.c1t b{display:grid;place-items:center;min-width:26px;height:26px;padding:0 6px;border-radius:999px;font:inherit}
+.c1t.o{color:var(--dim);font-weight:500}
+.c1t.t b{background:var(--fg);color:var(--bg)}
 /* Takvim */
 .card .chip{background:var(--surf2);color:#55524d}.card .chip.on{background:var(--fg);color:var(--bg)}
 .gl{margin-top:14px}.gr{display:flex;align-items:center;gap:12px;padding:10px 12px;margin-bottom:4px;border-radius:14px}.gl{--gk:#2fbf71;--gt:#1d8a50}.gl.w{--gk:#9b6cff;--gt:#6a3fd1}.gm{margin:18px 12px 6px;font-size:16px;font-weight:800}.gm:first-child{margin-top:4px}.gr.up{background:color-mix(in srgb,var(--gk) 16%,transparent)}.gr.pa{opacity:.5}.gr em{flex:none;font-style:normal;font-size:13px;font-weight:700;color:var(--gt)}.card .chip.on[data-lt=r]{background:#2fbf71;color:#fff}.card .chip.on[data-lt=w]{background:#9b6cff;color:#fff}.gr i{width:10px;height:10px;border-radius:50%;background:var(--gk);flex:none}.gr b{width:96px;flex:none;font:600 15px Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums}.gr span{flex:1;font-size:16px;font-weight:500}.gy{display:flex;align-items:center;gap:10px;margin-top:14px;flex-wrap:wrap}.gy b{font:600 20px Inter,system-ui,sans-serif;min-width:56px;text-align:center}
@@ -2127,7 +2133,7 @@ html[data-theme=dark]{color-scheme:dark;--bg:#000;--fg:#f4f4f2;--dim:#9c9a95;--s
       </div>
     </section>
     <section class="view" id="v-cal"><div class="cal" id="cal"></div><div class="cset" id="cset"></div></section>
-    <section class="view" id="v-cal1"><div class="c1" id="c1"></div></section>
+    <section class="view" id="v-cal1"><div class="c1" id="c1"><div class="c1h" id="c1h"></div><div class="c1w" id="c1w"></div><div class="c1g" id="c1g"></div></div></section>
     <section class="view" id="v-questions"><div class="qw">
       <div class="qh"><h1>Sorular<em id="qcnt"></em></h1>
         <div class="qa">
@@ -3675,16 +3681,19 @@ document.addEventListener("keydown",function(e){
   }
 });
 
-/* Takvim 1: 7x6 esit boyutlu ay karolari */
+/* Takvim 1: esit boyutlu, bitisik ay izgarasi */
 (function(){
-  var g=document.getElementById("c1");if(!g)return;
+  var g=document.getElementById("c1g");if(!g)return;
+  var AY=["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"],GN=["Pzt","Sal","Çar","Per","Cum","Cmt","Paz"];
   var n=new Date(),y=n.getFullYear(),m=n.getMonth();
-  var f=new Date(y,m,1),off=(f.getDay()+6)%7,h="";
-  for(var i=0;i<42;i++){
-    var d=new Date(y,m,1-off+i);
-    var c="c1t"+(d.getMonth()!==m?" o":"")+(d.getFullYear()===y&&d.getMonth()===m&&d.getDate()===n.getDate()?" t":"");
-    h+='<div class="'+c+'">'+d.getDate()+'</div>';
+  var off=(new Date(y,m,1).getDay()+6)%7,days=new Date(y,m+1,0).getDate(),rows=Math.ceil((off+days)/7),h="";
+  document.getElementById("c1h").innerHTML=AY[m]+" <em>"+y+"</em>";
+  document.getElementById("c1w").innerHTML=GN.map(function(x){return"<span>"+x+"</span>"}).join("");
+  for(var i=0;i<rows*7;i++){
+    var d=new Date(y,m,1-off+i),im=d.getMonth()===m;
+    h+='<div class="c1t'+(im?"":" o")+(im&&d.getDate()===n.getDate()?" t":"")+'"><b>'+d.getDate()+'</b></div>';
   }
+  g.style.gridTemplateRows="repeat("+rows+",minmax(0,1fr))";
   g.innerHTML=h;
 })();
 
