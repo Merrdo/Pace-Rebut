@@ -493,14 +493,18 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .c1t.o{color:color-mix(in srgb,var(--fg) 30%,var(--bg));font-weight:500}
 .c1t.t b{background:var(--fg);color:var(--bg)}
 .c1dh{flex:none;display:grid;grid-template-columns:var(--gw) repeat(var(--n),minmax(0,1fr))}
-.c1dc{display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 6px 10px;min-width:0;border-left:1px solid var(--ln);color:var(--fg);cursor:pointer;transition:background .4s var(--ease)}
+.c1dc{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;padding:0 6px 8px;min-width:0;border-left:1px solid var(--ln);color:var(--fg);cursor:pointer;transition:background .4s var(--ease)}
+.c1dh>.c1dc:nth-child(2){border-left:0}
+.c1dh+.c1ds .c1hc:nth-child(8n+2){border-left:0}
 .c1dc.we{background:color-mix(in srgb,var(--fg) 5%,var(--bg))}
 @media (hover:hover){.c1dc:hover{background:color-mix(in srgb,var(--fg) 8%,var(--bg))}}
-.c1dc small{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
-.c1dc b{display:grid;place-items:center;min-width:38px;height:38px;padding:2px 8px 0;border-radius:999px;font-size:23px;font-weight:700;line-height:1}
-.c1dc.we b{color:var(--dim)}
-.c1dc.t small{color:var(--fg)}
-.c1dc.t b{background:var(--fg);color:var(--bg)}
+.c1dn{display:flex;align-items:center;justify-content:center;gap:7px;height:48px;padding-top:3px;font-size:19px;line-height:1}
+.c1dn small{font-size:inherit;font-weight:500;letter-spacing:0;text-transform:none;color:inherit}
+.c1dn b{font-weight:700;font-variant-numeric:tabular-nums}
+.c1dc.we{color:var(--dim)}
+.c1dc.t{color:var(--nl)}
+.c1dc.t .c1dn small{font-weight:700}
+.c1dc.t:after{content:"";position:absolute;left:12px;right:12px;bottom:0;height:3px;border-radius:3px 3px 0 0;background:var(--nl)}
 .c1dc .c1ev{width:100%;margin-top:4px}
 /* Hafta görünümü: gün görünümünde eklenen görevler */
 .c1wo{position:absolute;left:var(--gw);right:0;top:0;bottom:0;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));pointer-events:none}
@@ -545,13 +549,16 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .c1hb{flex:none;display:flex;flex-wrap:wrap;gap:6px;padding:9px 14px 9px calc(var(--gw) + 6px);border-bottom:1px solid var(--ln)}
 .c1hb:empty{display:none}
 .c1hb .c1hv{font-size:14px;padding:3px 11px 2px 12px;border-radius:9px;max-width:100%}
+.c1{--nl:#2b7de9}
+html[data-theme=dark] .c1{--nl:#5aa2ff}
+.c1 .c1nl,.c1 .c1nl:before{background:var(--nl)}
 /* Takvim: geçiş katmanları + saat etiketleri */
 .c1b{position:relative;overflow:hidden}
 .c1pg{flex:1;min-height:0;display:flex;flex-direction:column}
 .c1gh{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;pointer-events:none}
 .c1hl{display:flex;justify-content:flex-end;align-items:center;align-self:start;height:20px;padding-right:12px;font-size:15px;font-weight:600;line-height:20px;letter-spacing:0;color:var(--fg);font-variant-numeric:tabular-nums;white-space:nowrap;transform:translateY(-10px)}
 /* Takvim > Gün görünümü: hafta şeridi + saat ızgarası + sağda bütün panel */
-.c1dv{--nl:#2b7de9;--c:#8ecbff;flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) clamp(280px,32vw,420px);border-top:1px solid var(--ln)}
+.c1dv{--c:#8ecbff;flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) clamp(280px,32vw,420px);border-top:1px solid var(--ln)}
 .c1dl{min-width:0;min-height:0;display:flex;flex-direction:column}
 .c1wk{--s:0;position:relative;flex:none;display:grid;grid-template-columns:var(--gw) repeat(7,minmax(0,1fr));padding:8px 0;border-bottom:1px solid var(--ln)}
 .c1hp{position:absolute;top:8px;bottom:8px;left:calc(var(--gw) + 4px);width:calc((100% - var(--gw))/7 - 8px);border-radius:16px;background:var(--c);transform:translateX(calc(var(--s)*(100% + 8px)));transition:transform .45s var(--ease);pointer-events:none}
@@ -3910,7 +3917,7 @@ document.addEventListener("keydown",function(e){
   function hl(i){return i?(i<10?"0":"")+i+":00":""}
   function hrs(days){
     var nn=days.length,one=nn===1,h='<div class="c1dh'+(one?" one":"")+'" style="--n:'+nn+'"><span></span>';
-    days.forEach(function(d){var w=wi(d);h+='<button type="button" class="c1dc'+(same(d,TD)?" t":"")+(w>4?" we":"")+'" data-d="'+key(d)+'"'+(one?' tabindex="-1"':"")+'><small>'+(one?GF[w]:GN[w])+'</small><b>'+d.getDate()+'</b>'+(function(x){return x?'<div class="c1ev">'+x+'</div>':""})(hlist(d,2))+'</button>'});
+    days.forEach(function(d){var w=wi(d);h+='<button type="button" class="c1dc'+(same(d,TD)?" t":"")+(w>4?" we":"")+'" data-d="'+key(d)+'"'+(one?' tabindex="-1"':"")+'><span class="c1dn"><small>'+(one?GF[w]:GN[w])+'</small><b>'+d.getDate()+'</b></span>'+(function(x){return x?'<div class="c1ev">'+x+'</div>':""})(hlist(d,2))+'</button>'});
     h+='</div><div class="c1ds" id="c1ds"><div class="c1dg" style="--n:'+nn+";--hh:"+HH+'px">';
     for(var i=0;i<24;i++){
       h+='<div class="c1hl">'+hl(i)+"</div>";
