@@ -660,15 +660,15 @@ html[data-theme=dark] .c1{--nl:#5aa2ff}
 @media (max-width:900px){.c1h{font-size:30px}.c1sw{--sw:62px}.c1sw button{font-size:14px}}
 @media (prefers-reduced-motion:reduce){.c1b,.c1b.an,.c1sw i{transition:none;animation:none}}
 /* ===== Takvim yenileme: görünüm anahtarı, zaman çizgisi, ay tarihleri ===== */
-.c1sw{--sw:66px;top:46px;left:auto;right:84px;padding:3px;border-radius:14px;background:color-mix(in srgb,var(--fg) 6%,var(--bg));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--fg) 8%,transparent);transform:none}
-.c1sw i{top:3px;left:3px;height:calc(100% - 6px);border-radius:11px;background:var(--nl);box-shadow:0 4px 10px -4px color-mix(in srgb,var(--nl) 60%,transparent),inset 0 1px 0 rgba(255,255,255,.28)}
-.c1sw button{height:32px;border-radius:11px;font-size:14px;font-weight:700;padding-top:1px}
+.c1sw{--sw:62px;top:42px;left:auto;right:84px;padding:3px;border-radius:999px;background:var(--surf);box-shadow:none;transform:none}
+.c1sw i{top:3px;left:3px;height:calc(100% - 6px);border-radius:999px;background:var(--nl);box-shadow:none}
+.c1sw button{height:40px;border-radius:999px;font-size:14px;font-weight:700;padding-top:1px}
 .c1sw button.on{color:#fff}
-@media (max-width:900px){.c1sw{--sw:58px}.c1sw button{font-size:13px}}
-@media (max-width:640px){.c1sw{--sw:46px;right:76px}.c1sw button{font-size:12px;height:30px}.c1h{font-size:26px;margin-left:16px}.c1st{right:12px}}
+@media (max-width:900px){.c1sw{--sw:56px}.c1sw button{font-size:13px}}
+@media (max-width:640px){.c1sw{--sw:44px;right:76px}.c1sw button{font-size:12px}.c1h{font-size:26px;margin-left:16px}.c1st{right:12px}.c1{--gw:64px}}
 /* Ay görünümü üst gün adları: gün görünümündeki yazı stili, biraz aşağıda */
-.c1w{margin-bottom:12px}
-.c1w span{padding:8px 10px 0;font-size:19px;font-weight:500;color:var(--fg)}
+.c1w{margin-bottom:4px}
+.c1w span{padding:14px 10px 0;font-size:19px;font-weight:500;color:var(--fg)}
 .c1w span:nth-child(6),.c1w span:nth-child(7){color:var(--dim)}
 
 .c1dg .c1nl{height:2px;margin-top:-1px;border-radius:2px;box-shadow:0 0 10px color-mix(in srgb,var(--nl) 55%,transparent)}
@@ -676,6 +676,8 @@ html[data-theme=dark] .c1{--nl:#5aa2ff}
 .c1dg .c1nl:after{content:attr(data-t);position:absolute;right:calc(100%*(var(--i) + 1) + 12px);top:50%;transform:translateY(-50%);padding:3px 8px 2px;border-radius:999px;background:var(--nl);color:#fff;font:700 12px/1.3 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;white-space:nowrap;box-shadow:0 3px 10px -2px color-mix(in srgb,var(--nl) 60%,transparent)}
 .c1hl{transition:opacity .25s var(--ease)}
 .c1hl.nh{opacity:0}
+.c1{--gw:76px}
+@media (max-width:640px){.c1{--gw:64px}}
 
 
 /* Takvim */
