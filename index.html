@@ -465,7 +465,7 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 @media (max-width:767px){.app:before{content:"Bu uygulama şimdilik tablet için tasarlandı.";position:fixed;inset:0;z-index:9;display:grid;place-items:center;background:var(--bg);color:var(--dim);text-align:center;padding:30px}}
 
-/* Takvim 1 */
+/* Takvim */
 .c1{--ln:color-mix(in srgb,var(--fg) 22%,var(--bg));--tn:color-mix(in srgb,var(--fg) 7%,transparent);--gw:56px;position:absolute;inset:0;display:flex;flex-direction:column;padding:46px 0 0;overflow:hidden}
 .c1h{flex:none;display:flex;align-items:baseline;gap:10px;margin:0 24px 42px;font-size:38px;line-height:1;font-weight:800;letter-spacing:-.02em;color:var(--fg);white-space:nowrap}
 .c1h button{font:inherit;letter-spacing:inherit;color:var(--dim);font-weight:500;background:none;border:0;padding:0;cursor:pointer;transition:color .4s var(--ease)}
@@ -517,12 +517,12 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .c1mg{flex:1;min-height:0;grid-template-rows:repeat(6,minmax(0,1fr));font-weight:500;font-variant-numeric:tabular-nums;color:var(--fg)}
 .c1mg>:nth-child(7n+6),.c1mg>:nth-child(7n+7){color:var(--dim)}
 .c1mg .t{display:grid;place-items:center;padding-top:.12em;font-weight:800;height:min(2em,100%);aspect-ratio:1;border-radius:50%;background:var(--fg);color:var(--bg)}
-/* Takvim 1: geçiş katmanları + saat etiketleri */
+/* Takvim: geçiş katmanları + saat etiketleri */
 .c1b{position:relative;overflow:hidden}
 .c1pg{flex:1;min-height:0;display:flex;flex-direction:column}
 .c1gh{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;pointer-events:none}
 .c1hl{display:flex;justify-content:flex-end;align-items:center;align-self:start;height:20px;padding-right:12px;font-size:15px;font-weight:600;line-height:20px;letter-spacing:0;color:var(--fg);font-variant-numeric:tabular-nums;white-space:nowrap;transform:translateY(-10px)}
-/* Takvim 1 > Gün görünümü: hafta şeridi + saat ızgarası + sağda bütün panel */
+/* Takvim > Gün görünümü: hafta şeridi + saat ızgarası + sağda bütün panel */
 .c1dv{--nl:#e0239f;flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) clamp(280px,32vw,420px);border-top:1px solid var(--ln)}
 .c1dl{min-width:0;min-height:0;display:flex;flex-direction:column}
 .c1wk{--s:0;position:relative;flex:none;display:grid;grid-template-columns:var(--gw) repeat(7,minmax(0,1fr));padding:8px 0;border-bottom:1px solid var(--ln)}
@@ -546,7 +546,7 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .c1dv .c1nl:before{background:var(--nl)}
 .c1dv .c1nl:after{content:attr(data-t);position:absolute;right:calc(100% + 4px);top:50%;transform:translateY(-50%);padding:3px 7px 1px;border-radius:999px;background:var(--nl);color:#fff;font:700 11px/1.3 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums}
 @media (max-width:820px){.c1dv{grid-template-columns:minmax(0,1fr)}.c1wb{font-size:16px;gap:4px}}
-/* Takvim 1 > Gün: görev planı (To do mantığı) */
+/* Takvim > Gün: görev planı (To do mantığı) */
 .c1tt{position:absolute;left:calc(var(--gw) + 6px);right:8px;top:0;bottom:0;cursor:pointer}
 .c1tt:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(to bottom,transparent 0 calc(var(--hh)/2 - 1px),var(--ln) calc(var(--hh)/2 - 1px) calc(var(--hh)/2),transparent calc(var(--hh)/2) var(--hh));opacity:0;transition:opacity .3s var(--ease);pointer-events:none}
 .c1dg.dr .c1tt:before{opacity:1}
@@ -628,21 +628,16 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .card .chip{background:var(--surf2);color:#55524d}.card .chip.on{background:var(--fg);color:var(--bg)}
 .gl{margin-top:14px}.gr{display:flex;align-items:center;gap:12px;padding:10px 12px;margin-bottom:4px;border-radius:14px}.gl{--gk:#2fbf71;--gt:#1d8a50}.gl.w{--gk:#9b6cff;--gt:#6a3fd1}.gm{margin:18px 12px 6px;font-size:16px;font-weight:800}.gm:first-child{margin-top:4px}.gr.up{background:color-mix(in srgb,var(--gk) 16%,transparent)}.gr.pa{opacity:.5}.gr em{flex:none;font-style:normal;font-size:13px;font-weight:700;color:var(--gt)}.card .chip.on[data-lt=r]{background:#2fbf71;color:#fff}.card .chip.on[data-lt=w]{background:#9b6cff;color:#fff}.gr i{width:10px;height:10px;border-radius:50%;background:var(--gk);flex:none}.gr b{width:96px;flex:none;font:600 15px Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums}.gr span{flex:1;font-size:16px;font-weight:500}.gy{display:flex;align-items:center;gap:10px;margin-top:14px;flex-wrap:wrap}.gy b{font:600 20px Inter,system-ui,sans-serif;min-width:56px;text-align:center}
 #v-cal{overflow:hidden}
-.cal{position:absolute;inset:0;display:flex;flex-direction:column;padding:26px 36px var(--dock-space);transition:padding .8s var(--ease)}
-.app.fs .cal{padding-bottom:26px}
-.kh{display:flex;justify-content:flex-end;align-items:center;gap:16px;margin-bottom:16px}
-.kc{display:flex;gap:10px;align-items:center}
+.c1st{position:absolute;top:42px;right:24px;z-index:3}
 .kb{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--surf);transition:transform .5s var(--sp),background .3s}
 .kb:active{transform:scale(.92)}
 .kb svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
-.kh{position:relative;z-index:3}
 .cset{position:absolute;inset:0;z-index:4;background:var(--bg);overflow:auto;padding:34px 24px var(--dock-space);opacity:0;visibility:hidden;transform:translateY(24px);transition:opacity .45s var(--ease),transform .65s var(--ease),visibility 0s .45s}
 .cset.on{opacity:1;visibility:visible;transform:none;transition-delay:0s}
 .tg{position:relative;width:58px;height:34px;border-radius:999px;background:var(--surf2);flex:none;transition:background .35s}
 .tg i{position:absolute;top:4px;left:4px;width:26px;height:26px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.2);transition:transform .55s var(--sp)}
 .tg.on{background:var(--fg)}.tg.on i{transform:translateX(24px)}
-@media (max-width:1000px){.cal{padding:22px 22px var(--dock-space)}.kh{gap:10px}.kb{width:40px;height:40px}}
-@media (min-width:1001px) and (max-width:1100px){.kh{gap:10px}.kb{width:40px;height:40px}}
+@media (max-width:1100px){.kb{width:40px;height:40px}}
 
 /* Tarih paneli */
 .dpb{display:flex;align-items:center;gap:10px;margin-top:14px;padding:11px 16px;border-radius:14px;background:var(--surf2);font:500 16px Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;transition:transform .5s var(--sp),background .3s var(--ease)}
@@ -2251,8 +2246,7 @@ html[data-theme=dark]{color-scheme:dark;--bg:#000;--fg:#f4f4f2;--dim:#9c9a95;--s
     <i class="ind"></i>
     <button class="db on" data-v="topics"><svg viewBox="0 0 24 24"><path d="M5 6h14M5 12h14M5 18h9"/></svg>Konular</button>
     <button class="db" data-v="timer"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9.5 2.5h5"/></svg>Süre</button>
-    <button class="db" data-v="cal"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/><text id="dkd" x="12" y="18" text-anchor="middle">22</text></svg>Takvim</button>
-    <button class="db" data-v="cal1"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/><text x="12" y="18" text-anchor="middle">1</text></svg>Takvim 1</button>
+    <button class="db" data-v="cal"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/><text id="dkd" x="12" y="18" text-anchor="middle">28</text></svg>Takvim</button>
     <button class="db" data-v="questions"><svg viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="3"/><circle cx="9" cy="10" r="1.6"/><path d="M20.5 15.5l-4.5-4.5-8.5 8.5"/></svg>Sorular</button>
     <button class="db" data-v="settings"><svg viewBox="0 0 24 24"><path d="M4 7h9M19 7h1M4 17h1M11 17h9"/><circle cx="16" cy="7" r="2.5"/><circle cx="8" cy="17" r="2.5"/></svg>Ayarlar</button>
   </nav>
@@ -2281,12 +2275,12 @@ html[data-theme=dark]{color-scheme:dark;--bg:#000;--fg:#f4f4f2;--dim:#9c9a95;--s
         </div>
       </div>
     </section>
-    <section class="view" id="v-cal"><div class="cal" id="cal"></div><div class="cset" id="cset"></div></section>
-    <section class="view" id="v-cal1"><div class="c1" id="c1">
+    <section class="view" id="v-cal"><div class="c1" id="c1">
       <div class="c1h" id="c1h"></div>
+      <button class="kb c1st" id="c1st" type="button" aria-label="Takvim ayarları"><svg viewBox="0 0 24 24"><path d="M4 7h9M19 7h1M4 17h1M11 17h9"/><circle cx="16" cy="7" r="2.5"/><circle cx="8" cy="17" r="2.5"/></svg></button>
       <div class="c1sw" id="c1sw" role="tablist" aria-label="Takvim görünümü"><i></i><button type="button" role="tab" data-v="d">Gün</button><button type="button" role="tab" data-v="w">Hafta</button><button type="button" role="tab" data-v="m" class="on">Ay</button><button type="button" role="tab" data-v="y">Yıl</button></div>
       <div class="c1b" id="c1b"></div>
-    </div></section>
+    </div><div class="cset" id="cset"></div></section>
     <section class="view" id="v-questions"><div class="qw">
       <div class="qh"><h1>Sorular<em id="qcnt"></em></h1>
         <div class="qa">
@@ -2503,11 +2497,11 @@ var KA=[
 ["tDown","t","Süre","Geri sayımdan 5 dk çıkar","Geri sayım hazırken süreyi 5 dakika azaltır.","ArrowDown"],
 ["kPrev","k","Konular","Önceki ders","Konular sayfasında bir önceki dersi seçer.","ArrowLeft"],
 ["kNext","k","Konular","Sonraki ders","Konular sayfasında bir sonraki dersi seçer.","ArrowRight"],
-["cPrev","c","Takvim","Önceki dönem","Takvim 1 sayfasında bir önceki günü, haftayı, ayı ya da yılı açar.","ArrowLeft"],
-["cNext","c","Takvim","Sonraki dönem","Takvim 1 sayfasında bir sonraki günü, haftayı, ayı ya da yılı açar.","ArrowRight"],
+["cPrev","c","Takvim","Önceki dönem","Takvim sayfasında bir önceki günü, haftayı, ayı ya da yılı açar.","ArrowLeft"],
+["cNext","c","Takvim","Sonraki dönem","Takvim sayfasında bir sonraki günü, haftayı, ayı ya da yılı açar.","ArrowRight"],
 ["cUp","c","Takvim","Görünümü büyüt","Gün → Hafta → Ay → Yıl sırasıyla ilerler. Yıl'dan sonra tekrar Gün'e döner.","ArrowUp"],
 ["cDown","c","Takvim","Görünümü küçült","Yıl → Ay → Hafta → Gün sırasıyla geri gider. Gün'den sonra tekrar Yıl'a döner.","ArrowDown"],
-["cToday","c","Takvim","Bugüne dön","Takvim 1 sayfasında bugünün tarihine döner.","t"],
+["cToday","c","Takvim","Bugüne dön","Takvim sayfasında bugünün tarihine döner.","t"],
 ["qPrev","q","Sorular","Önceki soru","Açık soruda bir önceki soruya geçer.","ArrowLeft"],
 ["qNext","q","Sorular","Sonraki soru","Açık soruda bir sonraki soruya geçer.","ArrowRight"],
 ["qSolved","q","Sorular","Çözüldü işaretle","Açık soruyu çözüldü olarak işaretler, tekrar basınca işareti kaldırır.","Enter"],
@@ -2520,7 +2514,7 @@ var KA=[
 ],KDEF={},KB={on:1,map:{}};
 /* Nav kısayolları alt çubuktaki (.db) sıraya göre OTOMATİK üretilir: sayfa sırası değişir ya da yeni sayfa eklenirse atamalar kendiliğinden uyar. Kullanıcı özelleştirmeleri sayfa adına (nav:<data-v>) bağlıdır. */
 (function(){
-  var DESC={topics:"Derslerin ve konuların listesini açar.",timer:"Kronometre, geri sayım ve pomodoro sayfasını açar.",cal:"Takvimi açar.",cal1:"Takvim 1 sayfasını açar.",questions:"Soru fotoğraflarının galerisini açar.",settings:"Ayarlar sayfasını açar."};
+  var DESC={topics:"Derslerin ve konuların listesini açar.",timer:"Kronometre, geri sayım ve pomodoro sayfasını açar.",cal:"Takvim sayfasını açar.",questions:"Soru fotoğraflarının galerisini açar.",settings:"Ayarlar sayfasını açar."};
   var nv=[];
   Array.prototype.forEach.call(document.querySelectorAll(".db"),function(b,n){
     var lb="";Array.prototype.forEach.call(b.childNodes,function(c){if(c.nodeType===3)lb+=c.textContent});lb=lb.trim()||b.dataset.v;
@@ -3679,15 +3673,11 @@ function ds(y,m,d){return y+"-"+p2(m+1)+"-"+p2(d)}
 function wdx(y,m,d){return(new Date(y,m,d).getDay()+6)%7}
 function hs(y,m,d){return(hol(y)[p2(m+1)+"-"+p2(d)]||[]).filter(function(h){return CS.set[h.g==="w"?"w":"r"]})}
 function its(y,m,d){var s=ds(y,m,d);return CS.items.filter(function(i){return i.d===s||(i.y&&i.d.slice(5)===s.slice(5)&&i.d<=s)}).sort(function(a,b){return(a.tm||"99").localeCompare(b.tm||"99")})}
-var IC={p:'<path d="M15 5l-7 7 7 7"/>',n:'<path d="M9 5l7 7-7 7"/>',st:'<path d="M4 7h9M19 7h1M4 17h1M11 17h9"/><circle cx="16" cy="7" r="2.5"/><circle cx="8" cy="17" r="2.5"/>'};
-function ib(a,i,x){return'<button class="kb'+(x||"")+'" data-a="'+a+'" aria-label="'+a+'"><svg viewBox="0 0 24 24">'+IC[i]+'</svg></button>'}
-function paintK(){
-  $("#cal").innerHTML='<div class="kh"><div class="kc">'+ib("st","st")+'</div></div>';
-}
+var IC={p:'<path d="M15 5l-7 7 7 7"/>',n:'<path d="M9 5l7 7-7 7"/>'};
 /* Hafta yardımcısı: istatistikteki hafta aralığı için */
 function wkMon(y,m,d){var t=new Date(y,m,d);t.setDate(t.getDate()-wdx(t.getFullYear(),t.getMonth(),t.getDate()));return t}
 function wkRange(y,m,d){var a=wkMon(y,m,d),b=new Date(a.getFullYear(),a.getMonth(),a.getDate()+6),sh=function(x){return MN[x.getMonth()].slice(0,3)};return a.getMonth()===b.getMonth()?a.getDate()+"\u2013"+b.getDate()+" "+MN[a.getMonth()]:a.getDate()+" "+sh(a)+" \u2013 "+b.getDate()+" "+sh(b)}
-$("#cal").addEventListener("click",function(e){if(e.target.closest("[data-a=st]")){paintS();$("#cset").classList.add("on")}});
+$("#c1st").addEventListener("click",function(){paintS();$("#cset").classList.add("on")});
 var KS=[["r","Resmi tatiller ve özel günler","Türkiye: resmi tatiller, dini ve milli bayramlar, anma günleri, Anneler/Babalar Günü"],["w","Uluslararası özel günler","Dünya: Noel, Cadılar Bayramı, Yılbaşı Gecesi, Dünya Erkekler Günü, Sevgililer Günü…"]],cl={y:TD.getFullYear(),t:"r"};
 function glist(){
   var h=hol(cl.y),o=[],ty=TD.getFullYear()===cl.y,tk=p2(TD.getMonth()+1)+"-"+p2(TD.getDate()),up={},c=0,pm=-1,out="";
@@ -3713,7 +3703,6 @@ $("#cset").addEventListener("click",function(e){
   else if(b.dataset.g){CS.set[b.dataset.g]=CS.set[b.dataset.g]?0:1;b.classList.toggle("on",!!CS.set[b.dataset.g]);csv()}
   else if(b.dataset.ly||b.dataset.lt){if(b.dataset.ly)cl.y+=+b.dataset.ly;else cl.t=b.dataset.lt;updL()}
 });
-paintK();
 function dkDay(){var e=$("#dkd"),d=String(new Date().getDate());if(e&&e.textContent!==d)e.textContent=d}
 dkDay();setInterval(dkDay,30000);document.addEventListener("visibilitychange",dkDay);
 
@@ -3839,7 +3828,7 @@ document.addEventListener("keydown",function(e){
   }
 });
 
-/* Takvim 1: Gun / Hafta / Ay / Yil gorunumleri */
+/* Takvim: Gun / Hafta / Ay / Yil gorunumleri */
 (function(){
   var root=document.getElementById("c1");if(!root)return;
   var E=function(i){return document.getElementById(i)};
@@ -4210,13 +4199,13 @@ $$(".db").forEach(function(b,n){b.onclick=function(){
   $("#dock").style.setProperty("--i",n);
   $$(".db").forEach(function(x){x.classList.toggle("on",x===b)});
   $$(".view").forEach(function(e){e.classList.toggle("on",e.id==="v-"+b.dataset.v)});
-  ap.classList.toggle("c1on",b.dataset.v==="cal1");ap.classList.remove("c1dk");
+  ap.classList.toggle("c1on",b.dataset.v==="cal");ap.classList.remove("c1dk");
   (function(q){q.inert=!q.classList.contains("on");q.setAttribute("aria-hidden",q.inert?"true":"false")})($("#v-questions"));
 }});
 
 /* Klavye kısayolları: atamalar KA listesinde, kullanıcının değişiklikleri KB.map'te (Ayarlar > Klavye kısa yolları) */
 function kFs(){
-  if(kView()==="cal1"){$(".app").classList.toggle("c1dk");return}
+  if(kView()==="cal"){$(".app").classList.toggle("c1dk");return}
   $("#fsb").click();
 }
 function kView(){var v=$(".view.on");return v?v.id.slice(2):""}
@@ -4258,12 +4247,13 @@ document.addEventListener("keydown",function(e){
   var v=kView(),fs=$(".app").classList.contains("fs"),cs=$("#cset").classList.contains("on");
   if(e.key==="Escape"&&!e.ctrlKey&&!e.metaKey){
     if(fs){e.preventDefault();kFs()}
-    else if(v==="cal1"&&$(".app").classList.contains("c1dk")){e.preventDefault();$(".app").classList.remove("c1dk")}
     else if(v==="cal"&&cs){e.preventDefault();$("#cset").classList.remove("on")}
+    else if(v==="cal"&&$(".app").classList.contains("c1dk")){e.preventDefault();$(".app").classList.remove("c1dk")}
     return;
   }
+  if(v==="cal"&&cs)return;
   var key=kbNorm(e);if(!key)return;
-  var sc=v==="timer"?"t":v==="topics"?"k":v==="cal1"?"c":"",id=null;
+  var sc=v==="timer"?"t":v==="topics"?"k":v==="cal"?"c":"",id=null;
   KA.some(function(x){if((x[1]==="g"||x[1]===sc)&&kbGet(x[0])===key){id=x[0];return true}});
   if(!id)return;
   var btn=!!a&&a.tagName==="BUTTON";
