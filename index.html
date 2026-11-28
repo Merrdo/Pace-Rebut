@@ -659,6 +659,28 @@ html[data-theme=dark] .c1{--nl:#5aa2ff}
 .ti.d span{text-decoration:none;background-size:100% 2px;opacity:.6}
 @media (max-width:900px){.c1h{font-size:30px}.c1sw{--sw:62px}.c1sw button{font-size:14px}}
 @media (prefers-reduced-motion:reduce){.c1b,.c1b.an,.c1sw i{transition:none;animation:none}}
+/* ===== Takvim yenileme: görünüm anahtarı, zaman çizgisi, ay tarihleri ===== */
+.c1sw{--sw:84px;top:42px;left:auto;right:24px;padding:4px;border-radius:18px;background:color-mix(in srgb,var(--fg) 6%,var(--bg));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--fg) 8%,transparent),0 6px 18px -10px color-mix(in srgb,var(--fg) 40%,transparent);transform:none}
+.c1sw i{top:4px;left:4px;height:calc(100% - 8px);border-radius:14px;background:var(--nl);box-shadow:0 6px 14px -4px color-mix(in srgb,var(--nl) 60%,transparent),inset 0 1px 0 rgba(255,255,255,.28)}
+.c1sw button{height:38px;border-radius:14px;font-size:16px;font-weight:700;padding-top:1px;letter-spacing:.01em}
+.c1sw button.on{color:#fff}
+@media (max-width:900px){.c1sw{--sw:68px}.c1sw button{font-size:15px}}
+@media (max-width:640px){.c1sw{--sw:54px;right:12px}.c1sw button{font-size:13px;height:34px}.c1h{font-size:26px;margin-left:16px}}
+
+.c1dg .c1nl{height:2px;margin-top:-1px;border-radius:2px;box-shadow:0 0 10px color-mix(in srgb,var(--nl) 55%,transparent)}
+.c1dg .c1nl:before{left:-6px;top:-5px;width:12px;height:12px;box-shadow:0 0 0 3px color-mix(in srgb,var(--nl) 28%,transparent)}
+.c1dg .c1nl:after{content:attr(data-t);position:absolute;right:calc(100%*(var(--i) + 1) + 12px);top:50%;transform:translateY(-50%);padding:3px 8px 2px;border-radius:999px;background:var(--nl);color:#fff;font:700 12px/1.3 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;white-space:nowrap;box-shadow:0 3px 10px -2px color-mix(in srgb,var(--nl) 60%,transparent)}
+.c1nb{position:absolute;z-index:0;left:var(--gw);right:0;top:calc(var(--m)/1440*100%);height:1px;background:color-mix(in srgb,var(--nl) 32%,transparent);pointer-events:none}
+.c1hl{transition:opacity .25s var(--ease)}
+.c1hl.nh{opacity:0}
+
+.c1t{padding:13px 10px 8px}
+.c1t b{display:flex;align-items:center;justify-content:center;gap:6px;min-width:0;height:34px;padding:3px 11px 0;border-radius:999px;font-size:19px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap}
+.c1t b small{font-size:inherit;font-weight:500;color:inherit}
+.c1t.o b{font-weight:600}
+.c1t.t b{background:var(--nl);color:#fff}
+@media (max-width:640px){.c1t b small{display:none}.c1t b{padding:3px 8px 0}}
+
 /* Takvim */
 .card .chip{background:var(--surf2);color:#55524d}.card .chip.on{background:var(--fg);color:var(--bg)}
 .gl{margin-top:14px}.gr{display:flex;align-items:center;gap:12px;padding:10px 12px;margin-bottom:4px;border-radius:14px}.gl{--gk:#2fbf71;--gt:#1d8a50}.gl.w{--gk:#9b6cff;--gt:#6a3fd1}.gm{margin:18px 12px 6px;font-size:16px;font-weight:800}.gm:first-child{margin-top:4px}.gr.up{background:color-mix(in srgb,var(--gk) 16%,transparent)}.gr.pa{opacity:.5}.gr em{flex:none;font-style:normal;font-size:13px;font-weight:700;color:var(--gt)}.card .chip.on[data-lt=r]{background:#2fbf71;color:#fff}.card .chip.on[data-lt=w]{background:#9b6cff;color:#fff}.gr i{width:10px;height:10px;border-radius:50%;background:var(--gk);flex:none}.gr b{width:96px;flex:none;font:600 15px Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums}.gr span{flex:1;font-size:16px;font-weight:500}.gy{display:flex;align-items:center;gap:10px;margin-top:14px;flex-wrap:wrap}.gy b{font:600 20px Inter,system-ui,sans-serif;min-width:56px;text-align:center}
@@ -3889,7 +3911,7 @@ document.addEventListener("keydown",function(e){
   }
   function mon(){
     var y=S.dt.getFullYear(),m=S.dt.getMonth(),off=wi(new Date(y,m,1)),days=new Date(y,m+1,0).getDate(),rows=Math.ceil((off+days)/7),c="";
-    for(var i=0;i<rows*7;i++){var d=new Date(y,m,1-off+i),im=d.getMonth()===m;c+='<div class="c1t'+(im?"":" o")+(same(d,TD)?" t":"")+'" data-d="'+key(d)+'"><b>'+d.getDate()+'</b>'+(function(x){return x?'<div class="c1ev">'+x+'</div>':""})(hlist(d,2))+'</div>'}
+    for(var i=0;i<rows*7;i++){var d=new Date(y,m,1-off+i),im=d.getMonth()===m;c+='<div class="c1t'+(im?"":" o")+(same(d,TD)?" t":"")+'" data-d="'+key(d)+'"><b><small>'+GN[wi(d)]+'</small>'+d.getDate()+'</b>'+(function(x){return x?'<div class="c1ev">'+x+'</div>':""})(hlist(d,2))+'</div>'}
     return'<div class="c1w">'+GN.map(function(x){return"<span>"+x+"</span>"}).join("")+'</div><div class="c1g" style="grid-template-rows:repeat('+rows+',minmax(0,1fr))">'+c+'</div>';
   }
   function yr(){
@@ -3934,7 +3956,7 @@ document.addEventListener("keydown",function(e){
       h+='</div>';
     });
     h+='</div>';
-    days.forEach(function(d,j){if(same(d,TD)){var t=new Date();h+='<i class="c1nl" style="--i:'+j+";--m:"+(t.getHours()*60+t.getMinutes())+'"></i>'}});
+    days.forEach(function(d,j){if(same(d,TD)){var t=new Date();var mm=t.getHours()*60+t.getMinutes();h+='<i class="c1nb" style="--m:'+mm+'"></i><i class="c1nl" data-t="'+tstr(t)+'" style="--i:'+j+";--m:"+mm+'"></i>'}});
     return h+"</div></div>";
   }
   function dayv(){
@@ -3968,8 +3990,16 @@ document.addEventListener("keydown",function(e){
     }
     var g=bd.querySelector(".c1dg"),l=g&&g.querySelector(".c1nl"),td=same(S.dt,TD);
     if(g){if(td&&!l)g.insertAdjacentHTML("beforeend",nowl());else if(!td&&l)l.remove()}
-    TDO.day(dx);
+    nlFix(bd);TDO.day(dx);
     return true;
+  }
+  /* Şimdiki zaman etiketi saat yazısının üstüne binerse o saat yazısını gizler */
+  function nlFix(r){
+    var l=r.querySelector(".c1nl"),g=l&&l.parentNode;
+    Array.prototype.forEach.call(r.querySelectorAll(".c1hl.nh"),function(x){x.classList.remove("nh")});
+    if(!g)return;
+    var m=+l.style.getPropertyValue("--m"),hh=parseFloat(g.style.getPropertyValue("--hh"))||HD,L=g.querySelectorAll(".c1hl");
+    for(var i=0;i<L.length;i++)if(Math.abs(i*60-m)*hh/60<24)L[i].classList.add("nh");
   }
   function tstr(t){return(t.getHours()<10?"0":"")+t.getHours()+":"+(t.getMinutes()<10?"0":"")+t.getMinutes()}
   function body(){
@@ -4201,7 +4231,7 @@ document.addEventListener("keydown",function(e){
       var t=new Date(),inV=S.v==="d"?same(S.dt,TD):same(ws(S.dt),ws(TD)),hx=S.v==="d"?HD:HH,r=(inV?Math.max(0,t.getHours()-2):7)*hx;
       ds.scrollTop=keep?st*hx/(pv==="d"?HD:HH):Math.max(0,r-14);
     }
-    TDO.attach(!!keep);
+    nlFix(pg);TDO.attach(!!keep);
     if(!ghost)return;
     bd.appendChild(ghost);
     var gd=ghost.querySelector(".c1ds");if(gd)gd.scrollTop=st;
@@ -4269,7 +4299,7 @@ document.addEventListener("keydown",function(e){
     if(id==="cToday"){if(!same(S.dt,TD))go(function(){S.dt=TD},S.dt<TD?1:-1);return true}
     return false;
   };
-  setInterval(function(){var l=bd.querySelector(".c1nl");if(l){var t=new Date();l.style.setProperty("--m",t.getHours()*60+t.getMinutes());l.setAttribute("data-t",tstr(t))}},30000);
+  setInterval(function(){var a=bd.querySelectorAll(".c1nl,.c1nb");if(a.length){var t=new Date(),m=t.getHours()*60+t.getMinutes();Array.prototype.forEach.call(a,function(l){l.style.setProperty("--m",m);if(l.hasAttribute("data-t"))l.setAttribute("data-t",tstr(t))});nlFix(bd)}},30000);
   go(function(){},0);
 })();
 
