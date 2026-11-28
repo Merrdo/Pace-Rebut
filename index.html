@@ -470,12 +470,38 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 #v-cal{overflow:hidden}
 .cal{position:absolute;inset:0;display:flex;flex-direction:column;padding:26px 36px var(--dock-space);transition:padding .8s var(--ease)}
 .app.fs .cal{padding-bottom:26px}
-.kh{display:flex;justify-content:flex-end;align-items:center;gap:16px;margin-bottom:16px}
+.kh{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:18px}
 .kc{display:flex;gap:10px;align-items:center}
 .kb{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--surf);transition:transform .5s var(--sp),background .3s}
 .kb:active{transform:scale(.92)}
 .kb svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .kh{position:relative;z-index:3}
+/* Ay gorunumu */
+.kt{display:flex;align-items:baseline;gap:12px;min-width:0;line-height:1;white-space:nowrap}
+.kt b{font-size:50px;font-weight:800;letter-spacing:-1px}
+.kt span{font-family:Inter,"SF Pro Display",system-ui,sans-serif;font-size:34px;font-weight:500;color:var(--dim);letter-spacing:-1px}
+.kz{height:46px;padding:0 20px;border-radius:999px;background:var(--surf);font-size:16px;font-weight:700;transition:transform .5s var(--sp),opacity .3s}
+.kz:active{transform:scale(.94)}.kz.off{display:none}
+.kw{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;margin-bottom:8px}
+.kw span{text-align:center;font:600 13px Inter,system-ui,sans-serif;letter-spacing:.3px;color:var(--dim)}
+.kw span:nth-child(n+6){opacity:.6}
+.kg{flex:1;min-height:0;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));grid-template-rows:repeat(var(--r),minmax(0,1fr));gap:8px}
+.kg.a,.kw.a{animation:ksl .55s var(--ease)}
+@keyframes ksl{from{opacity:0;transform:translateX(calc(var(--d)*30px))}to{opacity:1;transform:none}}
+.kd{position:relative;display:flex;flex-direction:column;gap:4px;min-height:0;padding:8px 9px;border-radius:16px;background:var(--surf);overflow:hidden;text-align:left;transition:transform .5s var(--sp)}
+.kd:active{transform:scale(.97)}
+.kd.o{background:transparent;box-shadow:inset 0 0 0 1.5px var(--surf2)}
+.kd.o .n{color:var(--dim);opacity:.55}.kd.o .kv{display:none}
+.kd .n{flex:none;display:grid;place-items:center;width:28px;height:28px;margin:-3px 0 0 -4px;border-radius:50%;font:600 15px/1 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums}
+.kd.we .n{color:var(--dim)}
+.kd.t .n{background:var(--fg);color:var(--bg)}
+.kv{display:flex;flex-direction:column;gap:3px;min-height:0;overflow:hidden}
+.ke{flex:none;padding:2px 6px;border-radius:7px;font-size:12px;font-weight:700;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--fg)}
+.ke.h{--gk:#2fbf71;background:color-mix(in srgb,var(--gk) 22%,transparent)}
+.ke.h.w{--gk:#9b6cff}
+.ke.i{background:var(--c);color:var(--ink)}
+.ke.m{padding:0 4px;background:none;color:var(--dim);font-size:11px;font-weight:600}
+@media (max-width:700px){.kt b{font-size:34px}.kt span{font-size:24px}.kz{height:40px;padding:0 14px;font-size:14px}.kw{gap:4px}.kg{gap:4px}.kd{padding:5px;border-radius:12px;gap:2px}.kd .n{width:24px;height:24px;font-size:13px}.kv{flex-direction:row;flex-wrap:wrap;gap:3px}.ke{width:6px;height:6px;padding:0;border-radius:50%;font-size:0}.ke.m{width:auto;height:auto;font-size:10px;border-radius:0}}
 .cset{position:absolute;inset:0;z-index:4;background:var(--bg);overflow:auto;padding:34px 24px var(--dock-space);opacity:0;visibility:hidden;transform:translateY(24px);transition:opacity .45s var(--ease),transform .65s var(--ease),visibility 0s .45s}
 .cset.on{opacity:1;visibility:visible;transform:none;transition-delay:0s}
 .tg{position:relative;width:58px;height:34px;border-radius:999px;background:var(--surf2);flex:none;transition:background .35s}
@@ -483,61 +509,6 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .tg.on{background:var(--fg)}.tg.on i{transform:translateX(24px)}
 @media (max-width:1000px){.cal{padding:22px 22px var(--dock-space)}.kh{gap:10px}.kb{width:40px;height:40px}}
 @media (min-width:1001px) and (max-width:1100px){.kh{gap:10px}.kb{width:40px;height:40px}}
-/* Takvim: ay görünümü (tam ekran, alt çubuk gizli) */
-.app.calx .dock{transform:translate(-50%,160%);opacity:0;pointer-events:none}
-#v-cal .cal{padding:max(24px,env(safe-area-inset-top,0px)) 40px max(28px,env(safe-area-inset-bottom,0px))}
-.cl-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:20px;flex:none}
-.cl-ttl{min-width:0}
-.cl-mo{display:flex;align-items:baseline;gap:16px;line-height:.92}
-.cl-mo b{font:800 clamp(56px,11vh,112px)/.92 "Baloo 2",ui-rounded,system-ui,sans-serif;letter-spacing:-2px}
-.cl-mo span{font:500 clamp(28px,5.4vh,54px)/1 Inter,system-ui,sans-serif;letter-spacing:-1.5px;color:var(--dim)}
-.cl-sub{margin-top:10px;display:flex;flex-wrap:wrap;gap:4px 14px;font:700 17px/1.3 Inter,system-ui,sans-serif}
-.cl-sub em{font-style:normal;font-weight:500;color:var(--dim)}
-.cl-tools{display:flex;align-items:center;gap:10px;flex:none}
-.cl-tools .kb{width:50px;height:50px}
-.cl-bg{height:50px;padding:0 22px;border-radius:999px;background:var(--surf);font-size:17px;font-weight:700;transition:transform .5s var(--sp),opacity .3s}
-.cl-bg:active{transform:scale(.94)}.cl-bg.off{opacity:.45}
-.cl-wk,.cl-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px}
-.cl-wk{flex:none;margin-bottom:10px}
-.cl-wk span{padding:0 10px;font:700 14px/1 Inter,system-ui,sans-serif;letter-spacing:.6px;text-transform:uppercase;color:var(--dim)}
-.cl-wk span:nth-child(n+6){color:var(--ct)}
-.cl-grid{flex:1;min-height:0;grid-template-rows:repeat(var(--rows,6),minmax(0,1fr))}
-.cl-grid.n,.cl-mo.n{animation:clN .55s var(--ease)}.cl-grid.p,.cl-mo.p{animation:clP .55s var(--ease)}
-@keyframes clN{from{opacity:0;transform:translateX(34px)}}@keyframes clP{from{opacity:0;transform:translateX(-34px)}}
-@keyframes clIn{from{opacity:0;transform:translateY(8px) scale(.97)}}
-.cl-day{position:relative;display:flex;flex-direction:column;min-width:0;min-height:0;padding:12px 12px 10px;border-radius:22px;background:var(--surf);text-align:left;overflow:hidden;box-shadow:0 1px 0 rgba(17,17,17,.04),0 8px 18px -12px rgba(17,17,17,.2);transition:transform .5s var(--sp),box-shadow .35s var(--ease);animation:clIn .6s var(--ease) backwards;animation-delay:calc(var(--i)*9ms)}
-.cl-day:active{transform:scale(.97)}
-.cl-top{display:flex;align-items:center;justify-content:space-between;gap:6px;flex:none}
-.cl-num{font:600 clamp(20px,3.4vh,30px)/1 Inter,system-ui,sans-serif;letter-spacing:-.8px;font-variant-numeric:tabular-nums}
-.cl-tag{font:800 11px/1 Inter,system-ui,sans-serif;letter-spacing:.7px;text-transform:uppercase;opacity:.65}
-.cl-day.we .cl-num{color:var(--ct)}.cl-day.hr .cl-num{color:#1d8a50}.cl-day.hw .cl-num{color:#6a3fd1}
-.cl-day.p .cl-num{opacity:.5}
-.cl-day.o{background:color-mix(in srgb,var(--surf) 42%,transparent);box-shadow:none}.cl-day.o .cl-num{color:var(--dim);opacity:.6}.cl-day.o .cl-list{opacity:.55}
-.cl-day.t{background:var(--c);color:#111;box-shadow:0 16px 30px -14px var(--c)}.cl-day.t .cl-num{color:#111;opacity:1}
-.cl-day.s{box-shadow:inset 0 0 0 2.5px var(--fg)}
-.cl-list{flex:1;min-height:0;margin-top:8px;display:flex;flex-direction:column;gap:4px;overflow:hidden}
-.cl-pill{flex:none;display:flex;align-items:center;gap:6px;min-width:0;padding:4px 9px;border-radius:10px;font:600 13px/1.25 Inter,system-ui,sans-serif}
-.cl-pill b{flex:none;font-weight:700;font-variant-numeric:tabular-nums;opacity:.7}
-.cl-pill span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.cl-pr{background:color-mix(in srgb,#2fbf71 18%,transparent);color:#1d8a50}
-.cl-pw{background:color-mix(in srgb,#9b6cff 18%,transparent);color:#6a3fd1}
-.cl-pi{background:var(--c);color:#111}
-.cl-day.t .cl-pr,.cl-day.t .cl-pw{background:rgba(17,17,17,.12);color:#111}.cl-day.t .cl-pi{background:#111;color:var(--c)}
-.cl-more{flex:none;padding:0 4px;font:700 12px/1.2 Inter,system-ui,sans-serif;color:var(--dim)}.cl-day.t .cl-more{color:rgba(17,17,17,.6)}
-.cl-hide{display:none!important}
-.cl-dots{display:none;justify-content:center;gap:3px;margin-top:auto}.cl-dots i{width:6px;height:6px;border-radius:50%;background:var(--ct)}.cl-dots .r{background:#2fbf71}.cl-dots .w{background:#9b6cff}
-html[data-theme=dark] .cl-pr,html[data-theme=dark] .cl-day.hr .cl-num{color:#62e09f}
-html[data-theme=dark] .cl-pw,html[data-theme=dark] .cl-day.hw .cl-num{color:#bda3ff}
-html[data-theme=dark] .cl-day.t .cl-num{color:#111}
-@media (max-width:760px){
-  #v-cal .cal{padding:max(16px,env(safe-area-inset-top,0px)) 12px max(16px,env(safe-area-inset-bottom,0px))}
-  .cl-head{flex-wrap:wrap;align-items:flex-start;gap:14px}.cl-sub{font-size:14px}.cl-tools{width:100%;justify-content:space-between}.cl-tools .kb{width:44px;height:44px}.cl-bg{height:44px;padding:0 16px;flex:1}
-  .cl-wk,.cl-grid{gap:5px}.cl-wk span{padding:0;text-align:center;font-size:11px}
-  .cl-day{padding:7px 4px 6px;border-radius:14px;align-items:center}.cl-top{justify-content:center}.cl-tag{display:none}.cl-num{font-size:18px}
-  .cl-list{display:none}.cl-dots{display:flex}
-}
-@media (prefers-reduced-motion:reduce){.cl-day,.cl-grid,.cl-mo{animation:none!important}}
-
 
 /* Tarih paneli */
 .dpb{display:flex;align-items:center;gap:10px;margin-top:14px;padding:11px 16px;border-radius:14px;background:var(--surf2);font:500 16px Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;transition:transform .5s var(--sp),background .3s var(--ease)}
@@ -3565,67 +3536,45 @@ function hs(y,m,d){return(hol(y)[p2(m+1)+"-"+p2(d)]||[]).filter(function(h){retu
 function its(y,m,d){var s=ds(y,m,d);return CS.items.filter(function(i){return i.d===s||(i.y&&i.d.slice(5)===s.slice(5)&&i.d<=s)}).sort(function(a,b){return(a.tm||"99").localeCompare(b.tm||"99")})}
 var IC={p:'<path d="M15 5l-7 7 7 7"/>',n:'<path d="M9 5l7 7-7 7"/>',st:'<path d="M4 7h9M19 7h1M4 17h1M11 17h9"/><circle cx="16" cy="7" r="2.5"/><circle cx="8" cy="17" r="2.5"/>'};
 function ib(a,i,x){return'<button class="kb'+(x||"")+'" data-a="'+a+'" aria-label="'+a+'"><svg viewBox="0 0 24 24">'+IC[i]+'</svg></button>'}
-/* Ay görünümü */
-var KM={y:TD.getFullYear(),m:TD.getMonth(),sel:"",dir:""},KT="";
-IC.ex='<path d="M5 6h14M5 12h14M5 18h9"/>';
-function kToday(){var n=new Date();return[n.getFullYear(),n.getMonth(),n.getDate()]}
-function kItems(y,m,d){
-  var p="",o="";
-  hs(y,m,d).forEach(function(h){var w=h.g==="w";p+='<span class="cl-pill '+(w?"cl-pw":"cl-pr")+'"><span>'+esc(h.n)+'</span></span>';o+='<i class="'+(w?"w":"r")+'"></i>'});
-  its(y,m,d).forEach(function(i){p+='<span class="cl-pill cl-pi">'+(i.tm?'<b>'+esc(i.tm)+'</b>':'')+'<span>'+esc(i.t)+'</span></span>';o+='<i></i>'});
-  return{p:p,d:o.split("</i>").slice(0,4).join("</i>")+(o?"</i>":"")}
+/* Ay gorunumu: KM = gosterilen ay. dir = gecis yonu (animasyon icin) */
+var KM={y:TD.getFullYear(),m:TD.getMonth(),dir:0};
+function kGo(n,abs){
+  if(abs){KM.dir=(KM.y*12+KM.m)<(abs.y*12+abs.m)?1:-1;KM.y=abs.y;KM.m=abs.m}
+  else{var t=new Date(KM.y,KM.m+n,1);KM.y=t.getFullYear();KM.m=t.getMonth();KM.dir=n}
+  paintK();
 }
 function paintK(){
-  var t=kToday(),td=ds(t[0],t[1],t[2]),f=wdx(KM.y,KM.m,1),dim=new Date(KM.y,KM.m+1,0).getDate(),rows=Math.ceil((f+dim)/7),g="",hc=0,ic=0,i;KT=td;
+  var y=KM.y,m=KM.m,now=new Date(),first=wdx(y,m,1),dim=new Date(y,m+1,0).getDate(),rows=Math.ceil((first+dim)/7),
+      tk=ds(now.getFullYear(),now.getMonth(),now.getDate()),cells="",wk="",i;
+  for(i=0;i<7;i++)wk+='<span>'+WS[i]+'</span>';
   for(i=0;i<rows*7;i++){
-    var dt=new Date(KM.y,KM.m,i-f+1),cy=dt.getFullYear(),cm=dt.getMonth(),cd=dt.getDate(),s=ds(cy,cm,cd),k=kItems(cy,cm,cd),hl=hs(cy,cm,cd),
-    c="cl-day"+(cm!==KM.m?" o":"")+(s===td?" t":"")+(s<td?" p":"")+(s===KM.sel?" s":"")+(i%7>4?" we":"")+(hl.length?(hl.some(function(x){return x.g!=="w"})?" hr":" hw"):"");
-    if(cm===KM.m){hc+=hl.length;ic+=its(cy,cm,cd).length}
-    g+='<button class="'+c+'" data-s="'+s+'" style="--i:'+i+'" aria-label="'+cd+" "+MN[cm]+" "+WD[wdx(cy,cm,cd)]+'"><span class="cl-top"><span class="cl-num">'+(cd===1?cd+" "+MN[cm].slice(0,3):cd)+'</span>'+(s===td?'<span class="cl-tag">Bugün</span>':'')+'</span><span class="cl-list">'+k.p+'<span class="cl-more cl-hide"></span></span><span class="cl-dots">'+k.d+'</span></button>';
+    var dt=new Date(y,m,1-first+i),cy=dt.getFullYear(),cm=dt.getMonth(),cd=dt.getDate(),k=ds(cy,cm,cd),
+        ev=hs(cy,cm,cd).map(function(h){return{c:"h"+(h.g==="w"?" w":""),t:h.n}}).concat(its(cy,cm,cd).map(function(x){return{c:"i",t:(x.tm?x.tm+" ":"")+x.t}})),
+        mx=2,html=ev.slice(0,mx).map(function(e){return'<div class="ke '+e.c+'">'+esc(e.t)+'</div>'}).join("");
+    if(ev.length>mx)html+='<div class="ke m">+'+(ev.length-mx)+'</div>';
+    cells+='<button class="kd'+(cm!==m?" o":"")+(k===tk?" t":"")+(i%7>4?" we":"")+'" data-d="'+k+'"><span class="n">'+cd+'</span><div class="kv">'+html+'</div></button>';
   }
-  var bt=function(a,l,x){return'<button class="kb" data-ka="'+a+'" aria-label="'+l+'"><svg viewBox="0 0 24 24">'+x+'</svg></button>'},
-  sm=[hc?hc+" özel gün":"",ic?ic+" etkinlik":""].filter(Boolean).join(" · ")||"Bu ay kayıt yok",d=KM.dir;
-  $("#cal").innerHTML='<div class="cl-head"><div class="cl-ttl"><div class="cl-mo '+d+'"><b>'+MN[KM.m]+'</b><span>'+KM.y+'</span></div><div class="cl-sub"><span>Bugün · '+t[2]+" "+MN[t[1]]+", "+WD[wdx(t[0],t[1],t[2])]+'</span><em>'+sm+'</em></div></div>'+
-  '<div class="cl-tools">'+bt("p","Önceki ay",IC.p)+'<button class="cl-bg'+(KM.y===t[0]&&KM.m===t[1]?" off":"")+'" data-ka="t">Bugün</button>'+bt("n","Sonraki ay",IC.n)+'<button class="kb" data-a="st" aria-label="Takvim ayarları"><svg viewBox="0 0 24 24">'+IC.st+'</svg></button>'+bt("x","Konular",IC.ex)+'</div></div>'+
-  '<div class="cl-wk">'+WS.map(function(x){return"<span>"+x+"</span>"}).join("")+'</div><div class="cl-grid '+d+'" style="--rows:'+rows+'">'+g+'</div>';
-  KM.dir="";requestAnimationFrame(kFit);
+  var d=KM.dir,an=d?" a":"";KM.dir=0;
+  $("#cal").innerHTML='<div class="kh"><div class="kt"><b>'+MN[m]+'</b><span>'+y+'</span></div><div class="kc">'+
+    '<button class="kz'+(y===now.getFullYear()&&m===now.getMonth()?" off":"")+'" data-a="td">Bugün</button>'+
+    '<button class="kb" data-a="pv" aria-label="Önceki ay"><svg viewBox="0 0 24 24">'+IC.p+'</svg></button>'+
+    '<button class="kb" data-a="nx" aria-label="Sonraki ay"><svg viewBox="0 0 24 24">'+IC.n+'</svg></button>'+
+    ib("st","st")+'</div></div>'+
+    '<div class="kw'+an+'" style="--d:'+d+'">'+wk+'</div><div class="kg'+an+'" style="--r:'+rows+';--d:'+d+'">'+cells+'</div>';
 }
-function kFit(){
-  $$("#cal .cl-list").forEach(function(l){
-    var ps=[].slice.call(l.querySelectorAll(".cl-pill")),mo=l.querySelector(".cl-more"),H=l.clientHeight,h=0,n=ps.length;
-    ps.forEach(function(p){p.classList.remove("cl-hide")});mo.classList.add("cl-hide");
-    if(!H)return;
-    while(l.scrollHeight>H+1&&h<n){h++;ps[n-h].classList.add("cl-hide");mo.textContent="+"+h;mo.classList.remove("cl-hide")}
-    if(l.scrollHeight>H+1)mo.classList.add("cl-hide");
-  });
-}
-function kGo(y,m,sel){var o=KM.y*12+KM.m,d=new Date(y,m,1);KM.dir=d.getFullYear()*12+d.getMonth()>o?"n":"p";KM.y=d.getFullYear();KM.m=d.getMonth();if(sel)KM.sel=sel;paintK()}
-$("#cal").addEventListener("click",function(e){
-  var b=e.target.closest("[data-ka]"),d=e.target.closest(".cl-day"),t=kToday(),a;
-  if(b){a=b.dataset.ka;
-    if(a==="p")kGo(KM.y,KM.m-1);else if(a==="n")kGo(KM.y,KM.m+1);else if(a==="t")kGo(t[0],t[1]);
-    else if(a==="x"){var k=$('.db[data-v="topics"]');if(k)k.click()}
-    return}
-  if(d){var p=d.dataset.s.split("-");
-    if(d.classList.contains("o"))kGo(+p[0],+p[1]-1,d.dataset.s);
-    else{KM.sel=d.dataset.s;$$("#cal .cl-day.s").forEach(function(x){x.classList.remove("s")});d.classList.add("s")}}
-});
-(function(){var x0=0,y0=0,on=0,c=$("#cal");
-  c.addEventListener("pointerdown",function(e){on=e.target.closest(".cl-grid")?1:0;x0=e.clientX;y0=e.clientY});
-  c.addEventListener("pointerup",function(e){if(!on)return;on=0;var dx=e.clientX-x0,dy=e.clientY-y0;if(Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy)*1.6)kGo(KM.y,KM.m+(dx<0?1:-1))});
-})();
-document.addEventListener("keydown",function(e){
-  if(kView()!=="cal"||$("#cset").classList.contains("on")||e.ctrlKey||e.metaKey||e.altKey)return;
-  if(e.key==="ArrowLeft")kGo(KM.y,KM.m-1);else if(e.key==="ArrowRight")kGo(KM.y,KM.m+1);
-});
-new MutationObserver(function(){var on=$("#v-cal").classList.contains("on");$(".app").classList.toggle("calx",on);if(on){var t=kToday();if(ds(t[0],t[1],t[2])!==KT)paintK();else kFit()}}).observe($("#v-cal"),{attributes:true,attributeFilter:["class"]});
-if(window.ResizeObserver)new ResizeObserver(kFit).observe($("#cal"));
-if(document.fonts&&document.fonts.ready)document.fonts.ready.then(kFit);
-setInterval(function(){var t=kToday();if(ds(t[0],t[1],t[2])!==KT)paintK()},30000);
 /* Hafta yardımcısı: istatistikteki hafta aralığı için */
 function wkMon(y,m,d){var t=new Date(y,m,d);t.setDate(t.getDate()-wdx(t.getFullYear(),t.getMonth(),t.getDate()));return t}
 function wkRange(y,m,d){var a=wkMon(y,m,d),b=new Date(a.getFullYear(),a.getMonth(),a.getDate()+6),sh=function(x){return MN[x.getMonth()].slice(0,3)};return a.getMonth()===b.getMonth()?a.getDate()+"\u2013"+b.getDate()+" "+MN[a.getMonth()]:a.getDate()+" "+sh(a)+" \u2013 "+b.getDate()+" "+sh(b)}
-$("#cal").addEventListener("click",function(e){if(e.target.closest("[data-a=st]")){paintS();$("#cset").classList.add("on")}});
+$("#cal").addEventListener("click",function(e){
+  var b=e.target.closest("[data-a]");if(!b)return;var a=b.dataset.a;
+  if(a==="st"){paintS();$("#cset").classList.add("on")}
+  else if(a==="pv")kGo(-1);else if(a==="nx")kGo(1);
+  else if(a==="td"){var n=new Date();kGo(0,{y:n.getFullYear(),m:n.getMonth()})}
+});
+(function(){var x=0,y=0,c=$("#cal");
+  c.addEventListener("pointerdown",function(e){x=e.clientX;y=e.clientY});
+  c.addEventListener("pointerup",function(e){var dx=e.clientX-x,dy=e.clientY-y;if(Math.abs(dx)>70&&Math.abs(dy)<Math.abs(dx)*.6)kGo(dx<0?1:-1)});
+})();
 var KS=[["r","Resmi tatiller ve özel günler","Türkiye: resmi tatiller, dini ve milli bayramlar, anma günleri, Anneler/Babalar Günü"],["w","Uluslararası özel günler","Dünya: Noel, Cadılar Bayramı, Yılbaşı Gecesi, Dünya Erkekler Günü, Sevgililer Günü…"]],cl={y:TD.getFullYear(),t:"r"};
 function glist(){
   var h=hol(cl.y),o=[],ty=TD.getFullYear()===cl.y,tk=p2(TD.getMonth()+1)+"-"+p2(TD.getDate()),up={},c=0,pm=-1,out="";
