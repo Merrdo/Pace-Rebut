@@ -4132,7 +4132,9 @@ document.addEventListener("keydown",function(e){
       t.addEventListener("pointerup",function(){end(true)});t.addEventListener("pointercancel",function(){end(false)});
       t.addEventListener("contextmenu",function(e){e.preventDefault()});t.addEventListener("dragstart",function(e){e.preventDefault()});
       t.addEventListener("click",onNew);
-      g.addEventListener("click",function(e){if(ed&&!e.target.closest(".tdc"))keep()});
+      var was=false;
+      g.addEventListener("click",function(){was=!!ed},true);
+      g.addEventListener("click",function(e){if(was&&ed&&!e.target.closest(".tdc"))keep();was=false});
       penSet(PEN);paint();
       if(!keepScroll&&list().length)fx(false);
     }
