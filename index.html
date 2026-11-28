@@ -4152,7 +4152,7 @@ document.addEventListener("keydown",function(e){
     function day(dx){
       if(!t)return;paint();reveal();
       if(!RM&&t.animate)t.animate([{opacity:0,transform:"translateX("+dx*28+"px)"},{opacity:1,transform:"none"}],{duration:300,easing:EASE})}
-    return{attach:attach,keep:keep,day:day};
+    return{attach:attach,keep:keep,day:day,isOpen:function(){return !!ed}};
   })();
   /* Eski sayfa solarken yenisi aynı anda gelir: boşluk ve yeniden yükleme hissi olmaz */
   function mount(dx,pv){
@@ -4220,6 +4220,11 @@ document.addEventListener("keydown",function(e){
     bd.addEventListener("click",function(e){if(Date.now()-sup<350){e.stopPropagation();e.preventDefault()}},true);
   })();
   /* Klavye kısa yolları (Ayarlar > Klavye kısa yolları > Takvim) bu işlevi çağırır */
+  /* Bir görev seçiliyken ekranın herhangi bir boş yerine dokununca panel kapanır */
+  (function(){var was=false;
+    root.addEventListener("click",function(){was=TDO.isOpen()},true);
+    root.addEventListener("click",function(e){if(was&&TDO.isOpen()&&!e.target.closest(".tdc,.c1pn,button,input,.c1sw"))TDO.keep();was=false});
+  })();
   window.c1Refresh=function(){first=true;go(function(){},0)};
   window.c1Act=function(id){
     if(id==="cPrev"||id==="cNext"){var k=id==="cNext"?1:-1;go(function(){S.dt=step(k)},k);return true}
