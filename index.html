@@ -465,51 +465,58 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 @media (max-width:767px){.app:before{content:"Bu uygulama şimdilik tablet için tasarlandı.";position:fixed;inset:0;z-index:9;display:grid;place-items:center;background:var(--bg);color:var(--dim);text-align:center;padding:30px}}
 
 /* Takvim 1 */
-.c1{--ln:color-mix(in srgb,var(--fg) 16%,var(--bg));--tn:color-mix(in srgb,var(--fg) 7%,transparent);position:absolute;inset:0;display:flex;flex-direction:column;padding:46px 0 0;overflow:hidden}
-.c1h{flex:none;display:flex;align-items:baseline;gap:10px;margin:0 24px 22px;font-size:38px;line-height:1;font-weight:800;letter-spacing:-.02em;color:var(--fg)}
+.c1{--ln:color-mix(in srgb,var(--fg) 16%,var(--bg));--tn:color-mix(in srgb,var(--fg) 7%,transparent);--gw:56px;position:absolute;inset:0;display:flex;flex-direction:column;padding:46px 0 0;overflow:hidden}
+.c1h{flex:none;display:flex;align-items:baseline;gap:10px;margin:0 24px 22px;font-size:38px;line-height:1;font-weight:800;letter-spacing:-.02em;color:var(--fg);white-space:nowrap}
 .c1h button{font:inherit;letter-spacing:inherit;color:var(--dim);font-weight:500;background:none;border:0;padding:0;cursor:pointer;transition:color .4s var(--ease)}
 .c1h button:active{color:var(--fg)}
-.c1b{flex:1;min-height:0;display:flex;flex-direction:column}
-.c1b.an{animation:c1in .7s var(--ease) backwards}
-@keyframes c1in{from{opacity:0;transform:translateX(calc(var(--dx,0)*22px)) scale(.992)}to{opacity:1;transform:none}}
+.c1sw{--s:2;--sw:74px;position:absolute;top:40px;left:50%;z-index:3;display:grid;grid-template-columns:repeat(4,var(--sw));padding:5px;border-radius:999px;background:var(--glass,rgba(255,255,255,.9));-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:var(--glass-sh,0 10px 32px rgba(0,0,0,.1));transform:translateX(-50%)}
+.c1sw i{position:absolute;top:5px;left:5px;width:var(--sw);height:calc(100% - 10px);border-radius:999px;background:var(--fg);transform:translateX(calc(var(--s)*100%));transition:transform .8s var(--ease)}
+.c1sw button{position:relative;z-index:1;height:38px;border-radius:999px;font-size:14px;font-weight:700;color:var(--fg);transition:color .45s var(--ease),transform .5s var(--sp)}
+.c1sw button:active{transform:scale(.94)}
+.c1sw button.on{color:var(--bg)}
+.c1nv{position:absolute;top:44px;right:24px;z-index:3;display:flex;align-items:center;gap:8px}
+.c1nv button{height:38px;min-width:38px;display:grid;place-items:center;padding:0 14px;border-radius:999px;background:var(--tn);color:var(--fg);font-size:13px;font-weight:700;transition:transform .5s var(--sp),background .4s var(--ease)}
+.c1nv button.ar{width:38px;padding:0}
+.c1nv button:active{transform:scale(.92)}
+.c1nv svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+@media (hover:hover){.c1nv button:hover{background:color-mix(in srgb,var(--fg) 12%,transparent)}}
+.c1b{flex:1;min-height:0;display:flex;flex-direction:column;transition:opacity .24s ease,transform .24s ease}
+.c1b.out{opacity:0;transform:translateX(calc(var(--dx,0)*-16px)) scale(.992)}
+.c1b.an{animation:c1in .8s var(--ease) backwards}
+@keyframes c1in{from{opacity:0;transform:translateX(calc(var(--dx,0)*24px)) scale(.992)}to{opacity:1;transform:none}}
 .c1w{flex:none;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));margin-bottom:10px}
 .c1w span{padding:0 10px;text-align:right;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
 .c1g{flex:1;min-height:0;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:1px;background:var(--ln);border-top:1px solid var(--ln);overflow:hidden}
-.c1t{display:flex;justify-content:flex-end;align-items:flex-start;padding:8px 10px;min-width:0;min-height:0;background:var(--bg);color:var(--fg);font-size:14px;font-weight:700}
+.c1t{display:flex;justify-content:flex-end;align-items:flex-start;padding:8px 10px;min-width:0;min-height:0;background:var(--bg);color:var(--fg);font-size:14px;font-weight:700;cursor:pointer;transition:background .4s var(--ease)}
 .c1t:nth-child(7n+6),.c1t:nth-child(7n+7){background:color-mix(in srgb,var(--fg) 5%,var(--bg))}
+@media (hover:hover){.c1t:hover{background:color-mix(in srgb,var(--fg) 8%,var(--bg))}}
 .c1t b{display:grid;place-items:center;min-width:26px;height:26px;padding:0 6px;border-radius:999px;font:inherit}
 .c1t.o{color:var(--dim);font-weight:500}
 .c1t.t b{background:var(--fg);color:var(--bg)}
-.c1y{flex:1;min-height:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));gap:1px;background:var(--ln);border-top:1px solid var(--ln);overflow:hidden}
+.c1dh{flex:none;display:grid;grid-template-columns:var(--gw) repeat(var(--n),minmax(0,1fr));padding-bottom:10px}
+.c1dc{display:flex;flex-direction:column;align-items:flex-end;gap:4px;padding:0 10px;min-width:0;color:var(--fg);cursor:pointer}
+.c1dh.one .c1dc{align-items:flex-start;cursor:default}
+.c1dc small{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
+.c1dc b{display:grid;place-items:center;min-width:30px;height:30px;padding:0 8px;border-radius:999px;font-size:17px;font-weight:700}
+.c1dc.t b{background:var(--fg);color:var(--bg)}
+.c1ds{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;border-top:1px solid var(--ln)}
+.c1dg{position:relative;display:grid;grid-template-columns:var(--gw) repeat(var(--n),minmax(0,1fr));grid-auto-rows:var(--hh)}
+.c1hl{position:relative;padding-right:10px;text-align:right;font-size:11px;font-weight:600;color:var(--dim);font-variant-numeric:tabular-nums;transform:translateY(-7px)}
+.c1hc{border-top:1px solid var(--ln);border-left:1px solid var(--ln);min-width:0}
+.c1hc.we{background:color-mix(in srgb,var(--fg) 5%,var(--bg))}
+.c1nl{position:absolute;z-index:1;left:calc(var(--gw) + (100% - var(--gw))*var(--i)/var(--n));width:calc((100% - var(--gw))/var(--n));top:calc(var(--m)/1440*100%);height:2px;margin-top:-1px;background:var(--fg);pointer-events:none}
+.c1nl:before{content:"";position:absolute;left:-5px;top:-4px;width:10px;height:10px;border-radius:50%;background:var(--fg)}
+.c1y{flex:1;min-height:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));gap:0;padding:6px 14px 18px;overflow:hidden}
 @media (orientation:portrait){.c1y{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(4,minmax(0,1fr))}}
-.c1ym{display:flex;flex-direction:column;gap:8px;padding:14px 16px 12px;min-width:0;min-height:0;background:var(--bg);color:var(--fg);text-align:left;cursor:pointer;transition:background .5s var(--ease),transform .5s var(--sp)}
+.c1ym{display:flex;flex-direction:column;gap:8px;padding:14px 12px 12px;min-width:0;min-height:0;border-radius:20px;background:transparent;color:var(--fg);text-align:left;cursor:pointer;transition:background .5s var(--ease),transform .5s var(--sp)}
 .c1ym:active{transform:scale(.985)}
-@media (hover:hover){.c1ym:hover{background:color-mix(in srgb,var(--fg) 4%,var(--bg))}}
+@media (hover:hover){.c1ym:hover{background:color-mix(in srgb,var(--fg) 5%,var(--bg))}}
 .c1mn{display:block;font-size:15px;font-weight:800}
 .c1ym.cur .c1mn:after{content:"";display:inline-block;width:6px;height:6px;margin-left:7px;border-radius:50%;background:var(--fg);vertical-align:middle}
-.c1mg{flex:1;min-height:0;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));grid-template-rows:repeat(6,minmax(0,1fr));align-items:center;justify-items:center;font-size:11px;font-weight:600;color:var(--fg)}
+.c1mg{flex:1;min-height:0;display:grid;grid-template-columns:repeat(7,minmax(0,22px));grid-template-rows:repeat(6,minmax(0,1fr));justify-content:start;column-gap:0;align-items:center;justify-items:center;font-size:11px;font-weight:600;color:var(--fg)}
 .c1mg .t{display:grid;place-items:center;min-width:20px;height:20px;border-radius:999px;background:var(--fg);color:var(--bg)}
-.c1m{position:absolute;top:44px;right:24px;z-index:4;width:42px;height:42px;display:grid;place-items:center;border-radius:999px;background:var(--tn);color:var(--fg);transition:transform .5s var(--sp),background .5s var(--ease),color .5s var(--ease)}
-.c1m:active{transform:scale(.92)}
-.c1m svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
-.c1.po .c1m{background:var(--fg);color:var(--bg)}
-.c1s{position:absolute;inset:0;z-index:2;visibility:hidden}
-.c1.po .c1s{visibility:visible}
-.c1p{position:absolute;top:96px;right:24px;z-index:3;width:min(330px,calc(100% - 48px));display:flex;flex-direction:column;gap:8px;padding:8px;border-radius:30px;background:var(--glass,rgba(255,255,255,.9));-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:var(--glass-sh,0 10px 32px rgba(0,0,0,.1));transform-origin:top right;opacity:0;visibility:hidden;transform:translateY(-12px) scale(.94);pointer-events:none;transition:transform .7s var(--ease),opacity .45s var(--ease),visibility 0s .7s}
-.c1.po .c1p{opacity:1;visibility:visible;transform:none;pointer-events:auto;transition-delay:0s}
-.c1seg{--s:0;position:relative;display:grid;grid-template-columns:1fr 1fr;padding:5px;border-radius:999px;background:var(--tn)}
-.c1seg i{position:absolute;top:5px;left:5px;width:calc(50% - 5px);height:calc(100% - 10px);border-radius:999px;background:var(--fg);transform:translateX(calc(var(--s)*100%));transition:transform .65s var(--ease)}
-.c1seg button{position:relative;z-index:1;height:38px;border-radius:999px;font-size:14px;font-weight:700;color:var(--fg);transition:color .35s var(--ease)}
-.c1seg button.on{color:var(--bg)}
-.c1nv{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:2px 2px 0}
-.c1nv button{flex:none;width:38px;height:38px;display:grid;place-items:center;border-radius:999px;background:var(--tn);color:var(--fg);transition:transform .5s var(--sp)}
-.c1nv button:active{transform:scale(.9)}
-.c1nv svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
-.c1nt{flex:1;text-align:center;font-size:16px;font-weight:800;letter-spacing:-.01em;color:var(--fg)}
-.c1ac{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.c1ac button{height:40px;border-radius:999px;background:var(--tn);color:var(--fg);font-size:13px;font-weight:700;transition:transform .5s var(--sp)}
-.c1ac button:active{transform:scale(.95)}
-@media (prefers-reduced-motion:reduce){.c1b.an{animation:none}.c1p,.c1seg i{transition:none}}
+@media (max-width:900px){.c1h{font-size:30px}.c1sw{--sw:62px}.c1sw button{font-size:13px}.c1nv button:not(.ar){padding:0 11px}}
+@media (prefers-reduced-motion:reduce){.c1b,.c1b.an,.c1sw i{transition:none;animation:none}}
 /* Takvim */
 .card .chip{background:var(--surf2);color:#55524d}.card .chip.on{background:var(--fg);color:var(--bg)}
 .gl{margin-top:14px}.gr{display:flex;align-items:center;gap:12px;padding:10px 12px;margin-bottom:4px;border-radius:14px}.gl{--gk:#2fbf71;--gt:#1d8a50}.gl.w{--gk:#9b6cff;--gt:#6a3fd1}.gm{margin:18px 12px 6px;font-size:16px;font-weight:800}.gm:first-child{margin-top:4px}.gr.up{background:color-mix(in srgb,var(--gk) 16%,transparent)}.gr.pa{opacity:.5}.gr em{flex:none;font-style:normal;font-size:13px;font-weight:700;color:var(--gt)}.card .chip.on[data-lt=r]{background:#2fbf71;color:#fff}.card .chip.on[data-lt=w]{background:#9b6cff;color:#fff}.gr i{width:10px;height:10px;border-radius:50%;background:var(--gk);flex:none}.gr b{width:96px;flex:none;font:600 15px Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums}.gr span{flex:1;font-size:16px;font-weight:500}.gy{display:flex;align-items:center;gap:10px;margin-top:14px;flex-wrap:wrap}.gy b{font:600 20px Inter,system-ui,sans-serif;min-width:56px;text-align:center}
@@ -2169,15 +2176,10 @@ html[data-theme=dark]{color-scheme:dark;--bg:#000;--fg:#f4f4f2;--dim:#9c9a95;--s
     </section>
     <section class="view" id="v-cal"><div class="cal" id="cal"></div><div class="cset" id="cset"></div></section>
     <section class="view" id="v-cal1"><div class="c1" id="c1">
-      <button class="c1m" id="c1m" type="button" aria-label="Takvim paneli" aria-haspopup="dialog" aria-expanded="false"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="6.5" height="6.5" rx="2"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="2"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="2"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="2"/></svg></button>
       <div class="c1h" id="c1h"></div>
+      <div class="c1sw" id="c1sw" role="tablist" aria-label="Takvim görünümü"><i></i><button type="button" role="tab" data-v="d">Gün</button><button type="button" role="tab" data-v="w">Hafta</button><button type="button" role="tab" data-v="m" class="on">Ay</button><button type="button" role="tab" data-v="y">Yıl</button></div>
+      <div class="c1nv" id="c1nv"><button type="button" class="ar" data-a="p" aria-label="Önceki"><svg viewBox="0 0 24 24"><path d="M14.5 6l-6 6 6 6"/></svg></button><button type="button" data-a="t">Bugün</button><button type="button" class="ar" data-a="n" aria-label="Sonraki"><svg viewBox="0 0 24 24"><path d="M9.5 6l6 6-6 6"/></svg></button></div>
       <div class="c1b" id="c1b"></div>
-      <div class="c1s" id="c1s"></div>
-      <div class="c1p" id="c1p" role="dialog" aria-label="Takvim paneli" aria-hidden="true" inert>
-        <div class="c1seg" id="c1seg"><i></i><button type="button" data-v="m" class="on">Ay</button><button type="button" data-v="y">Yıl</button></div>
-        <div class="c1nv"><button type="button" data-a="p" aria-label="Önceki"><svg viewBox="0 0 24 24"><path d="M14.5 6l-6 6 6 6"/></svg></button><div class="c1nt" id="c1nt"></div><button type="button" data-a="n" aria-label="Sonraki"><svg viewBox="0 0 24 24"><path d="M9.5 6l6 6-6 6"/></svg></button></div>
-        <div class="c1ac"><button type="button" data-a="t">Bugün</button><button type="button" data-a="d">Sayfalar</button></div>
-      </div>
     </div></section>
     <section class="view" id="v-questions"><div class="qw">
       <div class="qh"><h1>Sorular<em id="qcnt"></em></h1>
@@ -3726,65 +3728,105 @@ document.addEventListener("keydown",function(e){
   }
 });
 
-/* Takvim 1: ay / yil gorunumu ve panel */
+/* Takvim 1: Gun / Hafta / Ay / Yil gorunumleri */
 (function(){
   var root=document.getElementById("c1");if(!root)return;
   var E=function(i){return document.getElementById(i)};
-  var AY=["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"],GN=["Pzt","Sal","Çar","Per","Cum","Cmt","Paz"];
-  var ap=document.querySelector(".app"),hd=E("c1h"),bd=E("c1b"),pn=E("c1p"),sg=E("c1seg"),nt=E("c1nt"),mb=E("c1m");
-  var n=new Date(),T={y:n.getFullYear(),m:n.getMonth(),d:n.getDate()};
-  var S={v:"m",y:T.y,m:T.m};
-  function isT(y,m,d){return y===T.y&&m===T.m&&d===T.d}
+  var AY=["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"],AK=["Oca","Şub","Mar","Nis","May","Haz","Tem","Ağu","Eyl","Eki","Kas","Ara"],GN=["Pzt","Sal","Çar","Per","Cum","Cmt","Paz"],GF=["Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi","Pazar"];
+  var ap=document.querySelector(".app"),hd=E("c1h"),bd=E("c1b"),sw=E("c1sw"),nv=E("c1nv");
+  var n0=new Date(),TD=new Date(n0.getFullYear(),n0.getMonth(),n0.getDate());
+  var S={v:"m",dt:TD},HH=64,tm=0,first=true,IX={d:0,w:1,m:2,y:3};
+  var RM=window.matchMedia&&matchMedia("(prefers-reduced-motion:reduce)").matches;
+  function same(a,b){return a.getFullYear()===b.getFullYear()&&a.getMonth()===b.getMonth()&&a.getDate()===b.getDate()}
+  function wi(d){return(d.getDay()+6)%7}
+  function addD(d,k){return new Date(d.getFullYear(),d.getMonth(),d.getDate()+k)}
+  function addM(d,k){var t=new Date(d.getFullYear(),d.getMonth()+k+1,0).getDate();return new Date(d.getFullYear(),d.getMonth()+k,Math.min(d.getDate(),t))}
+  function key(d){return d.getFullYear()+"-"+d.getMonth()+"-"+d.getDate()}
+  function parse(s){var a=s.split("-");return new Date(+a[0],+a[1],+a[2])}
+  function ws(d){return addD(d,-wi(d))}
+  function step(k){return S.v==="d"?addD(S.dt,k):S.v==="w"?addD(S.dt,7*k):S.v==="m"?addM(S.dt,k):addM(S.dt,12*k)}
+  function title(){
+    var d=S.dt,yb=function(y){return' <button type="button" id="c1yb" aria-label="Yıl görünümünü aç">'+y+'</button>'};
+    if(S.v==="y")return"<span>"+d.getFullYear()+"</span>";
+    if(S.v==="d")return"<span>"+d.getDate()+" "+AY[d.getMonth()]+"</span>"+yb(d.getFullYear());
+    if(S.v==="w"){var a=ws(d),b=addD(a,6);return"<span>"+(a.getMonth()===b.getMonth()?AY[a.getMonth()]:AK[a.getMonth()]+" – "+AK[b.getMonth()])+"</span>"+yb(b.getFullYear())}
+    return"<span>"+AY[d.getMonth()]+"</span>"+yb(d.getFullYear());
+  }
   function mon(){
-    var y=S.y,m=S.m,off=(new Date(y,m,1).getDay()+6)%7,days=new Date(y,m+1,0).getDate(),rows=Math.ceil((off+days)/7),c="";
-    for(var i=0;i<rows*7;i++){var d=new Date(y,m,1-off+i),im=d.getMonth()===m;c+='<div class="c1t'+(im?"":" o")+(im&&isT(y,m,d.getDate())?" t":"")+'"><b>'+d.getDate()+'</b></div>'}
+    var y=S.dt.getFullYear(),m=S.dt.getMonth(),off=wi(new Date(y,m,1)),days=new Date(y,m+1,0).getDate(),rows=Math.ceil((off+days)/7),c="";
+    for(var i=0;i<rows*7;i++){var d=new Date(y,m,1-off+i),im=d.getMonth()===m;c+='<div class="c1t'+(im?"":" o")+(same(d,TD)?" t":"")+'" data-d="'+key(d)+'"><b>'+d.getDate()+'</b></div>'}
     return'<div class="c1w">'+GN.map(function(x){return"<span>"+x+"</span>"}).join("")+'</div><div class="c1g" style="grid-template-rows:repeat('+rows+',minmax(0,1fr))">'+c+'</div>';
   }
   function yr(){
-    var y=S.y,h='<div class="c1y">';
+    var y=S.dt.getFullYear(),h='<div class="c1y">';
     for(var mo=0;mo<12;mo++){
-      var off=(new Date(y,mo,1).getDay()+6)%7,days=new Date(y,mo+1,0).getDate(),c="";
-      for(var i=0;i<42;i++){var d=i-off+1;c+=(d>=1&&d<=days)?'<span'+(isT(y,mo,d)?' class="t"':"")+'>'+d+'</span>':'<i></i>'}
-      h+='<button type="button" class="c1ym'+(y===T.y&&mo===T.m?" cur":"")+'" data-m="'+mo+'"><span class="c1mn">'+AY[mo]+'</span><span class="c1mg">'+c+'</span></button>';
+      var off=wi(new Date(y,mo,1)),days=new Date(y,mo+1,0).getDate(),c="";
+      for(var i=0;i<42;i++){var d=i-off+1;c+=(d>=1&&d<=days)?"<span"+(same(new Date(y,mo,d),TD)?' class="t"':"")+">"+d+"</span>":"<i></i>"}
+      h+='<button type="button" class="c1ym'+(y===TD.getFullYear()&&mo===TD.getMonth()?" cur":"")+'" data-m="'+mo+'"><span class="c1mn">'+AY[mo]+'</span><span class="c1mg">'+c+'</span></button>';
     }
-    return h+'</div>';
+    return h+"</div>";
   }
-  function draw(dx){
-    var y=S.v==="y";
-    hd.innerHTML=y?'<span>'+S.y+'</span>':'<span>'+AY[S.m]+'</span> <button type="button" id="c1yb" aria-label="Yıl görünümünü aç">'+S.y+'</button>';
-    nt.textContent=y?S.y:AY[S.m]+" "+S.y;
-    sg.style.setProperty("--s",y?1:0);
-    Array.prototype.forEach.call(sg.querySelectorAll("button"),function(b){b.classList.toggle("on",b.dataset.v===S.v)});
-    bd.innerHTML=y?yr():mon();
+  function hrs(days){
+    var nn=days.length,one=nn===1,h='<div class="c1dh'+(one?" one":"")+'" style="--n:'+nn+'"><span></span>';
+    days.forEach(function(d){var w=wi(d);h+='<button type="button" class="c1dc'+(same(d,TD)?" t":"")+'" data-d="'+key(d)+'"'+(one?' tabindex="-1"':"")+'><small>'+(one?GF[w]:GN[w])+'</small><b>'+d.getDate()+'</b></button>'});
+    h+='</div><div class="c1ds" id="c1ds"><div class="c1dg" style="--n:'+nn+";--hh:"+HH+'px">';
+    for(var i=0;i<24;i++){
+      h+='<div class="c1hl">'+(i?(i<10?"0":"")+i+":00":"")+"</div>";
+      days.forEach(function(d){h+='<div class="c1hc'+(wi(d)>4?" we":"")+'"></div>'});
+    }
+    days.forEach(function(d,j){if(same(d,TD)){var t=new Date();h+='<i class="c1nl" style="--i:'+j+";--m:"+(t.getHours()*60+t.getMinutes())+'"></i>'}});
+    return h+"</div></div>";
+  }
+  function body(){
+    if(S.v==="y")return yr();
+    if(S.v==="m")return mon();
+    if(S.v==="d")return hrs([S.dt]);
+    var a=ws(S.dt),l=[];for(var i=0;i<7;i++)l.push(addD(a,i));return hrs(l);
+  }
+  function sync(){
+    sw.style.setProperty("--s",IX[S.v]);
+    Array.prototype.forEach.call(sw.querySelectorAll("button"),function(b){var on=b.dataset.v===S.v;b.classList.toggle("on",on);b.setAttribute("aria-selected",on?"true":"false")});
+  }
+  function paint(dx){
+    hd.innerHTML=title();
+    bd.innerHTML=body();
     bd.style.setProperty("--dx",dx||0);
     bd.classList.remove("an");void bd.offsetWidth;bd.classList.add("an");
+    var ds=E("c1ds");
+    if(ds){var t=new Date(),inV=S.v==="d"?same(S.dt,TD):same(ws(S.dt),ws(TD));ds.scrollTop=(inV?Math.max(0,t.getHours()-2):7)*HH}
   }
-  function setP(o){
-    root.classList.toggle("po",o);pn.inert=!o;pn.setAttribute("aria-hidden",o?"false":"true");mb.setAttribute("aria-expanded",o?"true":"false");
-    if(o)ap.classList.remove("c1dk");
+  function go(mut,dx){
+    clearTimeout(tm);mut();sync();
+    if(first||RM){first=false;paint(dx);return}
+    bd.style.setProperty("--dx",dx||0);bd.classList.add("out");
+    tm=setTimeout(function(){paint(dx);bd.classList.remove("out")},230);
   }
-  mb.addEventListener("click",function(){setP(!root.classList.contains("po"))});
-  E("c1s").addEventListener("click",function(){setP(false)});
-  document.addEventListener("keydown",function(e){if(e.key==="Escape"&&root.classList.contains("po"))setP(false)});
-  Array.prototype.forEach.call(document.querySelectorAll(".db"),function(b){b.addEventListener("click",function(){setP(false)})});
-  hd.addEventListener("click",function(e){if(e.target.id==="c1yb"){S.v="y";draw(0)}});
+  sw.addEventListener("click",function(e){
+    var b=e.target.closest?e.target.closest("button"):null;if(!b||b.dataset.v===S.v)return;
+    go(function(){S.v=b.dataset.v},0);
+  });
+  nv.addEventListener("click",function(e){
+    var b=e.target.closest?e.target.closest("button"):null;if(!b)return;
+    var a=b.dataset.a;
+    if(a==="p"||a==="n"){var k=a==="n"?1:-1;go(function(){S.dt=step(k)},k)}
+    else if(a==="t"){var k2=S.dt<TD?1:-1;go(function(){S.dt=TD},same(S.dt,TD)?0:k2)}
+  });
+  hd.addEventListener("click",function(e){if(e.target.id==="c1yb")go(function(){S.v="y"},0)});
   bd.addEventListener("click",function(e){
     ap.classList.remove("c1dk");
-    var t=e.target.closest?e.target.closest(".c1ym"):null;
-    if(t){S.m=+t.dataset.m;S.v="m";draw(0)}
+    var t=e.target.closest?e.target:null;if(!t)return;
+    var ym=t.closest(".c1ym");
+    if(ym){var mo=+ym.dataset.m,y=S.dt.getFullYear();go(function(){S.dt=new Date(y,mo,(y===TD.getFullYear()&&mo===TD.getMonth())?TD.getDate():1);S.v="m"},0);return}
+    var dc=t.closest(".c1t,.c1dc");
+    if(dc&&dc.dataset.d&&(dc.classList.contains("c1t")||S.v==="w")){var d=parse(dc.dataset.d);go(function(){S.dt=d;S.v="d"},0)}
   });
-  pn.addEventListener("click",function(e){
-    var b=e.target.closest?e.target.closest("button"):null;if(!b)return;
-    if(b.dataset.v){if(S.v!==b.dataset.v){S.v=b.dataset.v;draw(0)}return}
-    var a=b.dataset.a;
-    if(a==="p"||a==="n"){
-      var k=a==="n"?1:-1;
-      if(S.v==="y")S.y+=k;else{S.m+=k;if(S.m<0){S.m=11;S.y--}else if(S.m>11){S.m=0;S.y++}}
-      draw(k);
-    }else if(a==="t"){S.y=T.y;S.m=T.m;draw(0)}
-    else if(a==="d"){setP(false);ap.classList.add("c1dk")}
+  document.addEventListener("keydown",function(e){
+    if(e.defaultPrevented||e.ctrlKey||e.metaKey||e.altKey||e.shiftKey)return;
+    if(!E("v-cal1").classList.contains("on"))return;
+    if(e.key==="ArrowLeft"||e.key==="ArrowRight"){var k=e.key==="ArrowRight"?1:-1;e.preventDefault();go(function(){S.dt=step(k)},k)}
   });
-  draw(0);
+  setInterval(function(){var l=bd.querySelector(".c1nl");if(l){var t=new Date();l.style.setProperty("--m",t.getHours()*60+t.getMinutes())}},30000);
+  go(function(){},0);
 })();
 
 /* Gezinme */
@@ -3805,6 +3847,7 @@ $$(".db").forEach(function(b,n){b.onclick=function(){
 
 /* Klavye kısayolları: atamalar KA listesinde, kullanıcının değişiklikleri KB.map'te (Ayarlar > Klavye kısa yolları) */
 function kFs(){
+  if(kView()==="cal1"){$(".app").classList.toggle("c1dk");return}
   $("#fsb").click();
 }
 function kView(){var v=$(".view.on");return v?v.id.slice(2):""}
@@ -3845,6 +3888,7 @@ document.addEventListener("keydown",function(e){
   var v=kView(),fs=$(".app").classList.contains("fs"),cs=$("#cset").classList.contains("on");
   if(e.key==="Escape"&&!e.ctrlKey&&!e.metaKey){
     if(fs){e.preventDefault();kFs()}
+    else if(v==="cal1"&&$(".app").classList.contains("c1dk")){e.preventDefault();$(".app").classList.remove("c1dk")}
     else if(v==="cal"&&cs){e.preventDefault();$("#cset").classList.remove("on")}
     return;
   }
