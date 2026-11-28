@@ -465,7 +465,7 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 @media (max-width:767px){.app:before{content:"Bu uygulama şimdilik tablet için tasarlandı.";position:fixed;inset:0;z-index:9;display:grid;place-items:center;background:var(--bg);color:var(--dim);text-align:center;padding:30px}}
 
 /* Takvim 1 */
-.c1{--ln:color-mix(in srgb,var(--fg) 16%,var(--bg));--tn:color-mix(in srgb,var(--fg) 7%,transparent);--gw:56px;position:absolute;inset:0;display:flex;flex-direction:column;padding:46px 0 26px;overflow:hidden}
+.c1{--ln:color-mix(in srgb,var(--fg) 16%,var(--bg));--tn:color-mix(in srgb,var(--fg) 7%,transparent);--gw:56px;position:absolute;inset:0;display:flex;flex-direction:column;padding:46px 0 0;overflow:hidden}
 .c1h{flex:none;display:flex;align-items:baseline;gap:10px;margin:0 24px 22px;font-size:38px;line-height:1;font-weight:800;letter-spacing:-.02em;color:var(--fg);white-space:nowrap}
 .c1h button{font:inherit;letter-spacing:inherit;color:var(--dim);font-weight:500;background:none;border:0;padding:0;cursor:pointer;transition:color .4s var(--ease)}
 .c1h button:active{color:var(--fg)}
@@ -477,10 +477,7 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .c1b{flex:1;min-height:0;display:flex;flex-direction:column;transition:opacity .12s ease,transform .12s ease}
 .c1b,.c1b *{touch-action:pan-y}
 .c1b.out{opacity:0;transform:translateX(calc(var(--dx,0)*-16px)) scale(.992)}
-.c1b.an{animation:c1in .34s var(--ease) backwards}
-.c1hd{position:absolute;left:50%;bottom:calc(2px + env(safe-area-inset-bottom,0px));z-index:4;width:120px;height:24px;transform:translateX(-50%);display:grid;place-items:center;transition:opacity .3s var(--ease)}
-.c1hd i{width:44px;height:5px;border-radius:5px;background:color-mix(in srgb,var(--fg) 28%,transparent)}
-.app.c1dk .c1hd{opacity:0;pointer-events:none}
+.c1b.an{animation:c1in .26s var(--ease) backwards}
 .app.c1on:not(.c1dk) .dock{transform:translate(-50%,160%);opacity:0;pointer-events:none}
 @keyframes c1in{from{opacity:0;transform:translateX(calc(var(--dx,0)*24px)) scale(.992)}to{opacity:1;transform:none}}
 .c1w{flex:none;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));margin-bottom:10px}
@@ -2178,7 +2175,6 @@ html[data-theme=dark]{color-scheme:dark;--bg:#000;--fg:#f4f4f2;--dim:#9c9a95;--s
       <div class="c1h" id="c1h"></div>
       <div class="c1sw" id="c1sw" role="tablist" aria-label="Takvim görünümü"><i></i><button type="button" role="tab" data-v="d">Gün</button><button type="button" role="tab" data-v="w">Hafta</button><button type="button" role="tab" data-v="m" class="on">Ay</button><button type="button" role="tab" data-v="y">Yıl</button></div>
       <div class="c1b" id="c1b"></div>
-      <button type="button" class="c1hd" id="c1hd" aria-label="Alt çubuğu göster"><i></i></button>
     </div></section>
     <section class="view" id="v-questions"><div class="qw">
       <div class="qh"><h1>Sorular<em id="qcnt"></em></h1>
@@ -3795,8 +3791,14 @@ document.addEventListener("keydown",function(e){
     if(ds){var t=new Date(),inV=S.v==="d"?same(S.dt,TD):same(ws(S.dt),ws(TD));ds.scrollTop=(inV?Math.max(0,t.getHours()-2):7)*HH}
   }
   function go(mut,dx){
-    clearTimeout(tm);mut();sync();
-    if(first||RM||bd.classList.contains("out")||Date.now()-lp<380){first=false;bd.classList.remove("out");paint(dx);return}
+    mut();sync();
+    if(first||RM){clearTimeout(tm);first=false;bd.classList.remove("out");paint(dx);return}
+    if(bd.classList.contains("out"))return;
+    if(Date.now()-lp<300){
+      var cs=getComputedStyle(bd),o=cs.opacity,t=cs.transform;
+      bd.classList.remove("an");bd.style.transition="none";bd.style.opacity=o;bd.style.transform=t;void bd.offsetWidth;
+      bd.style.transition="";bd.style.opacity="";bd.style.transform="";
+    }
     bd.style.setProperty("--dx",dx||0);bd.classList.add("out");
     tm=setTimeout(function(){paint(dx);bd.classList.remove("out")},110);
   }
@@ -3820,13 +3822,13 @@ document.addEventListener("keydown",function(e){
     bd.addEventListener("pointerup",function(e){
       if(e.pointerId!==id)return;id=null;
       var dx=e.clientX-sx,dy=e.clientY-sy;
+      if(sy>window.innerHeight-56&&dy<-36&&Math.abs(dy)>Math.abs(dx)){sup=Date.now();ap.classList.add("c1dk");return}
       if(Math.abs(dx)<48||Math.abs(dx)<Math.abs(dy)*1.4)return;
       sup=Date.now();var k=dx<0?1:-1;go(function(){S.dt=step(k)},k);
     });
     bd.addEventListener("pointercancel",function(){id=null});
     bd.addEventListener("click",function(e){if(Date.now()-sup<350){e.stopPropagation();e.preventDefault()}},true);
   })();
-  E("c1hd").addEventListener("click",function(){ap.classList.toggle("c1dk")});
   document.addEventListener("keydown",function(e){
     if(e.defaultPrevented||e.ctrlKey||e.metaKey||e.altKey||e.shiftKey)return;
     if(!E("v-cal1").classList.contains("on"))return;
