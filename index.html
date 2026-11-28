@@ -98,6 +98,63 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .btn.dg:before{content:"";width:18px;height:18px;flex:none;background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3'/%3E%3C/svg%3E") center/contain no-repeat}
 .btn.dg.arm{background:#d12f35;color:#fff;box-shadow:inset 0 -3px 0 rgba(0,0,0,.22),0 6px 16px rgba(209,47,53,.35)}
 .msg{margin-top:10px;font-size:14px;font-weight:500;color:var(--dim);min-height:1.2em}
+.msg.ok{color:#1a7f4b}.msg.er{color:#d12f35}
+
+/* Ayarlar: tam ekran düzen. Solda başlık + bölüm menüsü, sağda geniş içerik. */
+#set.set{overflow:hidden;padding:0}
+.sp{display:grid;grid-template-columns:minmax(250px,340px) minmax(0,1fr);height:100%}
+.sp-rail{display:flex;flex-direction:column;min-height:0;padding:34px 20px var(--dock-space) 28px}
+.sp-rail h1{margin-bottom:8px}
+.sp-rail>p{max-width:260px;margin-bottom:28px;font-size:16px;font-weight:500;line-height:1.35;color:var(--dim)}
+.sp-nav{display:flex;flex-direction:column;gap:6px}
+.sp-nav button{display:flex;align-items:center;gap:12px;padding:13px 16px;border-radius:16px;text-align:left;font-size:18px;font-weight:700;color:var(--dim);transition:background .35s var(--ease),color .35s var(--ease),transform .5s var(--sp)}
+.sp-nav button:active{transform:scale(.97)}
+.sp-nav button.on{background:var(--fg);color:var(--bg)}
+.sp-nav svg{width:22px;height:22px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.sp-foot{margin-top:auto;padding:0 4px;font:500 13px/1.45 Inter,system-ui,sans-serif;color:var(--dim)}
+.sp-main{min-height:0;overflow:auto;padding:34px 48px var(--dock-space) 28px;overscroll-behavior:contain}
+.sp-in{position:relative;max-width:1100px}
+.sp-sec{margin-bottom:44px}
+.sp-sec .grp{margin:0 2px 16px}
+.sp-lead{margin:-4px 2px 16px;max-width:640px;font-size:15px;font-weight:500;color:var(--dim)}
+.sp-g{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.sp-g>.card{margin-bottom:0}
+.sp-g>.wide{grid-column:1/-1}
+.sp-g .lpm{flex:none;width:min(440px,50%);margin-top:0}
+.view.on .sp-rail{animation:up .7s var(--ease) backwards}
+.dmc{display:flex;flex-direction:column}
+.dmh{display:flex;align-items:flex-start;gap:14px}
+.dmh>div:last-child{flex:1;min-width:0}
+.ic{display:grid;place-items:center;width:48px;height:48px;flex:none;border-radius:16px;background:var(--c)}
+.ic svg{width:24px;height:24px;fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.chips span{padding:6px 12px;border-radius:999px;background:var(--surf2);font:600 13px Inter,system-ui,sans-serif}
+.chips b{margin-left:2px;font-weight:800;font-variant-numeric:tabular-nums}
+.dmc>.row{margin-top:auto;padding-top:16px}
+#dib{display:flex;flex:1;flex-direction:column;margin-top:16px}
+.drop{display:flex;flex:1;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:150px;padding:18px;border-radius:18px;border:2px dashed rgba(17,17,17,.2);text-align:center;transition:background .3s var(--ease),border-color .3s var(--ease),transform .5s var(--sp)}
+.drop:active{transform:scale(.985)}
+.drop svg{width:30px;height:30px;margin-bottom:4px;fill:none;stroke:var(--dim);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.drop b{font-size:18px;font-weight:700}
+.drop small{font:500 13px Inter,system-ui,sans-serif;color:var(--dim)}
+.card.over .drop{border-color:var(--fg);background:var(--surf2)}
+.pv{padding:4px 16px 8px;border-radius:16px;background:var(--surf2)}
+.pvh{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid rgba(17,17,17,.1)}
+.pvh svg{width:26px;height:26px;flex:none;fill:none;stroke:var(--dim);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.pvh div{min-width:0}
+.pvh b{display:block;overflow:hidden;font:700 15px Inter,system-ui,sans-serif;text-overflow:ellipsis;white-space:nowrap}
+.pvh small{font:500 13px Inter,system-ui,sans-serif;color:var(--dim)}
+.pvr{display:flex;justify-content:space-between;gap:12px;padding:7px 0;font:500 15px Inter,system-ui,sans-serif}
+.pvr span{color:var(--dim)}
+.pvr b{font-weight:700;font-variant-numeric:tabular-nums}
+.card .pvn{margin-top:12px;font-size:14px;font-weight:600;color:#d12f35}
+#dib>.row{margin-top:14px}
+.dgc{flex-direction:row;align-items:center;gap:24px;background:rgba(209,47,53,.07);box-shadow:inset 0 0 0 2px rgba(209,47,53,.18)}
+.dgc .dmh{flex:1}
+.dgr{flex:none;text-align:right}
+.dgr .msg{margin-top:6px}
+@media (max-width:1000px){.sp{grid-template-columns:230px minmax(0,1fr)}.sp-rail{padding-left:22px}.sp-main{padding:28px 28px var(--dock-space) 16px}.sp-g{grid-template-columns:1fr}}
+@media (max-width:860px){.sp{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr)}.sp-rail{padding:22px 24px 0}.sp-rail>p,.sp-foot{display:none}.sp-nav{flex-direction:row}.sp-main{padding:18px 24px var(--dock-space)}.dgc{flex-direction:column;align-items:flex-start}.dgr{text-align:left}.sp-g .lpm{width:100%}}
 
 /* Ders yonetimi */
 @keyframes up{from{opacity:0;transform:translateY(16px)}}
@@ -2114,16 +2171,174 @@ function resetDone(){S.done={};save()}
 /* Tam sıfırlama: "dd-" önekiyle saklanan HER ŞEY (durum, kısa yollar, takvim, arka plan, kalem ayarı, tuval yedekleri...) ve tuval veritabanı silinir.
    Yeni bir özellik veri saklayacaksa anahtarı "dd-" ile başlatmalı; böylece sıfırlama onu da otomatik kapsar. */
 var WIPING=0;
+/* YEDEK / GERİ YÜKLEME / SIFIRLAMA (Ayarlar > Veri yönetimi)
+   Yedek dosyası biçimi (format 2): {app:"dd",format:2,created,ls:{anahtar:metin},idb:{veritabanı:{version,stores:[{name,keyPath,autoIncrement,indexes,rows}]}}}
+   KURAL: Kalıcı saklanan HER ŞEY "dd-" önekiyle başlamalı: localStorage anahtarı ya da IndexedDB veritabanı adı.
+   Yedek alma, geri yükleme ve sıfırlama bu öneke göre çalışır; takvim, arka plan gibi yeni özellikler kod değişmeden kapsanır.
+   IndexedDB satırlarındaki Blob (soru görselleri, ileride arka plan resimleri) base64 olarak dosyaya yazılır. */
+var BK=(function(){
+  var PRE="dd-",SKIP={"dd-lastbk":1},LEG=["dd-q","dd-ink"],setRaw=Storage.prototype.setItem,jp=JSON.stringify;
+  function p0(n){return(n<10?"0":"")+n}
+  function lsKeys(){var a=[],i,k;try{for(i=0;i<localStorage.length;i++){k=localStorage.key(i);if(k&&k.indexOf(PRE)===0)a.push(k)}}catch(e){}return a}
+  function lsAll(skip){var o={};lsKeys().forEach(function(k){if(skip&&SKIP[k])return;try{o[k]=localStorage.getItem(k)}catch(e){}});return o}
+  function req(r){return new Promise(function(res,rej){r.onsuccess=function(){res(r.result)};r.onerror=function(){rej(r.error)}})}
+  /* Var olan veritabanını açar. Yoksa OLUŞTURMAZ (boş bir "dd-q" oluşursa uygulamanın kendi şeması kurulamaz). */
+  function idbOpen(n){return new Promise(function(res,rej){var r=indexedDB.open(n);r.onupgradeneeded=function(){try{r.transaction.abort()}catch(e){}};r.onsuccess=function(){res(r.result)};r.onerror=function(){rej(r.error||new Error("none"))}})}
+  function idbNames(){
+    var p=indexedDB.databases?indexedDB.databases().then(function(l){return l.map(function(d){return d.name})},function(){return[]}):Promise.resolve([]);
+    return p.then(function(a){var o=[];a.concat(["dd-q"]).forEach(function(n){if(n&&n.indexOf(PRE)===0&&o.indexOf(n)<0)o.push(n)});return o});
+  }
+  /* --- Blob <-> base64 --- */
+  function b64(blob){return new Promise(function(res,rej){var f=new FileReader();f.onload=function(){var x=String(f.result);res(x.slice(x.indexOf(",")+1))};f.onerror=function(){rej(f.error)};f.readAsDataURL(blob)})}
+  function bytes(d){var t=atob(d),n=t.length,u=new Uint8Array(n),i;for(i=0;i<n;i++)u[i]=t.charCodeAt(i);return u}
+  function enc(v){
+    if(v instanceof Blob)return b64(v).then(function(d){return{"$blob":v.type||"","d":d}});
+    if(v instanceof Date)return Promise.resolve({"$date":+v});
+    if(v instanceof ArrayBuffer)return b64(new Blob([v])).then(function(d){return{"$buf":d}});
+    if(Array.isArray(v))return Promise.all(v.map(enc));
+    if(v&&typeof v==="object"){var ks=Object.keys(v);return Promise.all(ks.map(function(k){return enc(v[k])})).then(function(r){var o={};ks.forEach(function(k,i){o[k]=r[i]});return o})}
+    return Promise.resolve(v);
+  }
+  function dec(v){
+    if(Array.isArray(v))return v.map(dec);
+    if(v&&typeof v==="object"){
+      if(typeof v.$blob==="string"&&typeof v.d==="string")return new Blob([bytes(v.d)],{type:v.$blob});
+      if(typeof v.$date==="number")return new Date(v.$date);
+      if(typeof v.$buf==="string")return bytes(v.$buf).buffer;
+      var o={},k;for(k in v)o[k]=dec(v[k]);return o;
+    }
+    return v;
+  }
+  /* --- Dışa aktar --- */
+  function dumpDb(name,parts,sep){
+    return idbOpen(name).then(function(db){
+      var sn=[].slice.call(db.objectStoreNames),chain=Promise.resolve();
+      parts.push((sep?",":"")+jp(name)+':{"version":'+db.version+',"stores":[');
+      sn.forEach(function(s,si){
+        chain=chain.then(function(){
+          var st=db.transaction(s,"readonly").objectStore(s),kp=st.keyPath,
+              idx=[].slice.call(st.indexNames).map(function(n){var x=st.index(n);return{name:n,keyPath:x.keyPath,unique:x.unique,multiEntry:x.multiEntry}}),
+              rv=req(st.getAll()),rk=kp==null?req(st.getAllKeys()):Promise.resolve(null);
+          return Promise.all([rv,rk]).then(function(r){
+            var vals=r[0],keys=r[1],p=Promise.resolve();
+            parts.push((si?",":"")+'{"name":'+jp(s)+',"keyPath":'+jp(kp)+',"autoIncrement":'+(st.autoIncrement?"true":"false")+',"indexes":'+jp(idx)+',"rows":[');
+            vals.forEach(function(v,i){p=p.then(function(){return enc(keys?[keys[i],v]:v)}).then(function(e){parts.push((i?",":"")+jp(e))})});
+            return p.then(function(){parts.push("]}")});
+          });
+        });
+      });
+      return chain.then(function(){parts.push("]}");db.close();return true},function(e){db.close();throw e});
+    },function(){return false});
+  }
+  function exportAll(){
+    try{if(typeof stTrack==="function")stTrack();if(typeof stFlush==="function")stFlush()}catch(e){}
+    var parts=['{"app":"dd","format":2,"created":'+jp(new Date().toISOString())+',"ls":'+jp(lsAll(true))+',"idb":{'];
+    return idbNames().then(function(ns){
+      var p=Promise.resolve(),c=0;
+      ns.forEach(function(n){p=p.then(function(){return dumpDb(n,parts,c>0)}).then(function(ok){if(ok)c++})});
+      return p;
+    }).then(function(){parts.push("}}");return new Blob(parts,{type:"application/json"})});
+  }
+  function fname(){var d=new Date();return"dd-yedek-"+d.getFullYear()+"-"+p0(d.getMonth()+1)+"-"+p0(d.getDate())+"-"+p0(d.getHours())+p0(d.getMinutes())+".json"}
+  function download(blob,name){var a=document.createElement("a"),u=URL.createObjectURL(blob);a.href=u;a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){a.remove();URL.revokeObjectURL(u)},4000)}
+  function mark(){try{localStorage.setItem("dd-lastbk",String(Date.now()))}catch(e){}}
+  function last(){try{return+localStorage.getItem("dd-lastbk")||0}catch(e){return 0}}
+  /* --- İçe aktar --- */
+  function parse(txt){
+    var o;try{o=JSON.parse(txt)}catch(e){return null}
+    if(!o||typeof o!=="object")return null;
+    if(o.app==="dd"&&o.format===2&&o.ls&&typeof o.ls==="object"){
+      var ls={},idb={},k;
+      for(k in o.ls)if(k.indexOf(PRE)===0&&!SKIP[k]&&typeof o.ls[k]==="string")ls[k]=o.ls[k];
+      if(o.idb&&typeof o.idb==="object")for(k in o.idb)if(k.indexOf(PRE)===0&&o.idb[k]&&Array.isArray(o.idb[k].stores))idb[k]=o.idb[k];
+      return{kind:"full",created:o.created,ls:ls,idb:idb};
+    }
+    if(o.v===1&&o.done&&typeof o.done==="object")return{kind:"legacy",txt:txt};
+    return null;
+  }
+  function restoreDb(name,d){
+    return new Promise(function(res,rej){
+      var r=indexedDB.open(name);
+      r.onupgradeneeded=function(){
+        var db=r.result;
+        d.stores.forEach(function(s){
+          if(!s||typeof s.name!=="string"||db.objectStoreNames.contains(s.name))return;
+          var st=db.createObjectStore(s.name,s.keyPath!=null?{keyPath:s.keyPath,autoIncrement:!!s.autoIncrement}:{autoIncrement:!!s.autoIncrement});
+          (s.indexes||[]).forEach(function(x){try{st.createIndex(x.name,x.keyPath,{unique:!!x.unique,multiEntry:!!x.multiEntry})}catch(e){}});
+        });
+      };
+      r.onsuccess=function(){res(r.result)};r.onerror=function(){rej(r.error)};
+    }).then(function(db){
+      var sts=d.stores.filter(function(s){return s&&typeof s.name==="string"&&db.objectStoreNames.contains(s.name)});
+      if(!sts.length){db.close();return}
+      var dd;
+      try{dd=sts.map(function(s){return{n:s.name,kp:s.keyPath,rows:(Array.isArray(s.rows)?s.rows:[]).map(dec)}})}catch(e){db.close();throw e}
+      return new Promise(function(res,rej){
+        var t=db.transaction(dd.map(function(x){return x.n}),"readwrite");
+        dd.forEach(function(x){var st=t.objectStore(x.n);st.clear();x.rows.forEach(function(r){if(x.kp==null)st.put(r[1],r[0]);else st.put(r)})});
+        t.oncomplete=function(){db.close();res()};t.onerror=t.onabort=function(){db.close();rej(t.error||new Error("idb"))};
+      });
+    });
+  }
+  /* Önce IndexedDB (her veritabanı tek işlemde, ya hep ya hiç), sonra localStorage. localStorage yazılamazsa eski hâli geri konur. */
+  function restore(b){
+    var old=lsAll(true),k,p=Promise.resolve();
+    Object.keys(b.idb).forEach(function(n){p=p.then(function(){return restoreDb(n,b.idb[n])})});
+    return p.then(function(){
+      try{Storage.prototype.setItem=function(){}}catch(e){}
+      try{
+        lsKeys().forEach(function(x){if(!SKIP[x])localStorage.removeItem(x)});
+        for(k in b.ls)setRaw.call(localStorage,k,b.ls[k]);
+      }catch(e){
+        try{lsKeys().forEach(function(x){if(!SKIP[x])localStorage.removeItem(x)});for(k in old)setRaw.call(localStorage,k,old[k])}catch(e2){}
+        Storage.prototype.setItem=setRaw;throw e;
+      }
+    });
+  }
+  /* --- Sıfırla --- */
+  function clearDb(n){
+    return idbOpen(n).then(function(db){
+      var sn=[].slice.call(db.objectStoreNames);
+      if(!sn.length){db.close();return}
+      return new Promise(function(res){var t=db.transaction(sn,"readwrite");sn.forEach(function(s){t.objectStore(s).clear()});t.oncomplete=t.onerror=t.onabort=function(){db.close();res()}});
+    }).catch(function(){});
+  }
+  function wipeIdb(){
+    return idbNames().then(function(ns){
+      return Promise.all(ns.map(clearDb)).catch(function(){}).then(function(){
+        var all=ns.slice();LEG.forEach(function(n){if(all.indexOf(n)<0)all.push(n)});
+        return Promise.all(all.map(function(n){return new Promise(function(res){var q;try{q=indexedDB.deleteDatabase(n)}catch(e){res();return}q.onsuccess=q.onerror=q.onblocked=function(){res()}})}));
+      });
+    });
+  }
+  /* --- Özet (dışa aktarma kartı ve içe aktarma önizlemesi için) --- */
+  function cnt(v){return Array.isArray(v)?v.length:v&&typeof v==="object"?Object.keys(v).length:0}
+  function J(ls,k){try{return JSON.parse(ls[k])}catch(e){return null}}
+  function dur(sec){var h=Math.floor(sec/3600),m=Math.floor(sec%3600/60);return h?h+" sa "+m+" dk":m+" dk"}
+  function summary(ls,qn){
+    var st=J(ls,"dd-state")||{},cal=J(ls,"dd-cal")||{},sd=st.study||{},tot=0,k;
+    for(k in sd)tot+=+sd[k]||0;
+    return[["Tamamlanan konu",cnt(st.done)],["Çalışma süresi",dur(tot)],["Özel ders",cnt(st.extra)],["Soru görseli",qn],["Test paketi",cnt(J(ls,"dd-tz-packs"))],["Çözülen test",cnt(J(ls,"dd-tz-hist"))],["Takvim etkinliği",cnt(cal.items)]];
+  }
+  function countQ(){
+    return idbOpen("dd-q").then(function(db){
+      if(!db.objectStoreNames.contains("q")){db.close();return 0}
+      return req(db.transaction("q","readonly").objectStore("q").count()).then(function(n){db.close();return n});
+    }).catch(function(){return 0});
+  }
+  function size(n){return n<1024?n+" B":n<1048576?Math.round(n/1024)+" KB":(n/1048576).toFixed(1).replace(".",",")+" MB"}
+  function when(t){var d=new Date(t);if(isNaN(d))return"";return d.getDate()+" "+["Oca","Şub","Mar","Nis","May","Haz","Tem","Ağu","Eyl","Eki","Kas","Ara"][d.getMonth()]+" "+d.getFullYear()+" "+p0(d.getHours())+":"+p0(d.getMinutes())}
+  return{lsAll:lsAll,exportAll:exportAll,fname:fname,download:download,mark:mark,last:last,parse:parse,restore:restore,wipeIdb:wipeIdb,summary:summary,countQ:countQ,size:size,when:when};
+})();
 function wipeAll(){
   if(WIPING)return;WIPING=1;
   try{Storage.prototype.setItem=function(){}}catch(e){}
   try{var ks=[],i;for(i=0;i<localStorage.length;i++)ks.push(localStorage.key(i));ks.forEach(function(k){if(k&&k.indexOf("dd-")===0)localStorage.removeItem(k)})}catch(e){}
   try{sessionStorage.clear()}catch(e){}
-  function done(){location.reload()}
-  try{indexedDB.deleteDatabase("dd-q");var r=indexedDB.deleteDatabase("dd-ink");r.onsuccess=r.onerror=done}catch(e){done()}
-  setTimeout(done,1500);
+  var fin=0;function done(){if(fin)return;fin=1;location.reload()}
+  BK.wipeIdb().then(done,done);
+  setTimeout(done,2500);
 }
-function exportData(){return JSON.stringify({v:1,date:S.date,done:S.done,study:S.study||{},goal:S.goal})}
 function importData(txt){
   var o;try{o=JSON.parse(txt)}catch(e){return false}
   if(!o||typeof o.done!=="object"||!o.done)return false;
@@ -2155,7 +2370,6 @@ function stats(){
   var tot=0,dn=0;vis().forEach(function(s){tot+=s.t.length;dn+=cnt(s)});
   $("#pct").textContent=tot?Math.round(dn/tot*100):0;
   $("#dleft").textContent="YKS'ye "+days()+" gün kaldı";
-  if($("#sd"))$("#sd").querySelector("span").textContent=fmtD(S.date);
   $$(".sub").forEach(function(b){var s=D[b.dataset.i],c=cnt(s);b.style.setProperty("--p",s.t.length?c/s.t.length:0);b.querySelector("small").textContent=c+" / "+s.t.length;b.classList.toggle("on",s.id===S.sel)});
   var s=cur(),c=cnt(s);
   if($("#cn")){$("#cn").innerHTML=c+'<small>/ '+s.t.length+'</small>';$("#fill").style.transform="scaleX("+(s.t.length?c/s.t.length:0)+")"}
@@ -2169,31 +2383,117 @@ function showSub(anim){
   stats();
 }
 function buildSettings(){
-  $("#set").innerHTML='<div class="setw"><h1>Ayarlar</h1>'+
-  '<div class="card lc"><div><h2>Dersler</h2><p>TYT ve AYT derslerini sırala, renklerini değiştir, yeni ders ekle.</p><div class="dots">'+vis().map(function(s){return'<i style="--c:'+s.c+'"></i>'}).join("")+'</div></div><button class="btn pr" id="ld">Düzenle</button></div>'+
-  '<div class="card lc kbc"><button class="kbo" id="kbo"><div><h2>Klavye kısa yolları</h2><p>Sayfa geçişi, süre ve konular için kısa yolları gör ve özelleştir.</p></div><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button><button class="tg'+(KB.on?" on":"")+'" data-kb="tg" aria-label="Klavye kısa yolları"><i></i></button></div>'+
-  '<div class="card"><h2>Sınav tarihi</h2><p>Geri sayım bu tarihe göre hesaplanır.</p><button class="dpb" id="sd" aria-haspopup="dialog"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span></span></button></div>'+
-  '<div class="card"><h2>Yedek</h2><p>İlerlemeni metin olarak kopyala, gerekirse buradan geri yükle.</p><div class="row"><button class="btn pr" id="bk">Yedeği kopyala</button></div><textarea id="bt" placeholder="Yedek metnini buraya yapıştır"></textarea><div class="row"><button class="btn" id="br">Geri yükle</button></div><div class="msg" id="bm"></div></div>'+
-  '<div class="card"><h2>Soruda basılı tutma</h2><p>Bir soruya basılı tutunca ne olsun? İkisini deneyip birini seç.</p><div class="lpm" id="lpm"><button type="button" data-m="pop">Bastığım yerde panel</button><button type="button" data-m="bar">Seçim + alt çubuk</button></div></div>'+
-  '<div class="card"><h2>Tüm verileri sıfırla</h2><p>Konular, istatistikler, sınav tarihi, takvim ve çizimler, ders düzeni, klavye kısa yolları ve ayarlar silinir. Uygulama ilk açıldığı hâle döner. Geri alınamaz.</p><div class="row"><button class="btn dg" id="rs" data-hold>Sıfırla</button></div><div class="msg" id="rm"></div></div></div>';
+  var prev=$("#spm"),keep=prev?prev.scrollTop:0;
+  var P={
+    gen:'<path d="M4 7h9M19 7h1M4 17h1M11 17h9"/><circle cx="16" cy="7" r="2.5"/><circle cx="8" cy="17" r="2.5"/>',
+    dat:'<ellipse cx="12" cy="5.5" rx="7.5" ry="3"/><path d="M4.5 5.5v13c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-13M4.5 12c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3"/>',
+    dl:'<path d="M12 4v11M7.5 10.5L12 15l4.5-4.5M5 19.5h14"/>',
+    ul:'<path d="M12 15V4M7.5 8.5L12 4l4.5 4.5M5 19.5h14"/>',
+    tr:'<path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/>',
+    fl:'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/>'
+  };
+  function I(k){return'<svg viewBox="0 0 24 24">'+P[k]+'</svg>'}
+  var DROP='<button class="drop" id="dip" type="button">'+I("ul")+'<b>Yedek dosyasını seç</b><small>ya da buraya sürükleyip bırak</small></button>';
+  var lb=BK.last();
+  $("#set").innerHTML='<div class="sp">'+
+  '<aside class="sp-rail"><h1>Ayarlar</h1><p>Uygulamayı kendine göre düzenle, verilerini yönet.</p>'+
+    '<nav class="sp-nav" id="spn"><button data-s="gen" class="on">'+I("gen")+'Genel</button><button data-s="dat">'+I("dat")+'Veri yönetimi</button></nav>'+
+    '<div class="sp-foot" id="spf"></div></aside>'+
+  '<div class="sp-main" id="spm"><div class="sp-in">'+
+    '<section class="sp-sec" id="sp-gen"><div class="grp">Genel</div><div class="sp-g">'+
+      '<div class="card lc"><div><h2>Dersler</h2><p>TYT ve AYT derslerini sırala, renklerini değiştir, yeni ders ekle.</p><div class="dots">'+vis().map(function(s){return'<i style="--c:'+s.c+'"></i>'}).join("")+'</div></div><button class="btn pr" id="ld">Düzenle</button></div>'+
+      '<div class="card lc kbc"><button class="kbo" id="kbo"><div><h2>Klavye kısa yolları</h2><p>Sayfa geçişi, süre ve konular için kısa yolları gör ve özelleştir.</p></div><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button><button class="tg'+(KB.on?" on":"")+'" data-kb="tg" aria-label="Klavye kısa yolları"><i></i></button></div>'+
+      '<div class="card lc wide"><div><h2>Soruda basılı tutma</h2><p>Bir soruya basılı tutunca ne olsun? İkisini deneyip birini seç.</p></div><div class="lpm" id="lpm"><button type="button" data-m="pop">Bastığım yerde panel</button><button type="button" data-m="bar">Seçim + alt çubuk</button></div></div>'+
+    '</div></section>'+
+    '<section class="sp-sec" id="sp-dat"><div class="grp">Veri yönetimi</div><p class="sp-lead">Uygulamadaki her şey tek bir yedek dosyasında toplanır: ilerleme, çalışma süreleri, dersler, soru görselleri, testler, takvim, kısa yollar ve ayarlar.</p><div class="sp-g">'+
+      '<div class="card dmc"><div class="dmh"><div class="ic" style="--c:#c6f36b">'+I("dl")+'</div><div><h2>Dışa aktar</h2><p>Tüm verilerini bir dosyaya yedekle.</p></div></div><div class="chips" id="dxc"></div><div class="row"><button class="btn pr" id="dxb">Yedeği indir</button></div><div class="msg" id="dxm">'+(lb?"Son yedek: "+BK.when(lb):"Henüz yedek almadın.")+'</div></div>'+
+      '<div class="card dmc" id="di"><div class="dmh"><div class="ic" style="--c:#6ec6ff">'+I("ul")+'</div><div><h2>İçe aktar</h2><p>Daha önce aldığın yedeği yükle. Mevcut veriler yedektekilerle değiştirilir.</p></div></div><div id="dib">'+DROP+'</div><input type="file" id="dif" accept=".json,.txt,application/json,text/plain" style="display:none"><div class="msg" id="dim"></div></div>'+
+      '<div class="card dmc dgc wide"><div class="dmh"><div class="ic" style="--c:#ff8a8a">'+I("tr")+'</div><div><h2>Tüm verileri sıfırla</h2><p>Konular, çalışma süreleri, istatistikler, dersler, takvim, soru görselleri, testler, kısa yollar ve ayarlar silinir. Uygulama ilk açıldığı hâle döner. Geri alınamaz, önce yedek almanı öneririz.</p></div></div><div class="dgr"><button class="btn dg" id="rs" data-hold>Sıfırla</button><div class="msg" id="rm"></div></div></div>'+
+    '</div></section>'+
+  '</div></div></div>';
+  var mn=$("#spm");if(keep)mn.scrollTop=keep;
+
+  /* Genel */
   (function(){var m="pop";try{m=localStorage.getItem("dd-lpmode")||"pop"}catch(e){}
     var bs=$$("#lpm button");function paint(){bs.forEach(function(b){b.classList.toggle("on",b.dataset.m===m)})}paint();
     bs.forEach(function(b){b.onclick=function(){m=b.dataset.m;try{localStorage.setItem("dd-lpmode",m)}catch(e){}paint()}});
   })();
-  $("#sd").onclick=function(){openDP(this)};
   $("#ld").onclick=openSheet;
   $("#kbo").onclick=openKb;
-  $("#bk").onclick=function(){
-    var t=exportData(),m=$("#bm");
-    function fb(){var a=$("#bt");a.value=t;a.focus();a.select();m.textContent="Kopyalanamadı. Metni elle kopyala."}
-    if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(function(){m.textContent="Kopyalandı."},fb);else fb();
+
+  /* Sol menü: bölüme git, kaydırırken seçili bölümü işaretle */
+  function spy(){
+    var secs=$$(".sp-sec"),c=secs[0],y=mn.scrollTop+80;
+    secs.forEach(function(x){if(x.offsetTop<=y)c=x});
+    if(mn.scrollHeight>mn.clientHeight+8&&mn.scrollTop+mn.clientHeight>=mn.scrollHeight-4)c=secs[secs.length-1];
+    $$("#spn button").forEach(function(b){b.classList.toggle("on","sp-"+b.dataset.s===c.id)});
+  }
+  mn.onscroll=spy;
+  $$("#spn button").forEach(function(b){b.onclick=function(){mn.scrollTo({top:$("#sp-"+b.dataset.s).offsetTop,behavior:"smooth"})}});
+  if(navigator.storage&&navigator.storage.estimate)navigator.storage.estimate().then(function(e){var f=$("#spf");if(f&&e&&e.usage)f.textContent="Bu cihazda kullanılan alan: "+BK.size(e.usage)},function(){});
+
+  /* Dışa aktar */
+  BK.countQ().then(function(qn){
+    var c=$("#dxc");if(!c)return;
+    c.innerHTML=BK.summary(BK.lsAll(true),qn).map(function(r){return'<span>'+r[0]+' <b>'+r[1]+'</b></span>'}).join("")+'<span>Ders düzeni ve renkler</span><span>Kısa yollar</span><span>Sesler</span><span>Tüm ayarlar</span>';
+  });
+  $("#dxb").onclick=function(){
+    var b=this,m=$("#dxm");if(b.disabled)return;
+    b.disabled=true;b.textContent="Hazırlanıyor…";m.className="msg";m.textContent="";
+    BK.exportAll().then(function(blob){
+      BK.download(blob,BK.fname());BK.mark();
+      m.className="msg ok";m.textContent="Yedek indirildi ("+BK.size(blob.size)+"). Dosyayı güvenli bir yerde sakla.";
+    },function(){m.className="msg er";m.textContent="Yedek oluşturulamadı."}).then(function(){b.disabled=false;b.textContent="Yedeği indir"});
   };
-  $("#br").onclick=function(){
-    var ok=importData($("#bt").value);
-    $("#bm").textContent=ok?"Yedek yüklendi.":"Yedek metni geçersiz.";
-    if(ok){$("#bt").value="";showSub(false)}
-  };
-  var rt;
+
+  /* İçe aktar */
+  var inp=$("#dif"),card=$("#di");
+  function imMsg(t,c){var m=$("#dim");m.className="msg"+(c?" "+c:"");m.textContent=t}
+  function bindDrop(){$("#dip").onclick=function(){inp.click()}}
+  function imReset(){inp.value="";$("#dib").innerHTML=DROP;bindDrop();imMsg("")}
+  function readText(f){
+    if(f.text)return f.text();
+    return new Promise(function(res,rej){var r=new FileReader();r.onload=function(){res(r.result)};r.onerror=function(){rej(r.error)};r.readAsText(f)});
+  }
+  function showPv(b,f){
+    var h='<div class="pv"><div class="pvh">'+I("fl")+'<div><b>'+esc(f.name)+'</b><small>'+BK.size(f.size)+(b.created&&BK.when(b.created)?" · "+BK.when(b.created):"")+'</small></div></div>',note;
+    if(b.kind==="full"){
+      var qn=0,d=b.idb["dd-q"];
+      if(d)d.stores.forEach(function(s){if(s&&s.name==="q"&&Array.isArray(s.rows))qn=s.rows.length});
+      BK.summary(b.ls,qn).forEach(function(r){h+='<div class="pvr"><span>'+r[0]+'</span><b>'+r[1]+'</b></div>'});
+      note="Mevcut tüm verilerin silinip bu yedekle değiştirilecek. Geri alınamaz.";
+    }else{
+      h+='<div class="pvr"><span>Yedek türü</span><b>Eski biçim</b></div>';
+      note="Bu eski bir yedek. Yalnızca konu ilerlemesi, çalışma süreleri ve hedef yüklenir, diğer verilerin korunur.";
+    }
+    h+='</div><p class="pvn">'+note+'</p><div class="row"><button class="btn pr" id="dic" data-hold style="--hf:#0a76b8">Yedeği yükle</button><button class="btn" id="din">Vazgeç</button></div>';
+    $("#dib").innerHTML=h;imMsg("");
+    $("#din").onclick=imReset;
+    $("#dic").onclick=function(){if(!ddHold.ok(this))return;apply(b)};
+  }
+  function apply(b){
+    var bt=$("#dic"),cn=$("#din");bt.disabled=true;cn.disabled=true;imMsg("Yükleniyor…");
+    function fail(t){imMsg(t,"er");bt.disabled=false;cn.disabled=false}
+    function fin(){imMsg("Yedek yüklendi. Uygulama yeniden başlıyor…","ok");setTimeout(function(){location.reload()},700)}
+    if(b.kind==="legacy"){if(importData(b.txt))fin();else fail("Yedek yüklenemedi.");return}
+    BK.restore(b).then(fin,function(){fail("Yedek yüklenemedi. Mevcut verilerine dokunulmadı.")});
+  }
+  function pick(f){
+    if(!f)return;
+    imMsg("Okunuyor…");
+    readText(f).then(function(t){
+      var b=BK.parse(t);
+      if(!b){imMsg("Bu dosya geçerli bir yedek değil.","er");return}
+      showPv(b,f);
+    },function(){imMsg("Dosya okunamadı.","er")});
+  }
+  bindDrop();
+  inp.onchange=function(){pick(inp.files&&inp.files[0])};
+  card.ondragover=function(e){e.preventDefault();card.classList.add("over")};
+  card.ondragleave=function(e){if(!card.contains(e.relatedTarget))card.classList.remove("over")};
+  card.ondrop=function(e){e.preventDefault();card.classList.remove("over");pick(e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files[0])};
+
+  /* Sıfırla */
   $("#rs").onclick=function(){
     if(!ddHold.ok(this))return;
     $("#rm").textContent="Siliniyor…";wipeAll();
