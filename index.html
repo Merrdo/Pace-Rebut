@@ -671,18 +671,11 @@ html[data-theme=dark] .c1{--nl:#5aa2ff}
 .c1w span{padding:14px 10px 0;font-size:19px;font-weight:500;color:var(--fg)}
 .c1w span:nth-child(6),.c1w span:nth-child(7){color:var(--dim)}
 
-.c1dg .c1nl{height:2px;margin-top:-1px;border-radius:2px;box-shadow:0 0 10px color-mix(in srgb,var(--nl) 55%,transparent)}
-.c1dg .c1nl:before{left:-6px;top:-5px;width:12px;height:12px;box-shadow:none}
+.c1dg .c1nl{height:2px;margin-top:-1px;border-radius:2px;box-shadow:0 0 0 1px color-mix(in srgb,var(--bg) 75%,transparent)}
+.c1dg .c1nl:before{left:-6px;top:-5px;width:12px;height:12px;box-shadow:0 0 0 2px color-mix(in srgb,var(--bg) 75%,transparent)}
 .c1dg .c1nl.wk:after{right:auto;left:10px}
 .c1dg .c1nl.wk.ov:after{left:auto;right:calc(100%*(var(--i) + 1) + 12px)}
-.c1dg .c1nl{transition:opacity .3s var(--ease)}
-.c1dg .c1nl.gone{opacity:0}
-.wtc.now{box-shadow:inset 0 0 0 2px var(--nl)}
-.wtc.now:before,.wtc.now:after{content:"";position:absolute;left:9px;bottom:6px;height:3px;border-radius:3px}
-.wtc.now:before{right:9px;background:rgba(0,0,0,.14)}
-.wtc.now:after{width:calc((100% - 18px)*var(--p,0));background:var(--nl);transition:width .6s var(--ease)}
-.wtc.now.sm:before,.wtc.now.sm:after{display:none}
-.c1dg .c1nl:after{content:attr(data-t);position:absolute;right:calc(100%*(var(--i) + 1) + 12px);top:50%;transform:translateY(-50%);padding:3px 8px 2px;border-radius:999px;background:var(--nl);color:#fff;font:700 12px/1.3 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;white-space:nowrap;box-shadow:0 3px 10px -2px color-mix(in srgb,var(--nl) 60%,transparent)}
+.c1dg .c1nl:after{content:attr(data-t);position:absolute;right:calc(100%*(var(--i) + 1) + 12px);top:50%;transform:translateY(-50%);padding:3px 8px 2px;border-radius:999px;background:var(--nl);color:#fff;font:700 12px/1.3 Inter,system-ui,sans-serif;font-variant-numeric:tabular-nums;white-space:nowrap;box-shadow:0 0 0 2px color-mix(in srgb,var(--bg) 75%,transparent)}
 .c1hl{transition:opacity .25s var(--ease)}
 .c1hl.nh{opacity:0}
 .c1{--gw:76px}
@@ -4008,17 +4001,10 @@ document.addEventListener("keydown",function(e){
     if(!g)return;
     var m=+l.style.getPropertyValue("--m"),hh=parseFloat(g.style.getPropertyValue("--hh"))||HD,y=m*hh/60,ov=true;
     if(l.classList.contains("wk")){
-      /* Hafta: çizgi bir görevin içine denk gelirse çizgi gizlenir, görev mavi çerçeve + ilerleme çubuğu alır */
-      var c=g.querySelectorAll(".c1wcol")[+l.style.getPropertyValue("--i")||0],t=c?c.querySelectorAll(".wtc"):[],ins=false;
+      /* Hafta: etiket çizginin başında durur; o saatte görev varsa saat sütununa geçer */
+      var c=g.querySelectorAll(".c1wcol")[+l.style.getPropertyValue("--i")||0],t=c?c.querySelectorAll(".wtc"):[];
       ov=false;
-      Array.prototype.forEach.call(t,function(x){
-        var tp=parseFloat(x.style.top)||0,ht=parseFloat(x.style.height)||1;
-        x.classList.remove("now");
-        if(y>=tp&&y<=tp+ht){ins=true;x.classList.add("now");x.style.setProperty("--p",Math.min(1,(y-tp)/ht).toFixed(3))}
-        else if(y>tp-14&&y<tp+ht+14)ov=true;
-      });
-      l.classList.toggle("gone",ins);
-      if(ins)ov=false;
+      Array.prototype.forEach.call(t,function(x){var tp=parseFloat(x.style.top)||0,ht=parseFloat(x.style.height)||0;if(y>tp-14&&y<tp+ht+14)ov=true});
       l.classList.toggle("ov",ov);
     }
     if(!ov)return;
