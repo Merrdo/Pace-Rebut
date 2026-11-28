@@ -476,6 +476,74 @@ div.hl small{display:block;font-size:14px;font-weight:500;color:var(--dim);curso
 .kb:active{transform:scale(.92)}
 .kb svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .kh{position:relative;z-index:3}
+/* Takvim sayfasi */
+.cx-h{flex:none;display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:18px;position:relative;z-index:3}
+.cx-h h1{font-size:50px;font-weight:800;letter-spacing:-1px;line-height:1}
+.cx-h h1 em{font-style:normal;color:var(--dim)}
+.cx-h .btn{height:46px;padding:0 20px;border-radius:999px;background:var(--surf)}
+.cx-b{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:28px}
+.cx-m{display:flex;flex-direction:column;min-height:0}
+.cx-w{display:grid;grid-template-columns:repeat(7,1fr);padding-bottom:8px;text-align:center;font:600 13px Inter,system-ui,sans-serif;color:var(--dim)}
+.cx-g{flex:1;min-height:0;display:grid;grid-template-columns:repeat(7,1fr);grid-template-rows:repeat(6,1fr);gap:4px}
+.cx-g.cx-l{animation:cxl .5s var(--ease)}.cx-g.cx-r{animation:cxr .5s var(--ease)}
+@keyframes cxl{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:none}}
+@keyframes cxr{from{opacity:0;transform:translateX(-26px)}to{opacity:1;transform:none}}
+.cx-d{display:flex;flex-direction:column;align-items:center;gap:4px;padding-top:6px;border-radius:18px;font-family:Inter,system-ui,sans-serif;transition:background .35s var(--ease),box-shadow .35s var(--ease),transform .5s var(--sp)}
+.cx-d:active{transform:scale(.93)}
+.cx-d b{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;font-size:17px;font-weight:600;transition:background .3s,color .3s}
+.cx-d.o{opacity:.3}
+.cx-d.hd b{color:#d12f35}
+.cx-d.s{background:var(--surf);box-shadow:0 6px 16px -8px rgba(17,17,17,.22)}
+.cx-d.t b{background:var(--fg);color:var(--bg)}
+.cx-dt{display:flex;gap:3px;height:6px}
+.cx-dt i{width:6px;height:6px;border-radius:50%;background:var(--c)}
+.cx-p{overflow:auto;min-height:0;overscroll-behavior:contain}
+.cx-ph{animation:rise .5s var(--ease) both}
+.cx-ph h2{font-size:30px;font-weight:800;letter-spacing:-.5px;line-height:1.05}
+.cx-ph p{margin-top:3px;font-size:15px;font-weight:500;color:var(--dim)}
+.cx-add{display:block;width:100%;margin:14px 0 12px;padding:14px;border-radius:18px;background:var(--fg);color:var(--bg);font-size:17px;font-weight:700;transition:transform .5s var(--sp)}
+.cx-add:active{transform:scale(.97)}
+.cx-it{display:flex;align-items:center;gap:12px;width:100%;margin-bottom:8px;padding:14px 16px;border-radius:18px;background:var(--surf);text-align:left;animation:rise .5s var(--ease) both;transition:transform .5s var(--sp)}
+button.cx-it:active{transform:scale(.97)}
+.cx-it:before{content:"";width:10px;height:10px;border-radius:50%;background:var(--c,var(--fg));flex:none}
+.cx-it span{flex:1;min-width:0;font-size:18px;font-weight:700;line-height:1.15;overflow-wrap:anywhere}
+.cx-it small,.cx-it time{flex:none;font:600 13px Inter,system-ui,sans-serif;color:var(--dim)}
+.cx-sec{margin:22px 2px 10px;font-size:20px;font-weight:800}
+.cx-u{display:flex;align-items:center;gap:14px;width:100%;margin-bottom:6px;padding:8px 10px;border-radius:16px;text-align:left;transition:background .3s,transform .5s var(--sp)}
+.cx-u:active{transform:scale(.97);background:var(--surf)}
+.cx-ud{flex:none;display:grid;place-items:center;width:46px;height:46px;border-radius:14px;background:var(--c);color:#111;font-style:normal;line-height:1}
+.cx-ud b{font:700 18px Inter,system-ui,sans-serif}
+.cx-ud small{margin-top:-6px;font:600 10px Inter,system-ui,sans-serif;text-transform:uppercase;opacity:.65}
+.cx-u span{flex:1;min-width:0;font-size:17px;font-weight:600;line-height:1.15;overflow-wrap:anywhere}
+.cx-u em{flex:none;font:500 13px Inter,system-ui,sans-serif;font-style:normal;color:var(--dim)}
+/* Ekleme paneli */
+.cx-sh{position:fixed;inset:0;z-index:8;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.34);opacity:0;visibility:hidden;transition:opacity .35s var(--ease),visibility 0s .35s}
+.cx-sh.on{opacity:1;visibility:visible;transition-delay:0s}
+.cx-sc{width:min(520px,100%);max-height:92dvh;overflow:auto;padding:24px 22px calc(22px + env(safe-area-inset-bottom,0px));border-radius:28px 28px 0 0;background:var(--bg);transform:translateY(48px);transition:transform .65s var(--ease)}
+.cx-sh.on .cx-sc{transform:none}
+.cx-sc h2{margin-bottom:16px;font-size:26px;font-weight:800}
+.cx-in{display:block;width:100%;height:52px;margin-bottom:10px;padding:0 16px;border:0;border-radius:16px;background:var(--surf);color:var(--fg);font:600 18px "Baloo 2",system-ui,sans-serif;-webkit-user-select:text;user-select:text;outline:0;box-shadow:inset 0 0 0 2px transparent;transition:box-shadow .3s}
+.cx-in:focus{box-shadow:inset 0 0 0 2px var(--fg)}
+.cx-in.bad{animation:cxb .4s;box-shadow:inset 0 0 0 2px #d12f35}
+@keyframes cxb{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.cx-r2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cx-cs{display:flex;gap:14px;margin:6px 4px 16px}
+.cx-cs button{width:34px;height:34px;border-radius:50%;background:var(--c);transition:transform .5s var(--sp),box-shadow .3s}
+.cx-cs button.on{transform:scale(1.08);box-shadow:0 0 0 3px var(--bg),0 0 0 5px var(--fg)}
+.cx-yr{display:flex;align-items:center;gap:12px;width:100%;margin-bottom:18px;padding:14px 16px;border-radius:16px;background:var(--surf);font-size:17px;font-weight:600;text-align:left}
+.cx-yr i{width:22px;height:22px;border-radius:50%;border:2px solid var(--dim);transition:background .3s,border-color .3s,box-shadow .3s}
+.cx-yr.on i{background:var(--fg);border-color:var(--fg);box-shadow:inset 0 0 0 4px var(--surf)}
+.cx-ft{display:flex;gap:10px}
+.cx-ft .btn{flex:1;height:52px;border-radius:18px;font-size:17px;justify-content:center}
+.cx-ft .btn.pr{flex:1.4}
+@media (max-width:900px){
+  .cx-b{display:block;overflow:auto;overscroll-behavior:contain}
+  .cx-g{flex:none;grid-template-rows:repeat(6,58px)}
+  .cx-p{overflow:visible;margin-top:22px}
+  .cx-h h1{font-size:38px}
+}
+@media (prefers-reduced-motion:reduce){.cx-g,.cx-it,.cx-ph{animation:none!important}}
+
 .cset{position:absolute;inset:0;z-index:4;background:var(--bg);overflow:auto;padding:34px 24px var(--dock-space);opacity:0;visibility:hidden;transform:translateY(24px);transition:opacity .45s var(--ease),transform .65s var(--ease),visibility 0s .45s}
 .cset.on{opacity:1;visibility:visible;transform:none;transition-delay:0s}
 .tg{position:relative;width:58px;height:34px;border-radius:999px;background:var(--surf2);flex:none;transition:background .35s}
@@ -3510,8 +3578,110 @@ function hs(y,m,d){return(hol(y)[p2(m+1)+"-"+p2(d)]||[]).filter(function(h){retu
 function its(y,m,d){var s=ds(y,m,d);return CS.items.filter(function(i){return i.d===s||(i.y&&i.d.slice(5)===s.slice(5)&&i.d<=s)}).sort(function(a,b){return(a.tm||"99").localeCompare(b.tm||"99")})}
 var IC={p:'<path d="M15 5l-7 7 7 7"/>',n:'<path d="M9 5l7 7-7 7"/>',st:'<path d="M4 7h9M19 7h1M4 17h1M11 17h9"/><circle cx="16" cy="7" r="2.5"/><circle cx="8" cy="17" r="2.5"/>'};
 function ib(a,i,x){return'<button class="kb'+(x||"")+'" data-a="'+a+'" aria-label="'+a+'"><svg viewBox="0 0 24 24">'+IC[i]+'</svg></button>'}
+/* Takvim sayfasi: ay izgarasi, gun paneli, yaklasanlar, etkinlik ekleme */
+var CC=["#ff90e8","#ffb46e","#c6f36b","#6ec6ff","#b79cff","#7ee8c0"],XM={y:TD.getFullYear(),m:TD.getMonth(),sel:"",ed:0,col:0,yr:0,arm:0},cxT=0;
+function tdy(){var n=new Date();return ds(n.getFullYear(),n.getMonth(),n.getDate())}
+function exm(){try{return/^\d{4}-\d{2}-\d{2}$/.test(S.date)?S.date:""}catch(e){return""}}
+function pdt(s){var p=s.split("-");return[+p[0],+p[1]-1,+p[2]]}
+function rel(s){var n=Math.round((new Date(s+"T12:00:00")-new Date(tdy()+"T12:00:00"))/864e5);return n===0?"Bugün":n===1?"Yarın":n===-1?"Dün":n>0?n+" gün sonra":(-n)+" gün önce"}
+function evOf(s){var p=pdt(s);return its(p[0],p[1],p[2])}
+function cxHead(){$("#cxt").innerHTML=MN[XM.m]+" <em>"+XM.y+"</em>"}
+function cxGrid(dir){
+  var y=XM.y,m=XM.m,f=wdx(y,m,1),t=tdy(),ex=exm(),h="",i;
+  for(i=0;i<42;i++){
+    var dt=new Date(y,m,i-f+1),cy=dt.getFullYear(),cm=dt.getMonth(),cd=dt.getDate(),s=ds(cy,cm,cd),dots="",hd=hs(cy,cm,cd).some(function(x){return x.g!=="w"});
+    if(s===ex)dots+='<i style="--c:var(--fg)"></i>';
+    its(cy,cm,cd).slice(0,3).forEach(function(e){dots+='<i style="--c:'+CC[e.c||0]+'"></i>'});
+    h+='<button class="cx-d'+(cm!==m?" o":"")+(s===t?" t":"")+(s===XM.sel?" s":"")+(hd?" hd":"")+'" data-s="'+s+'" aria-label="'+cd+" "+MN[cm]+'"><b>'+cd+'</b><span class="cx-dt">'+dots+"</span></button>";
+  }
+  var g=$("#cxg");g.innerHTML=h;
+  if(dir){g.classList.remove("cx-l","cx-r");void g.offsetWidth;g.classList.add(dir>0?"cx-l":"cx-r")}
+}
+function cxPanel(){
+  var s=XM.sel,p=pdt(s),hl=hs(p[0],p[1],p[2]),sub=rel(s),h="";
+  if(hl.length)sub+=" · "+hl.map(function(x){return x.n}).join(", ");
+  h+='<div class="cx-ph"><h2>'+p[2]+" "+MN[p[1]]+"</h2><p>"+WD[wdx(p[0],p[1],p[2])]+" · "+esc(sub)+'</p></div><button class="cx-add" data-a="ca">Etkinlik ekle</button>';
+  if(s===exm())h+='<div class="cx-it"><span>Sınav günü</span></div>';
+  var ev=evOf(s);
+  ev.forEach(function(e,i){h+='<button class="cx-it" data-e="'+e.id+'" style="--c:'+CC[e.c||0]+";animation-delay:"+(i*50)+'ms"><span>'+esc(e.t)+"</span>"+(e.y?"<small>Her yıl</small>":"")+(e.tm?"<time>"+esc(e.tm)+"</time>":"")+"</button>"});
+  if(!ev.length&&s!==exm())h+='<p class="em">Bu gün için kayıt yok.</p>';
+  $("#cxp").innerHTML=h;
+}
+function cxUp(){
+  var out=[],n=new Date(),ex=exm(),i,h="";
+  for(i=0;i<366&&out.length<6;i++){
+    var dt=new Date(n.getFullYear(),n.getMonth(),n.getDate()+i),y=dt.getFullYear(),m=dt.getMonth(),d=dt.getDate(),s=ds(y,m,d);
+    if(s===ex)out.push({s:s,t:"Sınav günü",c:"var(--fg)"});
+    its(y,m,d).forEach(function(e){out.push({s:s,t:e.t,c:CC[e.c||0]})});
+  }
+  out=out.slice(0,6);
+  h='<div class="cx-sec">Yaklaşan</div>';
+  if(!out.length)h+='<p class="em">Yaklaşan etkinlik yok.</p>';
+  out.forEach(function(o){var p=pdt(o.s);h+='<button class="cx-u" data-s="'+o.s+'" style="--c:'+o.c+'"><i class="cx-ud"><b>'+p[2]+"</b><small>"+MN[p[1]].slice(0,3)+"</small></i><span>"+esc(o.t)+"</span><em>"+rel(o.s)+"</em></button>"});
+  $("#cxu").innerHTML=h;
+}
+function cxAll(dir){cxHead();cxGrid(dir);cxPanel();cxUp()}
+function cxGo(n){var d=new Date(XM.y,XM.m+n,1);XM.y=d.getFullYear();XM.m=d.getMonth();cxHead();cxGrid(n)}
+function cxSel(s){
+  var p=pdt(s),sw=(p[0]*12+p[1])-(XM.y*12+XM.m);XM.sel=s;
+  if(sw){XM.y=p[0];XM.m=p[1];cxHead();cxGrid(sw>0?1:-1)}
+  else $$("#cxg .cx-d").forEach(function(b){b.classList.toggle("s",b.dataset.s===s)});
+  cxPanel();
+}
+function cxSh(){
+  $$("#cxc button").forEach(function(b,i){b.classList.toggle("on",i===XM.col)});
+  var y=$("#cxy"),x=$("#cxx");y.classList.toggle("on",!!XM.yr);y.setAttribute("aria-pressed",XM.yr?"true":"false");
+  x.classList.toggle("arm",!!XM.arm);x.textContent=XM.arm?"Silmeyi onayla":"Sil";
+}
+function cxOpen(id){
+  var e=null;if(id)CS.items.forEach(function(x){if(String(x.id)===String(id))e=x});
+  XM.ed=e?e.id:0;XM.col=e?(e.c||0):0;XM.yr=e&&e.y?1:0;XM.arm=0;
+  $("#cxst").textContent=e?"Etkinliği düzenle":"Yeni etkinlik";
+  $("#cxi").value=e?e.t:"";$("#cxd").value=e?e.d:XM.sel;$("#cxm").value=e&&e.tm?e.tm:"";
+  $("#cxx").style.display=e?"":"none";cxSh();
+  $("#cxs").classList.add("on");
+  if(!e)setTimeout(function(){$("#cxi").focus()},380);
+}
+function cxClose(){clearTimeout(cxT);$("#cxs").classList.remove("on");if(document.activeElement&&document.activeElement.blur)document.activeElement.blur()}
+function cxSave(){
+  var i=$("#cxi"),t=i.value.trim(),d=$("#cxd").value,tm=$("#cxm").value,e=null;
+  if(!t){i.classList.remove("bad");void i.offsetWidth;i.classList.add("bad");i.focus();return}
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(d))d=XM.sel;
+  CS.items.forEach(function(x){if(x.id===XM.ed)e=x});
+  if(!e){e={id:CS.nid++};CS.items.push(e)}
+  e.t=t;e.d=d;e.tm=tm||"";e.c=XM.col;e.y=XM.yr?1:0;
+  csv();cxClose();
+  var p=pdt(d);XM.sel=d;XM.y=p[0];XM.m=p[1];cxAll(0);
+}
 function paintK(){
-  $("#cal").innerHTML='<div class="kh"><div class="kc">'+ib("st","st")+'</div></div>';
+  XM.sel=tdy();
+  var ar=function(a,l,i){return'<button class="kb" data-a="'+a+'" aria-label="'+l+'"><svg viewBox="0 0 24 24">'+IC[i]+"</svg></button>"};
+  $("#cal").innerHTML='<div class="cx-h"><h1 id="cxt"></h1><div class="kc">'+ar("cp","Önceki ay","p")+'<button class="btn" data-a="cto">Bugün</button>'+ar("cn","Sonraki ay","n")+ib("st","st")+'</div></div><div class="cx-b"><div class="cx-m"><div class="cx-w">'+WS.map(function(x){return"<span>"+x+"</span>"}).join("")+'</div><div class="cx-g" id="cxg"></div></div><div class="cx-p"><div id="cxp"></div><div id="cxu"></div></div></div>';
+  if(!$("#cxs"))$("#v-cal").insertAdjacentHTML("beforeend",'<div class="cx-sh" id="cxs"><div class="cx-sc" role="dialog" aria-label="Etkinlik"><h2 id="cxst">Yeni etkinlik</h2><input class="cx-in" id="cxi" maxlength="60" placeholder="Etkinlik adı" autocomplete="off"><div class="cx-r2"><input class="cx-in" id="cxd" type="date" aria-label="Tarih"><input class="cx-in" id="cxm" type="time" aria-label="Saat (isteğe bağlı)"></div><div class="cx-cs" id="cxc">'+CC.map(function(c,i){return'<button data-i="'+i+'" style="--c:'+c+'" aria-label="Renk '+(i+1)+'"></button>'}).join("")+'</div><button class="cx-yr" id="cxy" aria-pressed="false"><i></i>Her yıl tekrarla</button><div class="cx-ft"><button class="btn dg" id="cxx">Sil</button><button class="btn" id="cxv">Vazgeç</button><button class="btn pr" id="cxk">Kaydet</button></div></div></div>');
+  $("#cal").addEventListener("click",function(e){
+    var b=e.target.closest("[data-a],[data-s],[data-e]");if(!b)return;
+    var a=b.dataset.a;
+    if(a==="cp")cxGo(-1);else if(a==="cn")cxGo(1);
+    else if(a==="cto"){var n=new Date(),sw=(n.getFullYear()*12+n.getMonth())-(XM.y*12+XM.m);XM.sel=tdy();XM.y=n.getFullYear();XM.m=n.getMonth();cxHead();cxGrid(sw>0?1:sw<0?-1:0);cxPanel()}
+    else if(a==="ca")cxOpen();
+    else if(b.dataset.e)cxOpen(b.dataset.e);
+    else if(b.dataset.s)cxSel(b.dataset.s);
+  });
+  var g=$("#cxg"),x0=0,y0=0;
+  g.addEventListener("touchstart",function(e){x0=e.touches[0].clientX;y0=e.touches[0].clientY},{passive:true});
+  g.addEventListener("touchend",function(e){var t=e.changedTouches[0],dx=t.clientX-x0,dy=t.clientY-y0;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5)cxGo(dx<0?1:-1)},{passive:true});
+  $("#cxs").onclick=function(e){if(e.target===this)cxClose()};
+  $("#cxc").onclick=function(e){var b=e.target.closest("[data-i]");if(b){XM.col=+b.dataset.i;cxSh()}};
+  $("#cxy").onclick=function(){XM.yr=XM.yr?0:1;cxSh()};
+  $("#cxv").onclick=cxClose;$("#cxk").onclick=cxSave;
+  $("#cxx").onclick=function(){
+    if(!XM.arm){XM.arm=1;cxSh();clearTimeout(cxT);cxT=setTimeout(function(){XM.arm=0;cxSh()},3000);return}
+    CS.items=CS.items.filter(function(x){return x.id!==XM.ed});csv();cxClose();cxAll(0);
+  };
+  $("#cxi").addEventListener("keydown",function(e){if(e.key==="Enter"){e.preventDefault();cxSave()}});
+  $("#cxs").addEventListener("keydown",function(e){if(e.key==="Escape"){e.stopPropagation();cxClose()}});
+  document.addEventListener("visibilitychange",function(){if(!document.hidden)cxAll(0)});
+  cxAll(0);
 }
 /* Hafta yardımcısı: istatistikteki hafta aralığı için */
 function wkMon(y,m,d){var t=new Date(y,m,d);t.setDate(t.getDate()-wdx(t.getFullYear(),t.getMonth(),t.getDate()));return t}
