@@ -1,4 +1,4 @@
-const CACHE = 'dd-v2'; // dosyaları değiştirince sürümü artır
+const CACHE = 'dd-v3'; // dosyaları değiştirince sürümü artır
 const ASSETS = [
   './', './index.html', './manifest.json',
   './icons/icon-192.png', './icons/icon-512.png',

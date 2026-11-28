@@ -1,6 +1,6 @@
 {
-  "name": "DD",
-  "short_name": "DD",
+  "name": "Pace",
+  "short_name": "Pace",
   "start_url": "./index.html",
   "scope": "./",
   "display": "fullscreen",
